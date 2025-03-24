@@ -15,6 +15,7 @@
 
     public class ReportUtils : IReportUtils
     {
+        private const int FiveMinutes = 5;
         private readonly IDynamicRepository dynamicRepository;
 
         private readonly ICacheService cacheService;
@@ -46,7 +47,7 @@
                     MoveBetsDate = command.MoveBetsDate
                 };
 
-                cacheService.Set<BalanceDate>(balanceDateCacheKey, balanceDate, new CacheItemOptions { RelativeExpiration = TimeSpan.FromMinutes(5) });
+                cacheService.Set<BalanceDate>(balanceDateCacheKey, balanceDate, new CacheItemOptions { RelativeExpiration = TimeSpan.FromMinutes(FiveMinutes) });
             }
                 return balanceDate;
         }

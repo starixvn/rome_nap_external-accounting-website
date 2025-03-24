@@ -43,42 +43,13 @@
         public UserCache GetMenuByUserId(int userId)
         {
             var criteria = new GetMenuByUserIdCriteria { UserId = userId };
-            var ds = dynamicRepository.FetchDataSet(criteria);
-            
-            if (ds?.Tables.Count == 2)
+            var ds = dynamicRepository.FetchMultiple<Menu, Function>(criteria);
+            if (ds.Item1.Any() && ds.Item2.Any())
             {
-                var menu = ds.Tables[0];
-                var func = ds.Tables[1];
-
-                var menus = (from c in menu.AsEnumerable()
-                            select new Menu
-                            {
-                                MenuId = c.Field<int>("MenuId"),
-                                MenuName = c.Field<string>("MenuName"),
-                                ParentId = c.Field<int>("ParentId"),
-                                ParentName = c.Field<string>("ParentName"),
-                                Url = c.Field<string>("Url"),
-                                FuncId = c.Field<int>("FuncId"),
-                                FuncKey = c.Field<string>("FuncKey"),
-                                DisplayOrder = c.Field<int>("DisplayOrder"),
-                                IsActive = c.Field<bool>("Active")
-                            }).ToList();
-
-                var funcs = (from c in func.AsEnumerable()
-                            select new Function
-                            {
-                                FuncID = c.Field<int>("funcid"),
-                                ParentID = c.Field<int>("parentId"),
-                                FuncName = c.Field<string>("funcName"),
-                                FuncKey = c.Field<string>("funcKey"),
-                                Policy = c.Field<EPolicy>("policy"),
-                                IsTest = c.Field<bool>("IsTest")
-                            }).ToList();
-
                 return new UserCache
                 {
-                    MenuList = menus,
-                    PolicyList = funcs
+                    MenuList = ds.Item1.ToList(),
+                    PolicyList = ds.Item2.ToList()
                 };
             }
 

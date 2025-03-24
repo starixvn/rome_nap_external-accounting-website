@@ -37,7 +37,7 @@
                     isSaba ? "BetSettingRef_Saba" : "BetSettingRef",
                     settingId,
                     DefaultLanguage,
-                    settingId);
+                    defaultValue: settingId);
         }
     }
 }
