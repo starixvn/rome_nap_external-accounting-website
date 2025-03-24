@@ -18,9 +18,11 @@
     public class ProductService : IProductService
     {
         private readonly IDynamicRepository dynamicRepository;
+        public ProductService() : this(null)
+        {
+        }
 
-        public ProductService(
-            IDynamicRepository dynamicRepository = null)
+        public ProductService(IDynamicRepository dynamicRepository)
         {
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }

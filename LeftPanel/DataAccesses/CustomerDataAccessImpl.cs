@@ -16,13 +16,17 @@
     {
         private readonly IDynamicRepository _dynamicRepository;
 
+        public CustomerDataAccessImpl() : this(null)
+        {
+        }
+
         public CustomerDataAccessImpl(IDynamicRepository dynamicRepository)
         {
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public DataSet GetPersonalInfo(string username, string groupName, int userId)
-            => _dynamicRepository.FetchDataSet(new GetPersonalInfoCriteria(username, groupName, userId));
+        public DataSet GetPersonalInfo(GetPersonalInfoCriteria criteria)
+            => _dynamicRepository.FetchDataSet(criteria);
 
         public DataSet GetLoginInfo(int custId, string groupName)
             => _dynamicRepository.FetchDataSet(new GetLogginInfoCriteria(custId, groupName));

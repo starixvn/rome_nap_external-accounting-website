@@ -24,5 +24,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
         public string ErrMsg { get; set; }
 
         public string GetSettingKey() => "Acc_CustomerUpdClearCredit";
+
+        public bool IsValid() => true;
     }
 }

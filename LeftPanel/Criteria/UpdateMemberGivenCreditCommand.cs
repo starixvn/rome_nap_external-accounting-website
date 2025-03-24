@@ -1,8 +1,5 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
 {
-    using System.Collections;
-    using Fanex.Data.Repository;
-
     public class UpdateMemberGivenCreditCommand : UpdateSMAGivenCreditCommand
     {
         public decimal TotalAmt { get; }

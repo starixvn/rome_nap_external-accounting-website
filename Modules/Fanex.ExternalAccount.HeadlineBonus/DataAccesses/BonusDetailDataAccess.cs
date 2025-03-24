@@ -2,13 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data;
-    using Fanex.CustomerSetting.Module.Core.Models;
-    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.HeadlineBonus.Criteria;
     using Fanex.ExternalAccount.HeadlineBonus.Models;
-    using Fanex.Data.Repository;
-    
+
     internal interface IBonusDetailDataAccess
     {
         IEnumerable<MemberBonusEntity> GetMemberBonus(GetMemberBonusCriteria criteria);

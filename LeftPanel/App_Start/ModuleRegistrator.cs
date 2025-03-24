@@ -2,7 +2,7 @@
 {
     using System.Reflection;
     using System.Web.Mvc;
-    using CustomerSetting.Module.Core.Web.App_Start;
+    using Fanex.ExternalAccount.Core.App_Start;
 
     public class ModuleRegistrator : AppAreaRegistrator
     {

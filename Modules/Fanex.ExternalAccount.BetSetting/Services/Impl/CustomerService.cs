@@ -14,12 +14,5 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Services.Impl
 
             return dao.UserInfo(new GetUserInfoCriteria(custId));
         }
-
-        public int UserGroupId(int custId)
-        {
-            ICustomerDao dao = new CustomerDao();
-
-            return dao.UserGroupId(custId);
-        }
     }
 }

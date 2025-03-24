@@ -8,7 +8,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
 
     public class DailyWinLossReportBuilder
     {
-        public DailyWinLossReportBuilder(List<DailyWinLoss> dailyWinLoss, bool isBold, int roleId, string winlostDate)
+        public DailyWinLossReportBuilder(IEnumerable<DailyWinLoss> dailyWinLoss, bool isBold, int roleId, string winlostDate)
         {
             WinlostDate = winlostDate;
             IsBold = isBold;
@@ -16,7 +16,7 @@ namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
             Data = dailyWinLoss;
         }
 
-        public List<DailyWinLoss> Data { get; }
+        public IEnumerable<DailyWinLoss> Data { get; }
 
         public bool IsBold { get; }
 

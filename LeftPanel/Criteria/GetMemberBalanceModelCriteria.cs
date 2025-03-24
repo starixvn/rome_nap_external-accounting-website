@@ -23,5 +23,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
             var prefixSp = SiteDB.IsSiteDB ? $"SiteDB{SiteDB.SiteDBGroupID}_" : string.Empty;
             return $"{prefixSp}Acc_BalanceMemberSel";
         }
+
+        public bool IsValid() => true;
     }
 }

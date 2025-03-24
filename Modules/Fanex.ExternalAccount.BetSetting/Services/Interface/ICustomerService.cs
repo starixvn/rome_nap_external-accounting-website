@@ -5,7 +5,5 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Services.Interface
     public interface ICustomerService
     {
         Customer UserInfo(int custId);
-
-        int UserGroupId(int custId);
     }
 }

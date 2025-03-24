@@ -18,6 +18,6 @@
         public override string GetSettingKey()
             => "EAS_CustomerSelLoginInfo";
 
-        public override bool IsValid() => CustId > 0;;
+        public override bool IsValid() => CustId > 0;
     }
 }

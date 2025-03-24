@@ -1,11 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.SearchAndCopy.Criteria;
     using Fanex.ExternalAccount.SearchAndCopy.Models;
+    using Fanex.Logging;
 
     public interface ISearchAndCopyRepository
     {
@@ -26,6 +28,8 @@
         Result UpdateCRMHeadlineInfo(UpdateCrmHeadlineInfoCriteria criteria);
 
         IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria);
+
+        void AddMsgAfterCreateNewSMA(AddMsgAfterCreateNewSMACommand command);
     }
 
     public class SearchAndCopyRepository : ISearchAndCopyRepository
@@ -55,7 +59,7 @@
         }
 
         public string GetGetGroupParentNameByGroupName(GetGroupParentNameByGroupNameCriteria criteria)
-            =>string.Join(",", _dynamicRepository.Fetch<string>(criteria).ToArray());
+            => string.Join(",", _dynamicRepository.Fetch<string>(criteria).ToArray());
 
         public Result CloneSettingComm(CloneSettingComCommand command)
         {
@@ -65,11 +69,13 @@
             }
 
             _dynamicRepository.Execute(command);
-            return new Result(command.ErrCode, command.ErrMsg, new { 
-                command.CustId, 
-                command.Case, 
-                HeadlineID_Old = command.Old_Headline, 
-                HeadlineID_New = command.New_Headline });
+            return new Result(command.ErrCode, command.ErrMsg, new
+            {
+                command.CustId,
+                command.Case,
+                HeadlineID_Old = command.Old_Headline,
+                HeadlineID_New = command.New_Headline
+            });
         }
 
         public void RollBackCustomer(RollbackCustomerInsertCommand command)
@@ -104,5 +110,17 @@
 
         public IEnumerable<SuperPrefix> GetSuperPrefixes(ICriteria criteria)
             => _dynamicRepository.Fetch<SuperPrefix>(criteria);
+
+        public void AddMsgAfterCreateNewSMA(AddMsgAfterCreateNewSMACommand command)
+        {
+            try
+            {
+                _dynamicRepository.Execute(command);
+            }
+            catch (Exception ex)
+            {
+                LogService.Error(ex.Message, ex);
+            }
+        }
     }
 }

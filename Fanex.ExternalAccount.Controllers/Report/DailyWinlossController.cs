@@ -16,7 +16,7 @@
     {
         private int _custId;
         private string _groupname = string.Empty;
-        private List<DailyWinLoss> _listDailyWinLoss;
+        private IEnumerable<DailyWinLoss> _listDailyWinLoss;
         private int _memberId;
         private int _mrecommend;
         private int _recommend;
@@ -63,7 +63,7 @@
             GetRequestPage();
             GetDailyWinLoss();
             var builder = new DailyWinLossReportBuilder(
-                _listDailyWinLoss ?? new List<DailyWinLoss>(),
+                _listDailyWinLoss,
                 false,
                 _viewlevel,
                 CheckRequest.GetStringRequest("date", string.Empty));

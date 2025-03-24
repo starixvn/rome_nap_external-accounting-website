@@ -3,12 +3,12 @@
     using System.Web.Mvc;
     using Base;
     using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Service.Impl.Report;
     using Fanex.ExternalAccount.Service.Impl.Report.MultipleCurrency;
+    using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Service.Interface.Report.MultipleCurrency;
     using Fanex.ExternalAccount.Service.Products;
     using Newtonsoft.Json;
-    using Service.Impl.Report;
-    using Service.Interface.Report;
     using Utilities;
 
     public class FilterController : BaseController

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Fanex.CustomerSetting.Module.Core.Models;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.HeadlineBonus.Criteria;
     using Fanex.ExternalAccount.HeadlineBonus.DataAccesses;
     using Fanex.ExternalAccount.HeadlineBonus.Models;

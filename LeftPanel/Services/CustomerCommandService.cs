@@ -1,9 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
+    using System.Threading.Tasks;
     using Core.Authorization;
     using Core.Shared;
     using Criteria;
-    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using DataAccesses;
     using DTO;
@@ -13,7 +13,6 @@
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Service.TelegramBot;
     using Sunplus.Agent.Utilities;
-    using System.Threading.Tasks;
     using Utilities;
     using Encryptor = Sunplus.Agent.Utilities.Encryptor;
 
@@ -105,7 +104,7 @@
                 return new Result(1, ViewLang.DontHavePermission);
             }
 
-            var result = customerDataAccess.CloseCutomer(custId, close, clearCredit, custName);
+            var result = customerDataAccess.CloseCustomer(custId, close, clearCredit, custName);
             if (result.IsSuccess && clearCredit)
             {
                 if (custInfo.RoleId == Role.Member)

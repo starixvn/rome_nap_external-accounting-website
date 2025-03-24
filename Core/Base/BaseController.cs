@@ -1,18 +1,17 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
-    using Authorization;
-    using Context;
-    using CustomerSetting.Module.Core.Criteria;
-    using CustomerSetting.Module.Core.Models;
-    using CustomerSetting.Module.Core.Services.Impl;
-    using CustomerSetting.Module.Core.Web;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
     using System;
     using System.Configuration;
     using System.IO;
     using System.Web;
     using System.Web.Mvc;
+    using Authorization;
+    using Context;
+    using Fanex.ExternalAccount.Core.Criteria;
+    using Fanex.ExternalAccount.Core.Model;
+    using Fanex.ExternalAccount.Core.Service;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
     using Utilities;
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
@@ -100,8 +99,8 @@
         {
             var permissionService = new ServiceBase();
             return permissionService.CheckCustomerBelongToSpecialSite(
-                new CheckCustomerIsSpecialSiteCriteria { UserName = username });
+                new CheckCustomerIsSpecialSiteCommand { UserName = username });
         }
-       
+
     }
 }

@@ -1,13 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Requests.Customer.OpenCustomer;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
 
     public partial class CustomerController
@@ -33,8 +33,9 @@
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Host)]
         public JsonResult SingleOpenCustomer(UpdateSingleClosedStatusQuery query)
         {
-            query.UserId = CurrentSession.UserId;
-            query.Language = CurrentSession.LangKey;
+            query.UserId = Core.Context.CurrentSession.Instance.UserId;
+            query.Language = Core.Context.CurrentSession.Instance.LangKey;
+            query.Ip = Core.Context.CurrentContext.Instance.Ip4Address;
 
             return Json(_customerService.UpdateSingleCustomerClosedStatus(query));
         }
@@ -54,8 +55,8 @@
 
             foreach (var item in request)
             {
-                item.UserId = CurrentSession.UserId;
-                item.Language = CurrentSession.LangKey;
+                item.UserId = Core.Context.CurrentSession.Instance.UserId;
+                item.Language = Core.Context.CurrentSession.Instance.LangKey;
             }
 
             return Json(_customerService.UpdateMultipleCustomerClosedStatus(request, roleId));

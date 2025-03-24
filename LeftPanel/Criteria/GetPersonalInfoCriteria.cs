@@ -16,6 +16,10 @@
         public string GroupName { get;  }
         public int UserId { get;  }
 
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
         public override string GetSettingKey()
             => "EAS_CustomerSelAllInfo";
 

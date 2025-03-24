@@ -1,18 +1,17 @@
 ﻿namespace Fanex.ExternalAccount.Statement.Controllers
 {
-    using Fanex.CustomerSetting.Module.Core.Web.Controllers;
+    using System.Web.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Statement.Constants;
     using Fanex.ExternalAccount.Statement.Criteria;
     using Fanex.ExternalAccount.Statement.Criteria.StatementReport;
     using Fanex.ExternalAccount.Statement.Models.StatementReport;
     using Fanex.ExternalAccount.Statement.Resources;
     using Fanex.ExternalAccount.Statement.Services.StatementReport;
-    using System.Web.Mvc;
     using Fanex.ExternalAccount.Statement.ViewModels;
-    using Fanex.ExternalAccount.Core.Shared;
-    
-    public class StatementReportController : BaseController
+
+    public class StatementReportController : Controller
     {
         public const string SessionKeyStatement = "Fanex.Razorbill.Report.Statement";
 

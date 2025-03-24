@@ -4,11 +4,9 @@ namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
 {
     using System.Collections.Generic;
     using System.Data;
-    using Fanex.CustomerSetting.Module.Core;
     using Criteria;
-    using Data;
-    using Models;
     using Fanex.Data.Repository;
+    using Models;
     public interface IHeadlinesDataAccess
     {
         GroupsHeadline GetGroupHeadlines(GetHeadlinesCriteria criteria);

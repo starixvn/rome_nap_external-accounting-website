@@ -205,6 +205,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\SearchAndCopyController.cs" />
+    <Compile Include="Criteria\AddMsgAfterCreateNewSMACommand.cs" />
     <Compile Include="Criteria\CloneSettingComCommand.cs" />
     <Compile Include="Criteria\CloneSettingExtraPTCommand.cs" />
     <Compile Include="Criteria\SearchCustomerCriteria.cs" />

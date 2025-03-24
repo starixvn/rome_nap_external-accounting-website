@@ -6,7 +6,5 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Interface
     public interface ICustomerDao
     {
         Customer UserInfo(GetUserInfoCriteria criteria);
-
-        int UserGroupId(int custId);
     }
 }

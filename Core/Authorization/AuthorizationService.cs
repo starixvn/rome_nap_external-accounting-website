@@ -9,8 +9,8 @@
     using CustomerSetting.Security.Authenticate;
     using DTO;
     using DTO.UserControl;
-    using Service;
-    using Service.Impl.UserControl;
+    using Fanex.ExternalAccount.Service;
+    using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Shared;
 
     public interface AuthorizationService

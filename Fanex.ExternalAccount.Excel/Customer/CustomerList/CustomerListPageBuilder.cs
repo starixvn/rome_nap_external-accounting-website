@@ -6,7 +6,7 @@
 
     public class CustomerListPageBuilder
     {
-        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, int uplineRoleId, bool withDataLimited = false,bool IsNoDownlines =false, bool hasSubGroups = false, bool isMultipleCurrencyGroup = false, bool isDirectMember = false)
+        public CustomerListPageBuilder(IEnumerable<CustomerListDTO> customerList, bool isBold, string status, int roleId, int uplineRoleId, bool withDataLimited = false,bool IsNoDownlines =false, bool hasSubGroups = false, bool isMultipleCurrencyGroup = false, bool isDirectMember = false)
         {
             Status = status;
             RoleId = roleId;
@@ -20,7 +20,7 @@
             IsDirectMember = isDirectMember;
         }
 
-        public List<CustomerListDTO> Data { get; }
+        public IEnumerable<CustomerListDTO> Data { get; }
 
         public bool IsBold { get; }
 

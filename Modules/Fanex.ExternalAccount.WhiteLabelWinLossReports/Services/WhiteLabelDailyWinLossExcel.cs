@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Web;
-    using Fanex.CustomerSetting.Module.Core.Extensions;
+    using Fanex.ExternalAccount.Core.Shared.Extensions;
     using Fanex.ExternalAccount.Excel;
     using Fanex.ExternalAccount.Excel.Utility;
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.Models;

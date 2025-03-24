@@ -1,8 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Services
 {
-    using Fanex.CustomerSetting.Module.Core.Criteria;
-    using Fanex.CustomerSetting.Module.Core.Services.Impl;
-    using Fanex.CustomerSetting.Module.Core.Services.Interface;
+    using System;
+    using System.Linq;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DTO;
@@ -13,8 +12,6 @@
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Utilities;
     using IBCUtils;
-    using System;
-    using System.Linq;
 
     public interface ISearchAndCopyService
     {
@@ -30,21 +27,18 @@
     public class SearchAndCopyService : ISearchAndCopyService
     {
         private readonly ISearchAndCopyRepository searchAndCopyRepository;
-        private readonly IServiceBase serviceBase;
         private readonly ISiteDBConfigService siteDBConfigService;
 
         public SearchAndCopyService()
-            : this(null, null, null)
+            : this(null, null)
         {
         }
 
         public SearchAndCopyService(
             ISearchAndCopyRepository searchAndCopyRepository,
-            ISiteDBConfigService siteDBConfigService,
-            IServiceBase serviceBase)
+            ISiteDBConfigService siteDBConfigService)
         {
             this.searchAndCopyRepository = searchAndCopyRepository ?? new SearchAndCopyRepository();
-            this.serviceBase = serviceBase ?? new ServiceBase();
             this.siteDBConfigService = siteDBConfigService ?? new SiteDBConfigService();
         }
 
@@ -98,7 +92,7 @@
             var headlineID_Old = resultData.HeadlineID_Old;
             var headlineID_New = resultData.HeadlineID_New;
 
-            serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(newCustId, 0, Role.Super));
+            searchAndCopyRepository.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACommand(newCustId, 0, Role.Super));
 
             var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCommand
             {

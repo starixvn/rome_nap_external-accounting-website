@@ -2,7 +2,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.App_Start
 {
     using System.Reflection;
     using System.Web.Mvc;
-    using Core.Web.App_Start;
+    using Fanex.ExternalAccount.Core.App_Start;
 
     public class ModuleRegistrator : AppAreaRegistrator
     {

@@ -183,6 +183,10 @@
       <Project>{3521a845-d2bf-4916-b02c-0b0e02f774db}</Project>
       <Name>Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj">
+      <Project>{AA1EA660-0E91-4C46-8100-F39C6A0BFC0B}</Project>
+      <Name>Fanex.ExternalAccount.DTO</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\ViewLang.resx">

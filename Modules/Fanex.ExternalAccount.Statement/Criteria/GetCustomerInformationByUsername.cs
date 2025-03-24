@@ -1,9 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Statement.Criteria
 {
-    using CustomerSetting.Module.Core.Web;
-    using Fanex.CustomerSetting.Module.Core;
     using Fanex.Data.Repository;
-    using System.Configuration;
 
     public class GetCustomerInformationByUsername : CriteriaBase
     {

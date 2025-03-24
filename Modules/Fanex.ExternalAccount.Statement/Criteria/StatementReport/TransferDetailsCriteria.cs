@@ -2,10 +2,10 @@
 {
     using System;
     using Fanex.Common;
-    using Fanex.CustomerSetting.Module.Core.Extensions;
-    using Fanex.ExternalAccount.Statement.Services;
     using Fanex.Data;
     using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.Statement.Services;
+    using Fanex.Logging;
 
     public class TransferDetailsCriteria : CriteriaBase
     {
@@ -42,8 +42,8 @@
                 Converter.ToDateTime(this.TransferDate);
             }
             catch (Exception ex)
-            { 
-                LogExtension.LogInfo(ex);
+            {
+                LogService.Info(ex.Message);
                 return false;
             }
 

@@ -5,7 +5,6 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
     using Common.Extensions;
     using Interface;
     using ViewModels;
-    using Core.Web;
     using Data;
     using ExternalAccount.Core.Shared;
     using Config = Fanex.ExternalAccount.Utilities.Config;
@@ -18,7 +17,5 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
 
         public Customer UserInfo(GetUserInfoCriteria criteria)
             => dynamicRepository.Get<Customer>(criteria);
-
-        public int UserGroupId(int custId) => SessionManager.Get<int>("EASGroupId");
     }
 }

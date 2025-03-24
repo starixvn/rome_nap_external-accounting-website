@@ -20,12 +20,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
             Ip = ip;
         }
 
-        public string GetSettingKey()
+        public virtual string GetSettingKey()
         {
             return "Acc_CustomerUpdCredit";
         }
 
-        public bool IsValid()
+        public virtual bool IsValid()
         {
             return Id > 0 && UplineId > 0;
         }

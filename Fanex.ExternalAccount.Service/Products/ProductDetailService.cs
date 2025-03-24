@@ -33,7 +33,11 @@
         private readonly IDynamicRepository dynamicRepository;
         private readonly ICacheService Cache = new CacheService(new MemoryCache(new MemoryCacheOptions()));
 
-        public ProductDetailService(IDynamicRepository dynamicRepository = null)
+        public ProductDetailService() : this(null)
+        {
+        }
+
+        public ProductDetailService(IDynamicRepository dynamicRepository)
         {
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
