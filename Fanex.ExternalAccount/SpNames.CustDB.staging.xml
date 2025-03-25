@@ -468,7 +468,12 @@
 	</Setting>
   </Function>
   <Function Name="Exchange Rate">
-    <Setting Key="EAS_Rpt_OandaExchangeRate" SpName="EAS_Rpt_OandaExchangeRate" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+	<Setting Key="EAS_Rpt_OandaExchangeRate" SpName="EAS_Rpt_OandaExchangeRate" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
+		<Mapping DataField="MYR/Unit" ObjectProperty="MYRRate" />
+		<Mapping DataField="CNY/Unit" ObjectProperty="CNYRate" />
+		<Mapping DataField="THB/Unit" ObjectProperty="THBRate" />
+		<Mapping DataField="IDR/Unit" ObjectProperty="IDRRate" />
+	</Setting>
   </Function>
   <Function Name="Edit Super List">
     <Setting Key="EAS_CustomerInfo_MultiCheck" SpName="EAS_CustomerInfo_MultiCheck" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
