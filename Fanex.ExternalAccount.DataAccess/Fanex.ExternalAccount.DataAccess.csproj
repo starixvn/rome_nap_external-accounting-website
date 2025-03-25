@@ -323,7 +323,6 @@
     <Compile Include="Customer\CustomerList\CustomerListDao.cs" />
     <Compile Include="Customer\GetCustDBConfigBySiteCriteria.cs" />
     <Compile Include="Customer\GetCustDBConfigCriteria.cs" />
-    <Compile Include="Customer\IAgentDao.cs" />
     <Compile Include="Customer\ICustomerDao.cs" />
     <Compile Include="Customer\IEditSuperListDao.cs" />
     <Compile Include="Customer\IMasterDao.cs" />
@@ -338,7 +337,6 @@
     <Compile Include="Extensions\EnumerableExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Customer\CustomerDao.cs" />
-    <Compile Include="Customer\AgentDao.cs" />
     <Compile Include="Customer\MasterDao.cs" />
     <Compile Include="Customer\SuperDao.cs" />
     <Compile Include="Login\ILoginDao.cs" />
