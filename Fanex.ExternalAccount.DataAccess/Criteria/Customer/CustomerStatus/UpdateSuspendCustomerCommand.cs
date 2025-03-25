@@ -27,14 +27,8 @@
             IP = ip;
         }
 
-        public string GetSettingKey()
-        {
-            return "Acc_CustomerUpdSuspended";
-        }
+        public string GetSettingKey() => "Acc_CustomerUpdSuspended";
 
-        public bool IsValid()
-        {
-            return UserId > 0 && CustId > 0;
-        }
+        public bool IsValid() => UserId > 0 && CustId > 0;
     }
 }

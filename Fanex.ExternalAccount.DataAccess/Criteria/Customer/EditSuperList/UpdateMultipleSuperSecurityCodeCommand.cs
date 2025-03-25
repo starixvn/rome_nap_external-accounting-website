@@ -24,9 +24,6 @@
         public string GetSettingKey()
          => "Acc_CustomerUpdSecurityCode_Multiple";
 
-        public bool IsValid()
-        {
-            return !string.IsNullOrWhiteSpace(CustIDList) && UserId > 0;
-        }
+        public bool IsValid() => !string.IsNullOrWhiteSpace(CustIDList) && UserId > 0;
     }
 }

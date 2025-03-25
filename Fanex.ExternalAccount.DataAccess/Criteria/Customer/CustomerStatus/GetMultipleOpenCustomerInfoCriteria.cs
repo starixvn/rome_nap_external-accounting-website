@@ -16,6 +16,6 @@
 
         public override string GetSettingKey() => "Acc_CustomerList_CloseInfoSel";
 
-        public override bool IsValid() => string.IsNullOrWhiteSpace(CustIdList);
+        public override bool IsValid() => !string.IsNullOrWhiteSpace(CustIdList);
     }
 }

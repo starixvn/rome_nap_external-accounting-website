@@ -30,14 +30,8 @@
 
         public int TotalRows { get; set; }
 
-        public override string GetSettingKey()
-        {
-            return "Acc_Customer_SuspendInfoDetailSel";
-        }
+        public override string GetSettingKey()=> "Acc_Customer_SuspendInfoDetailSel";
 
-        public override bool IsValid()
-        {
-            return CustId > 0;
-        }
+        public override bool IsValid() => CustId > 0;
     }
 }
