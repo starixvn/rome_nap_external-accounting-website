@@ -189,7 +189,6 @@
     <Compile Include="Criteria\Customer\EditTransferOptionCriteria.cs" />
     <Compile Include="Criteria\Customer\GetCustomerByUserNameCriteria.cs" />
     <Compile Include="Criteria\Customer\CheckMultipleSupersBetSettingCriteria.cs" />
-    <Compile Include="Criteria\Customer\CheckMemberCreationCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetMultipleOpenCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetMultipleProtectedStatusCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerStatus\GetSingleOpenCustomerInfoCriteria.cs" />

@@ -255,7 +255,6 @@
     <Compile Include="Customer\CustomerList\CustomerListService.cs" />
     <Compile Include="Customer\CustomerList\Params\SearchCustomerListParams.cs" />
     <Compile Include="Customer\AssociationAccountService.cs" />
-    <Compile Include="Customer\IAgentService.cs" />
     <Compile Include="Customer\ICustomerService.cs" />
     <Compile Include="Customer\IDataService.cs" />
     <Compile Include="Customer\IEditSuperListSevice.cs" />
@@ -296,7 +295,6 @@
     <Compile Include="Report\WinLossDetailServiceImpl.cs" />
     <Compile Include="Statement\IStatementService.cs" />
     <Compile Include="Statement\StatementService.cs" />
-    <Compile Include="Customer\AgentService.cs" />
     <Compile Include="Customer\MasterService.cs" />
     <Compile Include="Customer\CustomerService.cs" />
     <Compile Include="Customer\SuperService.cs" />
