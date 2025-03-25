@@ -16,6 +16,6 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.UserControl.UserCRUD
 
         public string GetSettingKey() => "EAS_UserInfoSel";
 
-        public bool IsValid() => !string.IsNullOrEmpty(Username) && GroupID > 0;
+        public bool IsValid() => GroupID > 0;
     }
 }

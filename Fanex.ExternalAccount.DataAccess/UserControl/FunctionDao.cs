@@ -30,7 +30,7 @@
 
         public FunctionDao(IDynamicRepository dynamicRepository = null)
         {
-            this.dynamicRepository = dynamicRepository;
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
         public Result CreateFunction(Function function, int custId, string ip, string assignedGroupIDs)
@@ -76,7 +76,8 @@
         public IEnumerable<Function> GetAllFunctions()
         {
             var criteria = new GetAllFunctionsCriteria();
-            return dynamicRepository.Fetch<Function>(criteria) ?? new List<Function>();
+            var dbResult = dynamicRepository.Fetch<Function>(criteria);
+            return dbResult ?? new List<Function>();
         }
 
         public Function GetFunctionPolicy(int funcId)

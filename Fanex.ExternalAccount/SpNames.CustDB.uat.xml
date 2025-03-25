@@ -109,7 +109,9 @@
       <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
     </Setting>
     <Setting Key="EAS_GroupInfoUpd" SpName="EAS_GroupInfoUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GroupPolicySel" SpName="EAS_GroupPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_GroupPolicySel" SpName="EAS_GroupPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
+      <Mapping DataField="Policy" ObjectProperty="GroupPolicy" />
+    </Setting>
     <Setting Key="EAS_GroupPolicyUpd" SpName="EAS_GroupPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="SubGroup">
@@ -144,7 +146,10 @@
   </Function>
   <Function Name="Menu and Function">
     <Setting Key="EAS_FunctionIns" SpName="EAS_FunctionIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_FunctionSel" SpName="EAS_FunctionSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_FunctionSel" SpName="EAS_FunctionSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
+      <Mapping DataField="FuncId" ObjectProperty="FuncID" />
+      <Mapping DataField="ParentId" ObjectProperty="ParentID" />
+    </Setting >
     <Setting Key="EAS_FunctionUpd" SpName="EAS_FunctionUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_FuncUpdStatus" SpName="EAS_FuncUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_MenuDel" SpName="EAS_MenuDel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
