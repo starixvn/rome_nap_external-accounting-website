@@ -144,7 +144,10 @@
     </Setting >
     <Setting Key="EAS_UserInfoUpdStatus" SpName="EAS_UserInfoUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoUpdUserGroup" SpName="EAS_UserInfoUpdUserGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserPolicySel" SpName="EAS_UserPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_UserPolicySel" SpName="EAS_UserPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
+      <Mapping DataField="UserPolicy" ObjectProperty="Policy" />
+      <Mapping DataField="ParentId" ObjectProperty="ParentID" />
+    </Setting>
     <Setting Key="EAS_UserPolicyUpd" SpName="EAS_UserPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoAddNew" SpName="EAS_UserInfoAddNew" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_UserInfoUpdAll" SpName="EAS_UserInfoUpdAll" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />

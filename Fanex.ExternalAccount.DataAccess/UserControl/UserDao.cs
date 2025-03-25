@@ -133,40 +133,8 @@
         public IEnumerable<Function> GetUserFunction(int userId)
         {
             var criteria = new GetUserFunctionCriteria { UserID = userId };
-            var ds = dynamicRepository.FetchDataSet(criteria);
-            
-            if (ds == null || ds.Tables.Count == 0)
-            {
-                return Enumerable.Empty<Function>();
-            }
-
-            var userTable = ds.Tables[0];
-            if (userTable.Rows.Count == 0)
-            {
-                return Enumerable.Empty<Function>();
-            }
-            
-            var users = userTable.AsEnumerable()
-                .Select(c => new Function
-                {
-                    FuncID = c.Field<int?>("FuncId") ?? 0,
-                    FuncName = c.Field<string>("FuncName") ?? string.Empty,
-                    FuncKey = c.Field<string>("FuncKey") ?? string.Empty,
-                    DisplayOrder = c.Field<int?>("DisplayOrder") ?? 0,
-                    ParentID = c.Field<int?>("ParentId") ?? 0,
-                    ParentName = c.Field<string>("ParentName") ?? string.Empty,
-                    Policy = c.Field<EPolicy?>("UserPolicy") ?? EPolicy.None,
-                    GroupPolicy = c.Field<EPolicy?>("GroupPolicy") ?? EPolicy.None,
-                    FuncDesc = c.Field<string>("FuncDesc") ?? string.Empty,
-                    CreatedDate = c.Field<string>("CreatedDate") ?? string.Empty,
-                    Creator = c.Field<int?>("Creator") ?? 0,
-                    Modifier = c.Field<int?>("Modifier") ?? 0,
-                    ModifiedDate = c.Field<string>("ModifiedDate") ?? string.Empty,
-                    IsTest = c.Field<bool?>("IsTest") ?? false
-                })
-                .ToList();
-
-            return users;
+            var functions = dynamicRepository.Fetch<Function>(criteria);
+            return functions;
         }
 
         public Result UpdateUserPolicy(int adminId, int userId, string oldPolicy, string policy, string ip)
