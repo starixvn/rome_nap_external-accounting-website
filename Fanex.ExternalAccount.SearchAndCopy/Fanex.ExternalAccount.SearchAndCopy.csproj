@@ -232,6 +232,7 @@
     <Compile Include="Services\SearchAndCopyService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Fanex.ExternalAccount.SearchAndCopy.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>

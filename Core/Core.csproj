@@ -418,6 +418,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Areas\Logs\APILoggerConnectionStrings.pro.config" />
     <None Include="Areas\Logs\APILoggerConnectionStrings.uat.config" />
     <None Include="Areas\Logs\LogsConfiguration.config" />

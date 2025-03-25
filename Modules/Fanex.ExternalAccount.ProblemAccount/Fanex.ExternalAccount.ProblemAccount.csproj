@@ -248,6 +248,7 @@
     <Compile Include="ViewModels\SetToReviewedViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Fanex.ExternalAccount.ProblemAccount.ruleset" />
     <None Include="packages.config" />
   </ItemGroup>
