@@ -24,6 +24,6 @@
         }
 
         public CustomerOtp GetCustomerOtpDto(int custId)
-            => _dynamicRepository.Get<CustomerOtp>(new GetCustomerOtpDtoCriteria(custId));
+            => _dynamicRepository.Get<CustomerOtp>(new GetCustomerOtpDtoCriteria(custId)) ?? new CustomerOtp();
     }
 }
