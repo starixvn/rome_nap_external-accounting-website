@@ -38,7 +38,7 @@
         public BalanceDate GetBalanceDate()
         {
             var balanceDate = cacheService.Get<BalanceDate>(balanceDateCacheKey);
-            if (balanceDate != null)
+            if (balanceDate == null)
             {
                 var command = new GetBalanceDateCriteria();
                 dynamicRepository.Execute(command);
@@ -49,7 +49,8 @@
 
                 cacheService.Set<BalanceDate>(balanceDateCacheKey, balanceDate, new CacheItemOptions { RelativeExpiration = TimeSpan.FromMinutes(FiveMinutes) });
             }
-                return balanceDate;
+
+            return balanceDate;
         }
     }
 
