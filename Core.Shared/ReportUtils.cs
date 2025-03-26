@@ -22,9 +22,9 @@
 
         private readonly string balanceDateCacheKey = "BalanceDateCacheKey";
 
-        public DateTime BalanceUpDate => GetBalanceDate().BalanceUpDate;
+        public DateTime BalanceUpDate => GetBalanceDate().BalanceUpDay;
 
-        public DateTime MoveBetsDate => GetBalanceDate().MoveBetsDate;
+        public DateTime MoveBetsDate => GetBalanceDate().MoveBetsDay;
 
         public ReportUtils(): this(null, null)
         { }
@@ -40,13 +40,7 @@
             var balanceDate = cacheService.Get<BalanceDate>(balanceDateCacheKey);
             if (balanceDate == null)
             {
-                var command = new GetBalanceDateCriteria();
-                dynamicRepository.Execute(command);
-                balanceDate = new BalanceDate {
-                    BalanceUpDate = command.BalanceUpDate,
-                    MoveBetsDate = command.MoveBetsDate
-                };
-
+                balanceDate= dynamicRepository.Get<BalanceDate>(new GetBalanceDateCriteria());
                 cacheService.Set<BalanceDate>(balanceDateCacheKey, balanceDate, new CacheItemOptions { RelativeExpiration = TimeSpan.FromMinutes(FiveMinutes) });
             }
 
@@ -56,19 +50,15 @@
 
     public class BalanceDate
     {
-        public DateTime MoveBetsDate { get; set; }
+        public DateTime MoveBetsDay { get; set; }
 
-        public DateTime BalanceUpDate { get; set; }
+        public DateTime BalanceUpDay { get; set; }
     }
 
-    public class GetBalanceDateCriteria : INonQueryCommand
+    public class GetBalanceDateCriteria : CriteriaBase
     {
-        public DateTime BalanceUpDate { get; set; }
+        public override string GetSettingKey() => "Age_SelBalanceUpDay";
 
-        public DateTime MoveBetsDate { get; set; }
-
-        public string GetSettingKey() => "Age_SelBalanceUpDay";
-
-        public bool IsValid() => true;
+        public override bool IsValid() => true;
     }
 }
