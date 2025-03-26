@@ -38,8 +38,7 @@
             var total = new ReportRawEntity();
             var extraInfos = new List<ReportRawEntity>();
             var totalRows = 0;
-            var dbResult = this.repository.FetchMultiple<ReportRawEntity, ReportRawEntity, ReportRawEntity, ReportRawEntity>(
-                    criteria);
+            var dbResult = this.repository.FetchMultiple<ReportRawEntity, ReportRawEntity, ReportRawEntity, ReportRawEntity>(criteria);
             // using (var db = new ObjectDb(criteria.GetSettingKey()))
             // {
             //     using (var reader = db.ExecuteReader(criteria.GetSpParams()))
@@ -99,9 +98,9 @@
             {
                 Events = dbResult.Item1.ToList(),
                 GroupLeagues = dbResult.Item1.GroupBy(x => x.LeagueId).Select(x => x.First()).ToList(),
-                GrandTotal = dbResult.Item3.First(),
                 Total = dbResult.Item2.Any() ? dbResult.Item2.First() : null,
-                SystemParlayOutright = dbResult.Item4.ToList(),
+                SystemParlayOutright = dbResult.Item3.ToList(),
+                GrandTotal = dbResult.Item4.First(),
                 TotalItems = criteria.TotalRows
             };
         }

@@ -157,8 +157,12 @@
     <Setting Key="EAS_FuncUpdStatus" SpName="EAS_FuncUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_MenuDel" SpName="EAS_MenuDel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_MenuIns" SpName="EAS_MenuIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MenuSel" SpName="EAS_MenuSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MenuSelByUserID" SpName="EAS_MenuSelByUserID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_MenuSel" SpName="EAS_MenuSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
+      <Mapping DataField="Active" ObjectProperty="IsActive" />
+    </Setting>
+    <Setting Key="EAS_MenuSelByUserID" SpName="EAS_MenuSelByUserID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+      <Mapping DataField="Active" ObjectProperty="IsActive" />
+    </Setting>
     <Setting Key="EAS_MenuUpd" SpName="EAS_MenuUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_MenuUpdStatus" SpName="EAS_MenuUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
     <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
@@ -510,9 +514,13 @@
     <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Match Win Loss Reports">
-    <Setting Key="EAS_MatchWinloss_Summary" SpName="EAS_MatchWinloss_Summary" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_MatchWinloss_Summary" SpName="EAS_MatchWinloss_Summary" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
+      <Mapping DataField="bettype" ObjectProperty="BetTypeId"/>
+    </Setting>
     <Setting Key="EAS_MatchWinloss_LeagueSel" SpName="EAS_MatchWinloss_LeagueSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MatchWinloss_Detail" SpName="EAS_MatchWinloss_Detail" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_MatchWinloss_Detail" SpName="EAS_MatchWinloss_Detail" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+      <Mapping DataField="bettype" ObjectProperty="BetTypeId"/>
+    </Setting>
     <Setting Key="EAS_MatchWinloss_SportSel" SpName="EAS_MatchWinloss_SportSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_MatchWinloss_EventSel" SpName="EAS_MatchWinloss_EventSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_MatchWinloss_BettypeSel" SpName="EAS_MatchWinloss_BettypeSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >

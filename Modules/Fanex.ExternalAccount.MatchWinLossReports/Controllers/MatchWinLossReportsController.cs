@@ -40,7 +40,7 @@
         {
             var today = DateTime.Now;
             var minDate = DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1);
-            var sports = service.GetSports(null).ToList();
+            var sports = service.GetSports().ToList();
             var userGroup = _currentSession.CurrencyGroup;
             var leagues = service.GetLeagues(sports[0].SportType, userGroup, today, today);
             var leagueIds = string.Join(", ", leagues.Select(x => x.LeagueId).ToList());

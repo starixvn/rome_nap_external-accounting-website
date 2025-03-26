@@ -9,8 +9,7 @@ namespace Fanex.ExternalAccount.MatchWinLossReports.Models
         public int ResourceId { get; set; }
 
         public string RefId { get; set; }
-
-        [SpParam(Ignored = true)]
+        
         public string SportName
         {
             get
