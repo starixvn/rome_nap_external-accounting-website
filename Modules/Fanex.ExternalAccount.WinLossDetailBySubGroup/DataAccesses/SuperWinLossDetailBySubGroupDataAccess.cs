@@ -10,6 +10,7 @@
     using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DataAccess.Products;
     using Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Criteria;
+    using System.Linq;
     
     public interface ISuperWinLossDetailBySubGroupDataAccess
     {
@@ -46,8 +47,8 @@
             // }
 
             //return new SuperWinLossDetailBySubGroupReport(superWinLossDetails, total, totalItems);
-            var dbResult = repository.FetchMultiple<SuperWinLossDetailBySubGroupModel, SuperWinLossDetailBySubGroupModel>(criteria);
-            return new SuperWinLossDetailBySubGroupReport(dbResult.Item1, dbResult.Item2.FirstOrDefault(), criteria.TotalRecords);
+           var dbResult = repository.FetchMultiple<SuperWinLossDetailBySubGroupModel, SuperWinLossDetailBySubGroupModel>(criteria);
+           return new SuperWinLossDetailBySubGroupReport(dbResult.Item1, dbResult.Item2.FirstOrDefault(), criteria.TotalRecords);
         }
 
         // private static SuperWinLossDetailBySubGroupModel GetSuperWinLossDetail(IDataReader reader)
