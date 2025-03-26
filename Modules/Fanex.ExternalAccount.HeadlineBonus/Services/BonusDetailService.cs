@@ -49,7 +49,7 @@
             var criteria = new GetMemberBonusCriteria(groupName, username, fromDate, toDate, statusId, isComplained, pageIndex, pageSize);
             var rawData = dataAccess.GetMemberBonus(criteria);
 
-            return GetBonusDetailReport(rawData, criteria.TotalItems);
+            return GetBonusDetailReport(rawData, criteria.TotalRows);
         }
 
         private static BonusDetailReport GetBonusDetailReport(IEnumerable<MemberBonusEntity> rawData, int totalItems)

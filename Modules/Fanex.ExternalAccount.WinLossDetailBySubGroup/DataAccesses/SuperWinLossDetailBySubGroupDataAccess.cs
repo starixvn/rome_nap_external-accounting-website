@@ -20,7 +20,7 @@
     public class SuperWinLossDetailBySubGroupDataAccess : ISuperWinLossDetailBySubGroupDataAccess
     {
         private readonly IDynamicRepository repository;
-        public SuperWinLossDetailBySubGroupDataAccess(IDynamicRepository repository = null) => this.repository = repository;
+        public SuperWinLossDetailBySubGroupDataAccess(IDynamicRepository repository = null) => this.repository = repository ?? new DynamicRepository();
         public SuperWinLossDetailBySubGroupReport GetSuperWinLossDetailBySubGroup(GetSuperWinLossDetailBySubGroupCriteria criteria)
         {
             var superWinLossDetails = new List<SuperWinLossDetailBySubGroupModel>();
