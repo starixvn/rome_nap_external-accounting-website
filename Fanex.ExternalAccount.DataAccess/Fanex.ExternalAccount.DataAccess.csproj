@@ -244,14 +244,16 @@
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutCheckCriteria.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutSelectCriteria.cs" />
     <Compile Include="Criteria\ParlayMaxPayout\MaxPayoutUpdateCriteria.cs" />
-    <Compile Include="Criteria\Report\GetAgentDailyWinlossCriteria.cs" />
+    <Compile Include="Criteria\Report\DailyWinLoss\GetAgentDailyWinlossCriteria.cs" />
+    <Compile Include="Criteria\Report\DailyWinLoss\GetCompanyDailyWinlossCriteria.cs" />
+    <Compile Include="Criteria\Report\DailyWinLoss\GetMasterDailyWinlossCriteria.cs" />
+    <Compile Include="Criteria\Report\DailyWinLoss\GetSuperDailyWinlossCriteria.cs" />
     <Compile Include="Criteria\Report\GetCurrencyListCriteria.cs" />
     <Compile Include="Criteria\Report\GetMemberWinlossDetailMultiCurrencyCriteria.cs" />
     <Compile Include="Criteria\Report\GetAgentWinlossDetailMultiCurrencyCriteria.cs" />
     <Compile Include="Criteria\Report\GetSuperWinlossDetailCriteria.cs" />
     <Compile Include="Criteria\Report\GetCustomerInfoCriteria.cs" />
     <Compile Include="Criteria\Report\GetExtraPTCriteria.cs" />
-    <Compile Include="Criteria\Report\GetMasterDailyWinlossCriteria.cs" />
     <Compile Include="Criteria\Report\GetMemberWinlossDetailCriteria.cs" />
     <Compile Include="Criteria\Report\GetAgentWinlossDetailCriteria.cs" />
     <Compile Include="Criteria\Report\GetSortingOrderCriteria.cs" />
@@ -260,8 +262,6 @@
     <Compile Include="Criteria\Report\GetSuperWinlossDetailMultiCurrencyCriteria.cs" />
     <Compile Include="Criteria\Report\UpdateSuggestUsernameCriteria.cs" />
     <Compile Include="Criteria\Report\GetSuggestUsernamesCriteria.cs" />
-    <Compile Include="Criteria\Report\GetSuperDailyWinlossCriteria.cs" />
-    <Compile Include="Criteria\Report\GetCompanyDailyWinlossCriteria.cs" />
     <Compile Include="Criteria\Report\WinLossByCurrency\BaseWinLossByCurrencyCriteria.cs" />
     <Compile Include="Criteria\Report\WinLossByCurrency\WinLossByCurrencyAgCriteria.cs" />
     <Compile Include="Criteria\Report\WinLossByCurrency\WinLossByCurrencyComCriteria.cs" />
