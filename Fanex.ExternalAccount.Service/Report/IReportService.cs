@@ -21,17 +21,17 @@
 
         IEnumerable<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId);
 
-        IEnumerable<WinLossDetailExtra> GetSuperWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+        IEnumerable<WinLossDetailExtra> GetSuperWinLossDetail(string groupname, int? custId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
-        IEnumerable<WinLossDetail> GetMasterWinLossDetail(int custId, int masterId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+        IEnumerable<WinLossDetail> GetMasterWinLossDetail(int custId, int? masterId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
         
         List<WinLossDetail> GetDirectMemberOfSuperWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
-        IEnumerable<WinLossDetailMAg> GetAgentWinLossDetail(int custId, int agentId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+        IEnumerable<WinLossDetailMAg> GetAgentWinLossDetail(int custId, int? agentId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
         
         
         List<WinLossDetailMAg> GetDirectMemberOfMasterWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
-        IEnumerable<WinLossDetailAg> GetMemberWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+        IEnumerable<WinLossDetailAg> GetMemberWinLossDetail(int custId, int? memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
         IEnumerable<int> GetSortingOrderList(string groupname);
 

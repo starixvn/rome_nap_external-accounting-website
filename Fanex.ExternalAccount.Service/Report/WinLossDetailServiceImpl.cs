@@ -30,7 +30,7 @@
             this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
-        private Func<int, int, DateTime, DateTime, string, string, object> GetWinLossDetailFunction(int roleId)
+        private Func<int, int?, DateTime, DateTime, string, string, object> GetWinLossDetailFunction(int roleId)
         {
             switch (roleId)
             {

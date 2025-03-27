@@ -131,8 +131,7 @@
             {
                 var superIds = model.WinLossByProducts.Select(item => item.CustId).Distinct();
 
-                var postionTakings = superWinLossDetailByPTDataAccess
-                    .GetSuperPositionTakingList(new SuperPTCriteria(Utils.JoinToString(superIds)));
+                var postionTakings = superWinLossDetailByPTDataAccess.GetSuperPositionTakingList(new SuperPTCriteria(Utils.JoinToString(superIds)));
 
                 var winLossByUsernames = BuildWinLossMCByUsernames(model.WinLossByProducts, postionTakings);
 
