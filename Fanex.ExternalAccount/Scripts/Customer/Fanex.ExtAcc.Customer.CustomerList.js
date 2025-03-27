@@ -97,12 +97,13 @@ Fanex.ExtAcc.Customer.CustomerList = {
         var pageIndex = !isNullOrUndefined(currentIndex) ? currentIndex : _this.cachedParams.pageIndex;
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMember = uplineRoleId == 2 ? true : false;
-
+        var isDirectMember = (uplineRoleId === 3 && $("#ddl-level-type-master-view").find(":selected").val() === "1")
+            || (uplineRoleId === 4 && $("#ddl-level-type-super-view").find(":selected").val() === "1");
         _this.cachedParams.pageIndex = pageIndex;
         _this.cachedParams.pageSize = pageSize;
 
         Fanex.ExtAcc.BlockUI();
-        Fanex.ExtAcc.Customer.CurrentLevel = isSuperList ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1;
+        Fanex.ExtAcc.Customer.CurrentLevel = isDirectMember ? Fanex.ExtAcc.Customer.Member : isSuperList ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1;
         this.DOMElements.divSuperLimitDate.toggle(isSuperList);
         this.DOMElements.divIsNoDownlines.toggle(!isMember);
         Fanex.ExtAcc.Customer.superId = uplineRoleId === Fanex.ExtAcc.Customer.Super ? uplineId : Fanex.ExtAcc.Customer.superId;
@@ -117,6 +118,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
             isShowSuperLimitDate: this.DOMElements.chkShowSuperLimitDate.is(":checked"),
             IsNoDownlines: this.DOMElements.chkIsNoDownlines.is(":checked"),
             uplineId: uplineId,
+            isDirectMember: isDirectMember,
             pageSize: pageSize,
             pageIndex: pageIndex + 1
         };
@@ -124,16 +126,9 @@ Fanex.ExtAcc.Customer.CustomerList = {
         if (isShowCurrency) {
             params.currencyIds = _this.DOMElements.$multiSelectCurrency.fanexMultiSelect("getItems", true).join(",");
         }
-        
-        if(params.uplineRoleId === 3){
-            params.isDirectMember = $("#ddl-level-type-master-view").find(":selected").val() === "1";
-        }
-        if(params.uplineRoleId === 4){
-            params.isDirectMember = $("#ddl-level-type-super-view").find(":selected").val() === "1";
-        }
-        
-        _this.cachedParams.isDirectMember = params.isDirectMember;
-         Fanex.ExtAcc.Customer.isEditDirectMember = params.isDirectMember;
+
+        _this.cachedParams.isDirectMember = isDirectMember;
+        Fanex.ExtAcc.Customer.isEditDirectMember = isDirectMember;
         _this.cachedParams.previousParams = params;
         _this.Search(params);
     },
@@ -278,12 +273,12 @@ Fanex.ExtAcc.Customer.CustomerList = {
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
         var showSubGroups = isSuperList && hasSubGroups;
-        if(isDirectMember){
+        if (isDirectMember) {
             isSuperList = false;
             isMemberList = true;
             showSubGroups = isSuperList && hasSubGroups;
         }
-        
+
         columns.push({ HeaderText: 'No.', Name: 'RowNumber', Width: 30, CellAlign: 'center' });
         columns.push({
             HeaderText: '', Name: 'Check', Width: 30, CellAlign: 'center',
@@ -341,11 +336,11 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push(isMemberList ? { HeaderText: 'Group', Name: 'discount', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
         columns.push(isMemberList ? { HeaderText: '1X2', Name: 'discount1x2', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of 1x2 bettype" ' } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Others', Name: 'discountcs', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all other bettypes" ' } : undefined);
-    
+
         columns.push(isMemberList ? { HeaderText: 'Group', Name: 'playerdiscount', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
         columns.push(isMemberList ? { HeaderText: '1X2', Name: 'playerdiscount1x2', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all types of 1x2 bettype" ' } : undefined);
         columns.push(isMemberList ? { HeaderText: 'Others', Name: 'playerdiscountcs', CellAlign: 'center', Width: 60, CustomAttr: ' title="Applies to all other bettypes" ' } : undefined);
- 
+
         //SMA
         columns.push(!isMemberList ? { HeaderText: 'Group A', Name: 'commision', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
         columns.push(!isMemberList ? { HeaderText: 'Group B', Name: 'groupb', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
@@ -353,7 +348,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push(!isMemberList ? { HeaderText: 'Group D', Name: 'groupd', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of Asian Handicap, Over/Under, and Odd/Even bettypes" ' } : undefined);
         columns.push(!isMemberList ? { HeaderText: '1X2', Name: 'discount1x2', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all types of 1x2 bettype" ' } : undefined);
         columns.push(!isMemberList ? { HeaderText: 'Others', Name: 'discountcs', Width: 60, CellAlign: 'center', CustomAttr: ' title="Applies to all other bettypes" ' } : undefined);
-    
+
         columns.push(showSubGroups ? { HeaderText: 'Assigned Sub Groups', Name: 'AssignedSubGroups', HeaderAlign: 'center', CellAlign: 'left', Width: 160 } : undefined);
         columns.push(!isMemberList ? { HeaderText: 'No. of Downlines', Name: 'NoOfDownlines', CellAlign: 'center', Width: 60 } : undefined);
         columns.push(isSuperList ? { HeaderText: 'Data Available', Name: 'DateLimit', CellAlign: 'center', Width: 100 } : undefined);
@@ -372,13 +367,13 @@ Fanex.ExtAcc.Customer.CustomerList = {
         var showSubGroups = isSuperList && hasSubGroups;
         var columns = [];
         var uplineDiscountLabel = 'Agent Commission';
-        if(isDirectMember){
+        if (isDirectMember) {
             isSuperList = false;
             isMemberList = true;
             showSubGroups = isSuperList && hasSubGroups;
-            uplineDiscountLabel = uplineRoleId  === Fanex.ExtAcc.Customer.Super ? 'Super Commission' : 'Master Commission';
+            uplineDiscountLabel = uplineRoleId === Fanex.ExtAcc.Customer.Super ? 'Super Commission' : 'Master Commission';
         }
-        
+
         columns.push({ HeaderText: 'No.', Name: 'RowNumber', MergeRowNumber: 2 });
         columns.push({ HeaderText: '', Name: 'Check', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Username', Name: 'username', MergeRowNumber: 2 });
@@ -405,7 +400,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
         var showSubGroups = isSuperList && hasSubGroups;
-        if(isDirectMember){
+        if (isDirectMember) {
             isSuperList = false;
             isMemberList = true;
             showSubGroups = isSuperList && hasSubGroups;
@@ -425,18 +420,18 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push(!isMemberList ? { Name: 'groupb', Value: currentRow.GroupB } : undefined);
         columns.push(!isMemberList ? { Name: 'groupc', Value: currentRow.GroupC } : undefined);
         columns.push(!isMemberList ? { Name: 'groupd', Value: currentRow.GroupD } : undefined);
-      
+
         columns.push(!isMemberList ? { Name: 'discount1x2', Value: currentRow.Discount1x2 } : undefined);
         columns.push(!isMemberList ? { Name: 'discountcs', Value: currentRow.DiscountCS } : undefined);
-    
+
         columns.push(isMemberList ? { Name: 'discount', Value: currentRow.Discount } : undefined);
         columns.push(isMemberList ? { Name: 'discount1x2', Value: currentRow.Discount1x2 } : undefined);
         columns.push(isMemberList ? { Name: 'discountcs', Value: currentRow.DiscountCS } : undefined);
-      
+
         columns.push(isMemberList ? { Name: 'playerdiscount', Value: currentRow.PlayerDiscount } : undefined);
         columns.push(isMemberList ? { Name: 'playerdiscount1x2', Value: currentRow.PlayerDiscount1x2 } : undefined);
         columns.push(isMemberList ? { Name: 'playerdiscountcs', Value: currentRow.PlayerDiscountCS } : undefined);
-       
+
         columns.push(showSubGroups ? { Name: 'AssignedSubGroups', Value: currentRow.SubGroup } : undefined);
         if (!isMemberList) {
             columns.push({ Name: 'NoOfDownlines', Value: currentRow.NoOfDownlines });
