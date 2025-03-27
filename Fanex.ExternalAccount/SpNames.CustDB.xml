@@ -79,10 +79,22 @@
   </Function>
   <Function Name="Report By Currency">
     <Setting Key="EAS_GetCurrencyList" SpName="EAS_GetCurrencyList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Com" SpName="EAS_Rpt_WinLossDetailByCurrency_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_SAg" SpName="EAS_Rpt_WinLossDetailByCurrency_SAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_MAg" SpName="EAS_Rpt_WinLossDetailByCurrency_MAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Ag" SpName="EAS_Rpt_WinLossDetailByCurrency_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Com" SpName="EAS_Rpt_WinLossDetailByCurrency_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+      <Mapping DataField="CurrencyName" ObjectProperty="Currency" />
+      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+    </Setting>
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_SAg" SpName="EAS_Rpt_WinLossDetailByCurrency_SAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+      <Mapping DataField="CurrencyName" ObjectProperty="Currency" />
+      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+    </Setting>
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_MAg" SpName="EAS_Rpt_WinLossDetailByCurrency_MAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+      <Mapping DataField="CurrencyName" ObjectProperty="Currency" />
+      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+    </Setting>
+    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Ag" SpName="EAS_Rpt_WinLossDetailByCurrency_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+      <Mapping DataField="CurrencyName" ObjectProperty="Currency" />
+      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+    </Setting>
     <Setting Key="EAS_Rpt_WinLossDetailByCurrency_ByPT" SpName="EAS_Rpt_WinLossDetailByCurrency_ByPT" DbName="DBAGE.bodb02.wsv_xnap" />
   </Function>
   <Function Name="Group">

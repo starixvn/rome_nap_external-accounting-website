@@ -18,27 +18,6 @@
         private readonly IReportByCurrencyDAO _reportDao;
         private readonly IReportUtils _reportUtils;
         
-        //private const string BalanceUpDayKey = "SUNPLUS.AGENT.MODEL.BL.REPORTS.BALANCEUPDAY";
-        //private static readonly ICacheService Cache = new CacheService(new MemoryCache(new MemoryCacheOptions()));
-   
-        // public static DataTable GetBalanceUpDay()
-        // {
-        //     Cache.TryGet<DataTable>(BalanceUpDayKey, out var balanceUpDay);
-        //     if (balanceUpDay == null)
-        //     {
-        //         var reportDao = new ReportDao();
-        //         balanceUpDay = reportDao.Age_SelBalanceUpDay();
-        //         if (balanceUpDay != null)
-        //         {
-        //             Cache.Set<DataTable>(BalanceUpDayKey, balanceUpDay, new CacheItemOptions { RelativeExpiration = TimeSpan.FromMinutes(5) });
-        //         }
-        //     }
-        //
-        //     return balanceUpDay;
-        // }
-        // public static DateTime BalanceUpDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["BalanceUpDay"]);
-        // public static DateTime MoveBetsDate => Utils.ToDateTime(GetBalanceUpDay().Rows[0]["MoveBetsDay"]);
-
         public ReportByCurrencyService(
             IReportByCurrencyDAO reportRespository = null,
             IReportUtils reportUtils = null)

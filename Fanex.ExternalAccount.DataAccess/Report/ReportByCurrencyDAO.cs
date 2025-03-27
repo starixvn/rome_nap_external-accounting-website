@@ -13,16 +13,15 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
     using Fanex.Data.Repository;
     using System.Linq;
     using Fanex.ExternalAccount.DataAccess.Criteria.Report;
-    
+
     public class ReportByCurrencyDAO : IReportByCurrencyDAO
     {
         private readonly IDynamicRepository dynamicRepository;
-        
-        public ReportByCurrencyDAO(IDynamicRepository dynamicRepository = null)
-        {
+
+        public ReportByCurrencyDAO(IDynamicRepository dynamicRepository = null) =>
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
-        }
-        
+
+
         public List<CurrencyEntity> EAS_GetCurrencyList(string groupName)
         {
             var criteria = new GetCurrencyListCriteria(groupName);
@@ -44,7 +43,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             var criteria = new WinLossByCurrencyComCriteria
             {
                 GroupName = groupname,
-                CustId = custId > 0 ? custId : 0,
                 Currencies = currencies,
                 BaseCurrency = baseCurrencyName,
                 FromDate = fromDate,
@@ -55,9 +53,18 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 MoveBetsDay = moveBetsDay
             };
 
-            var dataset = dynamicRepository.FetchDataSet(criteria);
-            
-            return ParseWinLossByCurrencyDataSet(dataset);
+            if (custId != 0)
+            {
+                criteria.CustId = custId;
+            }
+
+            var dataset = dynamicRepository.FetchMultiple<WinLossByCurrencyDetail, WinLossByCurrencyDetail>(criteria);
+
+            return new WinLossByCurrency
+            {
+                WinLossDetails = dataset.Item1.ToList(),
+                WinLossTotals = dataset.Item2.ToList()
+            };
         }
 
         public WinLossByCurrency EAS_Rpt_WinLossByCurDaily_SAg(
@@ -78,7 +85,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             {
                 GroupName = groupname,
                 CustId = custId,
-                MasterId = masterId > 0 ? masterId : (int?)null,
                 MemberId = memberId > 0 ? memberId : (int?)null,
                 BaseCurrency = baseCurrencyName,
                 FromDate = fromDate,
@@ -89,9 +95,18 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 MoveBetsDay = moveBetsDay
             };
 
-            var dataset = dynamicRepository.FetchDataSet(criteria);
-            
-            return ParseWinLossByCurrencyDataSet(dataset);
+            if (masterId != 0)
+            {
+                criteria.MasterId = masterId;
+            }
+
+            var dataset = dynamicRepository.FetchMultiple<WinLossByCurrencyDetail, WinLossByCurrencyDetail>(criteria);
+
+            return new WinLossByCurrency
+            {
+                WinLossDetails = dataset.Item1.ToList(),
+                WinLossTotals = dataset.Item2.ToList()
+            };
         }
         
         public WinLossByCurrencyMAg EAS_Rpt_WinLossByCurDaily_MAg(
@@ -112,7 +127,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             {
                 GroupName = groupname,
                 CustId = custId,
-                AgentId = agentId > 0 ? agentId : (int?)null,
                 MemberId = memberId > 0 ? memberId : (int?)null,
                 BaseCurrency = baseCurrencyName,
                 FromDate = fromDate,
@@ -123,9 +137,19 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 MoveBetsDay = moveBetsDay
             };
 
-            var dataset = dynamicRepository.FetchDataSet(criteria);
-            
-            return ParseWinLossByCurrencyMAgDataSet(dataset);
+            if (agentId != 0)
+            {
+                criteria.AgentId = agentId;
+            }
+
+            var dataset =
+                dynamicRepository.FetchMultiple<WinLossByCurrencyDetailMAg, WinLossByCurrencyDetailMAg>(criteria);
+
+            return new WinLossByCurrencyMAg
+            {
+                WinLossDetails = dataset.Item1.ToList(),
+                WinLossTotals = dataset.Item2.ToList()
+            };
         }      
         
 
@@ -156,209 +180,18 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 MoveBetsDay = moveBetsDay
             };
 
-            var dataset = dynamicRepository.FetchDataSet(criteria);
-            
-            return ParseWinLossByCurrencyAgDataSet(dataset);
-        }
-
-        private WinLossByCurrency ParseWinLossByCurrencyDataSet(DataSet dataset)
-        {
-            var details = new List<WinLossByCurrencyDetail>();
-            var totals = new List<WinLossByCurrencyDetail>();
-
-            if (dataset != null && dataset.Tables.Count >= 2)
+            if (memberId != 0)
             {
-                // Process details table
-                foreach (var row in dataset.Tables[0].AsEnumerable())
-                {
-                    var entity = new WinLossByCurrencyDetail
-                    {
-                        CustId = row.Field<int?>("custid") ?? 0,
-                        Currency = row.Field<string>("currencyname") ?? string.Empty,
-                        Username = row.Field<string>("username") ?? string.Empty,
-                        Turnover = row.Field<double?>("Turnover") ?? 0,
-                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
-                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
-                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
-                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
-                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
-                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
-                        AgComm = row.Field<double?>("AgComm") ?? 0,
-                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
-                        MAgWinlost = row.Field<double?>("MAgWinlost") ?? 0,
-                        MAgComm = row.Field<double?>("MAgComm") ?? 0,
-                        MAgTotal = row.Field<double?>("MAgTotal") ?? 0,
-                        SAgWinlost = row.Field<double?>("SAgWinlost") ?? 0,
-                        SAgComm = row.Field<double?>("SAgComm") ?? 0,
-                        SAgTotal = row.Field<double?>("SAgTotal") ?? 0,
-                        Company = row.Field<double?>("Company") ?? 0,
-                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
-                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
-                    };
-                    details.Add(entity);
-                }
-
-                // Process totals table
-                foreach (var row in dataset.Tables[1].AsEnumerable())
-                {
-                    var entity = new WinLossByCurrencyDetail
-                    {
-                        Username = row.Field<string>("total") ?? string.Empty,
-                        Turnover = row.Field<double?>("Turnover") ?? 0,
-                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
-                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
-                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
-                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
-                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
-                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
-                        AgComm = row.Field<double?>("AgComm") ?? 0,
-                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
-                        MAgWinlost = row.Field<double?>("MAgWinlost") ?? 0,
-                        MAgComm = row.Field<double?>("MAgComm") ?? 0,
-                        MAgTotal = row.Field<double?>("MAgTotal") ?? 0,
-                        SAgWinlost = row.Field<double?>("SAgWinlost") ?? 0,
-                        SAgComm = row.Field<double?>("SAgComm") ?? 0,
-                        SAgTotal = row.Field<double?>("SAgTotal") ?? 0,
-                        Company = row.Field<double?>("Company") ?? 0,
-                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
-                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
-                    };
-                    totals.Add(entity);
-                }
+                criteria.MemberId = memberId;
             }
 
-            return new WinLossByCurrency
-            {
-                WinLossDetails = details,
-                WinLossTotals = totals
-            };
-        }
-
-        private WinLossByCurrencyMAg ParseWinLossByCurrencyMAgDataSet(DataSet dataset)
-        {
-            var details = new List<WinLossByCurrencyDetailMAg>();
-            var totals = new List<WinLossByCurrencyDetailMAg>();
-
-            if (dataset != null && dataset.Tables.Count >= 2)
-            {
-                // Process details table
-                foreach (var row in dataset.Tables[0].AsEnumerable())
-                {
-                    var entity = new WinLossByCurrencyDetailMAg
-                    {
-                        CustId = row.Field<int?>("custid") ?? 0,
-                        Currency = row.Field<string>("currencyname") ?? string.Empty,
-                        Username = row.Field<string>("username") ?? string.Empty,
-                        Turnover = row.Field<double?>("Turnover") ?? 0,
-                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
-                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
-                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
-                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
-                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
-                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
-                        AgComm = row.Field<double?>("AgComm") ?? 0,
-                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
-                        MAgWinlost = row.Field<double?>("MAgWinlost") ?? 0,
-                        MAgComm = row.Field<double?>("MAgComm") ?? 0,
-                        MAgTotal = row.Field<double?>("MAgTotal") ?? 0,
-                        Company = row.Field<double?>("Company") ?? 0,
-                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
-                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
-                    };
-                    details.Add(entity);
-                }
-
-                // Process totals table
-                foreach (var row in dataset.Tables[1].AsEnumerable())
-                {
-                    var entity = new WinLossByCurrencyDetailMAg
-                    {
-                        Username = row.Field<string>("total") ?? string.Empty,
-                        Turnover = row.Field<double?>("Turnover") ?? 0,
-                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
-                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
-                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
-                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
-                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
-                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
-                        AgComm = row.Field<double?>("AgComm") ?? 0,
-                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
-                        MAgWinlost = row.Field<double?>("MAgWinlost") ?? 0,
-                        MAgComm = row.Field<double?>("MAgComm") ?? 0,
-                        MAgTotal = row.Field<double?>("MAgTotal") ?? 0,
-                        Company = row.Field<double?>("Company") ?? 0,
-                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
-                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
-                    };
-                    totals.Add(entity);
-                }
-            }
-
-            return new WinLossByCurrencyMAg
-            {
-                WinLossDetails = details,
-                WinLossTotals = totals
-            };
-        }
-
-        private WinLossByCurrencyAg ParseWinLossByCurrencyAgDataSet(DataSet dataset)
-        {
-            var details = new List<WinLossByCurrencyDetailAg>();
-            var totals = new List<WinLossByCurrencyDetailAg>();
-
-            if (dataset != null && dataset.Tables.Count >= 2)
-            {
-                // Process details table
-                foreach (var row in dataset.Tables[0].AsEnumerable())
-                {
-                    var entity = new WinLossByCurrencyDetailAg
-                    {
-                        CustId = row.Field<int?>("custid") ?? 0,
-                        Currency = row.Field<string>("currencyname") ?? string.Empty,
-                        Username = row.Field<string>("username") ?? string.Empty,
-                        Turnover = row.Field<double?>("Turnover") ?? 0,
-                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
-                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
-                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
-                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
-                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
-                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
-                        AgComm = row.Field<double?>("AgComm") ?? 0,
-                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
-                        Company = row.Field<double?>("Company") ?? 0,
-                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
-                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
-                    };
-                    details.Add(entity);
-                }
-
-                // Process totals table
-                foreach (var row in dataset.Tables[1].AsEnumerable())
-                {
-                    var entity = new WinLossByCurrencyDetailAg
-                    {
-                        Username = row.Field<string>("total") ?? string.Empty,
-                        Turnover = row.Field<double?>("Turnover") ?? 0,
-                        NetTurnover = row.Field<double?>("TurnoverNoDraw") ?? 0,
-                        GrossComm = row.Field<double?>("GrossComm") ?? 0,
-                        MemberWinlost = row.Field<double?>("MemberWinlost") ?? 0,
-                        PlayerComm = row.Field<double?>("PlayerComm") ?? 0,
-                        MemberTotal = row.Field<double?>("MemberTotal") ?? 0,
-                        AgWinlost = row.Field<double?>("AgWinlost") ?? 0,
-                        AgComm = row.Field<double?>("AgComm") ?? 0,
-                        AgTotal = row.Field<double?>("AgTotal") ?? 0,
-                        Company = row.Field<double?>("Company") ?? 0,
-                        RewardAmount = row.Field<double?>("RewardAmount") ?? 0,
-                        RewardCurrency = row.Field<string>("RewardCurrency") ?? string.Empty
-                    };
-                    totals.Add(entity);
-                }
-            }
+            var dataset =
+                dynamicRepository.FetchMultiple<WinLossByCurrencyDetailAg, WinLossByCurrencyDetailAg>(criteria);
 
             return new WinLossByCurrencyAg
             {
-                WinLossDetails = details,
-                WinLossTotals = totals
+                WinLossDetails = dataset.Item1.ToList(),
+                WinLossTotals = dataset.Item2.ToList()
             };
         }
     }

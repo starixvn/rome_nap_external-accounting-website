@@ -6,7 +6,7 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.Report
     public abstract class BaseWinLossByCurrencyCriteria : ICriteria
     {
         public string GroupName { get; set; }
-        public int CustId { get; set; }
+        public int? CustId { get; set; }
         public string BaseCurrency { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
@@ -17,9 +17,6 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.Report
 
         public abstract string GetSettingKey();
 
-        public virtual bool IsValid() => 
-            !string.IsNullOrEmpty(GroupName) && 
-            !string.IsNullOrEmpty(BaseCurrency) &&
-            CustId > 0;
+        public virtual bool IsValid() => !string.IsNullOrEmpty(GroupName);
     }
 } 
