@@ -1,7 +1,7 @@
 ﻿Fanex.ExtAcc.Customer.EditMultiple = function (div) {
     this.ResetFlags();
     var menuItems = {};
-
+    var isDirectMember = Fanex.ExtAcc.Customer.CustomerList.cachedParams.isDirectMember;
     this.isSuperEditMember = false;
     this.isMasterEditMember = false;
     this.IsFullInfo = false;
@@ -227,11 +227,59 @@
 
             productIds.push(groupId);
         }
+        
+        function addUplineEditGroupDirectMemberMenuItems(groupId, groupName){
+            console.log("addUplineEditGroupDirectMemberMenuItems",Fanex.ExtAcc.Customer.CustomerList.cachedParams)
+            const uplineRoleId = Fanex.ExtAcc.Customer.CustomerList.cachedParams.uplineRoleId;
+
+            const superEditDirectMember = isDirectMember && uplineRoleId === Fanex.ExtAcc.Customer.Super;
+            const masterEditDirectMember = isDirectMember && uplineRoleId === Fanex.ExtAcc.Customer.Master;
+            
+            if(superEditDirectMember){
+                var key = 'product_group_' + groupId;
+                menuItems[key] = {
+                    name: "Edit Multiple " + groupName,
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.ShowEditMultipleProductGroup(4, groupId, groupName);
+                    }
+                };
+                productIds.push(groupId);
+            }
+            if(masterEditDirectMember){
+                var key = 'product_group_' + groupId;
+                menuItems[key] = {
+                    name: groupName,
+                    className: "iconEnableEdit",
+                    items: {}
+                };
+
+                menuItems[key].items['master_' + key] = {
+                    name: 'Edit Multiple ' + groupName,
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.ShowEditMultipleProductGroup(3, groupId, groupName);
+                    }
+                };
+
+                menuItems[key].items['super_' + key] = {
+                    name: 'Super Edit Multiple ' + groupName,
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup(4, groupId, groupName);
+                    }
+                };
+                productIds.push(groupId);
+            }
+        }
 
         for (var i = 0, max = this.ProductGroups.length; i < max; i++) {
             var productGroup = this.ProductGroups[i];
 
-            addUplineEditGroupMemberMenuItems(productGroup.Id, productGroup.Name);
+            if(isDirectMember){
+                addUplineEditGroupDirectMemberMenuItems(productGroup.Id, productGroup.Name);
+            }
+            else{
+                addUplineEditGroupMemberMenuItems(productGroup.Id, productGroup.Name);
+            }
         }
 
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
