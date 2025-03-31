@@ -715,7 +715,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus = function (productIds) {
         height = 540,
         custIds = this.Ids().join(',');
     var isDirectMember = Fanex.ExtAcc.Customer.CustomerList.cachedParams.isDirectMember;
-    var currentUplineLevel = this.CurrentLevel + 1;
+    var currentUplineLevel = Fanex.ExtAcc.Customer.CustomerList.cachedParams.uplineRoleId;
     if (custIds.len === 0) {
         Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
     } else {
