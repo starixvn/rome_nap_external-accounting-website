@@ -498,7 +498,8 @@ Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts = function (uplineRoleId, 
 Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup = function (uplineRoleId, productGroupId, productGroupName) {
     var ret = this.IdsAndNames();
     var levelText = '';
-
+    var isDirectMember = Fanex.ExtAcc.Customer.CustomerList.cachedParams.isDirectMember;
+    var agentId = isDirectMember ? (uplineRoleId == Fanex.ExtAcc.Customer.Super ? -4 : -3) : 0;
     if (this.isSuperEditMember) {
         levelText = 'Super ';
     } else if (this.isMasterEditMember) {
@@ -507,7 +508,7 @@ Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup = function (uplineRoleId,
 
     if (!this.IsMultiple) {
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&productGroupId=' + productGroupId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit ' + productGroupName + ' Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&agentId=' + agentId + '&uplineRoleId=' + uplineRoleId + '&productGroupId=' + productGroupId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit ' + productGroupName + ' Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
@@ -531,7 +532,7 @@ Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup = function (uplineRoleId,
         }
 
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&productGroupId=' + productGroupId + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Multiple ' + productGroupName + ' Setting',
+            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&agentId=' + agentId + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&productGroupId=' + productGroupId + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Multiple ' + productGroupName + ' Setting',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
