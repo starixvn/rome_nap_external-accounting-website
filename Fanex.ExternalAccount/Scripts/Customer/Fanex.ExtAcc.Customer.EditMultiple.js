@@ -229,7 +229,6 @@
         }
         
         function addUplineEditGroupDirectMemberMenuItems(groupId, groupName){
-            console.log("addUplineEditGroupDirectMemberMenuItems",Fanex.ExtAcc.Customer.CustomerList.cachedParams)
             const uplineRoleId = Fanex.ExtAcc.Customer.CustomerList.cachedParams.uplineRoleId;
 
             const superEditDirectMember = isDirectMember && uplineRoleId === Fanex.ExtAcc.Customer.Super;
@@ -499,7 +498,7 @@ Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup = function (uplineRoleId,
     var ret = this.IdsAndNames();
     var levelText = '';
     var isDirectMember = Fanex.ExtAcc.Customer.CustomerList.cachedParams.isDirectMember;
-    var agentId = isDirectMember ? (uplineRoleId == Fanex.ExtAcc.Customer.Super ? -4 : -3) : 0;
+    var agentId = isDirectMember ? (-Fanex.ExtAcc.Customer.CustomerList.cachedParams.uplineRoleId) : 0;
     if (this.isSuperEditMember) {
         levelText = 'Super ';
     } else if (this.isMasterEditMember) {
