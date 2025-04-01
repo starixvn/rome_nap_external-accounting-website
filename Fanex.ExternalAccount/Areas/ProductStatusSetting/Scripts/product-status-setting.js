@@ -11170,9 +11170,7 @@ class ProductStatusSetting extends ProductStatusSettingBase {
                     .removeAttr('class')
                     .attr('class', labelText.toLowerCase())
                     .text(labelText);
-                if (roleId > 0) {
-                    this.toggleStatusDownlines(roleId - 1, enable, sportType, betType);
-                }
+                this.toggleStatusDownlines(roleId - 1, enable, sportType, betType);
                 if (roleId == 4) {
                     this.toggleStatusDownlines(-4, enable, sportType, betType);
                 }
@@ -11195,9 +11193,7 @@ class ProductStatusSetting extends ProductStatusSettingBase {
                     oppositeStatusSpan.text("0");
                     this.$(toggle).text(this.getTotalStatus(toggle, "total"));
                 }
-                if (roleId > 0) {
-                    this.toggleStatusDownlines(roleId - 1, enable, sportType, betType);
-                }
+                this.toggleStatusDownlines(roleId - 1, enable, sportType, betType);
                 if (roleId == 4) {
                     this.toggleStatusDownlines(-4, enable, sportType, betType);
                 }
@@ -11346,7 +11342,7 @@ class ProductStatusSetting extends ProductStatusSettingBase {
                 data.disableAllMasters = masterStatus.DisableAll;
                 break;
             case -3:
-                let masterDirectMemberStatus = this.getLevelStatus(toggle, data.disable);
+                let masterDirectMemberStatus = this.getLevelStatus(toggle, this.$custRole == 3 ? data.disable : data.disableAllMasters);
                 data.updateAllMasterDirectMembers = masterDirectMemberStatus.UpdateAll;
                 data.disableAllMasterDirectMembers = masterDirectMemberStatus.DisableAll;
                 break;
