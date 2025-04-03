@@ -36,7 +36,9 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int VGaming = 66;
         public const int FaChai = 89;
         public const int ASKMESLOT = 103;
-
+        public const int HOTDOT = 95;
+        public const int ODIN = 105;
+        public const int MicrogamingLive = 107;
         public const int DummyRNGProductId = 53;
 
         public static readonly List<int> ProductListForTooltipsRNGCasino = new List<int>
@@ -56,7 +58,10 @@ namespace Fanex.ExternalAccount.Core.Shared
             FastSpin,
             VGaming,
             FaChai,
-            ASKMESLOT
+            ASKMESLOT,
+            HOTDOT,
+            MicrogamingLive,
+            ODIN
         };
     }
 }
