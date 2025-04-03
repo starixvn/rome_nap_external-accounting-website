@@ -17,6 +17,7 @@
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.RabbitMQ;
     using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.ProductStatus.Setting.Configuration;
     using Logging.Extensions.Web;
     using ONEbook.UM;
     using ONEbook.UM.AspNetMVC.Filters;
@@ -142,12 +143,12 @@
 
             MvcHandler.DisableMvcResponseHeader = true;
 
-            //var productStatusConfig = new ProductStatusConfiguration()
-            //    .UseAuthorizeService(new ProductStatusAuthorizeService())
-            //    .UseProductStatusActor(new ProductStatusActor())
-            //    .SetUnAuthorizedUrl("~/Customer/AccessDenied")
-            //    .UseCustomerProductList(MultipleEditProductStatus.GetProductList);
-            //ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
+            var productStatusConfig = new ProductStatusConfiguration()
+                .UseAuthorizeService(new ProductStatusAuthorizeService())
+                .UseProductStatusActor(new ProductStatusActor())
+                .SetUnAuthorizedUrl("~/Customer/AccessDenied")
+                .UseCustomerProductList(MultipleEditProductStatus.GetProductList);
+            ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
             Fanex.RemotingRef.RefDataTypeContainer
                 .ConnectTo(new Uri(ConfigurationManager.AppSettings["Fanex.RemotingRef.Service"]))
                 .FromApplication("Ext NAP")

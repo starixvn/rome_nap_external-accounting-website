@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.33423.256
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35825.156 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeAnalysis", "CodeAnalysis", "{70A40E1E-ABC7-4CDA-B838-AC0BBC70BD57}"
 	ProjectSection(SolutionItems) = preProject
@@ -63,6 +63,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.WhiteLabelWinLossReports", "Modules\Fanex.ExternalAccount.WhiteLabelWinLossReports\Fanex.ExternalAccount.WhiteLabelWinLossReports.csproj", "{02EACB12-FC9B-4C53-9462-6F6DEAB75720}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ExternalAccount.RewardManagement", "Modules\Fanex.ExternalAccount.RewardManagement\Fanex.ExternalAccount.RewardManagement.csproj", "{19291A82-88CA-4719-8287-B148021617FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.ProductStatus.Setting", "Modules\Fanex.ProductStatus.Setting\Fanex.ProductStatus.Setting.csproj", "{40E4C3A8-036F-4908-9B31-25D221F4D28F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -303,7 +305,16 @@ Global
 		{19291A82-88CA-4719-8287-B148021617FA}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{19291A82-88CA-4719-8287-B148021617FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19291A82-88CA-4719-8287-B148021617FA}.Release|Any CPU.Build.0 = Release|Any CPU
-
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F}.Debug-Alpha|Any CPU.ActiveCfg = Debug|Any CPU
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F}.Debug-Alpha|Any CPU.Build.0 = Debug|Any CPU
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F}.Debug-NAP|Any CPU.ActiveCfg = Debug|Any CPU
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F}.Debug-NAP|Any CPU.Build.0 = Debug|Any CPU
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F}.Development|Any CPU.ActiveCfg = Release|Any CPU
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F}.Development|Any CPU.Build.0 = Release|Any CPU
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -319,10 +330,11 @@ Global
 		{BC9BF8EC-943B-468E-B0AB-97DBE2F17B49} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 		{02EACB12-FC9B-4C53-9462-6F6DEAB75720} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 		{19291A82-88CA-4719-8287-B148021617FA} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
+		{40E4C3A8-036F-4908-9B31-25D221F4D28F} = {E738F53C-66DE-4C5B-B5AF-FF39407CEA09}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35
 		SolutionGuid = {AE0E7979-1E8E-4837-A106-1C4DE3FB8397}
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\EnterpriseLibrary.Caching.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Data.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

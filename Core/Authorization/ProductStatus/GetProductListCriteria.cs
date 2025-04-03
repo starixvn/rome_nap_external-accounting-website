@@ -5,6 +5,8 @@
 
     internal class GetProductListCriteria : CriteriaBase
     {
+        internal GetProductListCriteria() : this(0) { }
+
         internal GetProductListCriteria(int groupId)
         {
             GroupId = groupId;

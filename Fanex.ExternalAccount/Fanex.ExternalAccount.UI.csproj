@@ -3041,6 +3041,10 @@
       <Project>{5f20bea2-febf-4ce2-8ff8-129dd93b3386}</Project>
       <Name>Fanex.ExternalAccount.SuperWinLossDetailBySubGroup</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.ProductStatus.Setting\Fanex.ProductStatus.Setting.csproj">
+      <Project>{40e4c3a8-036f-4908-9b31-25d221f4d28f}</Project>
+      <Name>Fanex.ProductStatus.Setting</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\Lang.resx">

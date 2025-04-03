@@ -448,7 +448,9 @@
     <Setting Key="EAS_CustomerSelCheckBelonging" SpName="EAS_CustomerSelCheckBelonging" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Get Product List of Multiple Edit Product Status">
-    <Setting Key="EAS_ProductSettingByGroup_Sel" SpName="EAS_ProductSettingByGroup_Sel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+	  <Setting Key="EAS_ProductSettingByGroup_Sel" SpName="EAS_ProductSettingByGroup_Sel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+		  <Mapping DataField="product_type" ObjectProperty="ProductType" />
+	  </Setting>
   </Function>
   <Function Name="Bonus Detail">
     <Setting Key="EAS_Bonus_Sel" SpName="EAS_Bonus_Sel" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />

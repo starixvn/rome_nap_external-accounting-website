@@ -416,6 +416,10 @@
       <Project>{c8cb1e7b-e68a-4065-ae30-3f8fb371974a}</Project>
       <Name>Fanex.ExternalAccount.ViewModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Modules\Fanex.ProductStatus.Setting\Fanex.ProductStatus.Setting.csproj">
+      <Project>{40E4C3A8-036F-4908-9B31-25D221F4D28F}</Project>
+      <Name>Fanex.ProductStatus.Setting</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
