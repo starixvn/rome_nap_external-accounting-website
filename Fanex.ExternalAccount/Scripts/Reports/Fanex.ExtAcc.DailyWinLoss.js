@@ -281,7 +281,7 @@ Fanex.ExtAcc.DailyWinLoss = {
                 return $this.RenderUsernameColumn(cell);
             }
         },
-        { HeaderText: 'Level', Name: 'LevelType', Width: 120, HeaderAlign: 'center', CellAlign: 'right' },
+        { HeaderText: 'Level', Name: 'LevelType', Width: 120, HeaderAlign: 'center' },
         { HeaderText: 'Total Turnover', Name: 'TotalTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: 'Company', Name: 'ComTO', Width: 130, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
         { HeaderText: '%', Name: 'ComTOPercent', Width: 40, HeaderAlign: 'center', CellAlign: 'right', FormatNumber: '0,0.00', FormatNegative: '$' },
