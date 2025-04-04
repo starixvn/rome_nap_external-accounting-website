@@ -116,7 +116,7 @@ else
             <div class="current-role">@roleNameDic[roleId]</div>
             <div class="all-status">
                 <input type="checkbox" class="checkbox-hide" id="@id"
-                       data-roleid="@roleId"
+                       data-roleid="@(roleId < 0 ? 1: roleId)"
                        data-disabledupline="@isDisabledUpline"
                        checked="checked"
                        @(isDisabledUpline ? "disabled " : string.Empty) />
