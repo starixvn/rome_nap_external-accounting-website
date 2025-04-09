@@ -10968,18 +10968,18 @@
         setup(jQuery);
     }
 })();
-class SimpleProductStatusSetting {
-    constructor($, topWindow) {
+var SimpleProductStatusSetting = /** @class */ (function () {
+    function SimpleProductStatusSetting($, topWindow) {
         this.$ = $;
         this.topWindow = topWindow;
     }
-    blockUI() {
+    SimpleProductStatusSetting.prototype.blockUI = function () {
         this.$.blockUI({
             blockMsgClass: "block-ui-loading"
         });
-    }
-    showMessage(code, message) {
-        const html = [
+    };
+    SimpleProductStatusSetting.prototype.showMessage = function (code, message) {
+        var html = [
             '<div class="',
             code ? "alerterror" : "alertsuccess",
             '"><div>',
@@ -10987,11 +10987,11 @@ class SimpleProductStatusSetting {
             "</div></div>"
         ];
         this.$("#sectionMessage").html(html.join("")).removeClass("hide");
-    }
-    hideMessage() {
+    };
+    SimpleProductStatusSetting.prototype.hideMessage = function () {
         this.$("#sectionMessage").addClass("hide").html("");
-    }
-    cacheDOMElements() {
+    };
+    SimpleProductStatusSetting.prototype.cacheDOMElements = function () {
         this.productId = this.$("#hiddenProductId").val();
         this.customerId = this.$("#hiddenCustId").val();
         this.customerRole = this.$("#hiddenCustRole").val();
@@ -11000,9 +11000,9 @@ class SimpleProductStatusSetting {
             noChange: this.$("#hiddenNoChangeMsg").val(),
             updateStatusFailed: this.$("#hiddenUpdateStatusFailedMsg").val(),
         };
-    }
-    registerEvents() {
-        const self = this;
+    };
+    SimpleProductStatusSetting.prototype.registerEvents = function () {
+        var self = this;
         $("#icon-copy-all")
             .on("click", function () {
             self.iconCopyAllClicked(self.$(this));
@@ -11016,15 +11016,15 @@ class SimpleProductStatusSetting {
             e.preventDefault();
             self.buttonSubmitClicked();
         });
-    }
-    iconCopyAllClicked(iconCopyAll) {
-        const firstCheckboxMain = this.$(this.checkboxMains[0]);
-        const firstCheckboxAllDownlines = this.getCheckboxAllDownlines(firstCheckboxMain);
-        const checkedMain = firstCheckboxMain.is(":checked");
-        const hasAllDownlines = firstCheckboxAllDownlines.length > 0;
-        const checkedAllDownlines = hasAllDownlines && firstCheckboxAllDownlines.is(":checked");
-        for (let i = 1, max = this.checkboxMains.length; i < max; i++) {
-            const checkbox = this.$(this.checkboxMains[i]);
+    };
+    SimpleProductStatusSetting.prototype.iconCopyAllClicked = function (iconCopyAll) {
+        var firstCheckboxMain = this.$(this.checkboxMains[0]);
+        var firstCheckboxAllDownlines = this.getCheckboxAllDownlines(firstCheckboxMain);
+        var checkedMain = firstCheckboxMain.is(":checked");
+        var hasAllDownlines = firstCheckboxAllDownlines.length > 0;
+        var checkedAllDownlines = hasAllDownlines && firstCheckboxAllDownlines.is(":checked");
+        for (var i = 1, max = this.checkboxMains.length; i < max; i++) {
+            var checkbox = this.$(this.checkboxMains[i]);
             if (!checkbox.is(":disabled")) {
                 checkbox.prop("checked", checkedMain);
                 if (hasAllDownlines) {
@@ -11033,11 +11033,11 @@ class SimpleProductStatusSetting {
                 checkbox.trigger("change");
             }
         }
-    }
-    checkboxMainChanged(checkbox) {
-        const checked = checkbox.is(":checked");
-        const checkboxDownlines = this.getCheckboxAllDownlines(checkbox);
-        const checkboxDownlinesOriginalValue = checkboxDownlines.data("originalvalue");
+    };
+    SimpleProductStatusSetting.prototype.checkboxMainChanged = function (checkbox) {
+        var checked = checkbox.is(":checked");
+        var checkboxDownlines = this.getCheckboxAllDownlines(checkbox);
+        var checkboxDownlinesOriginalValue = checkboxDownlines.data("originalvalue");
         if (!checkboxDownlinesOriginalValue) {
             checkboxDownlines.prop("checked", checked);
         }
@@ -11047,17 +11047,17 @@ class SimpleProductStatusSetting {
                 checkboxDownlines.prop("checked", checked);
             }
         }
-    }
-    getCheckboxAllDownlines(checkboxMain) {
+    };
+    SimpleProductStatusSetting.prototype.getCheckboxAllDownlines = function (checkboxMain) {
         return this.$("#checkbox-downlines-"
             + checkboxMain.data("sporttype")
             + "-"
             + checkboxMain.data("bettype"));
-    }
-    buttonSubmitClicked() {
+    };
+    SimpleProductStatusSetting.prototype.buttonSubmitClicked = function () {
         this.blockUI();
         this.hideMessage();
-        const productStatus = this.getProductStatusFormData();
+        var productStatus = this.getProductStatusFormData();
         if (productStatus.length) {
             this.updateProductStatus(productStatus);
         }
@@ -11065,18 +11065,18 @@ class SimpleProductStatusSetting {
             this.showMessage(1, this.resources.noChange);
             this.$.unblockUI();
         }
-    }
-    getProductStatusFormData() {
-        const self = this;
-        const productStatus = [];
+    };
+    SimpleProductStatusSetting.prototype.getProductStatusFormData = function () {
+        var self = this;
+        var productStatus = [];
         this.$(".checkbox-main").each(function () {
-            const checkbox = self.$(this);
-            const disable = !checkbox.is(":checked");
-            const checkboxOriginalValue = checkbox.data("originalvalue");
-            const sportType = checkbox.data("sporttype");
-            const betType = checkbox.data("bettype");
-            const checkboxDownlines = self.$("#checkbox-downlines-" + sportType + "-" + betType);
-            let disableDownlines = undefined, checkboxDownlinesOriginalValue = undefined;
+            var checkbox = self.$(this);
+            var disable = !checkbox.is(":checked");
+            var checkboxOriginalValue = checkbox.data("originalvalue");
+            var sportType = checkbox.data("sporttype");
+            var betType = checkbox.data("bettype");
+            var checkboxDownlines = self.$("#checkbox-downlines-" + sportType + "-" + betType);
+            var disableDownlines = undefined, checkboxDownlinesOriginalValue = undefined;
             if (checkboxDownlines.length) {
                 disableDownlines = !checkboxDownlines.is(":checked");
                 checkboxDownlinesOriginalValue = checkboxDownlines.data("originalvalue");
@@ -11091,21 +11091,22 @@ class SimpleProductStatusSetting {
             }
         });
         return productStatus;
-    }
-    setupAntiXSRF() {
-        const token = this.$("[name=__RequestVerificationToken]").val();
-        const headers = {};
+    };
+    SimpleProductStatusSetting.prototype.setupAntiXSRF = function () {
+        var token = this.$("[name=__RequestVerificationToken]").val();
+        var headers = {};
         headers["__RequestVerificationToken"] = token;
         return headers;
-    }
-    updateProductStatus(productStatus) {
-        const formData = {
+    };
+    SimpleProductStatusSetting.prototype.updateProductStatus = function (productStatus) {
+        var _this = this;
+        var formData = {
             productId: this.productId,
             custId: this.customerId,
             custRole: this.customerRole,
             productStatus: productStatus
         };
-        const jqxhr = this.$.ajax({
+        var jqxhr = this.$.ajax({
             type: "POST",
             url: this.postUpdateUrl,
             cache: false,
@@ -11115,20 +11116,21 @@ class SimpleProductStatusSetting {
             contentType: "application/json; charset=utf-8"
         });
         jqxhr
-            .done((data) => {
-            this.showMessage(data.Code, data.Message);
+            .done(function (data) {
+            _this.showMessage(data.Code, data.Message);
             if (!data.Code) {
-                setTimeout(this.topWindow.reloadLeftPanel, 1000 * 3);
+                setTimeout(_this.topWindow.reloadLeftPanel, 1000 * 3);
             }
         })
-            .fail(() => { this.showMessage(1, this.resources.updateStatusFailed); })
+            .fail(function () { _this.showMessage(1, _this.resources.updateStatusFailed); })
             .always(this.$.unblockUI);
-    }
-    initialize() {
+    };
+    SimpleProductStatusSetting.prototype.initialize = function () {
         this.cacheDOMElements();
         this.registerEvents();
-    }
-}
+    };
+    return SimpleProductStatusSetting;
+}());
 $(function () {
     new SimpleProductStatusSetting($, window.top).initialize();
 });

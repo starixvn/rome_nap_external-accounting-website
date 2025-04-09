@@ -758,7 +758,7 @@
         }
 
         top.shouldCalculatePopupHeight = false;
-        $scope.EnableProductGroup(2, "RNG Games", 800, 320);
+        $scope.EnableProductGroup(2, "RNG Games", 950, 400);
     };
 
     $scope.EnableCashout = function (enable, id, disabled) {

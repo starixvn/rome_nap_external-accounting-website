@@ -28,7 +28,7 @@ else
             {
                 <tr>
                     <td class="bettype-name">@item.Name</td>
-                    <td>@RenderStatus(item.SportType, item.ParentSportType, item.BetType, item.ParentBetType, item.IsDisabled, item.IsDisabledUpline, Model.CustRole)</td>
+                    <td>@RenderStatus(item.SportType, item.ParentSportType, item.BetType, item.ParentBetType, item.IsDisabled, item.IsDisabledUpline, Model.Recommend < 0 ? Model.Recommend : Model.CustRole)</td>
 
                     @if (item.DirectSuperMember != null)
                     {
@@ -70,7 +70,6 @@ else
 {
     while (roleId > 0)
     {
-
         if (roleId == RoleIdentity.Member)
         {
             @RenderHeaderStatus(recommend < 0 ? recommend : roleId, isMultipleBetTypes, isDisabledUpline);
@@ -105,7 +104,7 @@ else
         {2, Resources.AllAgents },
         {1, Resources.AllMembers }
     };
-    var roleName = Model.GetRoleName((byte)roleId);
+    var roleName = Model.GetRoleName(roleId);
     var id = string.Format("header_{0}", roleId);
     var tbodyEnableDownlineTooltip = string.Format(Resources.SearchAccountTHeadMulitpleTooltip, Resources.Enable.ToLower(), roleName + "s");
     var tbodyDisableDownlineTooltip = string.Format(Resources.SearchAccountTHeadMulitpleTooltip, Resources.Disable.ToLower(), roleName + "s");
@@ -116,7 +115,7 @@ else
             <div class="current-role">@roleNameDic[roleId]</div>
             <div class="all-status">
                 <input type="checkbox" class="checkbox-hide" id="@id"
-                       data-roleid="@(roleId < 0 ? 1: roleId)"
+                       data-roleid="@roleId"
                        data-disabledupline="@isDisabledUpline"
                        checked="checked"
                        @(isDisabledUpline ? "disabled " : string.Empty) />

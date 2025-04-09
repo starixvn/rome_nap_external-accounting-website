@@ -15509,8 +15509,7 @@ class ProductStatusSettingMultipe extends ProductStatusSettingBase {
         this.loadMultiple = () => this.$("#productIds").change(() => {
             var productId = this.$("#productIds").val();
             this.$("#productId").val(productId);
-            var productsFilter = this.$products.filter(x => x.Id == productId && x.IsGroup);
-            var isGroup = productsFilter != null && productsFilter.length > 0;
+            var isGroup = this.$products.some(x => x.Id == productId && x.IsGroup);
             this.$("#isGroup").val(isGroup.toString());
             this.$("#product-form").submit();
         });
@@ -15642,6 +15641,14 @@ class ProductStatusSettingMultipe extends ProductStatusSettingBase {
             if (roleId > 1) {
                 let downlineToggle = this.getToggleElements(this.$toggleArray, roleId - 1, sportType, bettype);
                 this.toogleStatusDownline(downlineToggle, enable);
+                if (roleId === 4) {
+                    let superDirectMemberToggle = this.getToggleElements(this.$toggleArray, -4, sportType, bettype);
+                    this.toogleStatusDownline(superDirectMemberToggle, enable);
+                }
+                if (roleId === 3) {
+                    let masterDirectMemberToggle = this.getToggleElements(this.$toggleArray, -3, sportType, bettype);
+                    this.toogleStatusDownline(masterDirectMemberToggle, enable);
+                }
             }
             if (this.isParentRow(toogle)) {
                 let parentSportType = this.getParentSportType(toogle);
@@ -15655,7 +15662,7 @@ class ProductStatusSettingMultipe extends ProductStatusSettingBase {
                     }
                     else {
                         if (roleId < 4) {
-                            let uplineToggle = this.getToggleElements(this.$toggleArray, roleId + 1, this.getSportType(childToogle), this.getBetType(childToogle));
+                            let uplineToggle = this.getToggleElements(this.$toggleArray, this.getUplineRoleId(roleId), this.getSportType(childToogle), this.getBetType(childToogle));
                             let uplineEnable = this.isChecked(uplineToggle);
                             if (uplineEnable) {
                                 this.enableElement(childToogle);
@@ -15712,6 +15719,13 @@ class ProductStatusSettingMultipe extends ProductStatusSettingBase {
     isEnabledElement(toggle) {
         let nextLabel = this.getNextLabel(toggle);
         return super.isEnabledElement(nextLabel);
+    }
+    getUplineRoleId(roleId) {
+        if (roleId === -3)
+            return 3;
+        if (roleId === -4)
+            return 4;
+        return roleId++;
     }
     getUpdateViewModel() {
         let viewModel = super.getUpdateViewModel();
