@@ -30,7 +30,6 @@
 
         public override bool IsValid() =>
             !string.IsNullOrEmpty(GroupName) &&
-            !string.IsNullOrWhiteSpace(LeagueIds) &&
             !string.IsNullOrWhiteSpace(FromDate) &&
             !string.IsNullOrWhiteSpace(ToDate);
 
