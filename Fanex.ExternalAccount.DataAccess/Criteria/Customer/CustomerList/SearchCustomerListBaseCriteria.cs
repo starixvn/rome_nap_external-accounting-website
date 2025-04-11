@@ -25,7 +25,7 @@
 
         protected readonly int[] ValidPageSize = { 50, 100, 500 };
 
-        public override bool IsValid() => Status >= MinStatusValue && Status < MaxStatusValue
+        public override bool IsValid() => Status >= MinStatusValue && Status <= MaxStatusValue
                 && (PageSize == int.MaxValue - 1 || Array.Exists(ValidPageSize, item => item == PageSize));
 
         public override string GetSettingKey()

@@ -1,12 +1,12 @@
 namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
 {
-    using Fanex.Data;
     using Fanex.Data.Repository;
 
-    public class GetTransferOptionCriteria : CriteriaBase
+    public class GetTransferOptionCriteria : INonQueryCommand
     {
         public int CustId { get; }
-        public string TransferOption { get; }
+
+        public string TransferOption { get; set; }
 
         public GetTransferOptionCriteria(int custId)
         {
@@ -14,8 +14,8 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer
             TransferOption = "00000000";
         }
 
-        public override string GetSettingKey() => "Acc_CustomerSelTransferOption";
+        public string GetSettingKey() => "Acc_CustomerSelTransferOption";
 
-        public override bool IsValid() => CustId > 0;
+        public bool IsValid() => CustId > 0;
     }
 }

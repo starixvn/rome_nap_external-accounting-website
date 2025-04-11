@@ -29,19 +29,18 @@
 
         public Transfer GetTransferOption(GetTransferOptionCriteria criteria)
         {
-            var result = _dynamicRepository.Fetch<dynamic>(criteria).FirstOrDefault();
-            var transferOption = result?.transferoption.ToString();
-            return transferOption?.Length > 0 ? new Transfer
+            _dynamicRepository.Execute(criteria);
+            return criteria.TransferOption.Length > 0 ? new Transfer
             {
 #pragma warning disable S109 // Magic numbers should not be used
-                Weekly = Convert.ToBoolean(int.Parse(transferOption[7].ToString())),
-                Mon = Convert.ToBoolean(int.Parse(transferOption[1].ToString())),
-                Tue = Convert.ToBoolean(int.Parse(transferOption[2].ToString())),
-                Wed = Convert.ToBoolean(int.Parse(transferOption[3].ToString())),
-                Thu = Convert.ToBoolean(int.Parse(transferOption[4].ToString())),
-                Fri = Convert.ToBoolean(int.Parse(transferOption[5].ToString())),
-                Sat = Convert.ToBoolean(int.Parse(transferOption[6].ToString())),
-                Sun = Convert.ToBoolean(int.Parse(transferOption[0].ToString()))
+                Weekly = Convert.ToBoolean(int.Parse(criteria.TransferOption[7].ToString())),
+                Mon = Convert.ToBoolean(int.Parse(criteria.TransferOption[1].ToString())),
+                Tue = Convert.ToBoolean(int.Parse(criteria.TransferOption[2].ToString())),
+                Wed = Convert.ToBoolean(int.Parse(criteria.TransferOption[3].ToString())),
+                Thu = Convert.ToBoolean(int.Parse(criteria.TransferOption[4].ToString())),
+                Fri = Convert.ToBoolean(int.Parse(criteria.TransferOption[5].ToString())),
+                Sat = Convert.ToBoolean(int.Parse(criteria.TransferOption[6].ToString())),
+                Sun = Convert.ToBoolean(int.Parse(criteria.TransferOption[0].ToString()))
 #pragma warning restore S109 // Magic numbers should not be used
             } : null;
         }
