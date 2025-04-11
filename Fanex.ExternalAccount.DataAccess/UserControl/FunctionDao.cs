@@ -61,9 +61,9 @@
                 FuncId = function.FuncID,
                 ParentId = function.ParentID,
                 DisplayOrder = function.DisplayOrder,
-                ParentName = function.ParentName,
+                ParentName = function.ParentName ?? "",
                 FuncName = function.FuncName,
-                FuncDesc = function.FuncDesc,
+                FuncDesc = function.FuncDesc ?? "",
                 IP = ip,
                 AssignedGroupIDs = assignedGroupIDs,
                 OldAssignedGroupIDs = oldAssignedGroupIDs
