@@ -74,11 +74,11 @@
 
         public decimal Turnover { get; }
 
-        public decimal NetTurnover { get; }
+        public decimal NetTurnover { get; set; }
 
         public decimal GrossComm { get; }
 
-        public decimal MemberWinlost { get; }
+        public decimal MemberWinlost { get; set; }
 
         public decimal MemberComm { get; }
 
