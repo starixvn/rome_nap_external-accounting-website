@@ -17,7 +17,7 @@
     };
 
     $scope.GetStatementList = function (custId) {
-        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('Statement/Index?id=' + custId + '&isinternal=0&username=' + $scope.model.personalInfo.currentLevel.value), null, null, true);
+        parent.Fanex.ExtAcc.LoadMainFrame(parent.resolveClientUrl('StatementReport/Index?id=' + custId + '&isinternal=0&username=' + $scope.model.personalInfo.currentLevel.value), null, null, true);
     };
 
     $scope.GetUplineRoleId = function (agentId, roleId) {

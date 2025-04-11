@@ -1,6 +1,5 @@
 namespace Fanex.ExternalAccount.MatchWinLossReports.Criteria
 {
-    //using Fanex.NAP.Framework.Data;
     using Fanex.Data.Repository;
     public class CurrencyCriteria: CriteriaBase
     {
