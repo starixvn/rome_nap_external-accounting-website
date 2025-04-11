@@ -65,6 +65,8 @@
         public int CustId { get; }
 
         public string Username { get; }
+        
+        public string TotalName { get; set; }
 
         public int ProductId { get; }
 

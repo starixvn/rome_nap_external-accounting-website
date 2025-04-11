@@ -123,7 +123,7 @@
 
                 var grandtotalRowValues = new List<object>
             {
-                totalByCurrency.Username,
+                totalByCurrency.TotalName,
                 null,
                 totalByCurrency.Turnover,
                 totalByCurrency.NetTurnover,

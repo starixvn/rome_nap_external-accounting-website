@@ -796,7 +796,7 @@ class WinLossDetailMC {
             if (this.viewlevel === 1) {
                 footerData.push({
                     Columns: [
-                        { Name: "Username", Value: this.totalSource[i].Username, MergeColNumber: 2, CellAlign: "right" },
+                        { Name: "Username", Value: this.totalSource[i].TotalName, MergeColNumber: 2, CellAlign: "right" },
                         { Name: "Turnover", Value: this.totalSource[i].Turnover },
                         { Name: "NetTurnover", Value: this.totalSource[i].NetTurnover },
                         { Name: "GrossComm", Value: this.totalSource[i].GrossComm },
@@ -814,7 +814,7 @@ class WinLossDetailMC {
             } else if (this.viewlevel === 2) {
                 footerData.push({
                     Columns: [
-                        { Name: "Username", Value: this.totalSource[i].Username, MergeColNumber: 3, CellAlign: "right" },
+                        { Name: "Username", Value: this.totalSource[i].TotalName, MergeColNumber: 3, CellAlign: "right" },
                         { Name: "Turnover", Value: this.totalSource[i].Turnover },
                         { Name: "NetTurnover", Value: this.totalSource[i].NetTurnover },
                         { Name: "GrossComm", Value: this.totalSource[i].GrossComm },
@@ -860,7 +860,7 @@ class WinLossDetailMC {
             else {
                 footerData.push({
                     Columns: [
-                        { Name: "Username", Value: this.totalSource[i].Username, MergeColNumber: 2, CellAlign: "right" },
+                        { Name: "Username", Value: this.totalSource[i].TotalName, MergeColNumber: 2, CellAlign: "right" },
                         { Name: "Turnover", Value: this.totalSource[i].Turnover },
                         { Name: "NetTurnover", Value: this.totalSource[i].NetTurnover },
                         { Name: "GrossComm", Value: this.totalSource[i].GrossComm },

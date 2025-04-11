@@ -32,8 +32,6 @@
         }
 
         public int CurrencyId { get; set; }
-        
-        public string TotalName { get; set; }
 
         public string CurrencyName { get; set; }
     }

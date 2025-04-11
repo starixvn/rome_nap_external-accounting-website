@@ -79,7 +79,7 @@
                 resultSheet.CopyRow(TemplateSheet, FirstColumnTotalIndex, toRowIndex, FirstColumnIndex, LastColumnIndex);
                 var values = new List<object>
                 {
-                    item.Username,
+                    item.TotalName,
                     null,
                     null,
                     item.Turnover,
