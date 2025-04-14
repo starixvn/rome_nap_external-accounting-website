@@ -45,7 +45,7 @@
     <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_Rpt_ViewExtraPT2" SpName="EAS_Rpt_ViewExtraPT2" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="EAS_Rpt_WinLossDetail_byPT" SpName="EAS_Rpt_WinLossDetail_byPT" DbName="DBAGE.bodb02.wsv_xnap" />
-    <Setting Key="EAS_GetPTProductBySuper" SpName="EAS_GetPTProductBySuper" DbName="DBACC.bodb02.wsv_xnap" />
+    <Setting Key="EAS_GetPTProductBySuper" SpName="EAS_GetPTProductBySuper" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="EAS_GetSubGroupList" SpName="EAS_GetSubGroupList" DbName="DBPOL.Nap_UserControl.wsv_xnap" />
     <Setting Key="EAS_Rpt_WinLossDetail_bySubGroup" SpName="EAS_Rpt_WinLossDetail_bySubGroup" DbName="DBAGE.bodb02.wsv_xnap" />
   </Function>
