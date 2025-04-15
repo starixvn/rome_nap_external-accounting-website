@@ -10,6 +10,7 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.Login
 
         public GetDbTimeCommand()
         {
+            LoginTime = DateTime.Now;
         }
 
         public string GetSettingKey() => "Age_LoginAdminVerifyTicket";

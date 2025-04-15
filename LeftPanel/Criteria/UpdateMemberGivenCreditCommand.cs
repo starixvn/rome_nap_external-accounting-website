@@ -14,10 +14,5 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
         {
             return "Acc_CustomerUpdCredit";
         }
-
-        public override bool IsValid()
-        {
-            return base.IsValid() && TotalAmt >= 0;
-        }
     }
 }

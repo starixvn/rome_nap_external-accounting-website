@@ -231,7 +231,7 @@ Fanex.ExtAcc = {
 
     EscapeHtml: function (string) {
         var result = '';
-        if (string.length < 1) {
+        if (string == undefined || string.length < 1) {
             return result;
         }
 

@@ -63,12 +63,12 @@
                 {
                     var customer = new SubGroupCustomer
                     {
-                        CustId = row.Field<int>("custid"),
-                        Username = row.Field<string>("username"),
-                        IsClosed = row.Field<bool>("closed"),
-                        IsSuspended = row.Field<bool>("suspended"),
-                        IsEnabled = row.Field<bool>("enabled"),
-                        SubGroup = row.Field<string>("subgroup"),
+                        CustId = Convert.ToInt32(row["custid"]),
+                        Username = Convert.ToString(row["username"]),
+                        IsClosed = Convert.ToBoolean(row["closed"]),
+                        IsSuspended = Convert.ToBoolean(row["suspended"]),
+                        IsEnabled = Convert.ToBoolean(row["enabled"]),
+                        SubGroup = Convert.ToString(row["subgroup"]),
                         SubGroupStatusList = subGroups.ToList()
                     };
                     result.Add(customer);
@@ -76,9 +76,8 @@
 
                 foreach (var row in assignedSubGroupCustomers)
                 {
-                    var customerId = row.Field<int>("custid");
-                    var groupName = row.Field<string>("groupname");
-
+                    var customerId = Convert.ToInt32(row["custid"]);
+                    var groupName = Convert.ToString(row["groupname"]);
                     var customer = result.FirstOrDefault(cust => cust.CustId == customerId);
                     if (customer != null)
                     {

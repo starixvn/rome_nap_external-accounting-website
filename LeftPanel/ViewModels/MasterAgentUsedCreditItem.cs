@@ -2,7 +2,11 @@
 {
     public class MasterAgentUsedCreditItem
     {
-        public string Username { get; set; }
+        public string Username => MasterName ?? AgentName;
+
+        public string MasterName { get; set; }
+
+        public string AgentName { get; set; }
 
         public decimal GivenCredit { get; set; }
 

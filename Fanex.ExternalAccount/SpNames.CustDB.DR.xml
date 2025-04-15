@@ -228,12 +228,14 @@
     <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.wsv_xnap" />
-	  <Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
-		  <Mapping DataField="roleid" ObjectProperty="Level" class="SingleUpdateAffectedDownline" />
-		  <Mapping DataField="cntAffected" ObjectProperty="AffectedDownlines" class="SingleUpdateAffectedDownline" />
-		  <Mapping DataField="cntUnchanged" ObjectProperty="RemainUnchangedDownlines" class="SingleUpdateAffectedDownline" />
-	  </Setting>
+    <Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
+		<Mapping DataField="suspended" ObjectProperty="Suspend" class="SingleUpdateAffectedDownline" />
+	</Setting>
+	<Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
+		<Mapping DataField="roleid" ObjectProperty="Level" class="SingleUpdateAffectedDownline" />
+		<Mapping DataField="cntAffected" ObjectProperty="AffectedDownlines" class="SingleUpdateAffectedDownline" />
+		<Mapping DataField="cntUnchanged" ObjectProperty="RemainUnchangedDownlines" class="SingleUpdateAffectedDownline" />
+	</Setting>
     <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.wsv_xnap" />
     <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
