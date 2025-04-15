@@ -5,7 +5,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
 
     public class GetMemberUsedCreditItemsCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "agentid")]
+        [SpParam(SqlParamName = "uplineid")]
         public int CustId { get; }
 
         public GetMemberUsedCreditItemsCriteria(int custId)

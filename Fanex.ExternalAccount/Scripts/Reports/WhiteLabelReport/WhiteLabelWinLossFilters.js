@@ -1,81 +1,13 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var BaseWinLossFilters = /** @class */ (function () {
-    function BaseWinLossFilters($) {
-        this.inputIds = [];
-        this.dropdowns = [];
-        this.$ = $;
-    }
-    BaseWinLossFilters.prototype.registerInputComponent = function (inputInfo) {
-        if (!this.inputIds.filter(function (id) { return id.inputId === inputInfo.inputId; }).length) {
-            this.inputIds.push(inputInfo);
-            return true;
-        }
-        return false;
-    };
-    BaseWinLossFilters.prototype.registerDropdownComponent = function (dropdownInfo) {
-        if (!this.dropdowns.filter(function (id) { return id.dropdownId === dropdownInfo.dropdownId; }).length) {
-            this.renderWhiteLabelDropdown(dropdownInfo);
-            this.dropdowns.push(dropdownInfo);
-            return true;
-        }
-        return false;
-    };
-    BaseWinLossFilters.prototype.getAllFilterValues = function () {
-        var self = this;
-        var inputParams = this.inputIds.map(function (elem) {
-            return {
-                name: elem.inputName,
-                currentValue: self.$("#" + elem.inputId).val(),
-            };
-        });
-        var dropdownParams = this.dropdowns.map(function (elem) {
-            return {
-                name: elem.dropdownName,
-                currentValue: self.$("#" + elem.dropdownId).fanexMultiSelect("getItems", true).toString(),
-            };
-        });
-        return {
-            inputParams: inputParams,
-            dropdownParams: dropdownParams,
-            calendarParams: this.getCalendarValues(),
-        };
-    };
-    BaseWinLossFilters.prototype.getCalendarValues = function () {
-        return { fromDate: this.fromDate, toDate: this.toDate };
-    };
-    BaseWinLossFilters.prototype.renderCalendarPicker = function (options) {
-        throw new Error("Method not implemented.");
-    };
-    BaseWinLossFilters.prototype.renderWhiteLabelDropdown = function (options) {
-        if (!options.dropdownOptions)
-            return;
-        return this.$("#" + options.dropdownId).fanexMultiSelect({
-            showFilter: true,
-            checkAllText: "Select All",
-            noneSelectedText: "None Selected",
-            useCustomCheckAllText: true,
-            customCheckAllText: "All",
-            isCheckAll: true,
-            listData: options.dropdownOptions,
-            minWidth: options.minWidth
-        });
-    };
-    return BaseWinLossFilters;
-}());
 var DailyWinLossFilters = /** @class */ (function (_super) {
     __extends(DailyWinLossFilters, _super);
     function DailyWinLossFilters() {
@@ -163,7 +95,7 @@ var DailyWinLossFilters = /** @class */ (function (_super) {
         ];
     };
     return DailyWinLossFilters;
-}(BaseWinLossFilters));
+}(BaseReportFilters));
 var SettlementWinLossFilters = /** @class */ (function (_super) {
     __extends(SettlementWinLossFilters, _super);
     function SettlementWinLossFilters() {
@@ -198,5 +130,5 @@ var SettlementWinLossFilters = /** @class */ (function (_super) {
         return moment(date).format('MM/DD/YYYY');
     };
     return SettlementWinLossFilters;
-}(BaseWinLossFilters));
+}(BaseReportFilters));
 //# sourceMappingURL=WhiteLabelWinLossFilters.js.map

@@ -101,7 +101,7 @@
 
         public DownlineList GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex)
         {
-            var downlineListDataSet = customerDataAccess.GetDownlineList(custid, pageSize, pageIndex, out int totalPages);
+            var downlineListDataSet = customerDataAccess.GetDownlineList( isDirectDownline,custid, pageSize, pageIndex, out int totalPages);
             return new DownlineList(downlineListDataSet, pageIndex, totalPages);
         }
 

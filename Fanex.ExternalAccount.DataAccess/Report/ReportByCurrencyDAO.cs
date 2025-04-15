@@ -85,6 +85,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             {
                 GroupName = groupname,
                 CustId = custId,
+                MasterId = masterId > 0 ? masterId : (int?)null,
                 MemberId = memberId > 0 ? memberId : (int?)null,
                 BaseCurrency = baseCurrencyName,
                 FromDate = fromDate,
@@ -95,11 +96,6 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 MoveBetsDay = moveBetsDay
             };
 
-            if (masterId != 0)
-            {
-                criteria.MasterId = masterId;
-            }
-
             var dataset = dynamicRepository.FetchMultiple<WinLossByCurrencyDetail, WinLossByCurrencyDetail>(criteria);
 
             return new WinLossByCurrency
@@ -108,7 +104,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 WinLossTotals = dataset.Item2.ToList()
             };
         }
-        
+
         public WinLossByCurrencyMAg EAS_Rpt_WinLossByCurDaily_MAg(
             string groupname,
             int custId,
@@ -128,6 +124,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 GroupName = groupname,
                 CustId = custId,
                 MemberId = memberId > 0 ? memberId : (int?)null,
+                AgentId = agentId > 0 ? agentId : (int?)null,
                 BaseCurrency = baseCurrencyName,
                 FromDate = fromDate,
                 ToDate = toDate,
@@ -137,21 +134,15 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 MoveBetsDay = moveBetsDay
             };
 
-            if (agentId != 0)
-            {
-                criteria.AgentId = agentId;
-            }
-
-            var dataset =
-                dynamicRepository.FetchMultiple<WinLossByCurrencyDetailMAg, WinLossByCurrencyDetailMAg>(criteria);
+            var dataset = dynamicRepository.FetchMultiple<WinLossByCurrencyDetailMAg, WinLossByCurrencyDetailMAg>(criteria);
 
             return new WinLossByCurrencyMAg
             {
                 WinLossDetails = dataset.Item1.ToList(),
                 WinLossTotals = dataset.Item2.ToList()
             };
-        }      
-        
+        }
+
 
         public WinLossByCurrencyAg EAS_Rpt_WinLossByCurDaily_Ag(
             string groupname,

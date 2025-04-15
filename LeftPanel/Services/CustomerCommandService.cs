@@ -20,7 +20,7 @@
     {
         Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
 
-        Result ResetMemberCredit(int custId, int agentId, bool closedOnly);
+        Result ResetMemberCredit(int custId, int uplineId, bool closedOnly);
 
         Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip);
 

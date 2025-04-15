@@ -7,7 +7,7 @@ var StateManager = /** @class */ (function () {
         return this.subscribers.some(function (item) { return item.prototype.name === callback.prototype.name; });
     };
     StateManager.prototype.setValue = function (newValue) {
-        if (JSON.stringify(this.value) !== JSON.stringify(newValue)) { // Use Object.is for strict comparison
+        if (JSON.stringify(this.value) !== JSON.stringify(newValue)) {
             this.value = newValue;
             this.notifySubscribers();
         }

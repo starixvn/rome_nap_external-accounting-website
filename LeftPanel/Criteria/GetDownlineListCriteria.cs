@@ -4,13 +4,15 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
 
     public class GetDownlineListCriteria : CriteriaBase
     {
+        public bool IsDirectDownline { get; }
         public int CustId { get; }
         public int PageSize { get; }
         public int PageIndex { get; }
         public int TotalPages { get; }
 
-        public GetDownlineListCriteria(int custId, int pageSize, int pageIndex, int totalPages)
+        public GetDownlineListCriteria(bool isDirectDownline, int custId, int pageSize, int pageIndex, int totalPages)
         {
+            IsDirectDownline = isDirectDownline;
             CustId = custId;
             PageSize = pageSize;
             PageIndex = pageIndex;

@@ -1,36 +1,26 @@
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
     return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
         extendStatics(d, b);
         function __() { this.constructor = d; }
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var BaseWhiteLabelWinLossGrid = /** @class */ (function () {
-    function BaseWhiteLabelWinLossGrid() {
-    }
-    return BaseWhiteLabelWinLossGrid;
-}());
 var DailyWinLossGrid = /** @class */ (function (_super) {
     __extends(DailyWinLossGrid, _super);
-    function DailyWinLossGrid(isMobile) {
-        var _this = _super.call(this) || this;
+    function DailyWinLossGrid(options) {
+        var _this = _super.call(this, options) || this;
         _this.gridOptions = {
             columns: DailyWinLossGrid.DefaultColumns,
             //numberOfFrozenColumn: 2,
             autoCalculateGridExpandHeight: false,
-            fullHeight: !isMobile.phone,
-            gridHeight: isMobile.phone ? $(window).height() - 70 : 700,
+            fullHeight: !options.isMobile.phone,
+            gridHeight: options.isMobile.phone ? $(window).height() - 70 : 700,
             showTitle: true,
             titleInfo: {
-                customButtons: "<span id=" + DailyWinLossGrid.ExcelBtnId + " title=\"Export Excel\" class=\"icon-excel\"></span>"
+                customButtons: "<span id=" + options.excelBtnId + " title=\"Export Excel\" class=\"icon-excel\"></span>"
             },
             gridExpandHeight: 260,
             showPager: false,
@@ -98,22 +88,22 @@ var DailyWinLossGrid = /** @class */ (function (_super) {
     ];
     DailyWinLossGrid.ExcelBtnId = 'exportWhiteLabelDailyWinLoss';
     return DailyWinLossGrid;
-}(BaseWhiteLabelWinLossGrid));
+}(BaseReportGrid));
 var SettlementWinLossGrid = /** @class */ (function (_super) {
     __extends(SettlementWinLossGrid, _super);
-    function SettlementWinLossGrid(isMobile) {
-        var _this = _super.call(this) || this;
+    function SettlementWinLossGrid(options) {
+        var _this = _super.call(this, options) || this;
         _this.gridOptions = {
             customizeHeader: true,
             columns: SettlementWinLossGrid.DefaultColumns,
             groupHeaderRows: [{ Columns: SettlementWinLossGrid.GroupHeaderColumns }],
             //numberOfFrozenColumn: 4,
             autoCalculateGridExpandHeight: false,
-            fullHeight: !isMobile.phone,
-            gridHeight: isMobile.phone ? $(window).height() - 70 : 700,
+            fullHeight: !options.isMobile.phone,
+            gridHeight: options.isMobile.phone ? $(window).height() - 70 : 700,
             showTitle: true,
             titleInfo: {
-                customButtons: "<span id=" + SettlementWinLossGrid.CopyBtnId + " title=\"Copy\" class=\"icon-copy\"></span><span id=" + SettlementWinLossGrid.ExcelBtnId + " title=\"Export Excel\" class=\"icon-excel\"></span>"
+                customButtons: "<span id=" + options.copyBtnId + " title=\"Copy\" class=\"icon-copy\"></span><span id=" + options.excelBtnId + " title=\"Export Excel\" class=\"icon-excel\"></span>"
             },
             gridExpandHeight: 320,
             showPager: false,
@@ -125,8 +115,38 @@ var SettlementWinLossGrid = /** @class */ (function (_super) {
             footerRows: [],
             showHighlightRow: false
         };
+        _this.initSelectColumnsDropdown(SettlementWinLossGrid.DefaultColumns, [0, 1]);
+        _this.initCopyBtn(options.copyBtnId);
         return _this;
     }
+    SettlementWinLossGrid.prototype.initSelectColumnsDropdown = function (columns, ignoreColumns) {
+        var _this = this;
+        var options = [];
+        var numberOfColumns = columns.length;
+        for (var i = 0; i < numberOfColumns; i++) {
+            if (ignoreColumns.includes(i))
+                continue;
+            options.push({
+                id: i.toString(),
+                value: i.toString(),
+                text: columns[i].ColumnName2,
+                checked: true,
+                enable: true
+            });
+        }
+        $("#" + this.options.selectColumnsId).fanexMultiSelectSearchable({
+            showFilter: true,
+            checkAllText: "Select All",
+            noneSelectedText: "None Selected",
+            useCustomCheckAllText: true,
+            customCheckAllText: "All",
+            isCheckAll: true,
+            listData: options,
+            onLeave: function () { return _this.showHideColumns(); },
+            toggleWidth: this.options.isMobile.phone ? 255 : 265,
+            minWidth: this.options.isMobile.phone ? 255 : 265
+        });
+    };
     SettlementWinLossGrid.prototype.buildBodyRows = function (reportData) {
         var bodyData = [];
         if (!reportData) {
@@ -134,32 +154,32 @@ var SettlementWinLossGrid = /** @class */ (function (_super) {
         }
         for (var _i = 0, reportData_2 = reportData; _i < reportData_2.length; _i++) {
             var element = reportData_2[_i];
-            var Month = element.Month, WhiteLabel = element.WhiteLabel, Agent = element.Agent, Master = element.Master, Super = element.Super, LossCarryforward = element.LossCarryforward, MemberWL = element.MemberWL, MemberPromotion = element.MemberPromotion, WhiteLabelNetWinLoss = element.WhiteLabelNetWinLoss, WhiteLabelIncome = element.WhiteLabelIncome, WhiteLabelPromotionShare = element.WhiteLabelPromotionShare, WhiteLabelFee = element.WhiteLabelFee, WhiteLabelPromotionSettlement = element.WhiteLabelPromotionSettlement, WhiteLabelTotal = element.WhiteLabelTotal, MasterEarning = element.MasterEarning, SuperEarning = element.SuperEarning, HeadlineEarning = element.HeadlineEarning, CompanyIncome = element.CompanyIncome, CompanyPromotionShare = element.CompanyPromotionShare, CompanyTotal = element.CompanyTotal;
             bodyData.push({
                 Columns: [
-                    { Name: "Month", Value: Month, CellAlign: "center" },
-                    { Name: "WhiteLabel", Value: WhiteLabel },
-                    { Name: "Agent", Value: Agent },
-                    { Name: "Master", Value: Master },
-                    { Name: "Super", Value: Super },
-                    { Name: "LossCarryforward", Value: LossCarryforward },
-                    { Name: "MemberWinLoss", Value: MemberWL },
-                    { Name: "MemberPromotion", Value: MemberPromotion },
-                    { Name: "WhiteLabelNetWinLoss", Value: WhiteLabelNetWinLoss },
-                    { Name: "WhiteLabelIncome", Value: WhiteLabelIncome },
-                    { Name: "WhiteLabelPromotionShare", Value: WhiteLabelPromotionShare },
-                    { Name: "WhiteLabelFee", Value: WhiteLabelFee },
-                    { Name: "WhiteLabelPromotionSettlement", Value: WhiteLabelPromotionSettlement },
-                    { Name: "WhiteLabelTotal", Value: WhiteLabelTotal },
-                    { Name: "MasterEarning", Value: MasterEarning },
-                    { Name: "SuperEarning", Value: SuperEarning },
-                    { Name: "HeadlineEarning", Value: HeadlineEarning },
-                    { Name: "CompanyIncome", Value: CompanyIncome },
-                    { Name: "CompanyPromotionShare", Value: CompanyPromotionShare },
-                    { Name: "CompanyTotal", Value: CompanyTotal }
+                    { Name: "Month", Value: element.Month, CellAlign: "center" },
+                    { Name: "WhiteLabel", Value: element.WhiteLabel },
+                    { Name: "Agent", Value: element.Agent },
+                    { Name: "Master", Value: element.Master },
+                    { Name: "Super", Value: element.Super },
+                    { Name: "MemberWinLoss", Value: element.MemberWL },
+                    { Name: "MemberPromotion", Value: element.MemberPromotion },
+                    { Name: "LossCarryforward", Value: element.LossCarryforward },
+                    { Name: "WhiteLabelWinLoss", Value: element.WhiteLabelWinLoss },
+                    { Name: "WhiteLabelNetWinLoss", Value: element.WhiteLabelNetWinLoss },
+                    { Name: "WhiteLabelFee", Value: element.WhiteLabelFee },
+                    { Name: "WhiteLabelPromotionSettlement", Value: element.WhiteLabelPromotionSettlement },
+                    { Name: "WhiteLabelPromotionShare", Value: element.WhiteLabelPromotionShare },
+                    { Name: "WhiteLabelTotal", Value: element.WhiteLabelTotal },
+                    { Name: "MasterEarning", Value: element.MasterEarning },
+                    { Name: "SuperEarning", Value: element.SuperEarning },
+                    { Name: "HeadlineEarning", Value: element.HeadlineEarning },
+                    { Name: "CompanyIncome", Value: element.CompanyIncome },
+                    { Name: "CompanyPromotionShare", Value: element.CompanyPromotionShare },
+                    { Name: "CompanyTotal", Value: element.CompanyTotal }
                 ]
             });
         }
+        this.gridBodyRowsCache = bodyData;
         return bodyData;
     };
     SettlementWinLossGrid.prototype.buildFooterRows = function (data) {
@@ -167,14 +187,14 @@ var SettlementWinLossGrid = /** @class */ (function (_super) {
         data && footerColumns.push({
             Columns: [
                 { Name: "Month", Value: "Grand Total", MergeColNumber: 5, CellAlign: "right" },
-                { Name: "LossCarryforward", Value: data.LossCarryforward, CellAlign: "right" },
                 { Name: "MemberWinLoss", Value: data.MemberWL, CellAlign: "right" },
                 { Name: "MemberPromotion", Value: data.MemberPromotion, CellAlign: "right" },
+                { Name: "LossCarryforward", Value: data.LossCarryforward, CellAlign: "right" },
+                { Name: "WhiteLabelWinLoss", Value: data.WhiteLabelWinLoss, CellAlign: "right" },
                 { Name: "WhiteLabelNetWinLoss", Value: data.WhiteLabelNetWinLoss, CellAlign: "right" },
-                { Name: "WhiteLabelIncome", Value: data.WhiteLabelIncome, CellAlign: "right" },
-                { Name: "WhiteLabelPromotionShare", Value: data.WhiteLabelPromotionShare, CellAlign: "right" },
                 { Name: "WhiteLabelFee", Value: data.WhiteLabelFee, CellAlign: "right" },
                 { Name: "WhiteLabelPromotionSettlement", Value: data.WhiteLabelPromotionSettlement, CellAlign: "right" },
+                { Name: "WhiteLabelPromotionShare", Value: data.WhiteLabelPromotionShare, CellAlign: "right" },
                 { Name: "WhiteLabelTotal", Value: data.WhiteLabelTotal, CellAlign: "right" },
                 { Name: "MasterEarning", Value: data.MasterEarning, CellAlign: "right" },
                 { Name: "SuperEarning", Value: data.SuperEarning, CellAlign: "right" },
@@ -184,6 +204,7 @@ var SettlementWinLossGrid = /** @class */ (function (_super) {
                 { Name: "CompanyTotal", Value: data.CompanyTotal, CellAlign: "right" },
             ]
         });
+        this.gridFooterRowsCache = footerColumns;
         return footerColumns;
     };
     SettlementWinLossGrid.prototype.getDefaultColumns = function () {
@@ -201,15 +222,15 @@ var SettlementWinLossGrid = /** @class */ (function (_super) {
         { HeaderText: "Agent", Name: "Agent", Width: 130, Sort: true, HeaderAlign: "center", ColumnName2: "Agent" },
         { HeaderText: "Master", Name: "Master", Width: 120, Sort: true, HeaderAlign: "center", ColumnName2: "Master" },
         { HeaderText: "Super", Name: "Super", Width: 110, Sort: true, HeaderAlign: "center", ColumnName2: "Super" },
-        { HeaderText: "Loss Carryforward", Name: "LossCarryforward", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "Loss Carryforward" },
         { HeaderText: "Win Loss", Name: "MemberWinLoss", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "Member - Win Loss" },
         { HeaderText: "Promotion", Name: "MemberPromotion", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "Member - Promotion" },
+        { HeaderText: "Loss C/f", Name: "LossCarryforward", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "White Label - Loss C/f" },
+        { HeaderText: "Win Loss", Name: "WhiteLabelWinLoss", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "White Label - Win Loss" },
         { HeaderText: "Net Win Loss", Name: "WhiteLabelNetWinLoss", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "White Label - Net Win Loss" },
-        { HeaderText: "Income", Name: "WhiteLabelIncome", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "White Label - Income" },
+        { HeaderText: "Gross Fee", Name: "WhiteLabelFee", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "White Label - Gross Fee", },
+        { HeaderText: "Promotion Settlement", Name: "WhiteLabelPromotionSettlement", Width: 160, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "WhiteLabel - Promotion Settlement" },
         { HeaderText: "Promotion Share", Name: "WhiteLabelPromotionShare", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "White Label - Promotion Share" },
-        { HeaderText: "Fee", Name: "WhiteLabelFee", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "White Label - Fee", },
-        { HeaderText: "Promotion Settlement", Name: "WhiteLabelPromotionSettlement", Width: 150, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "WhiteLabel - Promotion Settlement" },
-        { HeaderText: "Total", Name: "WhiteLabelTotal", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "White Label - Total" },
+        { HeaderText: "Total Fee", Name: "WhiteLabelTotal", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "White Label - Total Fee" },
         { HeaderText: "Master Earning", Name: "MasterEarning", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "Master Earning" },
         { HeaderText: "Super Earning", Name: "SuperEarning", Width: 110, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "Super Earning" },
         { HeaderText: "Headline Earning", Name: "HeadlineEarning", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$", ColumnName2: "Headline Earning" },
@@ -223,9 +244,8 @@ var SettlementWinLossGrid = /** @class */ (function (_super) {
         { HeaderText: "Agent", Name: "Agent", MergeRowNumber: 2 },
         { HeaderText: "Master", Name: "Master", MergeRowNumber: 2 },
         { HeaderText: "Super", Name: "Super", MergeRowNumber: 2 },
-        { HeaderText: "Loss Carryforward", Name: "LossCarryforward", MergeRowNumber: 2 },
         { HeaderText: "Member", Name: "MemberWinLoss", MergeColNumber: 2 },
-        { HeaderText: "White Label", Name: "WhiteLabelNetWinLoss", MergeColNumber: 6 },
+        { HeaderText: "White Label", Name: "LossCarryforward", MergeColNumber: 7 },
         { HeaderText: "Master Earning", Name: "MasterEarning", MergeRowNumber: 2 },
         { HeaderText: "Super Earning", Name: "SuperEarning", MergeRowNumber: 2 },
         { HeaderText: "Headline Earning", Name: "HeadlineEarning", MergeRowNumber: 2 },
@@ -234,5 +254,5 @@ var SettlementWinLossGrid = /** @class */ (function (_super) {
     SettlementWinLossGrid.ExcelBtnId = 'exportWhiteLabelSettlement';
     SettlementWinLossGrid.CopyBtnId = 'copyWhiteLabelSettlement';
     return SettlementWinLossGrid;
-}(BaseWhiteLabelWinLossGrid));
+}(BaseReportGrid));
 //# sourceMappingURL=WhiteLabelWinLossGrid.js.map

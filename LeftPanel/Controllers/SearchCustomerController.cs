@@ -12,6 +12,7 @@
 
     public class SearchCustomerController : BaseController
     {
+        private const int DefaultPageSize = 100;
         private const string MasterAgentCreditViewl =
             "~/Areas/CustomerSetting/Views/LeftPanel/UsedCredit/MasterAgentCredit.cshtml";
 
@@ -135,9 +136,7 @@
         [HttpPost]
         [AntiXSRFFilter]
         public ActionResult GetDownlineList(bool isDirectDownline, int custId, int pageIndex)
-#pragma warning disable S109 // Magic numbers should not be used
-            => JsonBase(customerQueryService.GetDownlineList(isDirectDownline, custId, 100, pageIndex));
-#pragma warning restore S109 // Magic numbers should not be used
+            => JsonBase(customerQueryService.GetDownlineList(isDirectDownline, custId, DefaultPageSize, pageIndex));
 
         [HttpGet]
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,

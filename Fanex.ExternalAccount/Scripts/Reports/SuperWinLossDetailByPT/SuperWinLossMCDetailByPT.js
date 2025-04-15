@@ -171,7 +171,7 @@ var SuperWinLossMCDetailByPT = /** @class */ (function () {
             var grandTotal = dataSource[i];
             footerData.push({
                 Columns: [
-                    { Name: "Username", Value: grandTotal.Username, MergeColNumber: 2, CellAlign: "right" },
+                    { Name: "Username", Value: grandTotal.TotalName, MergeColNumber: 2, CellAlign: "right" },
                     { Name: "Turnover", Value: grandTotal.Turnover },
                     { Name: "NetTurnover", Value: grandTotal.NetTurnover },
                     { Name: "GrossComm", Value: grandTotal.GrossComm },

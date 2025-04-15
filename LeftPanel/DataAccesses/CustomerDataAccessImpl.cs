@@ -53,7 +53,7 @@
 
         public DataSet GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex, out int totalPages)
         {
-            var criteria = new GetDownlineListCriteria(custid, pageSize, pageIndex, 0);
+            var criteria = new GetDownlineListCriteria(isDirectDownline, custid, pageSize, pageIndex, 0);
             totalPages = criteria.TotalPages;
             return _dynamicRepository.FetchDataSet(criteria);
         }
@@ -76,7 +76,7 @@
 
         public Result ResetMemberCredit(int custId, int uplineId, bool closedOnly)
         {
-            var command = new ResetMemberCreditCommand(custId, agentId, closedOnly, HttpContext.Current.Request.UserHostAddress);
+            var command = new ResetMemberCreditCommand(custId, uplineId, closedOnly, HttpContext.Current.Request.UserHostAddress);
             _dynamicRepository.Execute(command);
             return new Result(command.ErrCode, command.ErrMsg);
         }

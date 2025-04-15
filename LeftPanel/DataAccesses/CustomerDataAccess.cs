@@ -7,9 +7,7 @@
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
     using ViewModels;
 
-#pragma warning disable IDE1006 // Naming Styles
     public interface CustomerDataAccess
-#pragma warning restore IDE1006 // Naming Styles
     {
         DataSet GetPersonalInfo(GetPersonalInfoCriteria criteria);
 

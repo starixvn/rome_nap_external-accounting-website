@@ -10,12 +10,14 @@
     using Fanex.ExternalAccount.DataAccess.Criteria.Report;
     using Fanex.ExternalAccount.Service.Products;
     using Interface.Report;
+    using Microsoft.Extensions.Logging;
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
     using Utilities;
+    using static StackExchange.Redis.Role;
 
 #pragma warning disable S109 // Magic numbers should not be used
 
@@ -37,9 +39,9 @@
             _productDetailService = productDetailService ?? new ProductDetailService();
             _reportUtils = reportUtils ?? new ReportUtils();
         }
-        
+
         public static DateTime BalanceUpDate => new ReportUtils().BalanceUpDate;
-        
+
         public LineInfo SearchCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
             => _reportDao.GetCustomerInfo(new GetCustomerInfoCriteria(groupname, custId, userName, isGetUplineInfo));
 
@@ -54,7 +56,7 @@
 
         public IEnumerable<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, int memberId)
             => _reportDao.EAS_Rpt_WinLossDaily_MAg(new GetMasterDailyWinlossCriteria(winlostDate, custId, agentId, _reportUtils.MoveBetsDate));
-        
+
         public IEnumerable<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId)
             => _reportDao.EAS_Rpt_WinLossDaily_Ag(new GetAgentDailyWinlossCriteria(winlostDate, custId, memberId, _reportUtils.MoveBetsDate));
 
@@ -88,7 +90,27 @@
             {
                 CustId = custId,
                 MasterId = masterId > 0 ? masterId : null,
-                0,
+                MemberId = 0,
+                FromDate = fromDate,
+                ToDate = toDate,
+                ProductIds = productIds,
+                ProductDetailsXML = productDetailsXML,
+                BalanceUpDay = _reportUtils.BalanceUpDate,
+                MoveBetsDay = _reportUtils.MoveBetsDate
+            });
+
+        public IEnumerable<WinLossDetail> GetDirectMemberOfSuperWinLossDetail(
+            int custId,
+            int? memberId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML)
+            => _reportDao.EAS_Rpt_WinLossDetail_SAg(new GetMasterWinlossDetailCriteria
+            {
+                CustId = custId,
+                MasterId = 0,
+                MemberId = memberId > 0 ? memberId : null,
                 FromDate = fromDate,
                 ToDate = toDate,
                 ProductIds = productIds,
@@ -108,7 +130,7 @@
             {
                 CustId = custId,
                 AgentId = agentId > 0 ? agentId : null,
-                0,
+                MemberId = 0,
                 FromDate = fromDate,
                 ToDate = toDate,
                 ProductIds = productIds,
@@ -116,17 +138,26 @@
                 BalanceUpDay = _reportUtils.BalanceUpDate,
                 MoveBetsDay = _reportUtils.MoveBetsDate
             });
-        public List<WinLossDetailMAg> GetDirectMemberOfMasterWinLossDetail(
+
+        public IEnumerable<WinLossDetailMAg> GetDirectMemberOfMasterWinLossDetail(
             int custId,
-            int memberId,
+            int? memberId,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
             string productDetailsXML)
-            => _reportDao.EAS_Rpt_WinLossDetail_MAg(new GetAgentWinlossDetailCriteria(
-                custId, 
-                0, 
-                memberId, 
+            => _reportDao.EAS_Rpt_WinLossDetail_MAg(new GetAgentWinlossDetailCriteria
+            {
+                CustId = custId,
+                AgentId = 0,
+                MemberId = memberId > 0 ? memberId : null,
+                FromDate = fromDate,
+                ToDate = toDate,
+                ProductIds = productIds,
+                ProductDetailsXML = productDetailsXML,
+                BalanceUpDay = _reportUtils.BalanceUpDate,
+                MoveBetsDay = _reportUtils.MoveBetsDate
+            });
 
         public IEnumerable<WinLossDetailAg> GetMemberWinLossDetail(
             int custId,

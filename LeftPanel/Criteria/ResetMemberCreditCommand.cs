@@ -5,16 +5,16 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
     public class ResetMemberCreditCommand : INonQueryCommand
     {
         public int CustId { get; }
-        public int AgentId { get; }
+        public int UplineId { get; }
         public bool ClosedOnly { get; }
         public string Ip { get; }
         public int ErrCode { get; set; }
         public string ErrMsg { get; set; }
 
-        public ResetMemberCreditCommand(int custId, int agentId, bool closedOnly, string ip)
+        public ResetMemberCreditCommand(int custId, int uplineId, bool closedOnly, string ip)
         {
             CustId = custId;
-            AgentId = agentId;
+            UplineId = uplineId;
             ClosedOnly = closedOnly;
             Ip = ip;
         }
@@ -26,7 +26,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
 
         public bool IsValid()
         {
-            return CustId > 0 && AgentId > 0;
+            return CustId > 0 && UplineId > 0;
         }
     }
 }
