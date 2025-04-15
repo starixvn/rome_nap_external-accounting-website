@@ -6,16 +6,18 @@
 
     public class CustomerListPageBuilder
     {
-        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, bool withDataLimited = false,bool IsNoDownlines =false, bool hasSubGroups = false, bool isMultipleCurrencyGroup = false)
+        public CustomerListPageBuilder(List<CustomerListDTO> customerList, bool isBold, string status, int roleId, int uplineRoleId, bool withDataLimited = false,bool IsNoDownlines =false, bool hasSubGroups = false, bool isMultipleCurrencyGroup = false, bool isDirectMember = false)
         {
             Status = status;
             RoleId = roleId;
+            UplineRoleId = uplineRoleId;
             IsBold = isBold;
             Data = customerList;
             WithDataLimited = withDataLimited;
             WithNoDownlines = IsNoDownlines;
             HasSubGroups = hasSubGroups;
             IsMultipleCurrencyGroup = isMultipleCurrencyGroup;
+            IsDirectMember = isDirectMember;
         }
 
         public List<CustomerListDTO> Data { get; }
@@ -23,6 +25,10 @@
         public bool IsBold { get; }
 
         public int RoleId { get; }
+        
+        public int UplineRoleId { get; }
+        
+        public bool IsDirectMember { get; }
 
         public string Status { get; }
 
@@ -38,7 +44,7 @@
         {
             var mem = new MemoryStream();
             var settings = new TemplateSettings();
-            var filePath = settings.CustomerListPath(RoleId, HasSubGroups, IsMultipleCurrencyGroup);
+            var filePath = IsDirectMember ? settings.DirectMemberListPath(UplineRoleId, IsMultipleCurrencyGroup) : settings.CustomerListPath(RoleId, HasSubGroups, IsMultipleCurrencyGroup);
 
             using (var report = new CustomerListPage(filePath, this))
             {

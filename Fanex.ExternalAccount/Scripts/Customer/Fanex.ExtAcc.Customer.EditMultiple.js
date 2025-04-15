@@ -1,7 +1,7 @@
 ﻿Fanex.ExtAcc.Customer.EditMultiple = function (div) {
     this.ResetFlags();
     var menuItems = {};
-
+    var isDirectMember = Fanex.ExtAcc.Customer.CustomerList.cachedParams.isDirectMember;
     this.isSuperEditMember = false;
     this.isMasterEditMember = false;
     this.IsFullInfo = false;
@@ -227,11 +227,58 @@
 
             productIds.push(groupId);
         }
+        
+        function addUplineEditGroupDirectMemberMenuItems(groupId, groupName){
+            const uplineRoleId = Fanex.ExtAcc.Customer.CustomerList.cachedParams.uplineRoleId;
+
+            const superEditDirectMember = isDirectMember && uplineRoleId === Fanex.ExtAcc.Customer.Super;
+            const masterEditDirectMember = isDirectMember && uplineRoleId === Fanex.ExtAcc.Customer.Master;
+            
+            if(superEditDirectMember){
+                var key = 'product_group_' + groupId;
+                menuItems[key] = {
+                    name: "Edit Multiple " + groupName,
+                    className: "iconEnableEdit",
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.ShowEditMultipleProductGroup(4, groupId, groupName);
+                    }
+                };
+                productIds.push(groupId);
+            }
+            if(masterEditDirectMember){
+                var key = 'product_group_' + groupId;
+                menuItems[key] = {
+                    name: groupName,
+                    className: "iconEnableEdit",
+                    items: {}
+                };
+
+                menuItems[key].items['master_' + key] = {
+                    name: 'Edit Multiple ' + groupName,
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.ShowEditMultipleProductGroup(3, groupId, groupName);
+                    }
+                };
+
+                menuItems[key].items['super_' + key] = {
+                    name: 'Super Edit Multiple ' + groupName,
+                    callback: function () {
+                        Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup(4, groupId, groupName);
+                    }
+                };
+                productIds.push(groupId);
+            }
+        }
 
         for (var i = 0, max = this.ProductGroups.length; i < max; i++) {
             var productGroup = this.ProductGroups[i];
 
-            addUplineEditGroupMemberMenuItems(productGroup.Id, productGroup.Name);
+            if(isDirectMember){
+                addUplineEditGroupDirectMemberMenuItems(productGroup.Id, productGroup.Name);
+            }
+            else{
+                addUplineEditGroupMemberMenuItems(productGroup.Id, productGroup.Name);
+            }
         }
 
         for (var i = 0, max = this.UplineProductSettings.length; i < max; i++) {
@@ -269,8 +316,7 @@
         className: "iconEnableEdit",
         callback: function (key, opt) {
             top.shouldCalculatePopupHeight = false;
-            var url = resolveClientUrl('Customer/MultipleSuspend?custIdList=' + Fanex.ExtAcc.Customer.IdsAndNames().Ids + '&roleid=' + Fanex.ExtAcc.Customer.CurrentLevel);
-            Fanex.ExtAcc.Customer.Status.ViewSuspendMultiple(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.CurrentLevel);
+            Fanex.ExtAcc.Customer.Status.ViewSuspendMultiple(Fanex.ExtAcc.Customer.IdsAndNames().Ids, Fanex.ExtAcc.Customer.isEditDirectMember ? Fanex.ExtAcc.Customer.Member : Fanex.ExtAcc.Customer.CurrentLevel);
         }
     }
 
@@ -282,11 +328,11 @@
 
             Fanex.ExtAcc.Customer.ClosedStatus.ShowMultipleOpenCustomerPopup(
                 Fanex.ExtAcc.Customer.IdsAndNames().Ids,
-                Fanex.ExtAcc.Customer.CurrentLevel);
+                Fanex.ExtAcc.Customer.isEditDirectMember ? Fanex.ExtAcc.Customer.Member : Fanex.ExtAcc.Customer.CurrentLevel);
         }
     };
 
-    if (this.CurrentLevel !== this.Member && hasReadProtectCustomerFunction) {
+    if (this.CurrentLevel !== this.Member && hasReadProtectCustomerFunction && !this.isEditDirectMember) {
         menuItems.protectedStatus = {
             name: "Edit Multiple Protection Status",
             className: "iconEnableEdit",
@@ -317,9 +363,12 @@ Fanex.ExtAcc.Customer.UpdateMultipleDoubleComm = function (allow) {
 Fanex.ExtAcc.Customer.ShowEditMultipleProductGroup = function (uplineRoleId, productGroupId, productGroupName) {
     var ret = this.IdsAndNames();
     top.shouldCalculatePopupHeight = true;
+    var isDirectMember = Fanex.ExtAcc.Customer.CustomerList.cachedParams.isDirectMember;
+    var roleId = isDirectMember ? Fanex.ExtAcc.Customer.Member : Fanex.ExtAcc.Customer.CurrentLevel;
+    var agentId = isDirectMember ? (uplineRoleId == Fanex.ExtAcc.Customer.Super ? -4 : -3) : 0;
     if (!this.IsMultiple) {
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&productGroupId=' + productGroupId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit ' + productGroupName + ' Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            resolveClientUrl('Customer/EditCustomer?roleId=' + roleId + '&agentId=' + agentId + '&uplineRoleId=' + uplineRoleId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&productGroupId=' + productGroupId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit ' + productGroupName + ' Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
@@ -343,7 +392,7 @@ Fanex.ExtAcc.Customer.ShowEditMultipleProductGroup = function (uplineRoleId, pro
             CustIds += custIdsArr[i] + linkChar;
         }
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&productGroupId=' + productGroupId + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple ' + productGroupName + ' Setting',
+            resolveClientUrl('Customer/EditMultiple?roleId=' + roleId + '&agentId=' + agentId + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&productGroupId=' + productGroupId + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), 'Edit Multiple ' + productGroupName + ' Setting',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
@@ -448,7 +497,8 @@ Fanex.ExtAcc.Customer.ShowEditProductForMultipleCusts = function (uplineRoleId, 
 Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup = function (uplineRoleId, productGroupId, productGroupName) {
     var ret = this.IdsAndNames();
     var levelText = '';
-
+    var isDirectMember = Fanex.ExtAcc.Customer.CustomerList.cachedParams.isDirectMember;
+    var agentId = isDirectMember ? (-Fanex.ExtAcc.Customer.CustomerList.cachedParams.uplineRoleId) : 0;
     if (this.isSuperEditMember) {
         levelText = 'Super ';
     } else if (this.isMasterEditMember) {
@@ -457,7 +507,7 @@ Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup = function (uplineRoleId,
 
     if (!this.IsMultiple) {
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&productGroupId=' + productGroupId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit ' + productGroupName + ' Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
+            resolveClientUrl('Customer/EditCustomer?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&agentId=' + agentId + '&uplineRoleId=' + uplineRoleId + '&productGroupId=' + productGroupId + '&custId=' + Fanex.ExtAcc.Customer.UserId + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit ' + productGroupName + ' Setting ' + '<font color="#6dcff6">' + ret.Names[0] + '</font>',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
@@ -481,7 +531,7 @@ Fanex.ExtAcc.Customer.ShowSuperMasterEditMultipleGroup = function (uplineRoleId,
         }
 
         Fanex.ExtAcc.Form.ShowFrame(
-            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&productGroupId=' + productGroupId + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Multiple ' + productGroupName + ' Setting',
+            resolveClientUrl('Customer/EditMultiple?roleId=' + Fanex.ExtAcc.Customer.CurrentLevel + '&agentId=' + agentId + '&uplineRoleId=' + uplineRoleId + '&custIds=' + CustIds + '&productGroupId=' + productGroupId + '&usernames=' + Usernames + '&groupName=' + Fanex.ExtAcc.Customer.GroupName().groupName), levelText + 'Edit Multiple ' + productGroupName + ' Setting',
             1250,
             Fanex.ExtAcc.Customer.GetPopupHeight(270, 480),
             false, false, 1);
@@ -664,15 +714,17 @@ Fanex.ExtAcc.Customer.ShowEditMultipleProductStatus = function (productIds) {
         width = 860,
         height = 540,
         custIds = this.Ids().join(',');
-
+    var isDirectMember = Fanex.ExtAcc.Customer.CustomerList.cachedParams.isDirectMember;
+    var currentUplineLevel = Fanex.ExtAcc.Customer.CustomerList.cachedParams.uplineRoleId;
     if (custIds.len === 0) {
         Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
     } else {
         document.getElementById('productIds').value = productIds.join(',');
         document.getElementById('custIds').value = custIds;
         document.getElementById('custNames').value = this.Names().join(', ');
-        document.getElementById('custRole').value = this.CurrentLevel;
+        document.getElementById('custRole').value = isDirectMember ? Fanex.ExtAcc.Customer.Member : this.CurrentLevel;
         document.getElementById('groupId').value = Fanex.ExtAcc.Customer.GetGroupId();
+        document.getElementById('recommend').value = isDirectMember ? -currentUplineLevel : 0;
         Fanex.ExtAcc.Form.ShowFrame(blankUrl, title, width, height, false, false, 1);
         $('#targetProductStatusSettingForm').attr('action', resolveClientUrl('ProductStatusSetting/MultipleView')).submit();
     }

@@ -9,10 +9,14 @@
     internal class WinLossByCurrencyDetailReport : TemplateReport, IReportBuilder
     {
         private readonly WinLossByCurrencyDetailReportBuilder _builder;
-        private const int LastColumnIndex = 19;
+        private int LastColumnIndex { get; }
+        private bool IsExcludeLevelType { get; }
+
         public WinLossByCurrencyDetailReport(string filePath, WinLossByCurrencyDetailReportBuilder builder, string products = null) : base(filePath, products)
         {
             _builder = builder;
+            IsExcludeLevelType = _builder.UplineRoleId != Role.Super;
+            LastColumnIndex = IsExcludeLevelType ? 19 : 20;
         }
 
         public override void WriteBodyReport(ISheet resultSheet)
@@ -28,6 +32,7 @@
                 var values = new List<object>
                 {
                     item.Username,
+                    TemplateSettings.GetLevelType(item.RoleId),
                     item.Currency,
                     item.Turnover,
                     item.NetTurnover,
@@ -48,7 +53,10 @@
                     item.RewardAmount,
                     item.RewardCurrency ?? string.Empty
                 };
-
+                if (IsExcludeLevelType)
+                {
+                    values.RemoveAt(1);
+                }
                 resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
                 index++;
                 toRowId++;
@@ -63,6 +71,7 @@
                 var values = new List<object>
                 {
                     item.Username,
+                    null,
                     null,
                     item.Turnover,
                     item.NetTurnover,
@@ -83,7 +92,10 @@
                     item.RewardAmount,
                     item.RewardCurrency ?? string.Empty
                 };
-
+                if (IsExcludeLevelType)
+                {
+                    values.RemoveAt(1);
+                }
                 resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);
                 toRowIndex++;
             }
@@ -108,7 +120,7 @@
         public override void BuildMainTitle(ISheet resultSheet)
         {
 #pragma warning disable S3358 // Ternary operators should not be nested
-            var mainTitle = _builder.RoleId.IsSuper() ? "Super" : _builder.RoleId.IsMaster() ? "Master" : string.Empty;
+            var mainTitle = _builder.UplineRoleId.IsHeadline() ? "Super" : _builder.UplineRoleId.IsSuper() ? "Master" : string.Empty;
 #pragma warning restore S3358 // Ternary operators should not be nested
 
             mainTitle += _builder.FromDate.Equals(_builder.ToDate)
@@ -119,5 +131,6 @@
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }
+     
     }
 }

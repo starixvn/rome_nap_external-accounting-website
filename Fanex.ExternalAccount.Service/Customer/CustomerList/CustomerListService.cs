@@ -39,7 +39,7 @@
                 return new SearchCustomerListViewModel();
             }
 
-            var result = _customerListDao.SearchCustomerList(GetSearchCriteria(parameters));
+            var result = _customerListDao.SearchCustomerList(parameters.IsDirectMember ? GetSearchDownLineCriteria(parameters) : GetSearchCriteria(parameters));
             result.HasSubGroups = parameters.GroupId > 0 && _groupService.GetGroupWithSubGroups(parameters.GroupId).Any();
             if (!IsViewIPVN)
             {
@@ -86,7 +86,7 @@
                 case Role.Agent:
                     return new SearchMemberListCriteria
                     {
-                        Recommend = parameters.UplineId,
+                        UplineID = parameters.UplineId,
                         UserName = parameters.UserName,
                         Currencies = parameters.CurrencyIds,
                         UserId = parameters.UserId,
@@ -108,6 +108,20 @@
                         PageSize = parameters.PageSize
                     };
             }
+        }
+
+        private SearchCustomerListBaseCriteria GetSearchDownLineCriteria(SearchCustomerListParams parameters)
+        {
+            return new SearchMemberListCriteria
+            {
+                UplineID = parameters.UplineId,
+                UserName = parameters.UserName,
+                Currencies = parameters.CurrencyIds,
+                UserId = parameters.UserId,
+                Status = parameters.Status,
+                PageIndex = parameters.PageIndex,
+                PageSize = parameters.PageSize
+            };
         }
     }
 }

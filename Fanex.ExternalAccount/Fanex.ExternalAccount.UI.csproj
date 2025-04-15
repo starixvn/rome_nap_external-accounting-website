@@ -53,7 +53,7 @@
     <TypeScriptTarget>ES5</TypeScriptTarget>
     <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
     <TypeScriptModuleKind />
-    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
     <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
     <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
     <TypeScriptOutFile />
@@ -118,8 +118,8 @@
       <HintPath>..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.Customer.Client, Version=1.0.1.9, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.1.0.1.9\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+    <Reference Include="Fanex.Customer.Client, Version=1.0.1.11, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.2.1\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
@@ -174,8 +174,8 @@
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.2\lib\net40\Fanex.NAP.Framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.4.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.4.3\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
+    <Reference Include="Fanex.ProductStatus.Setting, Version=1.0.4.4, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.ProductStatus.Setting.1.0.4.4\lib\net461\Fanex.ProductStatus.Setting.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.PTEngine, Version=1.0.7.5, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.PTEngine.1.0.7.5\lib\net40\Fanex.PTEngine.dll</HintPath>
@@ -633,6 +633,12 @@
       <DependentUpon>match-win-loss-reports.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\reports\match-win-loss-reports.scss" />
+    <Content Include="ExcelTemplates\Customer\MasterDirectMemberList.xls" />
+    <Content Include="ExcelTemplates\Customer\MasterDirectMemberListMC.xls" />
+    <Content Include="ExcelTemplates\Customer\SuperDirectMemberList.xls" />
+    <Content Include="ExcelTemplates\Customer\SuperDirectMemberListMC.xls" />
+    <Content Include="ExcelTemplates\Reports\AgentDailyWinloss.xls" />
+    <Content Include="ExcelTemplates\Reports\MasterDailyWinloss.xls" />
     <Content Include="ExcelTemplates\Reports\MatchWinLossDetail.xls" />
     <Content Include="ExcelTemplates\Reports\MatchWinLossSummary.xls" />
     <Content Include="assets\styles\pages\reports\white-label-report.css">
@@ -642,6 +648,7 @@
       <DependentUpon>white-label-report.css</DependentUpon>
     </Content>
     <Content Include="assets\styles\pages\reports\white-label-report.scss" />
+    <Content Include="ExcelTemplates\Reports\WinLossMCDetailSuper.xls" />
     <Content Include="Scripts\clipboard.js" />
     <Content Include="assets\styles\base\_alpha-admin-fonts.min.css">
       <DependentUpon>_alpha-admin-fonts.css</DependentUpon>

@@ -32,6 +32,7 @@
     isSuperEditMember: false,
     isMasterEditMember: false,
     isSuperEditAgent: false,
+    isEditDirectMember: false,
 
     IsMultiple: false,
     IsFullInfo: false,

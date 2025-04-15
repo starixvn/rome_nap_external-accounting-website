@@ -1000,4 +1000,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="Columns" xml:space="preserve">
     <value>Columns</value>
   </data>
+  <data name="DirectMember" xml:space="preserve">
+    <value>Direct Member</value>
+  </data>
 </root>

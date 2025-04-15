@@ -120,6 +120,23 @@ Fanex.ExtAcc.WinLossDetail = {
         $("#monPickr1").monPickr("setToDay", today.getDate());
         $("#monPickr1").monPickr("setFromDay", 1);
     },
+    initLevelSelection: function (options) {
+        $(`#${options.dropdownId}`).empty().select2({
+            placeholder: "Select",
+            data: options.dropdownData,
+            dropdownAutoWidth: true,
+            templateSelection: function (data) {
+                return data.text;
+            },
+            sorter: function (data) {
+                return data;
+            }
+        }).bind("select2:select", function () {
+            if (options.onClosed) {
+                options.onClosed($(`#${options.dropdownId}`).val())
+            }
+        })
+    },
     getDayOfYear: function (date) {
         var day = date.getDate();
         var month = date.getMonth() + 1;
@@ -412,7 +429,7 @@ Fanex.ExtAcc.WinLossDetail = {
         $this.groupName = $("#selectedGroupName").html();
 
         this.ProductsList();
-
+        
         $("#Submit").click(function (e) {
             $this.CallSubmit();
         });
@@ -540,7 +557,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
     RenderUsernameColumn: function (cell) {
         var isDormantAccounts = cell.Value.CustId === 0;
-        if (cell == null || cell.Value.Username == "Grand Total" || $this.viewlevel < 2) {
+        if (cell == null || cell.Value.Username == "Grand Total" || $this.viewlevel < 2 || cell.Value.RoleId == 1) {
             return isDormantAccounts
                 ? $this.RenderDormantAccountsCell()
                 : '<div class="text-truncate" style="line-height: 22px; text-align: left; padding-left: 3px" title="' + cell.Value.Username + '">' + cell.Value.Username + "</div>";
@@ -590,6 +607,7 @@ Fanex.ExtAcc.WinLossDetail = {
             HeaderText: "Username", Name: "Username", Width: 130, Sort: true, HeaderAlign: "center",
             CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }
         },
+        { HeaderText: "Level", Name: "LevelType", Width: 130, Sort: true, HeaderAlign: "center" },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -614,6 +632,7 @@ Fanex.ExtAcc.WinLossDetail = {
             Sort: true, HeaderAlign: "center",
             CustomCellRender: function (cell) { return $this.RenderUsernameColumn(cell); }
         },
+        { HeaderText: "Level", Name: "LevelType", Width: 130, Sort: true, HeaderAlign: "center" },
         { HeaderText: "Turnover", Name: "Turnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "Net Turnover", Name: "NetTurnover", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
         { HeaderText: "GrossComm", Name: "GrossComm", Width: 130, Sort: true, HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00", FormatNegative: "$" },
@@ -663,6 +682,7 @@ Fanex.ExtAcc.WinLossDetail = {
     ],
     SAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Level", Name: "LevelType", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
         { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
@@ -675,6 +695,7 @@ Fanex.ExtAcc.WinLossDetail = {
     ],
     MAgHeaderColumns: [
         { HeaderText: "Username", Name: "Username", MergeRowNumber: 2 },
+        { HeaderText: "Level", Name: "LevelType", MergeRowNumber: 2 },
         { HeaderText: "Turnover", Name: "Turnover", MergeRowNumber: 2 },
         { HeaderText: "Net Turnover&nbsp;<span id=\"netTurnover\" class=\"bet-type-detail-icon\"></span>", Name: "NetTurnover", MergeRowNumber: 2 },
         { HeaderText: "GrossComm", Name: "GrossComm", MergeRowNumber: 2 },
@@ -813,6 +834,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 bodyData.push({
                     Columns: [
                         { Name: "Username", Value: this.dataSource[i] },
+                        { Name: "LevelType", Value: this.dataSource[i].RoleId === 2 ? "Agent" : "Direct Member" },
                         { Name: "Turnover", Value: this.dataSource[i].Turnover },
                         { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
                         { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
@@ -833,6 +855,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 bodyData.push({
                     Columns: [
                         { Name: "Username", Value: this.dataSource[i] },
+                        { Name: "LevelType", Value: this.dataSource[i].RoleId === 3 ? "Master Agent" : "Direct Member" },
                         { Name: "Turnover", Value: this.dataSource[i].Turnover },
                         { Name: "NetTurnover", Value: this.dataSource[i].NetTurnover },
                         { Name: "GrossComm", Value: this.dataSource[i].GrossComm },
@@ -935,7 +958,7 @@ Fanex.ExtAcc.WinLossDetail = {
         } else if (this.viewlevel === 2) {
             footerData.push({
                 Columns: [
-                    { Name: "Username", Value: "Grand Total" },
+                    { Name: "Username", Value: "Grand Total" , MergeColNumber: 2, CellAlign: "right"},
                     { Name: "Turnover", Value: sumTurnover },
                     { Name: "NetTurnover", Value: sumNetTurnover },
                     { Name: "GrossComm", Value: sumGrossComm },
@@ -955,7 +978,7 @@ Fanex.ExtAcc.WinLossDetail = {
         } else if (this.viewlevel === 3) {
             footerData.push({
                 Columns: [
-                    { Name: "Username", Value: "Grand Total" },
+                    { Name: "Username", Value: "Grand Total" , MergeColNumber: 2, CellAlign: "right"},
                     { Name: "Turnover", Value: sumTurnover },
                     { Name: "NetTurnover", Value: sumNetTurnover },
                     { Name: "GrossComm", Value: sumGrossComm },
@@ -1172,7 +1195,7 @@ Fanex.ExtAcc.WinLossDetail = {
                 }
 
                 $this.ChangeHeadlineTab();
-
+    
                 $("#mainGrid").css("display", $this.totalRows < 1 ? "none" : "block");
                 $("#mainGrid").css("visibility", $this.totalRows < 1 ? "hidden" : "visible");
                 $("#headlineDaily").css("display", $this.totalRows < 1 ? "none" : "block");

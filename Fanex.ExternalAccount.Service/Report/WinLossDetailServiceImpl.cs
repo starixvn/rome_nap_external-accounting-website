@@ -64,7 +64,7 @@
                     throw new InvalidOperationException(nameof(roleId));
             }
         }
-
+        
         public dynamic DrillDownWinLossDetail(IDrillDownWinLossDetailRequest request)
         {
             if (!request.IsValid)
@@ -172,16 +172,15 @@
                     productDetailsXML,
                     customerInfo)
                 : SearchWinLossDetailData(
-                    request.GroupName,
-                    request.FromDate,
-                    request.ToDate,
+                    request,
                     Utils.JoinToString(validProductIds),
                     productDetailsXML,
                     customerInfo);
+         
             return
                 new
                 {
-                    viewlevel = customerInfo.RoleId,
+                    viewlevel = GetViewLevel(customerInfo),
                     supername = customerInfo.SuperName,
                     mastername = customerInfo.MasterName,
                     agentname = customerInfo.AgentName,
@@ -192,6 +191,20 @@
                     sortingorderlist = sortingOrderList,
                     tooltips = request.ToolTipsProducts
                 };
+        }
+
+        private static int GetViewLevel(LineInfo customerInfo)
+        {
+            var dynamicRoleId = customerInfo.RoleId;
+            if (customerInfo.RoleId.IsMember() && customerInfo.AgentId.IsDirectMemberOfSuper())
+            {
+                dynamicRoleId = Role.Master;
+            }
+            if(customerInfo.RoleId.IsMember() && customerInfo.AgentId.IsDirectMemberOfMaster())
+            {
+                dynamicRoleId = Role.Agent;
+            }
+            return dynamicRoleId;
         }
 
         public dynamic GetExtraPT(IViewExtraPTRequest request)
@@ -212,9 +225,7 @@
         }
 
         private dynamic SearchWinLossDetailData(
-            string groupname,
-            DateTime fromDate,
-            DateTime toDate,
+            ISearchWinLossDetailRequest request,
             string productIds,
             string productDetailsXML,
             LineInfo customerInfo)
@@ -222,21 +233,33 @@
             if (customerInfo.RoleId >= Role.Super)
             {
                 return reportService.GetSuperWinLossDetail(
-                    groupname,
+                    request.GroupName,
                     customerInfo.CustId,
-                    fromDate,
-                    toDate,
+                    request.FromDate,
+                    request.ToDate,
                     productIds,
                     productDetailsXML);
             }
-
+        
             var getWinLossDetail = GetWinLossDetailFunction(customerInfo.RoleId.DirectUplineLevel());
-
+            var dynamicUplineId = customerInfo.GetUplineId();
+            
+            if (customerInfo.RoleId.IsMember() && customerInfo.AgentId.IsDirectMemberOfSuper())
+            {
+                getWinLossDetail = reportService.GetDirectMemberOfSuperWinLossDetail;
+                dynamicUplineId = customerInfo.SuperId;
+            }
+            
+            if (customerInfo.RoleId.IsMember() && customerInfo.AgentId.IsDirectMemberOfMaster())
+            {
+                getWinLossDetail = reportService.GetDirectMemberOfMasterWinLossDetail;
+                dynamicUplineId = customerInfo.MasterId;
+            }
             return getWinLossDetail(
-                customerInfo.GetUplineId(),
+                dynamicUplineId,
                 customerInfo.CustId,
-                fromDate,
-                toDate,
+                request.FromDate,
+                request.ToDate,
                 productIds,
                 productDetailsXML);
         }
@@ -259,12 +282,24 @@
                     request.Currencies,
                     request.BaseCurrencyName);
             }
-
             var getWinLossDetail = GetWinLossByCurrencyDetailFunction(customerInfo.RoleId.DirectUplineLevel());
+            var dynamicUplineId = customerInfo.GetUplineId();
+            
+            if (customerInfo.RoleId.IsMember() && customerInfo.AgentId.IsDirectMemberOfSuper())
+            {
+                getWinLossDetail = reportByCurrencyService.GetDirectMemberOfSuperWinLossMCDetail;
+                dynamicUplineId = customerInfo.SuperId;
+            }
+            
+            if (customerInfo.RoleId.IsMember() && customerInfo.AgentId.IsDirectMemberOfMaster())
+            {
+                getWinLossDetail = reportByCurrencyService.GetDirectMemberOfMasterWinLossMCDetail;
+                dynamicUplineId = customerInfo.MasterId;
+            }
 
             return getWinLossDetail(
                 request.GroupName,
-                customerInfo.GetUplineId(),
+                dynamicUplineId,
                 customerInfo.CustId,
                 request.FromDate,
                 request.ToDate,

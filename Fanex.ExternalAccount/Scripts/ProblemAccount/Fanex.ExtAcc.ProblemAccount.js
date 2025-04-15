@@ -1,6 +1,6 @@
 ﻿/// <reference path="../_references.js" />
 if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
-    alert("Fanex.ExtAcc.js module is required!")
+    alert("Fanex.ExtAcc.js module is required!");
 }
 
 (function ($) {
@@ -201,9 +201,16 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
                 .on("click", function () {
                     var $this = $(this);
                     var checked = $this.hasClass("menuActive");
-                    $this.removeClass().addClass(checked ? "menuInactive set-to-reviewed" : "menuActive set-to-reviewed")
+                    $this.removeClass().addClass(checked ? "menuInactive set-to-reviewed" : "menuActive set-to-reviewed");
                 });
         }
+    }
+
+    function getDirectMemberFormat(datum) {
+        if (datum.AgentId < 0) {
+            return datum.Username + "<span class='icon-directmember'></span>";
+        }
+        return datum.Username;
     }
 
     function getAccountStatusCssClass(datum) {
@@ -247,7 +254,7 @@ if (typeof Fanex === "undefined" || typeof Fanex.ExtAcc === "undefined") {
             Width: 200,
             CustomCellRender: function (cell) {
                 return roleId === 1
-                    ? cell.Value.Username
+                    ? getDirectMemberFormat(cell.Value)
                     : '<a href="javascript:;" class="drow-username">' + cell.Value.Username + '</a>';
             }
         });

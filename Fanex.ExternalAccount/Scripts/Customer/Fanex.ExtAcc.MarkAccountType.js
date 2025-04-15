@@ -218,7 +218,7 @@ Fanex.ExtAcc.MarkAccountType = {
                 var columns = [];
                 columns.push({ Name: 'RowNumber', Value: currentIndex + params.pageSize * params.pageIndex + 1 });
                 columns.push({ Name: 'Check', Value: currentRow });
-                columns.push({ Name: 'Username', Value: currentRow.Username });
+                columns.push({ Name: 'Username', Value: currentRow});
                 columns.push({ Name: 'Level', Value: $this.GetLevelName(currentRow.Level) });
                 columns.push({ Name: 'Type', Value: currentRow });
                 columns.push({ Name: 'MarkedDate', Value: currentRow.MarkDateTime });
@@ -239,7 +239,12 @@ Fanex.ExtAcc.MarkAccountType = {
                     return `<div onclick="Fanex.ExtAcc.MarkAccountType.Select(this)" id=ckbEdit${cell.Value.CustId} style="margin-left: 0px !important" data-cust-id="${cell.Value.CustId}" data-username="${cell.Value.Username}" class="menuInactive"></div>`;
                 }
             });
-            headers.push({ HeaderText: 'Username', Name: 'Username', Width: 180, CellAlign: 'left', HeaderAlign: 'center' });
+            headers.push({
+                HeaderText: 'Username', Name: 'Username', Width: 200, CellAlign: 'left', HeaderAlign: 'center',
+                CustomCellRender: function (cell) {
+                    return cell.Value.AgentId >= 0 ? cell.Value.Username : cell.Value.Username + '<span class="icon-directmember"></span>';
+                }
+            });
             headers.push({ HeaderText: 'Level', Name: 'Level', Width: 60, CellAlign: 'center' });
             headers.push({
                 HeaderText: 'Type', Name: 'Type', Width: 100, CellAlign: 'center',

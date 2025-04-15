@@ -29,7 +29,7 @@ Fanex.ExtAcc.AssociationAccount = {
         $this.DataFields = [
             { HeaderText: 'No.', Name: 'No', Width: 40, HeaderAlign: 'center', CellAlign: 'center' },
             { HeaderText: 'Username', Name: 'Username', HeaderAlign: 'center', Width: 200, CellAlign: 'left' },
-            { HeaderText: 'Level', Name: 'Level', CellAlign: 'center', Width: 100 },
+            { HeaderText: 'Level', Name: 'Level', CellAlign: 'center', Width: 160 },
             {
                 HeaderText: 'Status', Name: 'Status', Width: 100, CellAlign: 'center',
                 CustomCellRender: function (cell) {

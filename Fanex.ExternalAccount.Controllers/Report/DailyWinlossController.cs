@@ -95,7 +95,7 @@
                 {
                     return false;
                 }
-
+                
                 _roleId = custInfo.Rows[0].ToInt32("roleid");
                 _srecommend = custInfo.Rows[0].ToInt32("srecommend");
                 _mrecommend = custInfo.Rows[0].ToInt32("mrecommend");
@@ -136,7 +136,7 @@
             }
             if (_roleId.IsMaster())
             {
-                _listDailyWinLoss = reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, _mrecommend);
+                _listDailyWinLoss = reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, _mrecommend, 0);
                 return JsonBase(
                     new
                     {
@@ -152,7 +152,42 @@
             }
             if (_roleId.IsAgent())
             {
-                _listDailyWinLoss = reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, _recommend);
+                _listDailyWinLoss = reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, _recommend, 0);
+                return JsonBase(
+                    new
+                    {
+                        viewlevel = Role.Agent,
+                        supername = string.Empty,
+                        mastername = string.Empty,
+                        agentname = _username,
+                        srecommend = _srecommend,
+                        mrecommend = _mrecommend,
+                        recommend = _recommend,
+                        rows = _listDailyWinLoss
+                    },
+                    new JsonSerializerSettings());
+            }
+
+            if (_roleId.IsMember() && _recommend.IsDirectMemberOfSuper())
+            {
+                _listDailyWinLoss = reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, 0, _memberId);
+                return JsonBase(
+                    new
+                    {
+                        viewlevel = Role.Master,
+                        supername = string.Empty,
+                        mastername = _username,
+                        agentname = string.Empty,
+                        srecommend = _srecommend,
+                        mrecommend = _mrecommend,
+                        rows = _listDailyWinLoss
+                    },
+                    new JsonSerializerSettings());
+            }
+            
+            if (_roleId.IsMember() && _recommend.IsDirectMemberOfMaster())
+            {
+                _listDailyWinLoss = reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, 0, _memberId);
                 return JsonBase(
                     new
                     {
@@ -187,7 +222,7 @@
         {
             if (_viewlevel.IsSuper())
             {
-                _listDailyWinLoss = reportService.GetDailyWinLossSuper(_winlostDate, _custId, 0);
+                _listDailyWinLoss = reportService.GetDailyWinLossSuper(_winlostDate, _custId, 0,0);
                 return JsonBase(
                     new
                     {
@@ -199,7 +234,7 @@
             }
             if (_viewlevel.IsMaster())
             {
-                _listDailyWinLoss = reportService.GetDailyWinLossMaster(_winlostDate, _custId, 0);
+                _listDailyWinLoss = reportService.GetDailyWinLossMaster(_winlostDate, _custId, 0, 0);
                 return JsonBase(
                     new
                     {

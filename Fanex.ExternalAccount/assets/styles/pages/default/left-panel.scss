@@ -365,6 +365,7 @@ body {
         .product-name {
             text-decoration: underline;
         }
+
         .icon-bullet:before {
             content: '\2022';
             margin-right: 8px;
@@ -375,29 +376,35 @@ body {
 
     .subTab-parent {
         display: block;
-        width: 100%;        
+        width: 100%;
 
         .subTab-active {
             background-color: #5faa72;
-            color: #fff;   
+            color: #fff;
         }
     }
 
-    .subTab { 
-        float: left;       
+    .subTab-parent:after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+
+    .subTab {
+        float: left;
         position: relative;
         margin-right: 6px;
         padding: 0 25px 0 20px;
         background-color: #929292;
-        color: #fff;  
+        color: #fff;
         font-weight: bold;
         text-transform: uppercase;
-        cursor: pointer;           
-        
+        cursor: pointer;
+
         &:last-child {
             margin-right: 0;
-        }  
-        
+        }
+
         &:after {
             content: "";
             position: absolute;
@@ -409,8 +416,7 @@ body {
             border-style: solid;
             border-width: 4px 3px 0 3px;
             border-color: #fff transparent transparent transparent;
-            
-        }   
+        }
     }
 
     .list-link {
@@ -422,7 +428,6 @@ body {
         a:hover {
             text-decoration: underline;
         }
-
     }
 }
 

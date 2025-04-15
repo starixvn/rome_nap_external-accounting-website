@@ -708,6 +708,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Direct Member.
+        /// </summary>
+        public static string DirectMember {
+            get {
+                return ResourceManager.GetString("DirectMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Disabled.
         /// </summary>
         public static string Disabled {

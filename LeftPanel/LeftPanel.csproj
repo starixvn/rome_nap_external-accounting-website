@@ -252,6 +252,7 @@
     <Compile Include="ViewModels\RewardInfo.cs" />
     <Compile Include="ViewModels\Setting.cs" />
     <Compile Include="ViewModels\MasterAgentUsedCreditItem.cs" />
+    <Compile Include="ViewModels\UserCreditModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.14.0.8411\analyzers\Google.Protobuf.dll" />

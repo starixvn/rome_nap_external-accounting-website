@@ -125,9 +125,9 @@
             var parameters = new Hashtable
             {
 #pragma warning disable S1192 // String literals should not be duplicated
-                {"winlostdate", winlostDate},
+                { "winlostdate", winlostDate },
 #pragma warning restore S1192 // String literals should not be duplicated
-                {"groupname", groupname}
+                { "groupname", groupname }
             };
 
             if (custId != 0)
@@ -135,15 +135,15 @@
                 parameters.Add("custid", custId);
             }
 
-            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Com14", parameters);
+            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Com14", parameters, "Com");
         }
 
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Com(DateTime winlostDate, int custId, string groupname)
         {
             var parameters = new Hashtable
             {
-                {"winlostdate", winlostDate},
-                {"groupname", groupname}
+                { "winlostdate", winlostDate },
+                { "groupname", groupname }
             };
 
             if (custId != 0)
@@ -151,79 +151,99 @@
                 parameters.Add("custid", custId);
             }
 
-            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Com", parameters);
+            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Com", parameters, "Com");
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg14(DateTime winlostDate, int custId, int masterId)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg14(DateTime winlostDate, int custId, int masterId, int memberId)
         {
             var parameters = new Hashtable
             {
-                {"winlostdate", winlostDate},
-                {"custid", custId}
+                { "winlostdate", winlostDate },
+                { "custid", custId }
             };
 
             if (masterId != 0)
             {
                 parameters.Add("masterid", masterId);
             }
+            
+            if(memberId != 0)
+            {
+                parameters.Add("memberid", memberId);
+            }
 
-            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_SAg14", parameters);
+            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_SAg14", parameters, "Super");
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg(DateTime winlostDate, int custId, int masterId)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg(DateTime winlostDate, int custId, int masterId, int memberId)
         {
             var parameters = new Hashtable
             {
-                {"winlostdate", winlostDate},
-                {"custid", custId}
+                { "winlostdate", winlostDate },
+                { "custid", custId }
             };
 
             if (masterId != 0)
             {
                 parameters.Add("masterid", masterId);
             }
-
-            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_SAg", parameters);
+            
+            if(memberId != 0)
+            {
+                parameters.Add("memberid", memberId);
+            }
+            
+            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_SAg", parameters, "Super");
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg14(DateTime winlostDate, int custId, int agentId)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg14(DateTime winlostDate, int custId, int agentId, int memberId)
         {
             var parameters = new Hashtable
             {
-                {"winlostdate", winlostDate},
-                {"custid", custId}
+                { "winlostdate", winlostDate },
+                { "custid", custId }
             };
 
             if (agentId != 0)
             {
                 parameters.Add("agentid", agentId);
             }
+            
+            if(memberId != 0)
+            {
+                parameters.Add("memberid", memberId);
+            }
 
-            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_MAg14", parameters);
+            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_MAg14", parameters, "Master");
         }
 
-        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg(DateTime winlostDate, int custId, int agentId)
+        public List<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg(DateTime winlostDate, int custId, int agentId, int memberId)
         {
             var parameters = new Hashtable
             {
-                {"winlostdate", winlostDate},
-                {"custid", custId}
+                { "winlostdate", winlostDate },
+                { "custid", custId }
             };
 
             if (agentId != 0)
             {
                 parameters.Add("agentid", agentId);
             }
+            
+            if(memberId != 0)
+            {
+                parameters.Add("memberid", memberId);
+            }
 
-            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_MAg", parameters);
+            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_MAg", parameters, "Master");
         }
 
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag14(DateTime winlostDate, int custId, int memberId)
         {
             var parameters = new Hashtable
             {
-                {"winlostdate", winlostDate},
-                {"custid", custId}
+                { "winlostdate", winlostDate },
+                { "custid", custId }
             };
 
             if (memberId != 0)
@@ -231,15 +251,15 @@
                 parameters.Add("memberid", memberId);
             }
 
-            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Ag14", parameters);
+            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Ag14", parameters, "Agent");
         }
 
         public List<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(DateTime winlostDate, int custId, int memberId)
         {
             var parameters = new Hashtable
             {
-                {"winlostdate", winlostDate},
-                {"custid", custId}
+                { "winlostdate", winlostDate },
+                { "custid", custId }
             };
 
             if (memberId != 0)
@@ -247,7 +267,7 @@
                 parameters.Add("memberid", memberId);
             }
 
-            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Ag", parameters);
+            return GetCommonWinLossDaily("EAS_Rpt_WinLossDaily_Ag", parameters, "Agent");
         }
 
         public List<WinLossDetailExtra> EAS_Rpt_WinLossDetail_Com(
@@ -263,13 +283,13 @@
             var parameters = new Hashtable
             {
 #pragma warning disable S1192 // String literals should not be duplicated
-                {"groupname", groupname},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay}
+                { "groupname", groupname },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay }
 #pragma warning restore S1192 // String literals should not be duplicated
             };
 
@@ -284,6 +304,7 @@
         public List<WinLossDetail> EAS_Rpt_WinLossDetail_SAg(
             int custId,
             int masterId,
+            int memberId,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
@@ -293,18 +314,23 @@
         {
             var parameters = new Hashtable
             {
-                {"custid", custId},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay}
+                { "custid", custId },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay }
             };
 
             if (masterId != 0)
             {
                 parameters.Add("masterid", masterId);
+            }  
+            
+            if (memberId != 0)
+            {
+                parameters.Add("memberid", memberId);
             }
 
             return GetCommonWinLossDetail("EAS_Rpt_WinLossDetail_SAg", parameters);
@@ -313,6 +339,7 @@
         public List<WinLossDetailMAg> EAS_Rpt_WinLossDetail_MAg(
             int custId,
             int agentId,
+            int memberId,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
@@ -322,18 +349,23 @@
         {
             var parameters = new Hashtable
             {
-                {"custid", custId},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay}
+                { "custid", custId },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay },
             };
 
             if (agentId != 0)
             {
                 parameters.Add("agentid", agentId);
+            }
+            
+            if (memberId != 0)
+            {
+                parameters.Add("memberid", memberId);
             }
 
             return GetCommonWinLossDetailMAg("EAS_Rpt_WinLossDetail_MAg", parameters);
@@ -351,19 +383,20 @@
         {
             var parameters = new Hashtable
             {
-                {"custid", custId},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay}
+                { "custid", custId },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay }
             };
 
             if (memberId != 0)
             {
                 parameters.Add("memberid", memberId);
             }
+
             return GetCommonWinLossDetailAg("EAS_Rpt_WinLossDetail_Ag", parameters);
         }
 
@@ -487,6 +520,7 @@
             => new WinLossDetail
             {
                 CustId = reader.ToInt("custid"),
+                RoleId = reader.ToInt("roleid"),
                 Username = reader.To<string>("username"),
                 Turnover = reader.ToDouble("Turnover"),
                 NetTurnover = reader.ToDouble("TurnoverNoDraw"),
@@ -510,7 +544,7 @@
 #pragma warning restore S1192 // String literals should not be duplicated
             };
 
-    private List<WinLossDetailMAg> GetCommonWinLossDetailMAg(string spname, Hashtable parameters)
+        private List<WinLossDetailMAg> GetCommonWinLossDetailMAg(string spname, Hashtable parameters)
         {
             var entityList = new List<WinLossDetailMAg>();
 
@@ -533,6 +567,7 @@
             => new WinLossDetailMAg
             {
                 CustId = reader.ToInt("custid"),
+                RoleId = reader.ToInt("roleid"),
                 Username = reader.To<string>("username"),
                 Turnover = reader.ToDouble("Turnover"),
                 NetTurnover = reader.ToDouble("TurnoverNoDraw"),
@@ -562,6 +597,7 @@
                     while (reader.Read())
                     {
                         var entity = CreateWinLossDetailAgEntity(reader);
+                        entity.RoleId = 1;
                         entityList.Add(entity);
                     }
                 }
@@ -606,7 +642,7 @@
             return entityList;
         }
 
-        private List<DailyWinLoss> GetCommonWinLossDaily(string spname, Hashtable parameters)
+        private List<DailyWinLoss> GetCommonWinLossDaily(string spname, Hashtable parameters, string viewer)
         {
             var entityList = new List<DailyWinLoss>();
             var num = 1;
@@ -615,11 +651,25 @@
             {
                 if (reader != null)
                 {
-                    while (reader.Read())
+                    if (viewer == "Super" || viewer == "Master")
                     {
-                        var entity = CreateWinLossDailyEntity(reader, num);
-                        entityList.Add(entity);
-                        num++;
+                        while (reader.Read())
+                        {
+                            var entity = CreateWinLossDailyEntity(reader, num);
+                            entity.RoleId = reader.ToInt("roleid");
+                            entityList.Add(entity);
+                            num++;
+                        }
+                    }
+                    else
+                    {
+                        while (reader.Read())
+                        {
+                            var entity = CreateWinLossDailyEntity(reader, num);
+                            entity.RoleId = viewer == "Com" ? 5 : 1;
+                            entityList.Add(entity);
+                            num++;
+                        }
                     }
                 }
             }
@@ -638,49 +688,49 @@
                 TotalTO = reader.ToDouble("totalTO"),
                 ComTO = reader.ToDouble("ComTO"),
                 ComTOPercent = !reader.ToDouble("totalTO").Equals(0)
-                ? reader.ToDouble("ComTO") * 100 / reader.ToDouble("totalTO")
-                : 0,
+                    ? reader.ToDouble("ComTO") * 100 / reader.ToDouble("totalTO")
+                    : 0,
                 SAgTO = reader.ToDouble("SAgTO"),
                 SAgTOPercent = !reader.ToDouble("totalTO").Equals(0)
-                ? reader.ToDouble("SAgTO") * 100 / reader.ToDouble("totalTO")
-                : 0,
+                    ? reader.ToDouble("SAgTO") * 100 / reader.ToDouble("totalTO")
+                    : 0,
                 MAgTO = reader.ToDouble("MAgTO"),
                 MAgTOPercent = !reader.ToDouble("totalTO").Equals(0)
-                ? reader.ToDouble("MAgTO") * 100 / reader.ToDouble("totalTO")
-                : 0,
+                    ? reader.ToDouble("MAgTO") * 100 / reader.ToDouble("totalTO")
+                    : 0,
                 AgTO = reader.ToDouble("AgTO"),
                 AgTOPercent = !reader.ToDouble("totalTO").Equals(0)
-                ? reader.ToDouble("AgTO") * 100 / reader.ToDouble("totalTO")
-                : 0,
+                    ? reader.ToDouble("AgTO") * 100 / reader.ToDouble("totalTO")
+                    : 0,
                 ComWinlost = reader.ToDouble("ComWinlost"),
                 ComWinlostPercent = !reader.ToDouble("ComTO").Equals(0)
-                ? reader.ToDouble("ComWinlost") * 100 / reader.ToDouble("ComTO")
-                : 0,
+                    ? reader.ToDouble("ComWinlost") * 100 / reader.ToDouble("ComTO")
+                    : 0,
                 SAgWinlost = reader.ToDouble("SAgWinlost"),
                 SAgWinlostPercent = !reader.ToDouble("SAgTO").Equals(0)
-                ? reader.ToDouble("SAgWinlost") * 100 / reader.ToDouble("SAgTO")
-                : 0,
+                    ? reader.ToDouble("SAgWinlost") * 100 / reader.ToDouble("SAgTO")
+                    : 0,
                 MAgWinlost = reader.ToDouble("MAgWinlost"),
                 MAgWinlostPercent = !reader.ToDouble("MAgTO").Equals(0)
-                ? reader.ToDouble("MAgWinlost") * 100 / reader.ToDouble("MAgTO")
-                : 0,
+                    ? reader.ToDouble("MAgWinlost") * 100 / reader.ToDouble("MAgTO")
+                    : 0,
                 AgWinlost = reader.ToDouble("AgWinlost"),
                 AgWinlostPercent = !reader.ToDouble("AgTO").Equals(0)
-                ? reader.ToDouble("AgWinlost") * 100 / reader.ToDouble("AgTO")
-                : 0
+                    ? reader.ToDouble("AgWinlost") * 100 / reader.ToDouble("AgTO")
+                    : 0
 #pragma warning restore S109 // Magic numbers should not be used
 #pragma warning restore S1192 // String literals should not be duplicated
             };
 
 
         public List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_Com(
-            string groupname, 
+            string groupname,
             int custId,
             string currencyIds,
             int baseCurrency,
-            DateTime fromDate, 
-            DateTime toDate, 
-            string productIds, 
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
             string productDetailsXML,
             DateTime balanceUpDay,
             DateTime moveBetsDay)
@@ -688,13 +738,13 @@
             var parameters = new Hashtable
             {
 #pragma warning disable S1192 // String literals should not be duplicated
-                {"groupname", groupname},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay}
+                { "groupname", groupname },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay }
 #pragma warning restore S1192 // String literals should not be duplicated
             };
 
@@ -711,22 +761,22 @@
             int masterId,
             string currencyIds,
             int baseCurrency,
-            DateTime fromDate, 
+            DateTime fromDate,
             DateTime toDate,
-            string productIds, 
+            string productIds,
             string productDetailsXML,
             DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
             var parameters = new Hashtable
             {
-                {"custid", custId},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay}
+                { "custid", custId },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay }
             };
 
             if (masterId != 0)
@@ -756,55 +806,55 @@
             return entityList;
         }
 
-        private static WinLossByCurrencyDetail CreateWinLossMCDetailEntity(IDataReader reader) => new WinLossByCurrencyDetail
-        {
-            CustId = reader.ToInt("custid"),
-            Currency = "test",
-            Username = reader.To<string>("username"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
+        private static WinLossByCurrencyDetail CreateWinLossMCDetailEntity(IDataReader reader) =>
+            new WinLossByCurrencyDetail
+            {
+                CustId = reader.ToInt("custid"),
+                Currency = "test",
+                Username = reader.To<string>("username"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
 #pragma warning disable S1192 // String literals should not be duplicated
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgComm = reader.ToDouble("MAgComm"),
-            MAgTotal = reader.ToDouble("MAgTotal"),
-            SAgWinlost = reader.ToDouble("SAgWinlost"),
-            SAgComm = reader.ToDouble("SAgComm"),
-            SAgTotal = reader.ToDouble("SAgTotal"),
-            Company = reader.ToDouble("Company"),
-            RewardAmount = reader.ToDouble("RewardAmount"),
-            RewardCurrency = reader.To<string>("RewardCurrency")
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                MAgWinlost = reader.ToDouble("MAgWinlost"),
+                MAgComm = reader.ToDouble("MAgComm"),
+                MAgTotal = reader.ToDouble("MAgTotal"),
+                SAgWinlost = reader.ToDouble("SAgWinlost"),
+                SAgComm = reader.ToDouble("SAgComm"),
+                SAgTotal = reader.ToDouble("SAgTotal"),
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
 #pragma warning restore S1192 // String literals should not be duplicated
-        };
+            };
 
         public List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_MAg(
-            int custId, 
+            int custId,
             int agentId,
             string currencyIds,
-            int baseCurrency, 
-            DateTime fromDate, 
-            DateTime toDate, 
+            int baseCurrency,
+            DateTime fromDate,
+            DateTime toDate,
             string productIds,
             string productDetailsXML,
             DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
-
             var parameters = new Hashtable
             {
-                {"custid", custId},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay}
+                { "custid", custId },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay }
             };
 
             if (agentId != 0)
@@ -812,30 +862,30 @@
                 parameters.Add("agentid", agentId);
             }
 
-            return GetCommonWinLossMCDetailMAg("EAS_Rpt_WinLossDetail_MAg", parameters); 
+            return GetCommonWinLossMCDetailMAg("EAS_Rpt_WinLossDetail_MAg", parameters);
         }
 
         public List<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_Ag(
-            int custId, 
+            int custId,
             int memberId,
             string currencyIds,
             int baseCurrency,
             DateTime fromDate,
             DateTime toDate,
             string productIds,
-            string productDetailsXML, 
-            DateTime balanceUpDay, 
+            string productDetailsXML,
+            DateTime balanceUpDay,
             DateTime moveBetsDay)
         {
             var parameters = new Hashtable
             {
-                {"custid", custId},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay}
+                { "custid", custId },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay }
             };
 
             if (memberId != 0)
@@ -865,26 +915,27 @@
             return entityList;
         }
 
-        private static WinLossByCurrencyDetail CreateWinLossMCDetailMAgEntity(IDataReader reader) => new WinLossByCurrencyDetail
-        {
-            CustId = reader.ToInt("custid"),
-            Username = reader.To<string>("username"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgComm = reader.ToDouble("MAgComm"),
-            MAgTotal = reader.ToDouble("MAgTotal"),
-            Company = reader.ToDouble("Company"),
-            RewardAmount = reader.ToDouble("RewardAmount"),
-            RewardCurrency = reader.To<string>("RewardCurrency")
-        };
+        private static WinLossByCurrencyDetail CreateWinLossMCDetailMAgEntity(IDataReader reader) =>
+            new WinLossByCurrencyDetail
+            {
+                CustId = reader.ToInt("custid"),
+                Username = reader.To<string>("username"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                MAgWinlost = reader.ToDouble("MAgWinlost"),
+                MAgComm = reader.ToDouble("MAgComm"),
+                MAgTotal = reader.ToDouble("MAgTotal"),
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
+            };
 
         private List<WinLossByCurrencyDetail> GetCommonWinLossMCDetailAg(string spname, Hashtable parameters)
         {
@@ -905,22 +956,23 @@
             return entityList;
         }
 
-        private static WinLossByCurrencyDetail CreateWinLossMCDetailAgEntity(IDataReader reader) => new WinLossByCurrencyDetail
-        {
-            CustId = reader.ToInt("custid"),
-            Username = reader.To<string>("username"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            Company = reader.ToDouble("Company"),
-            RewardAmount = reader.ToDouble("RewardAmount"),
-            RewardCurrency = reader.To<string>("RewardCurrency")
-        };
+        private static WinLossByCurrencyDetail CreateWinLossMCDetailAgEntity(IDataReader reader) =>
+            new WinLossByCurrencyDetail
+            {
+                CustId = reader.ToInt("custid"),
+                Username = reader.To<string>("username"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
+            };
     }
 }

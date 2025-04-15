@@ -15351,86 +15351,70 @@ $.extend( $.ui.dialog.overlay.prototype, {
 
 }( jQuery ) );
 
-var ProductStatusSettingBase = /** @class */ (function () {
-    function ProductStatusSettingBase($, topWindow) {
-        var _this = this;
-        this.bindingSubmitEvent = function () { return _this.$("#btnSubmit").on("click", _this.onSubmit); };
-        this.bindingResetEvent = function () { return _this.$("#btnReset").on("click", function () { location.reload(true); }); };
-        this.getNextLabel = function (checkboxElement) {
-            return _this.$("label[for='" + checkboxElement.id + "']").toArray()[0];
-        };
-        this.getRoleId = function (element) { return _this.$(element).data("roleid"); };
-        this.isEnablebUpline = function (element) { return !_this.parseBoolean(_this.$(element).data("disabledupline")); };
-        this.getBetType = function (element) { return _this.$(element).data("bettype"); };
-        this.getParentBetType = function (element) { return _this.$(element).data("parent-bettype"); };
-        this.getSportType = function (element) { return _this.$(element).data("sporttype"); };
-        this.getParentSportType = function (element) { return _this.$(element).data("parent-sporttype"); };
-        this.isChecked = function (element) { return _this.$(element).is(":checked"); };
-        this.isChangeState = function (originValue, currentValue) {
-            return originValue != currentValue;
-        };
-        this.buildElementId = function (className, roleId, sportType, betType) {
-            return ["#", className, "_", roleId, "_", sportType, "_", betType].join("");
-        };
-        this.parseInt = function (value) { return parseInt(value.replace(/,/g, "")); };
-        this.parseBoolean = function (value) { return _this.$.parseJSON(value.toLowerCase()); };
-        this.getTooltip = function (element, enable) {
-            return enable ? _this.$(element).data("disabletooltip") : _this.$(element).data("enabletooltip");
-        };
-        this.getToggles = function (toggles, roleId) {
-            return toggles.filter(function (toggle) {
-                if (_this.getRoleId(toggle) == roleId) {
-                    return toggle;
-                }
-            });
-        };
-        this.getFirstToggle = function (toggles, roleId) {
-            return _this.getToggles(toggles, roleId)[0];
-        };
-        this.getTogglesByParentSportTypeBetType = function (toggles, roleId, parentSportType, parentBetType) {
-            return toggles.filter(function (toggle) {
-                if (_this.getRoleId(toggle) == roleId && _this.getParentSportType(toggle) == parentSportType && _this.getParentBetType(toggle) == parentBetType) {
-                    return toggle;
-                }
-            });
-        };
-        this.isParentRow = function (toggles) { return _this.getParentSportType(toggles) === 0 && _this.getParentBetType(toggles) === 0; };
-        this.onSubmit = function (e) {
+class ProductStatusSettingBase {
+    constructor($, topWindow) {
+        this.downlineRoleIds = [1, 2, -3, 3, -4, 4];
+        this.bindingSubmitEvent = () => this.$("#btnSubmit").on("click", this.onSubmit);
+        this.bindingResetEvent = () => this.$("#btnReset").on("click", function () { location.reload(true); });
+        this.getNextLabel = (checkboxElement) => this.$("label[for='" + checkboxElement.id + "']").toArray()[0];
+        this.getRoleId = (element) => this.$(element).data("roleid");
+        this.isEnablebUpline = (element) => !this.parseBoolean(this.$(element).data("disabledupline"));
+        this.getBetType = (element) => this.$(element).data("bettype");
+        this.getParentBetType = (element) => this.$(element).data("parent-bettype");
+        this.getSportType = (element) => this.$(element).data("sporttype");
+        this.getParentSportType = (element) => this.$(element).data("parent-sporttype");
+        this.isChecked = (element) => this.$(element).is(":checked");
+        this.isChangeState = (originValue, currentValue) => originValue != currentValue;
+        this.buildElementId = (className, roleId, sportType, betType) => ["#", className, "_", roleId, "_", sportType, "_", betType].join("");
+        this.parseInt = (value) => parseInt(value.replace(/,/g, ""));
+        this.parseBoolean = (value) => this.$.parseJSON(value.toLowerCase());
+        this.getTooltip = (element, enable) => enable ? this.$(element).data("disabletooltip") : this.$(element).data("enabletooltip");
+        this.getToggles = (toggles, roleId) => toggles.filter((toggle) => {
+            if (this.getRoleId(toggle) == roleId) {
+                return toggle;
+            }
+        });
+        this.getFirstToggle = (toggles, roleId) => this.getToggles(toggles, roleId)[0];
+        this.getTogglesByParentSportTypeBetType = (toggles, roleId, parentSportType, parentBetType) => toggles.filter((toggle) => {
+            if (this.getRoleId(toggle) == roleId && this.getParentSportType(toggle) == parentSportType && this.getParentBetType(toggle) == parentBetType) {
+                return toggle;
+            }
+        });
+        this.isParentRow = (toggles) => this.getParentSportType(toggles) === 0 && this.getParentBetType(toggles) === 0;
+        this.onSubmit = (e) => {
             e.preventDefault();
-            var updateViewModel = _this.getUpdateViewModel();
-            _this.$.blockUI({
+            let updateViewModel = this.getUpdateViewModel();
+            this.$.blockUI({
                 blockMsgClass: "block-ui-loading"
             });
             updateViewModel.productStatus.length > 0 ?
-                _this.callAjax(updateViewModel, _this.$resources.updateActionName) :
-                _this.showMessage(_this.$errorCodeDefault, _this.$resources.thereIsNoChange);
+                this.callAjax(updateViewModel, this.$resources.updateActionName) :
+                this.showMessage(this.$errorCodeDefault, this.$resources.thereIsNoChange);
         };
-        this.callAjax = function (updateViewModel, postAction) {
-            return _this.$.ajax({
-                type: "POST",
-                url: postAction,
-                cache: false,
-                headers: _this.setupAntiXSRF(),
-                data: JSON.stringify(updateViewModel),
-                contentType: "application/json; charset=utf-8",
-                success: function (data) { return _this.onSuccess(data); },
-                error: _this.onDefaultError
-            });
-        };
-        this.onDefaultError = function (jqXHR) {
+        this.callAjax = (updateViewModel, postAction) => this.$.ajax({
+            type: "POST",
+            url: postAction,
+            cache: false,
+            headers: this.setupAntiXSRF(),
+            data: JSON.stringify(updateViewModel),
+            contentType: "application/json; charset=utf-8",
+            success: (data) => this.onSuccess(data),
+            error: this.onDefaultError
+        });
+        this.onDefaultError = (jqXHR) => {
             if (jqXHR.status === 403) {
-                var denyObject = _this.$.parseJSON(jqXHR.responseText);
-                _this.showMessage(denyObject.ErrorCode, denyObject.ErrorMessage);
+                const denyObject = this.$.parseJSON(jqXHR.responseText);
+                this.showMessage(denyObject.ErrorCode, denyObject.ErrorMessage);
             }
             else {
-                _this.showMessage(_this.$errorCodeDefault, _this.$resources.updateStatusFailed);
+                this.showMessage(this.$errorCodeDefault, this.$resources.updateStatusFailed);
             }
         };
-        this.hideMessage = function () { return _this.$("#sectionMessage").html("").addClass("hide"); };
+        this.hideMessage = () => this.$("#sectionMessage").html("").addClass("hide");
         this.$ = $;
         this.$topWindow = topWindow;
     }
-    ProductStatusSettingBase.prototype.init = function () {
+    init() {
         this.cachedElements();
         this.$custId = this.$('#custId').val();
         this.$custName = this.$('#custName').val();
@@ -15441,9 +15425,9 @@ var ProductStatusSettingBase = /** @class */ (function () {
         this.$errorCodeDefault = 101;
         this.$timeoutDefault = 3000;
         this.$isReloadLeftPanel = false;
-    };
-    ProductStatusSettingBase.prototype.cachedElements = function () {
-        var table = this.$("#tbl-product");
+    }
+    cachedElements() {
+        let table = this.$("#tbl-product");
         this.$thead = table.find("thead");
         this.$tbody = table.find("tbody");
         this.$resources = {
@@ -15453,20 +15437,20 @@ var ProductStatusSettingBase = /** @class */ (function () {
             disabledClass: "disabled",
             forbiddenClass: "gray"
         };
-    };
-    ProductStatusSettingBase.prototype.disableElement = function (labelElement) {
+    }
+    disableElement(labelElement) {
         this.$(labelElement).addClass(this.$resources.forbiddenClass);
-    };
-    ProductStatusSettingBase.prototype.enableElement = function (labelElement) {
+    }
+    enableElement(labelElement) {
         this.$(labelElement).removeClass(this.$resources.forbiddenClass);
-    };
-    ProductStatusSettingBase.prototype.allowActionOnElement = function (labelElement) {
+    }
+    allowActionOnElement(labelElement) {
         return !this.$(labelElement).hasClass(this.$resources.forbiddenClass);
-    };
-    ProductStatusSettingBase.prototype.isEnabledElement = function (labelElement) {
+    }
+    isEnabledElement(labelElement) {
         return this.$(labelElement).hasClass(this.$resources.enabledClass);
-    };
-    ProductStatusSettingBase.prototype.getUpdateViewModel = function () {
+    }
+    getUpdateViewModel() {
         return {
             productId: this.$productId,
             custId: this.$custId,
@@ -15476,19 +15460,18 @@ var ProductStatusSettingBase = /** @class */ (function () {
             productStatus: [],
             isGroup: this.$isGroup
         };
-    };
-    ProductStatusSettingBase.prototype.setupAntiXSRF = function () {
-        var token = this.$('[name=__RequestVerificationToken]').val();
-        var headers = {};
+    }
+    setupAntiXSRF() {
+        let token = this.$('[name=__RequestVerificationToken]').val();
+        let headers = {};
         headers["__RequestVerificationToken"] = token;
         return headers;
-    };
-    ProductStatusSettingBase.prototype.onSuccess = function (data) {
-        var _this = this;
-        var html = [];
-        var isSuccess = true;
+    }
+    onSuccess(data) {
+        let html = [];
+        let isSuccess = true;
         this.$.each(data, function (index, result) {
-            var className;
+            let className;
             if (result.Code !== 0) {
                 className = "alerterror";
                 isSuccess = false;
@@ -15504,145 +15487,110 @@ var ProductStatusSettingBase = /** @class */ (function () {
         });
         this.showMixedMessages(html.join(""));
         if (isSuccess && this.$topWindow.reloadLeftPanel) {
-            setTimeout(function () { return _this.$topWindow.reloadLeftPanel(); }, this.$timeoutDefault);
+            setTimeout(() => this.$topWindow.reloadLeftPanel(), this.$timeoutDefault);
         }
-    };
-    ProductStatusSettingBase.prototype.showMessage = function (code, message) {
-        var html = ['<div class="', code === 0 ? "alertsuccess" : "alerterror", '"><div>', message, "</div></div>"].join("");
-        var messageDiv = this.$("#sectionMessage");
+    }
+    showMessage(code, message) {
+        let html = ['<div class="', code === 0 ? "alertsuccess" : "alerterror", '"><div>', message, "</div></div>"].join("");
+        let messageDiv = this.$("#sectionMessage");
         messageDiv.html(html).removeClass("hide");
         this.$.unblockUI();
-    };
-    ProductStatusSettingBase.prototype.showMixedMessages = function (html) {
-        var messageDiv = this.$("#sectionMessage");
+    }
+    showMixedMessages(html) {
+        let messageDiv = this.$("#sectionMessage");
         messageDiv.html(html).removeClass("hide");
         this.$.unblockUI();
-    };
-    return ProductStatusSettingBase;
-}());
+    }
+}
 //# sourceMappingURL=product-status-setting-base.js.map
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    };
-    return function (d, b) {
-        if (typeof b !== "function" && b !== null)
-            throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var ProductStatusSettingMultipe = /** @class */ (function (_super) {
-    __extends(ProductStatusSettingMultipe, _super);
-    function ProductStatusSettingMultipe($, topWindow) {
-        var _this = _super.call(this, $, topWindow) || this;
-        _this.loadMultiple = function () {
-            return _this.$("#productIds").change(function () {
-                var _a;
-                var productId = _this.$("#productIds").val();
-                _this.$("#productId").val(productId);
-                var isGroup = ((_a = _this.$products.filter(function (x) { return x.Id == productId && x.IsGroup; })) === null || _a === void 0 ? void 0 : _a.length) > 0;
-                _this.$("#isGroup").val(isGroup.toString());
-                _this.$("#product-form").submit();
-            });
-        };
-        _this.bindingToggleEvent = function () {
-            return _this.$toggleArray.forEach(function (element) {
-                return element.addEventListener('click', function () { return _this.toogleStatus(element); });
-            });
-        };
-        _this.bindingToggleAllEvent = function () {
-            return _this.$toggleAllArray.forEach(function (element) {
-                return element.addEventListener('click', function () { return _this.toogleStatusAll(element); });
-            });
-        };
-        _this.toggleStatus = function (toggle) { return _this.toggleStatusByValue(toggle, _this.isChecked(toggle)); };
-        _this.toggleStatusByValue = function (toggle, enable) {
-            _this.$(toggle).prop('checked', enable);
-            var labelElement = _this.getNextLabel(toggle);
-            var tooltip = _this.getTooltip(labelElement, enable);
-            var labelText = enable ? _this.$resources.enabled : _this.$resources.disabled;
-            var labelClass = enable ? _this.$resources.enabledClass : _this.$resources.disabledClass;
-            var bettype = _this.getBetType(toggle);
-            _this.$(labelElement).attr("title", tooltip)
+class ProductStatusSettingMultipe extends ProductStatusSettingBase {
+    constructor($, topWindow) {
+        super($, topWindow);
+        this.loadMultiple = () => this.$("#productIds").change(() => {
+            var productId = this.$("#productIds").val();
+            this.$("#productId").val(productId);
+            var isGroup = this.$products.some(x => x.Id == productId && x.IsGroup);
+            this.$("#isGroup").val(isGroup.toString());
+            this.$("#product-form").submit();
+        });
+        this.bindingToggleEvent = () => this.$toggleArray.forEach((element) => element.addEventListener('click', () => this.toogleStatus(element)));
+        this.bindingToggleAllEvent = () => this.$toggleAllArray.forEach((element) => element.addEventListener('click', () => this.toogleStatusAll(element)));
+        this.toggleStatus = (toggle) => this.toggleStatusByValue(toggle, this.isChecked(toggle));
+        this.toggleStatusByValue = (toggle, enable) => {
+            this.$(toggle).prop('checked', enable);
+            let labelElement = this.getNextLabel(toggle);
+            let tooltip = this.getTooltip(labelElement, enable);
+            let labelText = enable ? this.$resources.enabled : this.$resources.disabled;
+            let labelClass = enable ? this.$resources.enabledClass : this.$resources.disabledClass;
+            let bettype = this.getBetType(toggle);
+            this.$(labelElement).attr("title", tooltip)
                 .removeAttr('class')
                 .attr('class', labelClass)
                 .text(labelText);
         };
-        _this.watchHeader = function (roleId, isDownline) {
-            if (_this.$isMultipleBetTypes) {
-                [true, false].forEach(function (status) {
-                    _this.toogleHeader(roleId, status, isDownline);
+        this.watchHeader = (roleId, isDownline) => {
+            if (this.$isMultipleBetTypes) {
+                [true, false].forEach((status) => {
+                    this.toogleHeader(roleId, status, isDownline);
                 });
             }
         };
-        _this.toogleHeader = function (roleId, status, isDownline) {
-            var toggles = _this.getToggles(_this.$toggleArray, roleId);
-            if (toggles != null && toggles.length > 0 && _this.isAllStatus(toggles, status)) {
-                var toggleAll = _this.getFirstToggle(_this.$toggleAllArray, roleId);
-                _this.toggleStatusByValue(toggleAll, status);
+        this.toogleHeader = (roleId, status, isDownline) => {
+            let toggles = this.getToggles(this.$toggleArray, roleId);
+            if (toggles != null && toggles.length > 0 && this.isAllStatus(toggles, status)) {
+                let toggleAll = this.getFirstToggle(this.$toggleAllArray, roleId);
+                this.toggleStatusByValue(toggleAll, status);
                 if (isDownline && status == false) {
-                    _this.disableElement(toggleAll);
+                    this.disableElement(toggleAll);
                 }
             }
         };
-        _this.isAllStatus = function (toggles, status) {
-            return toggles.every(function (toggle) {
-                if (!_this.isEnabledElement(toggle)) {
-                    return true;
-                }
-                return _this.isChecked(toggle) == status;
-            });
-        };
-        _this.isUpdateSuccess = function (results) {
-            return results.every(function (result) {
-                return result.Code == 0;
-            });
-        };
-        return _this;
+        this.isAllStatus = (toggles, status) => toggles.every((toggle) => {
+            if (!this.isEnabledElement(toggle)) {
+                return true;
+            }
+            return this.isChecked(toggle) == status;
+        });
+        this.isUpdateSuccess = (results) => results.every((result) => {
+            return result.Code == 0;
+        });
     }
-    ProductStatusSettingMultipe.prototype.init = function () {
-        _super.prototype.init.call(this);
+    init() {
+        super.init();
         this.registerEvents();
         this.initDialog();
-    };
-    ProductStatusSettingMultipe.prototype.cachedElements = function () {
-        _super.prototype.cachedElements.call(this);
+    }
+    cachedElements() {
+        super.cachedElements();
         this.$toggleAllArray = this.$thead.find("input[class='checkbox-hide']").toArray();
         this.$toggleArray = this.$tbody.find("input[class='checkbox-hide']").toArray();
         this.$resources.enabled = this.$('#enableAll').val();
         this.$resources.disabled = this.$('#disableAll').val();
         this.$resources.updateActionName = "MultipleUpdate";
         this.$products = JSON.parse(this.$("#productsList").val());
-    };
-    ProductStatusSettingMultipe.prototype.registerEvents = function () {
-        var _this = this;
+    }
+    registerEvents() {
         this.loadMultiple();
         this.bindingToggleAllEvent();
         this.bindingToggleEvent();
-        this.$("#btnReset").on("click", function () { return _this.$("#product-form").submit(); });
-        this.$("#btnSubmit").on("click", function (e) {
+        this.$("#btnReset").on("click", () => this.$("#product-form").submit());
+        this.$("#btnSubmit").on("click", (e) => {
             e.preventDefault();
-            var updateViewModel = _this.getUpdateViewModel();
+            const updateViewModel = this.getUpdateViewModel();
             updateViewModel.productStatus.length > 0 ?
-                _this.$dialogConfirm.dialog("open") :
-                _this.showMessage(_this.$errorCodeDefault, _this.$resources.thereIsNoChange);
+                this.$dialogConfirm.dialog("open") :
+                this.showMessage(this.$errorCodeDefault, this.$resources.thereIsNoChange);
         });
-    };
-    ProductStatusSettingMultipe.prototype.initDialog = function () {
-        var _this = this;
-        var self = this;
-        var dialogButtons = [
+    }
+    initDialog() {
+        const self = this;
+        const dialogButtons = [
             {
                 text: "Yes",
                 "class": "btn -submit",
-                click: function () {
-                    _this.$dialogConfirm.dialog("close");
-                    var updateViewModel = self.getUpdateViewModel();
+                click: () => {
+                    this.$dialogConfirm.dialog("close");
+                    const updateViewModel = self.getUpdateViewModel();
                     self.$.blockUI({
                         blockMsgClass: "block-ui-loading"
                     });
@@ -15654,8 +15602,8 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
             {
                 text: "No",
                 "class": "btn -normal",
-                click: function () {
-                    _this.$dialogConfirm.dialog("close");
+                click: () => {
+                    this.$dialogConfirm.dialog("close");
                 }
             }
         ];
@@ -15668,121 +15616,143 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
             modal: true,
             buttons: dialogButtons
         });
-    };
-    ProductStatusSettingMultipe.prototype.toogleStatusAll = function (toogleAll) {
-        var _this = this;
+    }
+    toogleStatusAll(toogleAll) {
         if (this.allowActionOnElement(toogleAll)) {
             this.toggleStatus(toogleAll);
-            var roleId = this.getRoleId(toogleAll);
-            var enable_1 = this.isChecked(toogleAll);
-            var toogles = this.getToggles(this.$toggleArray, roleId);
-            toogles.forEach(function (toogle) {
-                if (_this.allowActionOnElement(toogle) && _this.isChecked(toogle) != enable_1) {
+            let roleId = this.getRoleId(toogleAll);
+            let enable = this.isChecked(toogleAll);
+            let toogles = this.getToggles(this.$toggleArray, roleId);
+            toogles.forEach((toogle) => {
+                if (this.allowActionOnElement(toogle) && this.isChecked(toogle) != enable) {
                     toogle.click();
                 }
             });
         }
-    };
-    ProductStatusSettingMultipe.prototype.toogleStatus = function (toogle) {
-        var _this = this;
+    }
+    toogleStatus(toogle) {
         if (this.allowActionOnElement(toogle)) {
             this.toggleStatus(toogle);
-            var roleId_1 = this.getRoleId(toogle);
-            var sportType = this.getSportType(toogle);
-            var bettype = this.getBetType(toogle);
-            var enable_2 = this.isChecked(toogle);
-            var isMacauGames = this.$("#productId").val() == "18";
-            this.watchHeader(roleId_1, false);
-            if (roleId_1 > 1) {
-                var downlineToggle = this.getToggleElements(this.$toggleArray, roleId_1 - 1, sportType, bettype);
-                this.toogleStatusDownline(downlineToggle, enable_2);
+            let roleId = this.getRoleId(toogle);
+            let sportType = this.getSportType(toogle);
+            let bettype = this.getBetType(toogle);
+            let enable = this.isChecked(toogle);
+            let isMacauGames = this.$("#productId").val() == "18";
+            this.watchHeader(roleId, false);
+            if (roleId > 1) {
+                let downlineToggle = this.getToggleElements(this.$toggleArray, roleId - 1, sportType, bettype);
+                this.toogleStatusDownline(downlineToggle, enable);
+                if (roleId === 4) {
+                    let superDirectMemberToggle = this.getToggleElements(this.$toggleArray, -4, sportType, bettype);
+                    this.toogleStatusDownline(superDirectMemberToggle, enable);
+                }
+                if (roleId === 3) {
+                    let masterDirectMemberToggle = this.getToggleElements(this.$toggleArray, -3, sportType, bettype);
+                    this.toogleStatusDownline(masterDirectMemberToggle, enable);
+                }
             }
             if (isMacauGames && this.isParentRow(toogle)) {
-                var parentSportType = this.getParentSportType(toogle);
-                var parentBettype = this.getParentBetType(toogle);
-                var childToggles = this.getTogglesByParentSportTypeBetType(this.$toggleArray, roleId_1, sportType, bettype);
-                childToggles.forEach(function (childToogle) {
-                    if (!enable_2) {
-                        _this.toggleStatusByValue(childToogle, enable_2);
-                        _this.toogleStatus(childToogle);
-                        _this.disableElement(childToogle);
+                let parentSportType = this.getParentSportType(toogle);
+                let parentBettype = this.getParentBetType(toogle);
+                let childToggles = this.getTogglesByParentSportTypeBetType(this.$toggleArray, roleId, sportType, bettype);
+                childToggles.forEach((childToogle) => {
+                    if (!enable) {
+                        this.toggleStatusByValue(childToogle, enable);
+                        this.toogleStatus(childToogle);
+                        this.disableElement(childToogle);
                     }
                     else {
-                        if (roleId_1 < 4) {
-                            var uplineToggle = _this.getToggleElements(_this.$toggleArray, roleId_1 + 1, _this.getSportType(childToogle), _this.getBetType(childToogle));
-                            var uplineEnable = _this.isChecked(uplineToggle);
+                        if (roleId < 4) {
+                            let uplineToggle = this.getToggleElements(this.$toggleArray, this.getUplineRoleId(roleId), this.getSportType(childToogle), this.getBetType(childToogle));
+                            let uplineEnable = this.isChecked(uplineToggle);
                             if (uplineEnable) {
-                                _this.enableElement(childToogle);
+                                this.enableElement(childToogle);
                             }
                         }
                         else {
-                            _this.enableElement(childToogle);
+                            this.enableElement(childToogle);
                         }
                     }
                 });
             }
         }
-    };
-    ProductStatusSettingMultipe.prototype.toogleStatusDownline = function (toogle, enabledUpline) {
+    }
+    toogleStatusDownline(toogle, enabledUpline) {
         this.toggleStatusByValue(toogle, enabledUpline);
         enabledUpline ? this.enableElement(toogle) : this.disableElement(toogle);
-        var roleId = this.getRoleId(toogle);
+        let roleId = this.getRoleId(toogle);
         this.watchHeader(roleId, true);
         if (roleId > 1) {
-            var sportType = this.getSportType(toogle);
-            var bettype = this.getBetType(toogle);
-            var enable = this.isChecked(toogle);
-            var downlineToggle = this.getToggleElements(this.$toggleArray, roleId - 1, sportType, bettype);
+            let sportType = this.getSportType(toogle);
+            let bettype = this.getBetType(toogle);
+            let enable = this.isChecked(toogle);
+            if (roleId == 3) {
+                this.toogleStatusDownline(this.getToggleElements(this.$toggleArray, -4, sportType, bettype), enable);
+            }
+            if (roleId == 2) {
+                this.toogleStatusDownline(this.getToggleElements(this.$toggleArray, -3, sportType, bettype), enable);
+            }
+            let downlineToggle = this.getToggleElements(this.$toggleArray, roleId - 1, sportType, bettype);
             this.toogleStatusDownline(downlineToggle, enable);
         }
-    };
-    ProductStatusSettingMultipe.prototype.getToggleElements = function (toggleArray, roleId, sportType, bettype) {
-        for (var index = 0; index < toggleArray.length; index++) {
-            var toggle = toggleArray[index];
+    }
+    getToggleElements(toggleArray, roleId, sportType, bettype) {
+        for (let index = 0; index < toggleArray.length; index++) {
+            let toggle = toggleArray[index];
             if (this.getRoleId(toggle) == roleId && this.getBetType(toggle) == bettype && this.getSportType(toggle) == sportType) {
                 return toggle;
             }
         }
         return null;
-    };
-    ProductStatusSettingMultipe.prototype.disableElement = function (toggle) {
-        var nextLabel = this.getNextLabel(toggle);
-        _super.prototype.disableElement.call(this, nextLabel);
-    };
-    ProductStatusSettingMultipe.prototype.enableElement = function (toggle) {
-        var nextLabel = this.getNextLabel(toggle);
-        _super.prototype.enableElement.call(this, nextLabel);
-    };
-    ProductStatusSettingMultipe.prototype.allowActionOnElement = function (toggle) {
-        var nextLabel = this.getNextLabel(toggle);
-        return _super.prototype.allowActionOnElement.call(this, nextLabel);
-    };
-    ProductStatusSettingMultipe.prototype.isEnabledElement = function (toggle) {
-        var nextLabel = this.getNextLabel(toggle);
-        return _super.prototype.isEnabledElement.call(this, nextLabel);
-    };
-    ProductStatusSettingMultipe.prototype.getUpdateViewModel = function () {
-        var _this = this;
-        var viewModel = _super.prototype.getUpdateViewModel.call(this);
-        var productStatus = this.$('#tbl-product > tbody  > tr').map(function (index, row) {
-            var firstCheckbox = _this.$(row).find('input:checkbox:first').toArray()[0];
-            if (_this.allowActionOnElement(firstCheckbox)) {
-                var data_1 = {
-                    sportType: _this.getSportType(firstCheckbox),
-                    betType: _this.getBetType(firstCheckbox),
-                    disable: !_this.isChecked(firstCheckbox),
+    }
+    disableElement(toggle) {
+        let nextLabel = this.getNextLabel(toggle);
+        super.disableElement(nextLabel);
+    }
+    enableElement(toggle) {
+        let nextLabel = this.getNextLabel(toggle);
+        super.enableElement(nextLabel);
+    }
+    allowActionOnElement(toggle) {
+        let nextLabel = this.getNextLabel(toggle);
+        return super.allowActionOnElement(nextLabel);
+    }
+    isEnabledElement(toggle) {
+        let nextLabel = this.getNextLabel(toggle);
+        return super.isEnabledElement(nextLabel);
+    }
+    getUplineRoleId(roleId) {
+        if (roleId === -3)
+            return 3;
+        if (roleId === -4)
+            return 4;
+        return roleId++;
+    }
+    getUpdateViewModel() {
+        let viewModel = super.getUpdateViewModel();
+        let productStatus = this.$('#tbl-product > tbody  > tr').map((index, row) => {
+            let firstCheckbox = this.$(row).find('input:checkbox:first').toArray()[0];
+            if (this.allowActionOnElement(firstCheckbox)) {
+                let data = {
+                    sportType: this.getSportType(firstCheckbox),
+                    betType: this.getBetType(firstCheckbox),
+                    disable: !this.isChecked(firstCheckbox),
+                    updateAllSuperDirectMembers: false,
+                    disableAllSuperDirectMembers: null,
                     updateAllMasters: false,
                     disableAllMasters: null,
+                    updateAllMasterDirectMembers: false,
+                    disableAllMasterDirectMembers: null,
                     updateAllAgents: false,
                     disableAllAgents: null,
                     updateAllMembers: false,
                     disableAllMembers: null
                 };
-                _this.$(row).find('input[type=checkbox]').toArray().forEach(function (toggle) {
-                    return _this.getproductStatus(toggle, data_1);
+                this.$(row).find('input[type=checkbox]').toArray().forEach((toggle) => {
+                    return this.getproductStatus(toggle, data);
                 });
-                if (data_1.updateAllMasters || data_1.updateAllAgents || data_1.updateAllMembers) {
-                    return data_1;
+                if (data.updateAllMasters || data.updateAllAgents || data.updateAllMembers) {
+                    return data;
                 }
             }
         }).get();
@@ -15790,13 +15760,21 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         viewModel.custIds = this.$('#custIds').val();
         viewModel.custNames = this.$('#custNames').val();
         return viewModel;
-    };
-    ProductStatusSettingMultipe.prototype.getproductStatus = function (toggle, model) {
-        var disableAll = !this.isEnabledElement(toggle);
+    }
+    getproductStatus(toggle, model) {
+        let disableAll = !this.isEnabledElement(toggle);
         switch (this.getRoleId(toggle)) {
+            case -4:
+                model.updateAllSuperDirectMembers = true;
+                model.disableAllSuperDirectMembers = disableAll;
+                break;
             case 3:
                 model.updateAllMasters = true;
                 model.disableAllMasters = disableAll;
+                break;
+            case -3:
+                model.updateAllMasterDirectMembers = true;
+                model.disableAllMasterDirectMembers = disableAll;
                 break;
             case 2:
                 model.updateAllAgents = true;
@@ -15809,20 +15787,20 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
         }
         ;
         return model;
-    };
-    ProductStatusSettingMultipe.prototype.onSuccess = function (results) {
+    }
+    onSuccess(results) {
         if (typeof this.$topWindow.onPruductStatusSettingSuccess === "function" && !this.$topWindow.onPruductStatusSettingSuccess(results, this.$.unblockUI)) {
             return;
         }
         if (results.length > 0) {
-            this.isUpdateSuccess(results) ? _super.prototype.onSuccess.call(this, [results[0]]) : this.onError(results);
+            this.isUpdateSuccess(results) ? super.onSuccess([results[0]]) : this.onError(results);
         }
         else {
             this.showMessage(results.Code, results.Message);
         }
-    };
-    ProductStatusSettingMultipe.prototype.onError = function (results) {
-        var html = [];
+    }
+    onError(results) {
+        let html = [];
         this.$.each(results, function (index, result) {
             html.push('<div class="');
             html.push(result.Code !== 0 ? "alerterror" : "alertsuccess");
@@ -15835,11 +15813,10 @@ var ProductStatusSettingMultipe = /** @class */ (function (_super) {
             html.push("</div></div>");
         });
         this.showMixedMessages(html.join(""));
-    };
-    return ProductStatusSettingMultipe;
-}(ProductStatusSettingBase));
+    }
+}
 $(function () {
-    var productStatusSettingMultipe = new ProductStatusSettingMultipe($, window.top);
+    let productStatusSettingMultipe = new ProductStatusSettingMultipe($, window.top);
     productStatusSettingMultipe.init();
 });
 //# sourceMappingURL=product-status-setting-multiple.js.map

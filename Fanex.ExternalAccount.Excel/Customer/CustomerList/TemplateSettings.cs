@@ -34,5 +34,26 @@
 
             return Path.Combine(_dir, fileName);
         }
+
+        public string DirectMemberListPath(int roleId, bool isMultipleCurrency = false)
+        {
+            var fileName = "";
+            switch (roleId)
+            {
+                case Role.Master:
+                    fileName = "MasterDirectMemberList";
+                    break;
+                case Role.Super:
+                    fileName = "SuperDirectMemberList";
+                    break;
+                default:
+                    fileName = "MemberList";
+                    break;
+            }
+            
+            fileName += isMultipleCurrency ? "MC.xls" : ".xls";
+
+            return Path.Combine(_dir, fileName);
+        }
     }
 }

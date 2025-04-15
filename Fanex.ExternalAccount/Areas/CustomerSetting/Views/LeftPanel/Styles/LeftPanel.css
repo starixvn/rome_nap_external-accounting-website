@@ -363,6 +363,12 @@ input {
     float: left;
 }
 
+.subTab-parent:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
 .subTab {
     border: 1px solid #CCC;
     border-left: none;

@@ -18,12 +18,12 @@
         $scope.model = null;
     }
 
-    $scope.GetDownline = function (custId) {
-        if (model.downlineLoaded) return;
+    $scope.GetDownline = function (isDirectDownline, custId) {
+        //if (model.downlineLoaded) return;
 
         parent.Fanex.ExtAcc.BlockUI();
         $.ajax({
-            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?custId=' + custId + '&pageIndex=1'),
+            url: parent.resolveClientUrl('CustomerSetting/LeftPanel/SearchCustomer/GetDownlineList?isDirectDownline=' + isDirectDownline + '&custId=' + custId + '&pageIndex=1'),
             method: 'post'
         })
         .success(function (result) {
@@ -56,7 +56,7 @@
                 $('#pages').show();
 
                 for (var i = 0; i < pages.length; i++) {
-                    var page = '<a id="link-' + pages[i].value + '" class="page" href="javascript:;" onclick="GetDownline(\'' + model.personalInfo.custId.value + '\', ' + pages[i].value + ')">' + pages[i].value + '</a>';
+                    var page = '<a id="link-' + pages[i].value + '" class="page" href="javascript:;" onclick="GetDownline(' + isDirectDownline + ',\'' + model.personalInfo.custId.value + '\', ' + pages[i].value + ')">' + pages[i].value + '</a>';
                     $('#pages').append(page);
                 }
 

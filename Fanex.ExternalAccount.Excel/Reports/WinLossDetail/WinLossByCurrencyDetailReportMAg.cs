@@ -9,7 +9,7 @@
     internal class WinLossByCurrencyDetailReportMAg : TemplateReport, IReportBuilder
     {
         private readonly AgentWinLossByCurrencyDetailReportBuilder _builder;
-        private const int LastColumnIndex = 16;
+        private const int LastColumnIndex = 17;
 
         public WinLossByCurrencyDetailReportMAg(string filePath, AgentWinLossByCurrencyDetailReportBuilder builder, string products = null)
             : base(filePath, products)
@@ -46,6 +46,7 @@
                 var values = new List<object>
                 {
                     item.Username,
+                    TemplateSettings.GetLevelType(item.RoleId),
                     item.Currency,
                     item.Turnover,
                     item.NetTurnover,
@@ -79,6 +80,7 @@
                 var values = new List<object>
                 {
                     item.Username,
+                    null,
                     null,
                     item.Turnover,
                     item.NetTurnover,

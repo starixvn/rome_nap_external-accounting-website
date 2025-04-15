@@ -10,12 +10,15 @@
     internal class DailyWinLossReport : TemplateReport, IReportBuilder
     {
         private readonly DailyWinLossReportBuilder _builder;
-        private const int LastColumnIndex = 18;
+        private int LastColumnIndex { get; }
+        private bool IsExcludeLevelType { get; }
 
         public DailyWinLossReport(string filePath, DailyWinLossReportBuilder builder)
             : base(filePath)
         {
             _builder = builder;
+            IsExcludeLevelType = _builder.RoleId != Role.Super && _builder.RoleId != Role.Master;
+            LastColumnIndex = IsExcludeLevelType ? 18 : 19;
         }
 
         public HSSFWorkbook Build()
@@ -47,6 +50,7 @@
                 {
                     item.No,
                     item.Username,
+                    TemplateSettings.GetLevelType(item.RoleId),
                     item.TotalTO,
                     item.ComTO,
                     item.ComTOPercent,
@@ -65,6 +69,10 @@
                     item.AgWinlost,
                     item.AgWinlostPercent
                 };
+                if (IsExcludeLevelType)
+                {
+                    values.RemoveAt(2);
+                }
                 resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, values);
                 index++;
                 toRowId++;
@@ -79,6 +87,7 @@
             resultSheet.CopyRow(TemplateSheet, FirstColumnTotalIndex, toRowIndex, FirstColumnIndex, LastColumnIndex);
             var values = new List<object>
             {
+                string.Empty,
                 string.Empty,
                 "Grand Total",
                 data.Sum(p => p.TotalTO),
@@ -114,7 +123,10 @@
                 !data.Sum(p => p.AgTO).Equals(0)
                     ? data.Sum(p => p.AgWinlost) / data.Sum(p => p.AgTO) * 100
                     : 0            };
-
+            if (IsExcludeLevelType)
+            {
+                values.RemoveAt(0);
+            }
             resultSheet.GetRow(toRowIndex).WriteCells(FirstColumnIndex, values);
         }
 
@@ -126,6 +138,6 @@
 
             resultSheet.GetCell(FirstRowIndex, FirstColumnIndex).SetCellValue(mainTitle);
         }
-
+        
     }
 }

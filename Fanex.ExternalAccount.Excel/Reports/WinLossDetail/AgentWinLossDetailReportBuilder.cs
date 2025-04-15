@@ -28,6 +28,7 @@
         public bool IsBold { get; }
 
         public int RoleId { get; }
+        public int UplineRoleId { get; }
 
         public string FromDate { get; }
 

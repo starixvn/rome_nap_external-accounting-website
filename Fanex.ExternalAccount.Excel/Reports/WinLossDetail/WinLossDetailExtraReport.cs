@@ -119,7 +119,7 @@
         public override void BuildMainTitle(ISheet resultSheet)
         {
 #pragma warning disable S3358 // Ternary operators should not be nested
-            var mainTitle = _builder.RoleId.IsSuper() ? "Super" : _builder.RoleId.IsMaster() ? "Master" : string.Empty;
+            var mainTitle = _builder.UplineRoleId.IsHeadline() ? "Super" : _builder.UplineRoleId.IsSuper() ? "Master" : string.Empty;
 #pragma warning restore S3358 // Ternary operators should not be nested
 
             mainTitle += _builder.FromDate.Equals(_builder.ToDate)

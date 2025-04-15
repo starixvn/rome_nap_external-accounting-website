@@ -63,7 +63,7 @@
                     {
                         builder = new MemberWinLossDetailReportBuilder(
                             isWinlossDetailNoData ? new List<WinLossDetailAg>() : (List<WinLossDetailAg>)winlossDetailData,
-                            request.Viewlevel,
+                            Role.Agent,
                             request.Fromdate,
                             request.Todate);
 
@@ -73,7 +73,7 @@
                     {
                         builder = new AgentWinLossDetailReportBuilder(
                             isWinlossDetailNoData ? new List<WinLossDetailMAg>() : (List<WinLossDetailMAg>)winlossDetailData,
-                            request.Viewlevel,
+                            Role.Master,
                             request.Fromdate,
                             request.Todate);
 
@@ -83,7 +83,7 @@
                     {
                         builder = new WinLossDetailReportBuilder(
                             isWinlossDetailNoData ? new List<WinLossDetail>() : (List<WinLossDetail>)winlossDetailData,
-                            request.Viewlevel,
+                            Role.Super,
                             request.Fromdate,
                             request.Todate);
 
@@ -93,7 +93,7 @@
                     {
                         builder = new WinLossDetailExtraReportBuilder(
                             isWinlossDetailNoData ? new List<WinLossDetailExtra>() : (List<WinLossDetailExtra>)winlossDetailData,
-                            request.Viewlevel,
+                            Role.Group,
                             request.Fromdate,
                             request.Todate);
 

@@ -49,7 +49,8 @@
                 Convert.ToDateTime(reader["createddate"]),
                 Convert.ToBoolean(reader["isreviewed"]),
                 Convert.ToByte(reader["closedreason"]),
-                Convert.ToByte(reader["locked"]));
+                Convert.ToByte(reader["locked"]),
+                Convert.ToInt32(reader["agentid"]));
 
         public Result SetToReviewed(ICriteria criteria)
         {

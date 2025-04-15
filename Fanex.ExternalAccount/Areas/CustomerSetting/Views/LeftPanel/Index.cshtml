@@ -29,12 +29,11 @@
                 @Html.Raw(ViewBag.ErrorMessage)
             </div>
             <div id="usernameInfo" data-ng-controller="LineInfoController" data-ng-hide="{{model==null}}">
-                <div class="row" data-ng-repeat="person in personalInfo.downlines">
-                    <div class="pull-left width-90">{{person.text}}</div>
-                    <div class="pull-left detail bold" data-ng-click="ViewUser('{{person.value}}')">{{person.value}}</div>
-
-                    <a class="floatRight icon-home" href="~/User/InternalLogin/?username={{person.value}}&groupname=@(Model == null ? string.Empty : Model.GroupName)" target="_blank"></a>
-                </div>
+	            <div class="row" data-ng-repeat="person in personalInfo.downlines">
+		            <div class="pull-left width-90" data-ng-if="person.value">{{person.text}}</div>
+		            <div class="pull-left detail bold" data-ng-if="person.value" data-ng-click="ViewUser('{{person.value}}')">{{person.value}}</div>
+		            <a class="floatRight icon-home" data-ng-if="person.value" href="~/User/InternalLogin/?username={{person.value}}&groupname=@(Model == null ? string.Empty : Model.GroupName)" target="_blank"></a>
+	            </div>
             </div>
             <div id="customerInfo" class="customer-info" data-ng-controller="PersonalInfoController" data-ng-hide="{{model==null}}">
                 <div class="currentUser">
@@ -88,7 +87,8 @@
             <div id="balanceInfo" class="balance-info" data-ng-controller="BalanceDownlineInfoController" data-ng-hide="{{model==null}}">
                 <ul class="tabs nav-tabs">
                     <li id="tab1"><a href="#tabs-1">Balance Info</a></li>
-                    <li id="tab2" data-ng-click="GetDownline({{personalInfo.custId.value}})"><a href="#tabs-2">Downline List</a></li>
+	                <li id="tab2" data-ng-click="GetDownline(false,{{personalInfo.custId.value}})"><a href="#tabs-2">@((Model != null && (int)Model.PersonalInfo.RoleId.Value == 4) ? "Master": (Model != null && (int)Model.PersonalInfo.RoleId.Value == 3) ? "Agent" : "Member")</a></li>
+	                <li id="tab3" data-ng-click="GetDownline(true,{{personalInfo.custId.value}})"><a href="#tabs-2">Direct Member</a></li>
                 </ul>
                 <div id="tabs-1" class="tab-content" data-ng-init="balances=balanceInfo.balances;isHide=balances.length < 7" data-ng-controller="BalanceController">
                     <div class="row">
@@ -207,16 +207,16 @@
                              data-ng-hide="model.personalInfo.roleId.value != 1"
                              class="pull-left subTab subTab-active">Edit</div>
                         <div data-ng-click="ViewSubTab('sub-super-pt')" id="sub-super-pt" class="subTab"
-                             data-ng-hide="model.personalInfo.roleId.value != 1">Super PT</div>
-                        <div data-ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="subTab"
-                             data-ng-hide="model.personalInfo.roleId.value != 1">Master PT</div>
+                             data-ng-hide="model.personalInfo.roleId.value != 1 || model.personalInfo.uplineId.value == -4">Super PT</div>
+	                    <div data-ng-click="ViewSubTab('sub-master-pt')" id="sub-master-pt" class="subTab"
+	                         data-ng-hide="model.personalInfo.roleId.value != 1 || model.personalInfo.uplineId.value == -4 || model.personalInfo.uplineId.value == -3">Master PT</div>
                     </div>
-                    <div id="edit">
-                        <div class="edit-item" data-ng-repeat="item in setting.details">
-                            <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
-                                 data-ng-click="{{item.key}}();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
-                        </div>
-                    </div>
+	                <div id="edit">
+		                <div class="edit-item" data-ng-repeat="item in setting.details">
+			                <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
+			                     data-ng-click="{{item.key}}();"><span class="icon-bullet"></span><span class="product-name">{{item.value}}</span></div>
+		                </div>
+	                </div>
                     <div id="superPT" style="display: none">
                         <div class="edit-item" data-ng-repeat="item in setting.superPts">
                             <div data-ng-hide="item.isHide || !item.visibled" class="settingEdit"
@@ -311,7 +311,7 @@
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/NoInfoController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/OnlineListController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/PersonalInfoController.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/SettingController.js?v=9")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/SettingController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/SettingPTController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/ViewInfoController.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Areas/CustomerSetting/Views/LeftPanel/Scripts/AjaxSetup.js")" type="text/javascript"></script>
@@ -325,8 +325,15 @@
             $('#balanceInfo').tabs();
             $('#settingInfo').tabs();
 
-            if (model.personalInfo.roleId.value == 1)
+            if (model.personalInfo.roleId.value == 1) {
                 $('#tab2').remove();
+                $('#tab3').remove();
+            }
+
+            if (model.personalInfo.roleId.value == 2) {             
+                $('#tab3').remove();
+            }
+              
         }
         else {
             $('#balanceInfo').remove();

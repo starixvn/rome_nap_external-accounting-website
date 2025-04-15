@@ -24,6 +24,7 @@
             Headline = ObjectInfo.CreateInstance("Headline", customerInfoRow.Headline());
             RoleId = ObjectInfo.CreateInstance("Role Id", role);
             UplineRoleId = ObjectInfo.CreateInstance("Upline Role Id", role.DirectUplineLevel());
+            Recommend = ObjectInfo.CreateInstance("Recommend", customerInfoRow.Recommend());
             CustList = new ObjectInfo
             {
                 Key = "CustList",
@@ -81,6 +82,8 @@
         }
 
         public ObjectInfo CurrentLevel { get; private set; }
+
+        public ObjectInfo Recommend { get; }
 
         public ObjectInfo Name { get; set; }
 

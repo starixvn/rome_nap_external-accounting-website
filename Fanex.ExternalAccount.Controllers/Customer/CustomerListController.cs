@@ -75,7 +75,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 UserName = request.UserName,
                 CurrencyIds = request.CurrencyIds,
                 PageIndex = request.PageIndex ?? 1,
-                PageSize = request.PageSize ?? DefaultPageSize
+                PageSize = request.PageSize ?? DefaultPageSize,
+                IsDirectMember = request.IsDirectMember
             }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP)));
         }
 
@@ -92,6 +93,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         {
             var status = request.GetStatusString();
             var roleId = request.UplineRoleId.HasValue ? request.UplineRoleId.Value - 1 : 4;
+            var uplineRoleId = request.UplineRoleId ?? 0;
             var customerList = _customerListService.Search(new SearchCustomerListParams
             {
                 GroupName = request.GroupName,
@@ -99,13 +101,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 IsDataLimited = request.IsShowSuperLimitDate ?? false,
                 IsNoDownlines = request.IsNoDownlines ?? false,
                 UplineId = request.UplineId ?? 0,
-                UplineRoleId = request.UplineRoleId ?? 0,
+                UplineRoleId = uplineRoleId,
                 Status = request.Status ?? 0,
                 UserId = CurrentSession.UserId,
                 UserName = request.UserName,
                 CurrencyIds = request.CurrencyIds,
                 PageIndex = 1,
-                PageSize = Int32.MaxValue - 1
+                PageSize = Int32.MaxValue - 1,
+                IsDirectMember = request.IsDirectMember
             }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP));
 
             var builder = new CustomerListPageBuilder(
@@ -113,12 +116,14 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 false,
                 status,
                 roleId,
+                uplineRoleId,
                 request.IsShowSuperLimitDate ?? false,
                 request.IsNoDownlines ?? false,
                 customerList.HasSubGroups,
-                Config.IsMultipleCurrencyGroup(request.GroupName));
+                Config.IsMultipleCurrencyGroup(request.GroupName), 
+                request.IsDirectMember);
             var excelStream = builder.Build();
-            var fileName = $"{status}{roleId.DisplayRoleName()}List{DateTime.Now:yyyyMMdd}.xls";
+            var fileName = request.IsDirectMember ? $"{status}{uplineRoleId.DisplayRoleName()}DirectMemberList{DateTime.Now:yyyyMMdd}.xls" : $"{status}{roleId.DisplayRoleName()}List{DateTime.Now:yyyyMMdd}.xls";
 
             ExportToExcel(excelStream, fileName);
         }

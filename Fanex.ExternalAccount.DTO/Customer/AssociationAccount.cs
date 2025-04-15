@@ -11,11 +11,13 @@ namespace Fanex.ExternalAccount.DTO.Customer
 
         public int RoleId { get; set; }
 
+        public int AgentId { get; set; }
+
         public string LevelName
         {
             get
             {
-                return Role.DisplayRoleName(RoleId);
+                return Role.DisplayRoleName(RoleId, AgentId);
             }
         }
 

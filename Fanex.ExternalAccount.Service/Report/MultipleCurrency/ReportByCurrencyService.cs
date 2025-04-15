@@ -51,9 +51,9 @@
             DateTime toDate,
             string productIds,
             string productDetailsXML,
-            string currencyIds,
+            string currencies,
             string baseCurrencyName)
-            => _reportDao.EAS_Rpt_WinLossByCurDaily_Com(groupname, custId, currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            => _reportDao.EAS_Rpt_WinLossByCurDaily_Com(groupname, custId, currencies, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public WinLossByCurrency GetMasterWinLossMCDetail(
             string groupname,
@@ -65,7 +65,19 @@
             string productDetailsXML,
             string currencyIds,
             string baseCurrencyName)
-            => _reportDao.EAS_Rpt_WinLossByCurDaily_SAg(groupname, custId, masterId, currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            => _reportDao.EAS_Rpt_WinLossByCurDaily_SAg(groupname, custId, masterId,0, currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);     
+        
+        public WinLossByCurrency GetDirectMemberOfSuperWinLossMCDetail(
+            string groupname,
+            int custId,
+            int memberId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML,
+            string currencyIds,
+            string baseCurrencyName)
+            => _reportDao.EAS_Rpt_WinLossByCurDaily_SAg(groupname, custId, 0,memberId, currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public WinLossByCurrencyMAg GetAgentWinLossMCDetail(
             string groupname,
@@ -77,7 +89,19 @@
             string productDetailsXML,
             string currencyIds,
             string baseCurrencyName)
-            => _reportDao.EAS_Rpt_WinLossByCurDaily_MAg(groupname, custId, agentId, currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
+            => _reportDao.EAS_Rpt_WinLossByCurDaily_MAg(groupname, custId, agentId, 0,currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);   
+        
+        public WinLossByCurrencyMAg GetDirectMemberOfMasterWinLossMCDetail(
+            string groupname,
+            int custId,
+            int memberId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML,
+            string currencyIds,
+            string baseCurrencyName)
+            => _reportDao.EAS_Rpt_WinLossByCurDaily_MAg(groupname, custId, 0,memberId, currencyIds, baseCurrencyName, fromDate, toDate, productIds, productDetailsXML, BalanceUpDate, MoveBetsDate);
 
         public WinLossByCurrencyAg GetMemberWinLossMCDetail(
             string groupname,

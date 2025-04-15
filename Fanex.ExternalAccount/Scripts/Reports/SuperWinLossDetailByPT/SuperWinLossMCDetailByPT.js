@@ -303,8 +303,8 @@ var SuperWinLossMCDetailByPT = /** @class */ (function () {
         Fanex.ExtAcc.Form.Alert("Net Turnover Information", message, 430, height);
     };
     SuperWinLossMCDetailByPT.prototype.GetParameterCurrency = function () {
-        var currencyIds = this.$multiSelectCurrency.fanexMultiSelect("getItems", true);
-        return currencyIds.length ? "&currencies=" + currencyIds.join(",") : "";
+        var currencyNames = this.$multiSelectCurrency.fanexMultiSelect("getSelectedTexts", true);
+        return currencyNames.length ? "&currencies=" + currencyNames.join(",") : "";
     };
     SuperWinLossMCDetailByPT.prototype.GetParameterBaseCurrency = function () {
         if ($("#ckbBaseCurrency").prop("checked")) {

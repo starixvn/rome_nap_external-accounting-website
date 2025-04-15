@@ -63,7 +63,7 @@
                         builder = new MemberWinLossByCurrencyDetailReportBuilder(
                             isWinlossDetailNoData ? new List<WinLossByCurrencyDetailAg>() : ((WinLossByCurrencyAg)winlossDetailData).WinLossDetails,
                             ((WinLossByCurrencyAg)winlossDetailData).WinLossTotals,
-                            request.Viewlevel,
+                            Role.Agent,
                             request.Fromdate,
                             request.Todate,
                             request.BaseCurrencyName);
@@ -75,7 +75,30 @@
                         builder = new AgentWinLossByCurrencyDetailReportBuilder(
                             isWinlossDetailNoData ? new List<WinLossByCurrencyDetailMAg>() : ((WinLossByCurrencyMAg)winlossDetailData).WinLossDetails,
                             ((WinLossByCurrencyMAg)winlossDetailData).WinLossTotals,
-                            request.Viewlevel,
+                            Role.Master,
+                            request.Fromdate,
+                            request.Todate,
+                            request.BaseCurrencyName);
+
+                        break;
+                    }
+                case Role.Master:
+                    {
+                        builder = new WinLossByCurrencyDetailReportBuilder(
+                            isWinlossDetailNoData ? new List<WinLossByCurrencyDetail>() : ((WinLossByCurrency)winlossDetailData).WinLossDetails,
+                            ((WinLossByCurrency)winlossDetailData).WinLossTotals,
+                            Role.Super,
+                            request.Fromdate,
+                            request.Todate,
+                            request.BaseCurrencyName);  
+                        break;
+                    }
+                case Role.Super:
+                    {
+                        builder = new WinLossByCurrencyDetailReportBuilder(
+                            isWinlossDetailNoData ? new List<WinLossByCurrencyDetail>() : ((WinLossByCurrency)winlossDetailData).WinLossDetails,
+                            ((WinLossByCurrency)winlossDetailData).WinLossTotals,
+                            Role.Group,
                             request.Fromdate,
                             request.Todate,
                             request.BaseCurrencyName);
@@ -83,17 +106,7 @@
                         break;
                     }
                 default:
-                    {
-                        builder = new WinLossByCurrencyDetailReportBuilder(
-                            isWinlossDetailNoData ? new List<WinLossByCurrencyDetail>() : ((WinLossByCurrency)winlossDetailData).WinLossDetails,
-                            ((WinLossByCurrency)winlossDetailData).WinLossTotals,
-                            request.Viewlevel,
-                            request.Fromdate,
-                            request.Todate,
-                            request.BaseCurrencyName);
-
-                        break;
-                    }
+                    return;
             }
 
             var formatedProducts = reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);

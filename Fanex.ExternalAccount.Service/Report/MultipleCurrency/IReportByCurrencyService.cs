@@ -20,11 +20,33 @@
             string productDetailsXML,
             string currencies,
             string baseCurrencyName);
-
+        
+        WinLossByCurrency GetDirectMemberOfSuperWinLossMCDetail(
+            string groupname,
+            int custId,
+            int memberId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML,
+             string currencies,
+            string baseCurrencyName);
+        
         WinLossByCurrency GetMasterWinLossMCDetail(
             string groupname,
             int custId,
             int masterId,
+            DateTime fromDate,
+            DateTime toDate,
+            string productIds,
+            string productDetailsXML,
+            string currencies,
+            string baseCurrencyName);
+        
+        WinLossByCurrencyMAg GetDirectMemberOfMasterWinLossMCDetail(
+            string groupname,
+            int custId,
+            int memberId,
             DateTime fromDate,
             DateTime toDate,
             string productIds,

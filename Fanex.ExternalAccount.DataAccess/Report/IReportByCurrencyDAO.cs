@@ -26,6 +26,7 @@
             string groupname,
             int custId,
             int masterId,
+            int memberId,
             string currencies,
             string baseCurrencyName,
             DateTime fromDate,
@@ -34,11 +35,12 @@
             string productDetailsXML,
             DateTime balanceUpDay,
             DateTime moveBetsDay);
-
+        
         WinLossByCurrencyMAg EAS_Rpt_WinLossByCurDaily_MAg(
             string groupname,
             int custId,
             int agentId,
+            int memberId,
             string currencies,
             string baseCurrencyName,
             DateTime fromDate,
@@ -46,7 +48,7 @@
             string productIds,
             string productDetailsXML,
             DateTime balanceUpDay,
-            DateTime moveBetsDay);
+            DateTime moveBetsDay);      
 
         WinLossByCurrencyAg EAS_Rpt_WinLossByCurDaily_Ag(
             string groupname,

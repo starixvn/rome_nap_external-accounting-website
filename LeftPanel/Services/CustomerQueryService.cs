@@ -22,7 +22,7 @@
 
         OnlineList GetOnlineList(int custId);
 
-        DownlineList GetDownlineList(int custid, int pageSize, int pageIndex);
+        DownlineList GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex);
 
         IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);
 
@@ -98,8 +98,8 @@
             return new OnlineList();
         }
 
-        public DownlineList GetDownlineList(int custid, int pageSize, int pageIndex)
-            => new DownlineList(customerDataAccess.GetDownlineList(custid, pageSize, pageIndex), pageIndex);
+        public DownlineList GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex)
+            => new DownlineList(customerDataAccess.GetDownlineList(isDirectDownline, custid, pageSize, pageIndex), pageIndex);
 
         public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
             => customerDataAccess.MasterAgentUsedCreditItems(custId, roleId);

@@ -12,7 +12,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
     using System.Collections;
     using System.Collections.Generic;
     using System.Data;
-    
+
     public class ReportByCurrencyDAO : DAOBase, IReportByCurrencyDAO
     {
         public List<CurrencyEntity> EAS_GetCurrencyList(string groupName)
@@ -55,15 +55,15 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
         {
             var parameters = new Hashtable
             {
-                {"groupname", groupname},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrencyName},
-                {"currencies", currencies}
+                { "groupname", groupname },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay },
+                { "basecurrency", baseCurrencyName },
+                { "currencies", currencies }
             };
 
             if (custId != 0)
@@ -71,13 +71,14 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 parameters.Add("custid", custId);
             }
 
-            return GetWinLossByCurrencyDetail("EAS_Rpt_WinLossDetailByCurrency_Com", parameters);
+            return GetWinLossByCurrencyDetail("EAS_Rpt_WinLossDetailByCurrency_Com", parameters, "Com");
         }
 
         public WinLossByCurrency EAS_Rpt_WinLossByCurDaily_SAg(
             string groupname,
             int custId,
             int masterId,
+            int memberId,
             string currencies,
             string baseCurrencyName,
             DateTime fromDate,
@@ -89,15 +90,15 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
         {
             var parameters = new Hashtable
             {
-                {"groupname", groupname},
-                {"custid", custId},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrencyName}
+                { "groupname", groupname },
+                { "custid", custId },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay },
+                { "basecurrency", baseCurrencyName }
             };
 
             if (masterId != 0)
@@ -105,13 +106,20 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 parameters.Add("masterid", masterId);
             }
 
-            return GetWinLossByCurrencyDetail("EAS_Rpt_WinLossDetailByCurrency_SAg", parameters);
-        }
+            if (memberId != 0)
+            {
+                parameters.Add("memberid", memberId);
+                
+            }
 
+            return GetWinLossByCurrencyDetail("EAS_Rpt_WinLossDetailByCurrency_SAg", parameters, "Super");
+        }
+        
         public WinLossByCurrencyMAg EAS_Rpt_WinLossByCurDaily_MAg(
             string groupname,
             int custId,
             int agentId,
+            int memberId,
             string currencies,
             string baseCurrencyName,
             DateTime fromDate,
@@ -123,24 +131,30 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
         {
             var parameters = new Hashtable
             {
-                {"groupname", groupname},
-                {"custid", custId},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrencyName}
+                { "groupname", groupname },
+                { "custid", custId },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay },
+                { "basecurrency", baseCurrencyName },
             };
 
             if (agentId != 0)
             {
                 parameters.Add("agentid", agentId);
+            } 
+            
+            if (memberId != 0)
+            {
+                parameters.Add("memberid", memberId);
             }
 
             return GetWinLossByCurrencyDetailMAg("EAS_Rpt_WinLossDetailByCurrency_MAg", parameters);
-        }
+        }      
+        
 
         public WinLossByCurrencyAg EAS_Rpt_WinLossByCurDaily_Ag(
             string groupname,
@@ -157,15 +171,15 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
         {
             var parameters = new Hashtable
             {
-                {"groupname", groupname},
-                {"custid", custId},
-                {"fromdate", fromDate},
-                {"todate", toDate},
-                {"balanceupday", balanceUpDay},
-                {"productids", productIds},
-                {"productdetails", productDetailsXML},
-                {"movebetsday", moveBetsDay},
-                {"basecurrency", baseCurrencyName}
+                { "groupname", groupname },
+                { "custid", custId },
+                { "fromdate", fromDate },
+                { "todate", toDate },
+                { "balanceupday", balanceUpDay },
+                { "productids", productIds },
+                { "productdetails", productDetailsXML },
+                { "movebetsday", moveBetsDay },
+                { "basecurrency", baseCurrencyName }
             };
 
             if (memberId != 0)
@@ -176,7 +190,7 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             return GetWinLossByCurrencyDetailAg("EAS_Rpt_WinLossDetailByCurrency_Ag", parameters);
         }
 
-        private WinLossByCurrency GetWinLossByCurrencyDetail(string spname, Hashtable parameters)
+        private WinLossByCurrency GetWinLossByCurrencyDetail(string spname, Hashtable parameters, string viewer = "")
         {
             var details = new List<WinLossByCurrencyDetail>();
             var totals = new List<WinLossByCurrencyDetail>();
@@ -188,6 +202,11 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                     while (reader.Read())
                     {
                         var entity = CreateWinLossByCurrencyDetail(reader);
+                        if (viewer == "Super")
+                        {
+                            entity.RoleId = reader.ToInt("roleid");
+                        }
+
                         details.Add(entity);
                     }
 
@@ -207,53 +226,55 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
             };
         }
 
-        private static WinLossByCurrencyDetail CreateWinLossByCurrencyDetail(IDataReader reader) => new WinLossByCurrencyDetail
-        {
-            CustId = reader.ToInt("custid"),
-            Currency = reader.To<string>("currencyname"),
-            Username = reader.To<string>("username"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgComm = reader.ToDouble("MAgComm"),
-            MAgTotal = reader.ToDouble("MAgTotal"),
-            SAgWinlost = reader.ToDouble("SAgWinlost"),
-            SAgComm = reader.ToDouble("SAgComm"),
-            SAgTotal = reader.ToDouble("SAgTotal"),
-            Company = reader.ToDouble("Company"),
-            RewardAmount = reader.ToDouble("RewardAmount"),
-            RewardCurrency = reader.To<string>("RewardCurrency")
-        };
+        private static WinLossByCurrencyDetail CreateWinLossByCurrencyDetail(IDataReader reader) =>
+            new WinLossByCurrencyDetail
+            {
+                CustId = reader.ToInt("custid"),
+                Currency = reader.To<string>("currencyname"),
+                Username = reader.To<string>("username"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                MAgWinlost = reader.ToDouble("MAgWinlost"),
+                MAgComm = reader.ToDouble("MAgComm"),
+                MAgTotal = reader.ToDouble("MAgTotal"),
+                SAgWinlost = reader.ToDouble("SAgWinlost"),
+                SAgComm = reader.ToDouble("SAgComm"),
+                SAgTotal = reader.ToDouble("SAgTotal"),
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
+            };
 
-        private static WinLossByCurrencyDetail CreateWinLossByCurrencyTotal(IDataReader reader) => new WinLossByCurrencyDetail
-        {
-            Username = reader.To<string>("total"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgComm = reader.ToDouble("MAgComm"),
-            MAgTotal = reader.ToDouble("MAgTotal"),
-            SAgWinlost = reader.ToDouble("SAgWinlost"),
-            SAgComm = reader.ToDouble("SAgComm"),
-            SAgTotal = reader.ToDouble("SAgTotal"),
-            Company = reader.ToDouble("Company"),
-            RewardAmount = reader.ToDouble("RewardAmount"),
-            RewardCurrency = reader.To<string>("RewardCurrency")
-        };
+        private static WinLossByCurrencyDetail CreateWinLossByCurrencyTotal(IDataReader reader) =>
+            new WinLossByCurrencyDetail
+            {
+                Username = reader.To<string>("total"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                MAgWinlost = reader.ToDouble("MAgWinlost"),
+                MAgComm = reader.ToDouble("MAgComm"),
+                MAgTotal = reader.ToDouble("MAgTotal"),
+                SAgWinlost = reader.ToDouble("SAgWinlost"),
+                SAgComm = reader.ToDouble("SAgComm"),
+                SAgTotal = reader.ToDouble("SAgTotal"),
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
+            };
 
         private WinLossByCurrencyMAg GetWinLossByCurrencyDetailMAg(string spname, Hashtable parameters)
         {
@@ -285,47 +306,51 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 WinLossTotals = totals
             };
         }
-        private static WinLossByCurrencyDetailMAg CreateWinLossByCurrencyDetailMAg(IDataReader reader) => new WinLossByCurrencyDetailMAg
-        {
-            CustId = reader.ToInt("custid"),
-            Username = reader.To<string>("username"),
-            Currency = reader.To<string>("currencyname"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgComm = reader.ToDouble("MAgComm"),
-            MAgTotal = reader.ToDouble("MAgTotal"),
-            Company = reader.ToDouble("Company"),
-            RewardAmount = reader.ToDouble("RewardAmount"),
-            RewardCurrency = reader.To<string>("RewardCurrency")
-        };
 
-        private static WinLossByCurrencyDetailMAg CreateWinLossByCurrencyTotalMAg(IDataReader reader) => new WinLossByCurrencyDetailMAg
-        {
-            Username = reader.To<string>("total"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            MAgWinlost = reader.ToDouble("MAgWinlost"),
-            MAgComm = reader.ToDouble("MAgComm"),
-            MAgTotal = reader.ToDouble("MAgTotal"),
-            Company = reader.ToDouble("Company"),
-            RewardAmount = reader.ToDouble("RewardAmount"),
-            RewardCurrency = reader.To<string>("RewardCurrency")
-        };
+        private static WinLossByCurrencyDetailMAg CreateWinLossByCurrencyDetailMAg(IDataReader reader) =>
+            new WinLossByCurrencyDetailMAg
+            {
+                CustId = reader.ToInt("custid"),
+                RoleId = reader.ToInt("roleid"),
+                Username = reader.To<string>("username"),
+                Currency = reader.To<string>("currencyname"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                MAgWinlost = reader.ToDouble("MAgWinlost"),
+                MAgComm = reader.ToDouble("MAgComm"),
+                MAgTotal = reader.ToDouble("MAgTotal"),
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
+            };
+
+        private static WinLossByCurrencyDetailMAg CreateWinLossByCurrencyTotalMAg(IDataReader reader) =>
+            new WinLossByCurrencyDetailMAg
+            {
+                Username = reader.To<string>("total"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                MAgWinlost = reader.ToDouble("MAgWinlost"),
+                MAgComm = reader.ToDouble("MAgComm"),
+                MAgTotal = reader.ToDouble("MAgTotal"),
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
+            };
 
         private WinLossByCurrencyAg GetWinLossByCurrencyDetailAg(string spname, Hashtable parameters)
         {
@@ -357,42 +382,44 @@ namespace Fanex.ExternalAccount.DataAccess.Impl.Report
                 WinLossTotals = totals
             };
         }
-        private static WinLossByCurrencyDetailAg CreateWinLossByCurrencyDetailAg(IDataReader reader) => new WinLossByCurrencyDetailAg
-        {
-            CustId = reader.ToInt("custid"),
-            Username = reader.To<string>("username"),
-            Currency = reader.To<string>("currencyname"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            Company = reader.ToDouble("Company"),
-            RewardAmount = reader.ToDouble("RewardAmount"),
-            RewardCurrency = reader.To<string>("RewardCurrency")
-        };
 
-        private static WinLossByCurrencyDetailAg CreateWinLossByCurrencyTotalAg(IDataReader reader) => new WinLossByCurrencyDetailAg
-        {
-            Username = reader.To<string>("total"),
-            Turnover = reader.ToDouble("Turnover"),
-            NetTurnover = reader.ToDouble("TurnoverNoDraw"),
-            GrossComm = reader.ToDouble("GrossComm"),
-            MemberWinlost = reader.ToDouble("MemberWinlost"),
-            PlayerComm = reader.ToDouble("PlayerComm"),
-            MemberTotal = reader.ToDouble("MemberTotal"),
-            AgWinlost = reader.ToDouble("AgWinlost"),
-            AgComm = reader.ToDouble("AgComm"),
-            AgTotal = reader.ToDouble("AgTotal"),
-            Company = reader.ToDouble("Company"),
-            RewardAmount = reader.ToDouble("RewardAmount"),
-            RewardCurrency = reader.To<string>("RewardCurrency")
-        };
+        private static WinLossByCurrencyDetailAg CreateWinLossByCurrencyDetailAg(IDataReader reader) =>
+            new WinLossByCurrencyDetailAg
+            {
+                CustId = reader.ToInt("custid"),
+                Username = reader.To<string>("username"),
+                Currency = reader.To<string>("currencyname"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
+            };
 
+        private static WinLossByCurrencyDetailAg CreateWinLossByCurrencyTotalAg(IDataReader reader) =>
+            new WinLossByCurrencyDetailAg
+            {
+                Username = reader.To<string>("total"),
+                Turnover = reader.ToDouble("Turnover"),
+                NetTurnover = reader.ToDouble("TurnoverNoDraw"),
+                GrossComm = reader.ToDouble("GrossComm"),
+                MemberWinlost = reader.ToDouble("MemberWinlost"),
+                PlayerComm = reader.ToDouble("PlayerComm"),
+                MemberTotal = reader.ToDouble("MemberTotal"),
+                AgWinlost = reader.ToDouble("AgWinlost"),
+                AgComm = reader.ToDouble("AgComm"),
+                AgTotal = reader.ToDouble("AgTotal"),
+                Company = reader.ToDouble("Company"),
+                RewardAmount = reader.ToDouble("RewardAmount"),
+                RewardCurrency = reader.To<string>("RewardCurrency")
+            };
     }
 }
 
