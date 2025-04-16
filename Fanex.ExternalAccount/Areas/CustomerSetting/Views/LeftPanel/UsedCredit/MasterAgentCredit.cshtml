@@ -24,7 +24,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @if (Model == null || Model.MasterAgentUsedCredit.MasterAgentUsedCreditItems == null || Model.MasterAgentUsedCredit.MasterAgentUsedCreditItems.Count == 0)
+                @if (Model == null || Model.MasterAgentUsedCredit.MasterAgentUsedCreditItems == null || !Model.MasterAgentUsedCredit.MasterAgentUsedCreditItems.Any())
                 {
                     <tr>
                         <td class="title C" colspan="3">There is no information available.</td>
@@ -71,7 +71,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @if (Model == null || Model.DirectMemberUsedCredit.MemberUsedCreditItems == null || Model.DirectMemberUsedCredit.MemberUsedCreditItems.Count == 0)
+                @if (Model == null || Model.DirectMemberUsedCredit.MemberUsedCreditItems == null || !Model.DirectMemberUsedCredit.MemberUsedCreditItems.Any())
                 {
                     <tr>
                         <td class="title C" colspan="4">There is no information available.</td>
@@ -116,7 +116,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @if (Model == null || Model.DirectMemberUsedCredit.MemberUsedCreditItems == null || Model.DirectMemberUsedCredit.MemberUsedCreditItems.Count == 0)
+                @if (Model == null || Model.DirectMemberUsedCredit.MemberUsedCreditItems == null || !Model.DirectMemberUsedCredit.MemberUsedCreditItems.Any())
                 {
                     <tr>
                         <td class="title C" colspan="4">There is no information available.</td>
