@@ -1,5 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Customer.CustomerList
 {
+    using System.Linq;
     using Fanex.Data.Repository;
     using Fanex.ExternalAccount.Controllers.ViewModels.CustomerList;
     using Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerList;
@@ -24,7 +25,12 @@
         public SearchCustomerListViewModel SearchCustomerList(SearchCustomerListBaseCriteria criteria)
         {
             var result = new SearchCustomerListViewModel();
-            result.CustomerList = _dynamicRepository.Fetch<CustomerListDTO>(criteria);
+            result.CustomerList = _dynamicRepository.Fetch<CustomerListDTO>(criteria).Select(customer =>
+            {
+                customer.LimitDays = customer.LimitDays ?? 0;
+                customer.SubGroup = customer.SubGroup ?? string.Empty;
+                return customer;
+            });
             result.PageIndex = criteria.PageIndex;
             result.TotalRows = criteria.TotalRows;
 

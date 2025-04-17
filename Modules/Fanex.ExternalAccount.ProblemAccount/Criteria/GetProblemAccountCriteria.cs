@@ -7,6 +7,8 @@
 
     public class GetProblemAccountCriteria : CriteriaBase
     {
+        public GetProblemAccountCriteria() { }
+
         public GetProblemAccountCriteria(GetListViewModel viewModel)
         {
             FromDate = viewModel.FromDate;

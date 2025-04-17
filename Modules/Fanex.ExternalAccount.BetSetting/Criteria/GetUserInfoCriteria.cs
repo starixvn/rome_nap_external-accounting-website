@@ -19,10 +19,7 @@
 
         public byte SettingStatus => Config.SettingStatus;
 
-        public override bool IsValid()
-        {
-            throw new NotImplementedException();
-        }
+        public override bool IsValid() => true;
 
         public override string GetSettingKey() => "Age_CustomerSelUserInfo";
     }

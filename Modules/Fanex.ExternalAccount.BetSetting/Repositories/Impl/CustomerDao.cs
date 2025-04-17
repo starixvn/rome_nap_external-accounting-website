@@ -15,6 +15,13 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
     {
         private IDynamicRepository dynamicRepository;
 
+        public CustomerDao() : this(null) { }
+
+        public CustomerDao(IDynamicRepository dynamicRepository)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public Customer UserInfo(GetUserInfoCriteria criteria)
             => dynamicRepository.Get<Customer>(criteria);
     }

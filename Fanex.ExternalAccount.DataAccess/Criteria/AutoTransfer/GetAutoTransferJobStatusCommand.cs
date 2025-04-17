@@ -6,6 +6,8 @@
 
     public class GetAutoTransferJobStatusCommand : INonQueryCommand
     {
+        public GetAutoTransferJobStatusCommand() { }
+
         public GetAutoTransferJobStatusCommand(SiteDB siteDB)
         {
             SiteDB = siteDB.IsSiteDB ? $"SiteDB{siteDB.SiteDBGroupID}_" : string.Empty;
@@ -31,7 +33,7 @@
 
         public string ErrMsg { get; set; }
 
-        public string GetSettingKey() => $"{SiteDB}Age_ClearBalanceCust_Job_StatusCheck" ;
+        public string GetSettingKey() => $"{SiteDB}Age_ClearBalanceCust_Job_StatusCheck";
 
         public bool IsValid() => true;
     }
