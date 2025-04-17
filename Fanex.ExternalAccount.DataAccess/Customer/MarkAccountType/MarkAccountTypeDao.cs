@@ -45,7 +45,7 @@
         {
             var errorUsernames = _dynamicRepository.Fetch<ErrorMarkAccount>(criteria);
             var result = new Result();
-            if (errorUsernames.Any(e => e.ErrCode > 0))
+            if (!errorUsernames.Any(e => e.ErrCode > 0))
             {
                 return result;
             }

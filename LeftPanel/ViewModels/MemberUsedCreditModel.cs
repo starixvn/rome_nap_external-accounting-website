@@ -18,12 +18,12 @@
                 : null;
 
         public decimal TotalActiveMemberUsedCredit
-            => MemberUsedCreditItems == null || MemberUsedCreditItems.Any()
+            => MemberUsedCreditItems == null || !MemberUsedCreditItems.Any()
                 ? 0m
                 : MemberUsedCreditItems.Where(x => !x.IsClosed).Sum(o => o.Amount);
 
         public decimal TotalInactiveMemberUsedCredit
-            => MemberUsedCreditItems == null || MemberUsedCreditItems.Any()
+            => MemberUsedCreditItems == null || !MemberUsedCreditItems.Any()
                 ? 0m
                 : MemberUsedCreditItems.Where(x => x.IsClosed).Sum(o => o.Amount);
     }

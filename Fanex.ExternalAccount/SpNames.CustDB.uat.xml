@@ -1,568 +1,568 @@
 ﻿<Functions>
-  <Function Name="Site DB">
-    <Setting Key="SiteDB3_Dot_BalanceDebitInitialize" SpName="Dot_BalanceDebitInitialize" DbName="SiteDB.bodb02.wsv_xnap" />
-    <Setting Key="SiteDB3_Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="SiteDB.bodb02.wsv_xnap" />
-    <Setting Key="SiteDB3_Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="SiteDB.bodb02.wsv_xnap" />
-    <Setting Key="SiteDB3_Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="SiteDB.bodb02.wsv_xnap" />
-    <Setting Key="SiteDB3_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="SiteDB.bodb02.wsv_xnap" />
-    <Setting Key="SiteDB3_Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="SiteDB.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="SiteDB3_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="SiteDB.BODB02.wsv_xnap" Plain="0" />
-    <Setting Key="SiteDB3_PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="SiteDB.bodb02.wsv_xnap" Plain="0" />
-  </Function>
+	<Function Name="Site DB">
+		<Setting Key="SiteDB3_Dot_BalanceDebitInitialize" SpName="Dot_BalanceDebitInitialize" DbName="DBSITE03.bodb02.wsv_xnap" />
+		<Setting Key="SiteDB3_Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="DBSITE03.bodb02.wsv_xnap" />
+		<Setting Key="SiteDB3_Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="DBSITE03.bodb02.wsv_xnap" />
+		<Setting Key="SiteDB3_Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="DBSITE03.bodb02.wsv_xnap" />
+		<Setting Key="SiteDB3_Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBSITE03.bodb02.wsv_xnap" />
+		<Setting Key="SiteDB3_Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBSITE03.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="SiteDB3_Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBSITE03.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="SiteDB3_PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBSITE03.bodb02.wsv_xnap" Plain="0" />
+	</Function>
 
-  <Function Name="PT Setting Information">
-    <Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Login">
-    <Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserLogout" SpName="EAS_UserLogout" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Report">
-    <Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
-      <Mapping DataField="srecommend" ObjectProperty="SuperId" />
-      <Mapping DataField="mrecommend" ObjectProperty="MasterId" />
-      <Mapping DataField="recommend" ObjectProperty="AgentId" />
-    </Setting>
-    <Setting Key="EAS_CustomerSelUserSearch" SpName="EAS_CustomerSelUserSearch" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerUpdUserSearch" SpName="EAS_CustomerUpdUserSearch" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_Com14" SpName="EAS_Rpt_WinLossDaily_Com14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_Com" SpName="EAS_Rpt_WinLossDaily_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_SAg14" SpName="EAS_Rpt_WinLossDaily_SAg14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_SAg" SpName="EAS_Rpt_WinLossDaily_SAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_MAg14" SpName="EAS_Rpt_WinLossDaily_MAg14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_MAg" SpName="EAS_Rpt_WinLossDaily_MAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_Ag14" SpName="EAS_Rpt_WinLossDaily_Ag14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
-      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-      <Mapping DataField="ExtraWinLost" ObjectProperty="ExtraWinLoss" />
-    </Setting>
-    <Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
-      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-    </Setting>
-    <Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
-      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-    </Setting>
-    <Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
-      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-      <Mapping DataField="ExtraWinLost" ObjectProperty="ExtraWinLoss" />
-    </Setting>
-    <Setting Key="EAS_Rpt_WinLossDetailExtra_Com" SpName="EAS_Rpt_WinLossDetailExtra_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
-    <Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_ViewExtraPT2" SpName="EAS_Rpt_ViewExtraPT2" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="EAS_Rpt_WinLossDetail_byPT" SpName="EAS_Rpt_WinLossDetail_byPT" DbName="DBAGE.bodb02.wsv_xnap" />
-    <Setting Key="EAS_GetPTProductBySuper" SpName="EAS_GetPTProductBySuper" DbName="DBCust.CustDB.wsv_xnap">
-      <Mapping DataField="CustID" ObjectProperty="CustId" />
-      <Mapping DataField="SuperPT" ObjectProperty="PositionTaking" />
-      <Mapping DataField="ProductID" ObjectProperty="ProductId" />
-      <Mapping DataField="ProductName" ObjectProperty="ProductName" />
-    </Setting>
-    <Setting Key="EAS_GetSubGroupList" SpName="EAS_GetSubGroupList" DbName="DBPOL.Nap_UserControl.wsv_xnap" />
-    <Setting Key="EAS_Rpt_WinLossDetail_bySubGroup" SpName="EAS_Rpt_WinLossDetail_bySubGroup" DbName="DBAGE.bodb02.wsv_xnap">
-      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-      <Mapping DataField="MemberWinLost" ObjectProperty="MemberWinLoss" />
-      <Mapping DataField="PlayerComm" ObjectProperty="MemberComm" />
-      <Mapping DataField="AgWinLost" ObjectProperty="AgentWinLoss" />
-      <Mapping DataField="AgComm" ObjectProperty="AgentComm" />
-      <Mapping DataField="AgTotal" ObjectProperty="AgentTotal" />
-      <Mapping DataField="MAgWinLost" ObjectProperty="MasterWinLoss" />
-      <Mapping DataField="MAgComm" ObjectProperty="MasterComm" />
-      <Mapping DataField="MAgTotal" ObjectProperty="MasterTotal" />
-      <Mapping DataField="SAgWinLost" ObjectProperty="SuperWinLoss" />
-      <Mapping DataField="SAgComm" ObjectProperty="SuperComm" />
-      <Mapping DataField="SAgTotal" ObjectProperty="SuperTotal" />
-    </Setting>
-  </Function>
-  <Function Name="Report By Currency">
-    <Setting Key="EAS_GetCurrencyList" SpName="EAS_GetCurrencyList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Com" SpName="EAS_Rpt_WinLossDetailByCurrency_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
-      <Mapping DataField="CurrencyName" ObjectProperty="Currency" />
-      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-      <Mapping DataField="Total" ObjectProperty="TotalName" />
-    </Setting>
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_SAg" SpName="EAS_Rpt_WinLossDetailByCurrency_SAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
-      <Mapping DataField="CurrencyName" ObjectProperty="Currency" />
-      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-      <Mapping DataField="Total" ObjectProperty="TotalName" />
-    </Setting>
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_MAg" SpName="EAS_Rpt_WinLossDetailByCurrency_MAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
-      <Mapping DataField="CurrencyName" ObjectProperty="Currency" />
-      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-      <Mapping DataField="Total" ObjectProperty="TotalName" />
-    </Setting>
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_Ag" SpName="EAS_Rpt_WinLossDetailByCurrency_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
-      <Mapping DataField="CurrencyName" ObjectProperty="Currency" />
-      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-      <Mapping DataField="Total" ObjectProperty="TotalName" />
-    </Setting>
-    <Setting Key="EAS_Rpt_WinLossDetailByCurrency_ByPT" SpName="EAS_Rpt_WinLossDetailByCurrency_ByPT" DbName="DBAGE.bodb02.wsv_xnap">
-      <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-      <Mapping DataField="PlayerComm" ObjectProperty="MemberComm" />
-      <Mapping DataField="Total" ObjectProperty="TotalName" />
-    </Setting>
-  </Function>
-  <Function Name="Group">
-    <Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GroupInfoIns" SpName="EAS_GroupInfoIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GroupInfoSel" SpName="EAS_GroupInfoSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
-      <Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
-      <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
-    </Setting>
-    <Setting Key="EAS_GroupInfoSelAllGroup" SpName="EAS_GroupInfoSelAllGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
-      <Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
-      <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
-    </Setting>
-    <Setting Key="EAS_GroupInfoSelExternalGroup" SpName="EAS_GroupInfoSelExternalGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
-      <Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
-      <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
-    </Setting>
-    <Setting Key="EAS_GroupInfoSelByGroupID" SpName="EAS_GroupInfoSelByGroupID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
-      <Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
-      <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
-    </Setting>
-    <Setting Key="EAS_GroupInfoSelByGroupName" SpName="EAS_GroupInfoSelByGroupName" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
-      <Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
-      <Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
-    </Setting>
-    <Setting Key="EAS_GroupInfoUpd" SpName="EAS_GroupInfoUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GroupPolicySel" SpName="EAS_GroupPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
-      <Mapping DataField="Policy" ObjectProperty="GroupPolicy" />
-    </Setting>
-    <Setting Key="EAS_GroupPolicyUpd" SpName="EAS_GroupPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="SubGroup">
-    <Setting Key="EAS_CustomerSelBySubGroup" SpName="EAS_CustomerSelBySubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerUpdSubGroup" SpName="EAS_CustomerUpdSubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoSelBySubGroup" SpName="EAS_UserInfoSelBySubGroup" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoUpdSubGroupAdminPwd" SpName="EAS_UserInfoUpdSubGroupAdminPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_OnUser_ForceKickout" SpName="EAS_OnUser_ForceKickout" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-  </Function>
-  <Function name="Group Configuration">
-    <Setting Key="EAS_GroupConfigurationSel" SpName="EAS_GroupConfigurationSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" plain="0" />
-    <Setting Key="EAS_GroupConfigurationUpd" SpName="EAS_GroupConfigurationUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" plain="0" />
-  </Function>
-  <Function Name="User">
-    <Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserCheckPermission_All" SpName="EAS_UserCheckPermission_All" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoAddExistingUser" SpName="EAS_UserInfoAddExistingUser" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoSel" SpName="EAS_UserInfoSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
-      <Mapping DataField="CustId" ObjectProperty="UserID" />
-    </Setting >
-    <Setting Key="EAS_UserInfoSelByUserID" SpName="EAS_UserInfoSelByUserID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
-      <Mapping DataField="CustId" ObjectProperty="UserID" />
-    </Setting >
-    <Setting Key="EAS_UserInfoUpdStatus" SpName="EAS_UserInfoUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoUpdUserGroup" SpName="EAS_UserInfoUpdUserGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserPolicySel" SpName="EAS_UserPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
-      <Mapping DataField="UserPolicy" ObjectProperty="Policy" />
-      <Mapping DataField="ParentId" ObjectProperty="ParentID" />
-    </Setting>
-    <Setting Key="EAS_UserPolicyUpd" SpName="EAS_UserPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoAddNew" SpName="EAS_UserInfoAddNew" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoUpdAll" SpName="EAS_UserInfoUpdAll" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserInfoUpdUserPwd" SpName="EAS_UserInfoUpdUserPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_GetCustArchiveStatus" SpName="Acc_GetCustArchiveStatus" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Menu and Function">
-    <Setting Key="EAS_FunctionIns" SpName="EAS_FunctionIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_FunctionSel" SpName="EAS_FunctionSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
-      <Mapping DataField="FuncId" ObjectProperty="FuncID" />
-      <Mapping DataField="ParentId" ObjectProperty="ParentID" />
-    </Setting >
-    <Setting Key="EAS_FunctionUpd" SpName="EAS_FunctionUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_FuncUpdStatus" SpName="EAS_FuncUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MenuDel" SpName="EAS_MenuDel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MenuIns" SpName="EAS_MenuIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MenuSel" SpName="EAS_MenuSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
-      <Mapping DataField="Active" ObjectProperty="IsActive" />
-    </Setting>
-    <Setting Key="EAS_MenuSelByUserID" SpName="EAS_MenuSelByUserID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
-      <Mapping DataField="Active" ObjectProperty="IsActive" />
-    </Setting>
-    <Setting Key="EAS_MenuUpd" SpName="EAS_MenuUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MenuUpdStatus" SpName="EAS_MenuUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Grant Permission">
-    <Setting Key="EAS_GroupPolicySelByFuncID" SpName="EAS_GroupPolicySelByFuncID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GroupPolicyUpdMultiple" SpName="EAS_GroupPolicyUpdMultiple" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserPolicySelByFuncID" SpName="EAS_UserPolicySelByFuncID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_UserPolicyUpdMultiple" SpName="EAS_UserPolicyUpdMultiple" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Left Panel">
-    <Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.wsv_xnap" Plain="0" />
-    <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCust.CustDB.wsv_xnap" Plain="0" >
-		<Mapping DataField="credit" ObjectProperty="Amount" />
-		<Mapping DataField="closed" ObjectProperty="IsClosed" />
-	</Setting>
-    <Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerList_CloseInfoSel" SpName="Acc_CustomerList_CloseInfoSel" DbName="DBCust.CustDB.wsv_xnap" />
-	<Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
-		<Mapping DataField="roleid" ObjectProperty="Level" class="SingleOpenAffectedDownline" />
-		<Mapping DataField="cntAffected" ObjectProperty="AffectedDownlines" class="SingleOpenAffectedDownline" />
-		<Mapping DataField="cntUnchanged" ObjectProperty="RemainUnchangedDownlines" class="SingleOpenAffectedDownline" />
-	</Setting>
-    <Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-	<Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
-		<Mapping DataField="suspended" ObjectProperty="Suspend" class="SingleUpdateAffectedDownline" />
-	</Setting>
-	<Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
-		<Mapping DataField="roleid" ObjectProperty="Level" class="SingleUpdateAffectedDownline" />
-		<Mapping DataField="cntAffected" ObjectProperty="AffectedDownlines" class="SingleUpdateAffectedDownline" />
-		<Mapping DataField="cntUnchanged" ObjectProperty="RemainUnchangedDownlines" class="SingleUpdateAffectedDownline" />
-	</Setting>
-    <Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-	  <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.wsv_xnap" Plain="0" >
-		  <Mapping DataField="creatdate" ObjectProperty="CreatedDate" />
-		  <Mapping DataField="lastlogged" ObjectProperty="LastLoggedIn" />
-		  <Mapping DataField="pwdexpiry" ObjectProperty="PasswordExpired" />
-	  </Setting>
-    <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Dot_BalanceDebitInitialize" SpName="Dot_BalanceDebitInitialize" DbName="DBTXN.bodb02.wsv_xnap" />
-    <Setting Key="Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="DBTXN.bodb02.wsv_xnap" />
-    <Setting Key="Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="DBTXN.bodb02.wsv_xnap" />
-    <Setting Key="Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="DBTXN.bodb02.wsv_xnap" />
-    <Setting Key="Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.bodb02.wsv_xnap" />
-  </Function>
-  <Function Name="Customer List">
-	  <Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-	  <Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >
-		  <Mapping DataField="Downlines" ObjectProperty="NoOfDownlines" />
-	  </Setting>
-	  <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-	  <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >
-		  <Mapping DataField="ugroup" ObjectProperty="UserGroup" />
-	  </Setting>
-    <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
-      <Mapping DataField="Currency" ObjectProperty="CurrencyId" />
-    </Setting>
-    <Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerUpdPwd" SpName="Age_CustomerUpdPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_OnUser_ForceKickedout" SpName="Age_OnUser_ForceKickedout" DbName="DBONUSER.ON_USER.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerUpdUserInfo" SpName="Age_CustomerUpdUserInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelSuperInfo" SpName="EAS_CustomerSelSuperInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerUpdSuperInfo" SpName="EAS_CustomerUpdSuperInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerUpdTransferOption" SpName="EAS_CustomerUpdTransferOption" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelSuperAutoTransfer" SpName="Acc_CustomerSelSuperAutoTransfer" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Customer_AssociationInfo" SpName="EAS_Customer_AssociationInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Sportsbook">
-    <Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelEditCustomer_SAg" SpName="Acc_CustomerSelEditCustomer_SAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerSelUserComm" SpName="Age_CustomerSelUserComm" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdMember_Master" SpName="Acc_CustomerUpdMember_Master" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerCheckExists" SpName="Age_CustomerCheckExists" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerCheckReachDownline" SpName="Age_CustomerCheckReachDownline" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_MsgCustReadStatus_Ins" SpName="Age_MsgCustReadStatus_Ins" DbName="DBMSG.bodb_Message.wsv_xnap" />
-  </Function>
-  <Function Name="Edit Commission">
-    <Setting Key="Age_CustomerUpdMasterComm" SpName="Age_CustomerUpdMasterComm" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Statement - Report">
-    <Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.wsv_xnap" Plain="0" >
-      <Mapping DataField="winlostdate" ObjectProperty="StatementDate" />
-      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
-      <Mapping DataField="Comm" ObjectProperty="Commission" />
-      <Mapping DataField="TransferAmt" ObjectProperty="TransferAmount" />
-      <Mapping DataField="ClosingBalance" ObjectProperty="AccumulatedTotal" />
-      <Mapping DataField="VoidAmt" ObjectProperty="VoidCancelled" />
-    </Setting>
-    <Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14" DbName="DBRPT.bodb_report.wsv_xnap" Plain="0" >
-      <Mapping DataField="winlostdate" ObjectProperty="StatementDate" />
-      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
-      <Mapping DataField="Comm" ObjectProperty="Commission" />
-      <Mapping DataField="TransferAmt" ObjectProperty="TransferAmount" />
-      <Mapping DataField="ClosingBalance" ObjectProperty="AccumulatedTotal" />
-      <Mapping DataField="VoidAmt" ObjectProperty="VoidCancelled" />
-    </Setting >
-    <Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="DBRPT.bodb_report.wsv_xnap" Plain="0" >
-      <Mapping DataField="winlostdate" ObjectProperty="StatementDate" />
-      <Mapping DataField="WinLost" ObjectProperty="WinLoss" />
-      <Mapping DataField="Comm" ObjectProperty="Commission" />
-      <Mapping DataField="TransferAmt" ObjectProperty="TransferAmount" />
-      <Mapping DataField="ClosingBalance" ObjectProperty="AccumulatedTotal" />
-      <Mapping DataField="VoidAmt" ObjectProperty="VoidCancelled" />
-    </Setting >
-    <Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.wsv_xnap" Plain="0" >
-      <Mapping DataField="transdate" ObjectProperty="StatementDate" />
-      <Mapping DataField="transtype" ObjectProperty="TransactionType" />
-      <Mapping DataField="transdesc" ObjectProperty="Description" />
-      <Mapping DataField="ExRate" ObjectProperty="ExchangeRate" />
-    </Setting >
-    <Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old" DbName="DBARC.bodb_Archive.wsv_xnap" Plain="0" >
-      <Mapping DataField="transdate" ObjectProperty="StatementDate" />
-      <Mapping DataField="transtype" ObjectProperty="TransactionType" />
-      <Mapping DataField="transdesc" ObjectProperty="Description" />
-      <Mapping DataField="ExRate" ObjectProperty="ExchangeRate" />
-    </Setting >
-    <Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >
-      <Mapping DataField="custid" ObjectProperty="CustomerId" />
-      <Mapping DataField="roleid" ObjectProperty="RoleId" />
-    </Setting >
-  </Function>
-  <Function Name="DCS">
-    <Function Name="Enable Status">
-      <Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCUST.CustDB.wsv_xnap">
-        <Mapping DataField="ProductID" ObjectProperty="ProductId" />
-      </Setting>
-      <Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCUST.CustDB.wsv_xnap" />
-      <Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
-    </Function>
-  </Function>
-  <Function Name="Casino Win Limit">
-    <Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="OTP">
-    <Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="NG2"> 
-    <Setting Key="Acc_Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All" DbName="DBPOL.NAP_UserControl.wsv_xnap" />
-    <Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CustomerIsInternalAdmin" SpName="Acc_CustomerIsInternalAdmin" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="API Logger">
-    <Setting Key="WriteLog_UserLog_ExternalAPI_Ins" SpName="WriteLog_UserLog_ExternalAPI_Ins" DbName="dblog" IgnoreImport="true" Plain="0" />
-    <Setting Key="WriteLog_UserLog_ExternalAPI_UpdResponse" SpName="WriteLog_UserLog_ExternalAPI_UpdResponse" DbName="dblog" IgnoreImport="true" Plain="0" />
-  </Function>
-  <Function Name="Customer - ThirdParty">
-    <Setting Key="Acc_CustomerSelStatusByProductId" SpName="Acc_CustomerSelStatusByProductId" DbName="DBCust.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="Otp">
-    <Setting Key="EAS_OTP_CustomerOTPSel" SpName="EAS_OTP_CustomerOTPSel" DbName="DBCUST.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="Product Status Setting">
-    <!--Select functions-->
-    <Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatusSelect_Esports" SpName="Acc_Admin_DisableNewProductStatusSelect_Esports" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatus_160_Select" SpName="Acc_Admin_DisableNewProductStatus_160_Select" DbName="DBCust.CustDB.wsv_xnap" />
-    <!--Update functions-->
-    <Setting Key="Acc_AdminCheckAllowedDownlinesByLevel" SpName="Acc_AdminCheckAllowedDownlinesByLevel" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_Admin_DisableNewProductStatus_160_Upd" SpName="Acc_Admin_DisableNewProductStatus_160_Upd" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBCust.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="Check allow downlines">
-    <Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="IP">
-    <Setting Key="GetIPInfo" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.wsv_xnap" />
-    <Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.wsv_xnap" />
-  </Function>
-  <Function Name="Data Range">
-    <Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.wsv_xnap">
-      <Mapping DataField="errcode" ObjectProperty="ErrorCode" />
-      <Mapping DataField="errmsg" ObjectProperty="ErrorMessage" />
-    </Setting>
-    <Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBCust.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="Products">
-    <Setting Key="EAS_GetProductID_ByGroupConfiguration" SpName="EAS_GetProductID_ByGroupConfiguration" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_GetProductList" SpName="EAS_GetProductList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="Age_Rpt_GetProductDetail" SpName="Age_Rpt_GetProductDetail" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Member Balance Info">
-    <Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.BODB02.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DB042.bodb02.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Search And Copy">
-    <Setting Key="EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="DBSite1_EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust1.CustDB.wsv_xnap" />
-    <Setting Key="DBSite2_EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust2.CustDB.wsv_xnap" />
-    <Setting Key="DBSite3_EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust3.CustDB.wsv_xnap" />
-    <Setting Key="EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="DBSite1_EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBCust1.CustDB.wsv_xnap" />
-    <Setting Key="DBSite2_EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBCust2.CustDB.wsv_xnap" />
-    <Setting Key="DBSite3_EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBCust3.CustDB.wsv_xnap" />
-    <Setting Key="EAS_GroupAdmin_Sel" SpName="EAS_GroupAdmin_Sel" DbName="DBPOL.NAP_UserControl.wsv_xnap" />
-    <Setting Key="EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="DBSite1_EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust1.CustDB.wsv_xnap" />
-    <Setting Key="DBSite2_EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust2.CustDB.wsv_xnap" />
-    <Setting Key="DBSite3_EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust3.CustDB.wsv_xnap" />
-    <Setting Key="EAS_CustomerInsMember_CloneSetting_ExtraPT" SpName="EAS_CustomerInsMember_CloneSetting_ExtraPT" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_GameEnableJackpotSel" SpName="Acc_GameEnableJackpotSel" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_SuperPrefixByGroupSel" SpName="Acc_SuperPrefixByGroupSel" DbName="DBCust.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="CRM Update Headline Info">
-    <Setting Key="Acc_CRM_HeadlineUpd" SpName="Acc_CRM_HeadlineUpd" DbName="DBCRM.bodb_CRM.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="UM On product">
-    <Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCust.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CheckUM_MultipleCustProductStatus" SpName="Acc_CheckUM_MultipleCustProductStatus" DbName="DBCust.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="Problem Account List">
-    <Setting Key="EAS_ProblemAccount_CustomerList" SpName="EAS_ProblemAccount_CustomerList" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_ProblemAccount_ReviewStatusUpd" SpName="EAS_ProblemAccount_ReviewStatusUpd" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="User belong to Group">
-    <Setting Key="EAS_UserCheckBelonging" SpName="EAS_UserCheckBelonging" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelCheckBelonging" SpName="EAS_CustomerSelCheckBelonging" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Get Product List of Multiple Edit Product Status">
-	<Setting Key="EAS_ProductSettingByGroup_Sel" SpName="EAS_ProductSettingByGroup_Sel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
-		<Mapping DataField="product_type" ObjectProperty="ProductType" />
-	</Setting>
-  </Function>
-  <Function Name="Bonus Detail">
-    <Setting Key="EAS_Bonus_Sel" SpName="EAS_Bonus_Sel" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Bonus_Cancel" SpName="EAS_Bonus_Cancel" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Bonus_Ins" SpName="EAS_Bonus_Ins" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Limit New Downline">
-    <Setting Key="Acc_ProblemAccountLimitDownlineCheck" SpName="Acc_ProblemAccountLimitDownlineCheck" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="ParlayMaxPayout">
-    <Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect" DbName="DBCUST.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd" DbName="DBCUST.CustDB.wsv_xnap" />
-    <Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline" DbName="DBCUST.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="Protected Status">
-    <Setting Key="EAS_CustomerSelProtectionModeList" SpName="EAS_CustomerSelProtectionModeList" DbName="DBCUST.CustDB.wsv_xnap" />
-    <Setting Key="Age_CustomerUpdProtectedMode" SpName="Age_CustomerUpdProtectedMode" DbName="DBCUST.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="Total Bet">
-    <Setting Key="EAS_TotalBet_LeagueSel" SpName="EAS_TotalBet_LeagueSel" DbName="DBBOF.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_TotalBet_EventSel" SpName="EAS_TotalBet_EventSel" DbName="DBBOF.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_TotalBet_1378Sel" SpName="EAS_TotalBet_1378Sel" DbName="DBBOF.bodb02.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Mark Account Type">
-    <Setting Key="EAS_AccountType_Check" SpName="EAS_AccountType_Check" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_AccountType_Ins" SpName="EAS_AccountType_Ins" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_AccountType_Del" SpName="EAS_AccountType_Del" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_AccountType_Multiple_Ins" SpName="EAS_AccountType_Multiple_Ins" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-	<Setting Key="EAS_AccountType_Sel" SpName="EAS_AccountType_Sel" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >
-		<Mapping DataField="RoleID" ObjectProperty="Level" />
-	</Setting>
-    <Setting Key="EAS_AccountType_Upd" SpName="EAS_AccountType_Upd" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Auto Transfer">
-    <Setting Key="Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="SiteDB3_Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="SiteDB.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="Age_ToastMessage_Ins" SpName="Age_ToastMessage_Ins" DbName="DBMSG.bodb_Message.wsv_xnap" />
-    <Setting Key="Age_Msg_SetMessage" SpName="Age_Msg_SetMessage" DbName="DBMSG.bodb_Message.wsv_xnap" />
-    <Setting Key="Age_Msg_SetUsrMessage" SpName="Age_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.wsv_xnap" />
-  </Function>
-  <Function Name="Parlay Max Payout Info">
-	<Setting Key="Acc_SabaVirtualSportsBetSettingRef_Sel" SpName="Acc_SabaVirtualSportsBetSettingRef_Sel" DbName="DBTXN.bodb02.wsv_xnap" >
-		<Mapping DataField="SettingId_Followed" ObjectProperty="SettingIdFollowed" />
-	</Setting>
-  </Function>
-  <Function Name="Exchange Rate">
-	<Setting Key="EAS_Rpt_OandaExchangeRate" SpName="EAS_Rpt_OandaExchangeRate" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
-		<Mapping DataField="MYR/Unit" ObjectProperty="MYRRate" />
-		<Mapping DataField="CNY/Unit" ObjectProperty="CNYRate" />
-		<Mapping DataField="THB/Unit" ObjectProperty="THBRate" />
-		<Mapping DataField="IDR/Unit" ObjectProperty="IDRRate" />
-	</Setting>
-  </Function>
-  <Function Name="Edit Super List">
-    <Setting Key="EAS_CustomerInfo_MultiCheck" SpName="EAS_CustomerInfo_MultiCheck" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerUpdSuperInfo_Multiple" SpName="EAS_CustomerUpdSuperInfo_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Age_CustomerUpdPwd_Multiple" SpName="Age_CustomerUpdPwd_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdSecurityCode_Multiple" SpName="Acc_CustomerUpdSecurityCode_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Headline List">
-    <Setting Key="EAS_CustomerSelByGroupHeadline" SpName="EAS_CustomerSelByGroupHeadline" DbName="DBCust.CustDB.wsv_xnap" Plain="0" >
-      <Mapping DataField="custheadlineid" ObjectProperty="GroupId"/>
-      <Mapping DataField="groupheadline" ObjectProperty="GroupName"/>
-    </Setting>
-  </Function>
-  <Function Name="Customer Setting">
-    <Setting Key="Acc_LiteMode_CustSetting_ProductProfileSelect" SpName="Acc_LiteMode_CustSetting_ProductProfileSelect" DbName="DBCUST.CustDB.wsv_xnap" />
-  </Function>
-  <Function Name="Manage Admin">
-    <Setting Key="EAS_eaUserInfo_Ins" SpName="EAS_eaUserInfo_Ins" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerInsUserInfo_Rollback" SpName="Acc_CustomerInsUserInfo_Rollback" DbName="DBCust3.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_WriteLog_UserLog_UserControl_Wrapper" SpName="EAS_WriteLog_UserLog_UserControl_Wrapper" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Scaleout DBCUST">
-    <Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBGLOB.GlobCustDB.wsv_xnap" />
-    <Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBGLOB.GlobCustDB.wsv_xnap" />
-    <Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
-  </Function>
-  <Function Name="Match Win Loss Reports">
-    <Setting Key="EAS_MatchWinloss_Summary" SpName="EAS_MatchWinloss_Summary" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
-      <Mapping DataField="bettype" ObjectProperty="BetTypeId"/>
-    </Setting>
-    <Setting Key="EAS_MatchWinloss_LeagueSel" SpName="EAS_MatchWinloss_LeagueSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MatchWinloss_Detail" SpName="EAS_MatchWinloss_Detail" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
-      <Mapping DataField="bettype" ObjectProperty="BetTypeId"/>
-    </Setting>
-    <Setting Key="EAS_MatchWinloss_SportSel" SpName="EAS_MatchWinloss_SportSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MatchWinloss_EventSel" SpName="EAS_MatchWinloss_EventSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_MatchWinloss_BettypeSel" SpName="EAS_MatchWinloss_BettypeSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
-      <Mapping DataField="bettype" ObjectProperty="BetTypeId"/>
-    </Setting >
-  </Function>
-  <Function Name="Reward Detail">
-    <Setting Key="Age_Rpt_GetProgramList" SpName="Age_Rpt_GetProgramList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
-      <Mapping DataField="resource_en" ObjectProperty="ProgramName" />
-      <Mapping DataField="resourceid" ObjectProperty="ProgramId" />
-    </Setting>
-    <Setting Key="EAS_Rpt_RewardDetail_Com" SpName="EAS_Rpt_RewardDetail_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
-      <Mapping DataField="CurrencyCode" ObjectProperty="MemberCurrency" />
-    </Setting >
-  </Function>
-  <Function Name="White Label">
-    <Setting Key="EAS_Rpt_WhiteLabelWinLoss" SpName="EAS_Rpt_WhiteLabelWinLoss" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_WhiteLabelListSel" SpName="EAS_WhiteLabelListSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_Rpt_WhiteLabelSettlement" SpName="EAS_Rpt_WhiteLabelSettlement" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-  </Function>
+	<Function Name="PT Setting Information">
+		<Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Login">
+		<Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserLogout" SpName="EAS_UserLogout" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Report">
+		<Setting Key="Age_SelBalanceUpDay" SpName="Age_SelBalanceUpDay" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerSelUserInfo" SpName="EAS_CustomerSelUserInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
+			<Mapping DataField="srecommend" ObjectProperty="SuperId" />
+			<Mapping DataField="mrecommend" ObjectProperty="MasterId" />
+			<Mapping DataField="recommend" ObjectProperty="AgentId" />
+		</Setting>
+		<Setting Key="EAS_CustomerSelUserSearch" SpName="EAS_CustomerSelUserSearch" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerUpdUserSearch" SpName="EAS_CustomerUpdUserSearch" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WinLossDaily_Com14" SpName="EAS_Rpt_WinLossDaily_Com14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WinLossDaily_Com" SpName="EAS_Rpt_WinLossDaily_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WinLossDaily_SAg14" SpName="EAS_Rpt_WinLossDaily_SAg14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WinLossDaily_SAg" SpName="EAS_Rpt_WinLossDaily_SAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WinLossDaily_MAg14" SpName="EAS_Rpt_WinLossDaily_MAg14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WinLossDaily_MAg" SpName="EAS_Rpt_WinLossDaily_MAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WinLossDaily_Ag14" SpName="EAS_Rpt_WinLossDaily_Ag14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
+			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+			<Mapping DataField="ExtraWinLost" ObjectProperty="ExtraWinLoss" />
+		</Setting>
+		<Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
+			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+		</Setting>
+		<Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
+			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+		</Setting>
+		<Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
+			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+			<Mapping DataField="ExtraWinLost" ObjectProperty="ExtraWinLoss" />
+		</Setting>
+		<Setting Key="EAS_Rpt_WinLossDetailExtra_Com" SpName="EAS_Rpt_WinLossDetailExtra_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
+		<Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_ViewExtraPT2" SpName="EAS_Rpt_ViewExtraPT2" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="EAS_Rpt_WinLossDetail_byPT" SpName="EAS_Rpt_WinLossDetail_byPT" DbName="DBAGE.bodb02.wsv_xnap" />
+		<Setting Key="EAS_GetPTProductBySuper" SpName="EAS_GetPTProductBySuper" DbName="DBCust.CustDB.wsv_xnap" >
+			<Mapping DataField="CustID" ObjectProperty="CustId" />
+			<Mapping DataField="SuperPT" ObjectProperty="PositionTaking" />
+			<Mapping DataField="ProductID" ObjectProperty="ProductId" />
+			<Mapping DataField="ProductName" ObjectProperty="ProductName" />
+		</Setting>
+		<Setting Key="EAS_GetSubGroupList" SpName="EAS_GetSubGroupList" DbName="DBPOL.Nap_UserControl.wsv_xnap" />
+		<Setting Key="EAS_Rpt_WinLossDetail_bySubGroup" SpName="EAS_Rpt_WinLossDetail_bySubGroup" DbName="DBAGE.bodb02.wsv_xnap">
+			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+			<Mapping DataField="MemberWinLost" ObjectProperty="MemberWinLoss" />
+			<Mapping DataField="PlayerComm" ObjectProperty="MemberComm" />
+			<Mapping DataField="AgWinLost" ObjectProperty="AgentWinLoss" />
+			<Mapping DataField="AgComm" ObjectProperty="AgentComm" />
+			<Mapping DataField="AgTotal" ObjectProperty="AgentTotal" />
+			<Mapping DataField="MAgWinLost" ObjectProperty="MasterWinLoss" />
+			<Mapping DataField="MAgComm" ObjectProperty="MasterComm" />
+			<Mapping DataField="MAgTotal" ObjectProperty="MasterTotal" />
+			<Mapping DataField="SAgWinLost" ObjectProperty="SuperWinLoss" />
+			<Mapping DataField="SAgComm" ObjectProperty="SuperComm" />
+			<Mapping DataField="SAgTotal" ObjectProperty="SuperTotal" />
+		</Setting >
+	</Function>
+	<Function Name="Report By Currency">
+		<Setting Key="EAS_GetCurrencyList" SpName="EAS_GetCurrencyList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WinLossDetailByCurrency_Com" SpName="EAS_Rpt_WinLossDetailByCurrency_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+			<Mapping DataField="CurrencyName" ObjectProperty="Currency" />
+			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+			<Mapping DataField="Total" ObjectProperty="TotalName" />
+		</Setting>
+		<Setting Key="EAS_Rpt_WinLossDetailByCurrency_SAg" SpName="EAS_Rpt_WinLossDetailByCurrency_SAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+			<Mapping DataField="CurrencyName" ObjectProperty="Currency" />
+			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+			<Mapping DataField="Total" ObjectProperty="TotalName" />
+		</Setting>
+		<Setting Key="EAS_Rpt_WinLossDetailByCurrency_MAg" SpName="EAS_Rpt_WinLossDetailByCurrency_MAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+			<Mapping DataField="CurrencyName" ObjectProperty="Currency" />
+			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+			<Mapping DataField="Total" ObjectProperty="TotalName" />
+		</Setting>
+		<Setting Key="EAS_Rpt_WinLossDetailByCurrency_Ag" SpName="EAS_Rpt_WinLossDetailByCurrency_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+			<Mapping DataField="CurrencyName" ObjectProperty="Currency" />
+			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+			<Mapping DataField="Total" ObjectProperty="TotalName" />
+		</Setting>
+		<Setting Key="EAS_Rpt_WinLossDetailByCurrency_ByPT" SpName="EAS_Rpt_WinLossDetailByCurrency_ByPT" DbName="DBAGE.bodb02.wsv_xnap">
+			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
+			<Mapping DataField="PlayerComm" ObjectProperty="MemberComm" />
+			<Mapping DataField="Total" ObjectProperty="TotalName" />
+		</Setting>
+	</Function>
+	<Function Name="Group">
+		<Setting Key="EAS_GroupInfoDel" SpName="EAS_GroupInfoDel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_GroupInfoIns" SpName="EAS_GroupInfoIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_GroupInfoSel" SpName="EAS_GroupInfoSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+			<Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
+			<Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
+		</Setting>
+		<Setting Key="EAS_GroupInfoSelAllGroup" SpName="EAS_GroupInfoSelAllGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+			<Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
+			<Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
+		</Setting>
+		<Setting Key="EAS_GroupInfoSelExternalGroup" SpName="EAS_GroupInfoSelExternalGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+			<Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
+			<Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
+		</Setting>
+		<Setting Key="EAS_GroupInfoSelByGroupID" SpName="EAS_GroupInfoSelByGroupID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+			<Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
+			<Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
+		</Setting>
+		<Setting Key="EAS_GroupInfoSelByGroupName" SpName="EAS_GroupInfoSelByGroupName" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+			<Mapping DataField="ParentGroup" ObjectProperty="ParentGroupName" />
+			<Mapping DataField="ParentId" ObjectProperty="ParentGroupId" />
+		</Setting>
+		<Setting Key="EAS_GroupInfoUpd" SpName="EAS_GroupInfoUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_GroupPolicySel" SpName="EAS_GroupPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
+			<Mapping DataField="Policy" ObjectProperty="GroupPolicy" />
+		</Setting>
+		<Setting Key="EAS_GroupPolicyUpd" SpName="EAS_GroupPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="SubGroup">
+		<Setting Key="EAS_CustomerSelBySubGroup" SpName="EAS_CustomerSelBySubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerUpdSubGroup" SpName="EAS_CustomerUpdSubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserInfoSelBySubGroup" SpName="EAS_UserInfoSelBySubGroup" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserInfoUpdSubGroupAdminPwd" SpName="EAS_UserInfoUpdSubGroupAdminPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_OnUser_ForceKickout" SpName="EAS_OnUser_ForceKickout" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+	</Function>
+	<Function name="Group Configuration">
+		<Setting Key="EAS_GroupConfigurationSel" SpName="EAS_GroupConfigurationSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" plain="0" />
+		<Setting Key="EAS_GroupConfigurationUpd" SpName="EAS_GroupConfigurationUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" plain="0" />
+	</Function>
+	<Function Name="User">
+		<Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserCheckPermission_All" SpName="EAS_UserCheckPermission_All" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserInfoAddExistingUser" SpName="EAS_UserInfoAddExistingUser" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserInfoSel" SpName="EAS_UserInfoSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
+			<Mapping DataField="CustId" ObjectProperty="UserID" />
+		</Setting >
+		<Setting Key="EAS_UserInfoSelByUserID" SpName="EAS_UserInfoSelByUserID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+			<Mapping DataField="CustId" ObjectProperty="UserID" />
+		</Setting >
+		<Setting Key="EAS_UserInfoUpdStatus" SpName="EAS_UserInfoUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserInfoUpdUserGroup" SpName="EAS_UserInfoUpdUserGroup" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserPolicySel" SpName="EAS_UserPolicySel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+			<Mapping DataField="UserPolicy" ObjectProperty="Policy" />
+			<Mapping DataField="ParentId" ObjectProperty="ParentID" />
+		</Setting>
+		<Setting Key="EAS_UserPolicyUpd" SpName="EAS_UserPolicyUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserInfoAddNew" SpName="EAS_UserInfoAddNew" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserInfoUpdAll" SpName="EAS_UserInfoUpdAll" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserInfoUpdUserPwd" SpName="EAS_UserInfoUpdUserPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_GetCustArchiveStatus" SpName="Acc_GetCustArchiveStatus" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Menu and Function">
+		<Setting Key="EAS_FunctionIns" SpName="EAS_FunctionIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_FunctionSel" SpName="EAS_FunctionSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+			<Mapping DataField="FuncId" ObjectProperty="FuncID" />
+			<Mapping DataField="ParentId" ObjectProperty="ParentID" />
+		</Setting >
+		<Setting Key="EAS_FunctionUpd" SpName="EAS_FunctionUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_FuncUpdStatus" SpName="EAS_FuncUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_MenuDel" SpName="EAS_MenuDel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_MenuIns" SpName="EAS_MenuIns" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_MenuSel" SpName="EAS_MenuSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0">
+			<Mapping DataField="Active" ObjectProperty="IsActive" />
+		</Setting>
+		<Setting Key="EAS_MenuSelByUserID" SpName="EAS_MenuSelByUserID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+			<Mapping DataField="Active" ObjectProperty="IsActive" />
+		</Setting>
+		<Setting Key="EAS_MenuUpd" SpName="EAS_MenuUpd" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_MenuUpdStatus" SpName="EAS_MenuUpdStatus" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_FunctionSelEdit" SpName="EAS_FunctionSelEdit" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Grant Permission">
+		<Setting Key="EAS_GroupPolicySelByFuncID" SpName="EAS_GroupPolicySelByFuncID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_GroupPolicyUpdMultiple" SpName="EAS_GroupPolicyUpdMultiple" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserPolicySelByFuncID" SpName="EAS_UserPolicySelByFuncID" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserPolicyUpdMultiple" SpName="EAS_UserPolicyUpdMultiple" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Left Panel">
+		<Setting Key="SelAllInfo" SpName="Acc_CustomerSelAllInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.wsv_xnap" Plain="0" />
+		<Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCust.CustDB.wsv_xnap" Plain="0" >
+			<Mapping DataField="credit" ObjectProperty="Amount" />
+			<Mapping DataField="closed" ObjectProperty="IsClosed" />
+		</Setting>
+		<Setting Key="Acc_CustomerUpdResetMemberCredit" SpName="Acc_CustomerUpdResetMemberCredit" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_Con_FileNameSelByCustID" SpName="Acc_Con_FileNameSelByCustID" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdSuperVS_MinMaxBet" SpName="Acc_CustomerUpdSuperVS_MinMaxBet" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerInsClearBalance" SpName="Acc_CustomerInsClearBalance" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerList_CloseInfoSel" SpName="Acc_CustomerList_CloseInfoSel" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
+			<Mapping DataField="roleid" ObjectProperty="Level" class="SingleOpenAffectedDownline" />
+			<Mapping DataField="cntAffected" ObjectProperty="AffectedDownlines" class="SingleOpenAffectedDownline" />
+			<Mapping DataField="cntUnchanged" ObjectProperty="RemainUnchangedDownlines" class="SingleOpenAffectedDownline" />
+		</Setting>
+		<Setting Key="Acc_Customer_CloseInfoDetailSel" SpName="Acc_Customer_CloseInfoDetailSel" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CustomerUpdClearCredit" SpName="Acc_CustomerUpdClearCredit" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdSuspended" SpName="Acc_CustomerUpdSuspended" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerList_SuspendInfoSel" SpName="Acc_CustomerList_SuspendInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
+			<Mapping DataField="suspended" ObjectProperty="Suspend" class="SingleUpdateAffectedDownline" />
+		</Setting>
+		<Setting Key="Acc_Customer_SuspendInfoSel" SpName="Acc_Customer_SuspendInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
+			<Mapping DataField="roleid" ObjectProperty="Level" class="SingleUpdateAffectedDownline" />
+			<Mapping DataField="cntAffected" ObjectProperty="AffectedDownlines" class="SingleUpdateAffectedDownline" />
+			<Mapping DataField="cntUnchanged" ObjectProperty="RemainUnchangedDownlines" class="SingleUpdateAffectedDownline" />
+		</Setting>
+		<Setting Key="Acc_Customer_SuspendInfoDetailSel" SpName="Acc_Customer_SuspendInfoDetailSel" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.wsv_xnap" Plain="0" >
+			<Mapping DataField="creatdate" ObjectProperty="CreatedDate" />
+			<Mapping DataField="lastlogged" ObjectProperty="LastLoggedIn" />
+			<Mapping DataField="pwdexpiry" ObjectProperty="PasswordExpired" />
+		</Setting>
+		<Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Dot_BalanceDebitInitialize" SpName="Dot_BalanceDebitInitialize" DbName="DBTXN.bodb02.wsv_xnap" />
+		<Setting Key="Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="DBTXN.bodb02.wsv_xnap" />
+		<Setting Key="Dot_BalanceDebitRemove" SpName="Dot_BalanceDebitRemove" DbName="DBTXN.bodb02.wsv_xnap" />
+		<Setting Key="Dot_BalanceCreditRemove" SpName="Dot_BalanceCreditRemove" DbName="DBTXN.bodb02.wsv_xnap" />
+		<Setting Key="Acc_CustomerTotalAmountSel" SpName="Acc_CustomerTotalAmountSel" DbName="DBTXN.bodb02.wsv_xnap" />
+	</Function>
+	<Function Name="Customer List">
+		<Setting Key="EAS_CustomerSelByCom" SpName="EAS_CustomerSelByCom" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerSelBySAg" SpName="EAS_CustomerSelBySAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >
+			<Mapping DataField="Downlines" ObjectProperty="NoOfDownlines" />
+		</Setting>
+		<Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >
+			<Mapping DataField="ugroup" ObjectProperty="UserGroup" />
+		</Setting>
+		<Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
+			<Mapping DataField="Currency" ObjectProperty="CurrencyId" />
+		</Setting>
+		<Setting Key="Acc_CustomerSelTransferOption" SpName="Acc_CustomerSelTransferOption" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerUpdPwd" SpName="Age_CustomerUpdPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_OnUser_ForceKickedout" SpName="Age_OnUser_ForceKickedout" DbName="DBONUSER.ON_USER.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerUpdUserInfo" SpName="Age_CustomerUpdUserInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerSelSuperInfo" SpName="EAS_CustomerSelSuperInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerUpdSuperInfo" SpName="EAS_CustomerUpdSuperInfo" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerUpdTransferOption" SpName="EAS_CustomerUpdTransferOption" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdDoubleCommLosing" SpName="Acc_CustomerUpdDoubleCommLosing" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelSuperAutoTransfer" SpName="Acc_CustomerSelSuperAutoTransfer" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Customer_AssociationInfo" SpName="EAS_Customer_AssociationInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Sportsbook">
+		<Setting Key="Acc_CustomerSelSAgentInfo" SpName="Acc_CustomerSelSAgentInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelMAgentInfo" SpName="Acc_CustomerSelMAgentInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelAgentInfo" SpName="Acc_CustomerSelAgentInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelSEditCustomer" SpName="Acc_CustomerSelSEditCustomer" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelMEditCustomer" SpName="Acc_CustomerSelMEditCustomer" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelEditCustomer_SAg" SpName="Acc_CustomerSelEditCustomer_SAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelEditCustomer_MAg" SpName="Acc_CustomerSelEditCustomer_MAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelEditCustomer" SpName="Acc_CustomerSelEditCustomer" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerSelUserComm" SpName="Age_CustomerSelUserComm" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerSelBetSetting" SpName="Age_CustomerSelBetSetting" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerUpdMemBetSetting" SpName="Age_CustomerUpdMemBetSetting" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelComEditOverride_MAg" SpName="Acc_CustomerSelComEditOverride_MAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelComEditOverride_Ag" SpName="Acc_CustomerSelComEditOverride_Ag" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerInsMember_MAg" SpName="Acc_CustomerInsMember_MAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerInsMember_SAg" SpName="Acc_CustomerInsMember_SAg" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerInsMember_Ag" SpName="Acc_CustomerInsMember_Ag" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdSuper_All" SpName="Acc_CustomerUpdSuper_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdMaster_All" SpName="Acc_CustomerUpdMaster_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdAgent_All" SpName="Acc_CustomerUpdAgent_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdMember_All" SpName="Acc_CustomerUpdMember_All" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdMember_Super" SpName="Acc_CustomerUpdMember_Super" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdMember_Master" SpName="Acc_CustomerUpdMember_Master" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustOverrideUpd" SpName="Acc_CustOverrideUpd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelCEditCustomer" SpName="Acc_CustomerSelCEditCustomer" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerSelComEditOverride_SAg" SpName="Acc_CustomerSelComEditOverride_SAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerSelCheckBelonging_ByUsername" SpName="Age_CustomerSelCheckBelonging_ByUsername" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerCheckExists" SpName="Age_CustomerCheckExists" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerCheckReachDownline" SpName="Age_CustomerCheckReachDownline" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_MsgCustReadStatus_Ins" SpName="Age_MsgCustReadStatus_Ins" DbName="DBMSG.bodb_Message.wsv_xnap" />
+	</Function>
+	<Function Name="Edit Commission">
+		<Setting Key="Age_CustomerUpdMasterComm" SpName="Age_CustomerUpdMasterComm" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerUpdAgentComm" SpName="Age_CustomerUpdAgentComm" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerUpdUserComm" SpName="Age_CustomerUpdUserComm" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Statement - Report">
+		<Setting Key="Statement_Report_GetList" SpName="Acc_StatementSel" DbName="DBACC.bodb02.wsv_xnap" Plain="0" >
+			<Mapping DataField="winlostdate" ObjectProperty="StatementDate" />
+			<Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+			<Mapping DataField="Comm" ObjectProperty="Commission" />
+			<Mapping DataField="TransferAmt" ObjectProperty="TransferAmount" />
+			<Mapping DataField="ClosingBalance" ObjectProperty="AccumulatedTotal" />
+			<Mapping DataField="VoidAmt" ObjectProperty="VoidCancelled" />
+		</Setting>
+		<Setting Key="Statement_Report_GetList_14" SpName="Acc_StatementSel_14" DbName="DBRPT.bodb_report.wsv_xnap" Plain="0" >
+			<Mapping DataField="winlostdate" ObjectProperty="StatementDate" />
+			<Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+			<Mapping DataField="Comm" ObjectProperty="Commission" />
+			<Mapping DataField="TransferAmt" ObjectProperty="TransferAmount" />
+			<Mapping DataField="ClosingBalance" ObjectProperty="AccumulatedTotal" />
+			<Mapping DataField="VoidAmt" ObjectProperty="VoidCancelled" />
+		</Setting >
+		<Setting Key="Statement_Report_GetList_WH" SpName="Acc_StatementSel_Old" DbName="DBRPT.bodb_report.wsv_xnap" Plain="0" >
+			<Mapping DataField="winlostdate" ObjectProperty="StatementDate" />
+			<Mapping DataField="WinLost" ObjectProperty="WinLoss" />
+			<Mapping DataField="Comm" ObjectProperty="Commission" />
+			<Mapping DataField="TransferAmt" ObjectProperty="TransferAmount" />
+			<Mapping DataField="ClosingBalance" ObjectProperty="AccumulatedTotal" />
+			<Mapping DataField="VoidAmt" ObjectProperty="VoidCancelled" />
+		</Setting >
+		<Setting Key="Statement_Report_TransferDetails" SpName="Acc_StatementSelTransfer" DbName="DBACC.bodb02.wsv_xnap" Plain="0" >
+			<Mapping DataField="transdate" ObjectProperty="StatementDate" />
+			<Mapping DataField="transtype" ObjectProperty="TransactionType" />
+			<Mapping DataField="transdesc" ObjectProperty="Description" />
+			<Mapping DataField="ExRate" ObjectProperty="ExchangeRate" />
+		</Setting >
+		<Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old" DbName="DBARC.bodb_Archive.wsv_xnap" Plain="0" >
+			<Mapping DataField="transdate" ObjectProperty="StatementDate" />
+			<Mapping DataField="transtype" ObjectProperty="TransactionType" />
+			<Mapping DataField="transdesc" ObjectProperty="Description" />
+			<Mapping DataField="ExRate" ObjectProperty="ExchangeRate" />
+		</Setting >
+		<Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >
+			<Mapping DataField="custid" ObjectProperty="CustomerId" />
+			<Mapping DataField="roleid" ObjectProperty="RoleId" />
+		</Setting >
+	</Function>
+	<Function Name="DCS">
+		<Function Name="Enable Status">
+			<Setting Key="Acc_CustSetting_StatusSettingSelect" SpName="Acc_CustSetting_StatusSettingSelect" DbName="DBCUST.CustDB.wsv_xnap" >
+				<Mapping DataField="ProductID" ObjectProperty="ProductId" />
+			</Setting>
+			<Setting Key="Acc_CustSetting_DisableStatUpd" SpName="Acc_CustSetting_DisableStatUpd" DbName="DBCUST.CustDB.wsv_xnap" />
+			<Setting Key="Acc_CustSetting_DisableNewProductStatusUpd" SpName="Acc_CustSetting_DisableNewProductStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
+		</Function>
+	</Function>
+	<Function Name="Casino Win Limit">
+		<Setting Key="Acc_CustomerWinLimitSelEdit" SpName="Acc_CustomerWinLimitSelEdit" DbName="DBCust.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="OTP">
+		<Setting Key="RemoveCustomerOTP" SpName="Age_OTP_CustomerOTPDel" DbName="DBCust.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="NG2">
+		<Setting Key="Acc_Con_CheckPermission_All" SpName="Acc_Con_CheckPermission_All" DbName="DBPOL.NAP_UserControl.wsv_xnap" />
+		<Setting Key="Acc_CustomerIsSpecialSite" SpName="Acc_CustomerIsSpecialSite" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CustomerIsInternalAdmin" SpName="Acc_CustomerIsInternalAdmin" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CustSetting_DisableGameStatusSelect" SpName="Acc_CustSetting_DisableGameStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CustSetting_DisableGameStatusUpd" SpName="Acc_CustSetting_DisableGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CustSetting_SyncGameStatusUpd" SpName="Acc_CustSetting_SyncGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="CheckAllowedShow" SpName="Acc_CheckAllowedShow" DbName="DBCust.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="API Logger">
+		<Setting Key="WriteLog_UserLog_ExternalAPI_Ins" SpName="WriteLog_UserLog_ExternalAPI_Ins" DbName="dblog" IgnoreImport="true" Plain="0" />
+		<Setting Key="WriteLog_UserLog_ExternalAPI_UpdResponse" SpName="WriteLog_UserLog_ExternalAPI_UpdResponse" DbName="dblog" IgnoreImport="true" Plain="0" />
+	</Function>
+	<Function Name="Customer - ThirdParty">
+		<Setting Key="Acc_CustomerSelStatusByProductId" SpName="Acc_CustomerSelStatusByProductId" DbName="DBCust.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="Otp">
+		<Setting Key="EAS_OTP_CustomerOTPSel" SpName="EAS_OTP_CustomerOTPSel" DbName="DBCUST.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="Product Status Setting">
+		<!--Select functions-->
+		<Setting Key="Acc_AdminSelStatusByProductId" SpName="Acc_AdminSelStatusByProductId" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_Admin_DisableGameStatusSelect" SpName="Acc_Admin_DisableGameStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_Admin_DisableNewProductStatusSelect" SpName="Acc_Admin_DisableNewProductStatusSelect" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_Admin_DisableNewProductStatusSelect_Esports" SpName="Acc_Admin_DisableNewProductStatusSelect_Esports" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_Admin_DisableNewProductStatus_160_Select" SpName="Acc_Admin_DisableNewProductStatus_160_Select" DbName="DBCust.CustDB.wsv_xnap" />
+		<!--Update functions-->
+		<Setting Key="Acc_AdminCheckAllowedDownlinesByLevel" SpName="Acc_AdminCheckAllowedDownlinesByLevel" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_AdminUpdCSStatus_Cust" SpName="Acc_AdminUpdCSStatus_Cust" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_Admin_DisableGameStatusUpd" SpName="Acc_Admin_DisableGameStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_Admin_DisableNewProductStatusUpd" SpName="Acc_Admin_DisableNewProductStatusUpd" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_Admin_DisableNewProductStatus_160_Upd" SpName="Acc_Admin_DisableNewProductStatus_160_Upd" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CustSetting_ProductProfileSelect" SpName="Acc_CustSetting_ProductProfileSelect" DbName="DBCust.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="Check allow downlines">
+		<Setting Key="Acc_CustomerSelCheckAllowedDownlines" SpName="Acc_CustomerSelCheckAllowedDownlines" DbName="DBCust.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="IP">
+		<Setting Key="GetIPInfo" SpName="Acc_GetIPInfo_Full" DbName="DBCust.IPDB.wsv_xnap" />
+		<Setting Key="GetIPVN" SpName="GetIPVN" DbName="DBCust.IPDB.wsv_xnap" />
+	</Function>
+	<Function Name="Data Range">
+		<Setting Key="EAS_CustomerDateLimitMultipleUpd" SpName="EAS_CustomerDateLimitMultipleUpd" DbName="DBCust.CustDB.wsv_xnap">
+			<Mapping DataField="errcode" ObjectProperty="ErrorCode" />
+			<Mapping DataField="errmsg" ObjectProperty="ErrorMessage" />
+		</Setting>
+		<Setting Key="EAS_CustomerDateLimitSel" SpName="EAS_CustomerDateLimitSel" DbName="DBCust.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="Products">
+		<Setting Key="EAS_GetProductID_ByGroupConfiguration" SpName="EAS_GetProductID_ByGroupConfiguration" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_GetProductList" SpName="EAS_GetProductList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="Age_Rpt_GetProductDetail" SpName="Age_Rpt_GetProductDetail" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Member Balance Info">
+		<Setting Key="Acc_BalanceMemberSel" SpName="Acc_BalanceMemberSel" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_OutstandingMemberSel" SpName="Acc_OutstandingMemberSel" DbName="DB042.bodb02.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Search And Copy">
+		<Setting Key="EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="DBSite1_EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBSITE01.CustDB.wsv_xnap" />
+		<Setting Key="DBSite2_EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBSITE02.CustDB.wsv_xnap" />
+		<Setting Key="DBSite3_EAS_CustomerInsMember_CloneSetting_Com" SpName="EAS_CustomerInsMember_CloneSetting_Com" DbName="DBSITE03.CustDB.wsv_xnap" />
+		<Setting Key="EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="DBSite1_EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBSITE02.CustDB.wsv_xnap" />
+		<Setting Key="DBSite2_EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBSITE03.CustDB.wsv_xnap" />
+		<Setting Key="DBSite3_EAS_CustomerInsMember_CloneSetting_Com_Validate" SpName="EAS_CustomerInsMember_CloneSetting_Com_Validate" DbName="DBSITE03.CustDB.wsv_xnap" />
+		<Setting Key="EAS_GroupAdmin_Sel" SpName="EAS_GroupAdmin_Sel" DbName="DBPOL.NAP_UserControl.wsv_xnap" />
+		<Setting Key="EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="DBSite1_EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBSITE01.CustDB.wsv_xnap" />
+		<Setting Key="DBSite2_EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBSITE02.CustDB.wsv_xnap" />
+		<Setting Key="DBSite3_EAS_CustomerUplineUserNameSel" SpName="EAS_CustomerUplineUserNameSel" DbName="DBSITE03.CustDB.wsv_xnap" />
+		<Setting Key="EAS_CustomerInsMember_CloneSetting_ExtraPT" SpName="EAS_CustomerInsMember_CloneSetting_ExtraPT" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_GameEnableJackpotSel" SpName="Acc_GameEnableJackpotSel" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_SuperPrefixByGroupSel" SpName="Acc_SuperPrefixByGroupSel" DbName="DBCust.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="CRM Update Headline Info">
+		<Setting Key="Acc_CRM_HeadlineUpd" SpName="Acc_CRM_HeadlineUpd" DbName="DBCRM.bodb_CRM.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="UM On product">
+		<Setting Key="Acc_CheckUM" SpName="Acc_CheckUM" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CheckUM_MultipleCustProductStatus" SpName="Acc_CheckUM_MultipleCustProductStatus" DbName="DBCust.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="Problem Account List">
+		<Setting Key="EAS_ProblemAccount_CustomerList" SpName="EAS_ProblemAccount_CustomerList" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_ProblemAccount_ReviewStatusUpd" SpName="EAS_ProblemAccount_ReviewStatusUpd" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="User belong to Group">
+		<Setting Key="EAS_UserCheckBelonging" SpName="EAS_UserCheckBelonging" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerSelCheckBelonging" SpName="EAS_CustomerSelCheckBelonging" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Get Product List of Multiple Edit Product Status">
+		<Setting Key="EAS_ProductSettingByGroup_Sel" SpName="EAS_ProductSettingByGroup_Sel" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" >
+			<Mapping DataField="product_type" ObjectProperty="ProductType" />
+		</Setting>
+	</Function>
+	<Function Name="Bonus Detail">
+		<Setting Key="EAS_Bonus_Sel" SpName="EAS_Bonus_Sel" DbName="DBACC.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Bonus_Cancel" SpName="EAS_Bonus_Cancel" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Bonus_Ins" SpName="EAS_Bonus_Ins" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Limit New Downline">
+		<Setting Key="Acc_ProblemAccountLimitDownlineCheck" SpName="Acc_ProblemAccountLimitDownlineCheck" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="ParlayMaxPayout">
+		<Setting Key="Acc_CustSetting_MaxPayoutSelect" SpName="Acc_CustSetting_MaxPayoutSelect" DbName="DBCUST.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CustSetting_MaxPayoutUpd" SpName="Acc_CustSetting_MaxPayoutUpd" DbName="DBCUST.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CustSetting_MaxPayoutCheckDownline" SpName="Acc_CustSetting_MaxPayoutCheckDownline" DbName="DBCUST.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="Protected Status">
+		<Setting Key="EAS_CustomerSelProtectionModeList" SpName="EAS_CustomerSelProtectionModeList" DbName="DBCUST.CustDB.wsv_xnap" />
+		<Setting Key="Age_CustomerUpdProtectedMode" SpName="Age_CustomerUpdProtectedMode" DbName="DBCUST.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="Total Bet">
+		<Setting Key="EAS_TotalBet_LeagueSel" SpName="EAS_TotalBet_LeagueSel" DbName="DBBOF.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_TotalBet_EventSel" SpName="EAS_TotalBet_EventSel" DbName="DBBOF.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_TotalBet_1378Sel" SpName="EAS_TotalBet_1378Sel" DbName="DBBOF.bodb02.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Mark Account Type">
+		<Setting Key="EAS_AccountType_Check" SpName="EAS_AccountType_Check" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_AccountType_Ins" SpName="EAS_AccountType_Ins" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_AccountType_Del" SpName="EAS_AccountType_Del" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_AccountType_Multiple_Ins" SpName="EAS_AccountType_Multiple_Ins" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_AccountType_Sel" SpName="EAS_AccountType_Sel" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >
+			<Mapping DataField="RoleID" ObjectProperty="Level" />
+		</Setting>
+		<Setting Key="EAS_AccountType_Upd" SpName="EAS_AccountType_Upd" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Auto Transfer">
+		<Setting Key="Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="SiteDB3_Age_ClearBalanceCust_Job_StatusCheck" SpName="Age_ClearBalanceCust_Job_StatusCheck" DbName="DBSITE03.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="Age_ToastMessage_Ins" SpName="Age_ToastMessage_Ins" DbName="DBMSG.bodb_Message.wsv_xnap" />
+		<Setting Key="Age_Msg_SetMessage" SpName="Age_Msg_SetMessage" DbName="DBMSG.bodb_Message.wsv_xnap" />
+		<Setting Key="Age_Msg_SetUsrMessage" SpName="Age_Msg_SetUsrMessage" DbName="DBMSG.bodb_Message.wsv_xnap" />
+	</Function>
+	<Function Name="Parlay Max Payout Info">
+		<Setting Key="Acc_SabaVirtualSportsBetSettingRef_Sel" SpName="Acc_SabaVirtualSportsBetSettingRef_Sel" DbName="DBTXN.bodb02.wsv_xnap" >
+			<Mapping DataField="SettingId_Followed" ObjectProperty="SettingIdFollowed" />
+		</Setting>
+	</Function>
+	<Function Name="Exchange Rate">
+		<Setting Key="EAS_Rpt_OandaExchangeRate" SpName="EAS_Rpt_OandaExchangeRate" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
+			<Mapping DataField="MYR/Unit" ObjectProperty="MYRRate" />
+			<Mapping DataField="CNY/Unit" ObjectProperty="CNYRate" />
+			<Mapping DataField="THB/Unit" ObjectProperty="THBRate" />
+			<Mapping DataField="IDR/Unit" ObjectProperty="IDRRate" />
+		</Setting>
+	</Function>
+	<Function Name="Edit Super List">
+		<Setting Key="EAS_CustomerInfo_MultiCheck" SpName="EAS_CustomerInfo_MultiCheck" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerUpdSuperInfo_Multiple" SpName="EAS_CustomerUpdSuperInfo_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Age_CustomerUpdPwd_Multiple" SpName="Age_CustomerUpdPwd_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerUpdSecurityCode_Multiple" SpName="Acc_CustomerUpdSecurityCode_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Headline List">
+		<Setting Key="EAS_CustomerSelByGroupHeadline" SpName="EAS_CustomerSelByGroupHeadline" DbName="DBCust.CustDB.wsv_xnap" Plain="0" >
+			<Mapping DataField="custheadlineid" ObjectProperty="GroupId"/>
+			<Mapping DataField="groupheadline" ObjectProperty="GroupName"/>
+		</Setting>
+	</Function>
+	<Function Name="Customer Setting">
+		<Setting Key="Acc_LiteMode_CustSetting_ProductProfileSelect" SpName="Acc_LiteMode_CustSetting_ProductProfileSelect" DbName="DBCUST.CustDB.wsv_xnap" />
+	</Function>
+	<Function Name="Manage Admin">
+		<Setting Key="EAS_eaUserInfo_Ins" SpName="EAS_eaUserInfo_Ins" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerInsUserInfo_Rollback" SpName="Acc_CustomerInsUserInfo_Rollback" DbName="DBCust3.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_WriteLog_UserLog_UserControl_Wrapper" SpName="EAS_WriteLog_UserLog_UserControl_Wrapper" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Scaleout DBCUST">
+		<Setting Key="Acc_ServerDBConfigSel" SpName="Acc_ServerDBConfigSel" DbName="DBGLOB.GlobCustDB.wsv_xnap" />
+		<Setting Key="Acc_ServerDBConfigSelByCust" SpName="Acc_ServerDBConfigSelByCust" DbName="DBGLOB.GlobCustDB.wsv_xnap" />
+		<Setting Key="Acc_CustomerIns_Register" SpName="Acc_CustomerIns_Register" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
+		<Setting Key="Acc_CustomerIns_Rollback" SpName="Acc_CustomerIns_Rollback" DbName="DBGLOB.GlobCustDB.wsv_xnap" Plain="0" />
+	</Function>
+	<Function Name="Match Win Loss Reports">
+		<Setting Key="EAS_MatchWinloss_Summary" SpName="EAS_MatchWinloss_Summary" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
+			<Mapping DataField="bettype" ObjectProperty="BetTypeId"/>
+		</Setting>
+		<Setting Key="EAS_MatchWinloss_LeagueSel" SpName="EAS_MatchWinloss_LeagueSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_MatchWinloss_Detail" SpName="EAS_MatchWinloss_Detail" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+			<Mapping DataField="bettype" ObjectProperty="BetTypeId"/>
+		</Setting>
+		<Setting Key="EAS_MatchWinloss_SportSel" SpName="EAS_MatchWinloss_SportSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_MatchWinloss_EventSel" SpName="EAS_MatchWinloss_EventSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_MatchWinloss_BettypeSel" SpName="EAS_MatchWinloss_BettypeSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
+			<Mapping DataField="bettype" ObjectProperty="BetTypeId"/>
+		</Setting >
+	</Function>
+	<Function Name="Reward Detail">
+		<Setting Key="Age_Rpt_GetProgramList" SpName="Age_Rpt_GetProgramList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0">
+			<Mapping DataField="resource_en" ObjectProperty="ProgramName" />
+			<Mapping DataField="resourceid" ObjectProperty="ProgramId" />
+		</Setting>
+		<Setting Key="EAS_Rpt_RewardDetail_Com" SpName="EAS_Rpt_RewardDetail_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" >
+			<Mapping DataField="CurrencyCode" ObjectProperty="MemberCurrency" />
+		</Setting >>
+	</Function>
+	<Function Name="White Label">
+		<Setting Key="EAS_Rpt_WhiteLabelWinLoss" SpName="EAS_Rpt_WhiteLabelWinLoss" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_WhiteLabelListSel" SpName="EAS_WhiteLabelListSel" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_Rpt_WhiteLabelSettlement" SpName="EAS_Rpt_WhiteLabelSettlement" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+	</Function>
 </Functions>
