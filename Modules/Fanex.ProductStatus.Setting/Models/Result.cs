@@ -18,11 +18,16 @@
         private const int ParentChildViolated = 92;
         private readonly RefDataService _refDataService;
 
-        public Result(int code, string message, int msgType = 0, RefDataService refDataService = null)
+        public Result(int code, string message, RefDataService refDataService = null)
         {
             Code = code;
             Message = message;
-            MsgType = msgType;
+            _refDataService = refDataService ?? new RefDataServiceImpl();
+        }
+
+        public Result(Hashtable outputParams, RefDataService refDataService = null)
+        {
+            CreateResult(outputParams);
             _refDataService = refDataService ?? new RefDataServiceImpl();
         }
 

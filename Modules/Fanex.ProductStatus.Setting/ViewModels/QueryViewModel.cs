@@ -28,10 +28,12 @@
 
         public bool AllowUpdate { get; private set; }
 
-        public IDictionary<byte, bool> ShowColumnByRoles { get; private set; }
-            = new Dictionary<byte, bool>
+        public IDictionary<short, bool> ShowColumnByRoles { get; private set; }
+            = new Dictionary<short, bool>
             {
+                [RoleIdentity.SuperDirectMember] = false,
                 [RoleIdentity.Master] = false,
+                [RoleIdentity.MasterDirectMember] = false,
                 [RoleIdentity.Agent] = false,
                 [RoleIdentity.Member] = false
             };
@@ -49,7 +51,9 @@
                 if (HasData)
                 {
                     var firstProductStatus = ProductStatus.First();
+                    ShowColumnByRoles[RoleIdentity.SuperDirectMember] = firstProductStatus.IsShowDirectSuperMember;
                     ShowColumnByRoles[RoleIdentity.Master] = firstProductStatus.IsShowMaster;
+                    ShowColumnByRoles[RoleIdentity.MasterDirectMember] = firstProductStatus.IsShowDirectMasterMember;
                     ShowColumnByRoles[RoleIdentity.Agent] = firstProductStatus.IsShowAgent;
                     ShowColumnByRoles[RoleIdentity.Member] = firstProductStatus.IsShowMember;
                 }

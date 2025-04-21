@@ -26,6 +26,14 @@
 
         public int TotalEnabledMembers { get; set; }
 
+        public int TotalDisabledSuperDirectMembers { get; set; }
+
+        public int TotalEnabledSuperDirectMembers { get; set; }
+
+        public int TotalDisabledMasterDirectMembers { get; set; }
+
+        public int TotalEnabledMasterDirectMembers { get; set; }
+
         public string Name { get; set; }
     }
 }

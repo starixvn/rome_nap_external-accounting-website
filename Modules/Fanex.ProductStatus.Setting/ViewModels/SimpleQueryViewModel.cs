@@ -10,10 +10,12 @@
 
     public class SimpleQueryViewModel
     {
-        private readonly IDictionary<byte, string> roleDictionary = new Dictionary<byte, string>
+        private readonly IDictionary<short, string> roleDictionary = new Dictionary<short, string>
         {
             [RoleIdentity.Super] = Resources.Super,
+            [RoleIdentity.SuperDirectMember] = Resources.SuperDirectMember,
             [RoleIdentity.Master] = Resources.Master,
+            [RoleIdentity.MasterDirectMember] = Resources.MasterDirectMember,
             [RoleIdentity.Agent] = Resources.Agent,
             [RoleIdentity.Member] = Resources.Member,
         };
@@ -43,7 +45,7 @@
 
         public int SportTypeId { get; set; }
 
-        public byte CustRole { get; set; }
+        public short CustRole { get; set; }
 
         public string CustName { get; set; }
 

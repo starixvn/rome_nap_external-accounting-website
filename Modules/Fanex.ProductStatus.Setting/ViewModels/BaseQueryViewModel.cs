@@ -12,10 +12,12 @@
     {
         private readonly IProductStatusActor productStatusActor;
 
-        protected readonly IDictionary<byte, string> roleDictionary = new Dictionary<byte, string>
+        protected readonly IDictionary<short, string> roleDictionary = new Dictionary<short, string>
         {
             [RoleIdentity.Super] = Resources.Super,
+            [RoleIdentity.SuperDirectMember] = Resources.SuperDirectMember,
             [RoleIdentity.Master] = Resources.Master,
+            [RoleIdentity.MasterDirectMember] = Resources.MasterDirectMember,
             [RoleIdentity.Agent] = Resources.Agent,
             [RoleIdentity.Member] = Resources.Member,
         };
@@ -33,7 +35,9 @@
 
         public int SportTypeId { get; set; }
 
-        public byte CustRole { get; set; }
+        public short CustRole { get; set; }
+
+        public short Recommend { get; set; }
 
         public byte SystemId
             => productStatusActor.SystemId;
@@ -44,7 +48,7 @@
         public IEnumerable<ProductStatusViewModel> ProductStatus { get; private set; }
             = Enumerable.Empty<ProductStatusViewModel>();
 
-        public string GetRoleName(byte roleId)
+        public string GetRoleName(short roleId)
         {
             string roleName;
             roleDictionary.TryGetValue(roleId, out roleName);

@@ -88,6 +88,15 @@ namespace Fanex.ProductStatus.Setting.AppResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All Master Direct Members.
+        /// </summary>
+        public static string AllMasterDirectMember {
+            get {
+                return ResourceManager.GetString("AllMasterDirectMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to All Masters.
         /// </summary>
         public static string AllMasters {
@@ -111,6 +120,15 @@ namespace Fanex.ProductStatus.Setting.AppResources {
         public static string AllProducts {
             get {
                 return ResourceManager.GetString("AllProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All Super Direct Members.
+        /// </summary>
+        public static string AllSuperDirectMember {
+            get {
+                return ResourceManager.GetString("AllSuperDirectMember", resourceCulture);
             }
         }
         
@@ -241,6 +259,15 @@ namespace Fanex.ProductStatus.Setting.AppResources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Master Direct Member.
+        /// </summary>
+        public static string MasterDirectMember {
+            get {
+                return ResourceManager.GetString("MasterDirectMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Member.
         /// </summary>
         public static string Member {
@@ -354,6 +381,15 @@ namespace Fanex.ProductStatus.Setting.AppResources {
         public static string Super {
             get {
                 return ResourceManager.GetString("Super", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Super Direct Member.
+        /// </summary>
+        public static string SuperDirectMember {
+            get {
+                return ResourceManager.GetString("SuperDirectMember", resourceCulture);
             }
         }
         

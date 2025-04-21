@@ -34,7 +34,7 @@
         public Result ExecuteNonQuery(IBaseNonQueryCommand command)
         {
             dynamicRepository.Execute(command);
-            return new Result(command.ErrCode, command.ErrCode == 0 ? Resources.StatusUpdatedSuccessfully: command.ErrMsg, command.MsgType);
+            return new Result(command.ErrCode, command.ErrCode == 0 ? Resources.StatusUpdatedSuccessfully: command.ErrMsg);
         }
 
         public IEnumerable<ProductStatusUM> GetProductStatusUM(ICriteria criteria)

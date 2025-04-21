@@ -12,7 +12,7 @@ namespace Fanex.ProductStatus.Setting.Models
 
         public bool? DisableDownlines { get; set; }
 
-        public ProductStatusCommand ToProductStatusCommand(byte roleId)
+        public ProductStatusCommand ToProductStatusCommand(short roleId)
         {
             var command = new ProductStatusCommand
             {

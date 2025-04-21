@@ -5,7 +5,7 @@
 
     public class ProductStatusViewModel
     {
-        public ProductStatusViewModel(ProductStatusModel model, byte custRole)
+        public ProductStatusViewModel(ProductStatusModel model, short custRole)
         {
             Name = model.Name;
             SportType = model.SportType;
@@ -18,12 +18,15 @@
             switch (custRole)
             {
                 case RoleIdentity.Super:
+                    DirectSuperMember = new DownlineStatusViewModel(IsDisabled, model.TotalDisabledSuperDirectMembers, model.TotalEnabledSuperDirectMembers);
                     Master = new DownlineStatusViewModel(IsDisabled, model.TotalDisabledMasters, model.TotalEnabledMasters);
+                    DirectMasterMember = new DownlineStatusViewModel(IsDisabled || model.TotalEnabledMasters == 0, model.TotalDisabledMasterDirectMembers, model.TotalEnabledMasterDirectMembers);
                     Agent = new DownlineStatusViewModel(IsDisabled || model.TotalEnabledMasters == 0, model.TotalDisabledAgents, model.TotalEnabledAgents);
                     Member = new DownlineStatusViewModel(IsDisabled || model.TotalEnabledAgents == 0, model.TotalDisabledMembers, model.TotalEnabledMembers);
                     break;
 
                 case RoleIdentity.Master:
+                    DirectMasterMember = new DownlineStatusViewModel(IsDisabled, model.TotalDisabledMasterDirectMembers, model.TotalEnabledMasterDirectMembers);
                     Agent = new DownlineStatusViewModel(IsDisabled, model.TotalDisabledAgents, model.TotalEnabledAgents);
                     Member = new DownlineStatusViewModel(IsDisabled || model.TotalEnabledAgents == 0, model.TotalDisabledMembers, model.TotalEnabledMembers);
                     break;
@@ -33,7 +36,9 @@
                     break;
 
                 default:
+                    DirectSuperMember = null;
                     Master = null;
+                    DirectMasterMember = null;
                     Agent = null;
                     Member = null;
                     break;
@@ -54,10 +59,20 @@
 
         public bool IsDisabledUpline { get; }
 
+        public DownlineStatusViewModel DirectSuperMember { get; }
+
+        public bool IsShowDirectSuperMember
+            => DirectSuperMember != null && DirectSuperMember.TotalDisabled + DirectSuperMember.TotalEnabled > 0;
+
         public DownlineStatusViewModel Master { get; }
 
         public bool IsShowMaster
             => Master != null && Master.TotalDisabled + Master.TotalEnabled > 0;
+
+        public DownlineStatusViewModel DirectMasterMember { get; }
+
+        public bool IsShowDirectMasterMember
+            => DirectMasterMember != null && DirectMasterMember.TotalDisabled + DirectMasterMember.TotalEnabled > 0;
 
         public DownlineStatusViewModel Agent { get; }
 

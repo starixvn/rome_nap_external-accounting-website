@@ -24,7 +24,15 @@ namespace Fanex.ProductStatus.Setting.Models
 
         public bool DisableAllMembers { get; set; }
 
-        public ProductStatusCommand CorrectProperties(byte roleId)
+        public bool UpdateAllSuperDirectMembers { get; set; }
+
+        public bool DisableAllSuperDirectMembers { get; set; }
+
+        public bool UpdateAllMasterDirectMembers { get; set; }
+
+        public bool DisableAllMasterDirectMembers { get; set; }
+
+        public ProductStatusCommand CorrectProperties(short roleId)
         {
             if (Disable)
             {
@@ -32,6 +40,8 @@ namespace Fanex.ProductStatus.Setting.Models
                 {
                     UpdateAllMasters = true;
                     DisableAllMasters = true;
+                    UpdateAllSuperDirectMembers = true;
+                    DisableAllSuperDirectMembers = true;
                     --roleId;
                 }
 
@@ -39,6 +49,8 @@ namespace Fanex.ProductStatus.Setting.Models
                 {
                     UpdateAllAgents = true;
                     DisableAllAgents = true;
+                    UpdateAllMasterDirectMembers = true;
+                    DisableAllMasterDirectMembers = true;
                     --roleId;
                 }
 
