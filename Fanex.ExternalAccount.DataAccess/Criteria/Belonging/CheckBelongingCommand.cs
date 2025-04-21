@@ -19,10 +19,6 @@
 
         public bool IsBelonging { get; set; }
 
-        public int ErrCode { get; }
-
-        public string ErrMsg { get; }
-
         public string GetSettingKey()
             => "EAS_UserCheckBelonging";
 

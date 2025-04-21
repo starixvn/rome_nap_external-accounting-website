@@ -19,7 +19,6 @@ namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
         public GroupsHeadline GetGroupHeadlines(GetHeadlinesCriteria criteria)
         {
             IDictionary<int, GroupHeadline> groupHeadlinesHash = new Dictionary<int, GroupHeadline>();
-            var countHeadline = 0;
             // using (var db = new ObjectDb(criteria.GetSettingKey()))
             // {
             //     using (var reader = db.ExecuteReader(criteria.GetSpParams()))
@@ -62,7 +61,7 @@ namespace Fanex.ExternalAccount.HeadlineList.DataAccesses
             return new GroupsHeadline
             {
                 Groups = headlineGroups,
-                TotalHeadlines = countHeadline
+                TotalHeadlines = dbResult.Count()
             };
         }
 

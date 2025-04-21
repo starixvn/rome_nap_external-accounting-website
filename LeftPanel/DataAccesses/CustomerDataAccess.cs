@@ -29,7 +29,7 @@
 
         IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
 
-        Result ResetMemberCredit(int custId, int uplineId, bool closedOnly);
+        Result ResetMemberCredit(int userId, int uplineId, bool closedOnly);
 
         Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip, SiteDB siteDB);
 

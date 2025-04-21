@@ -6,6 +6,8 @@
 
     public class SetToReviewedCommand : INonQueryCommand
     {
+        public SetToReviewedCommand() { }
+
         public SetToReviewedCommand(SetToReviewedViewModel viewModel)
         {
             CustomerList = viewModel.CustIds;

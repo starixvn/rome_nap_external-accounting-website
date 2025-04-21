@@ -24,8 +24,8 @@
         public string Language { get; }
         public int SubAccId { get; }
         public string LoginIp { get; }
-        public int ErrCode { get; }
-        public string ErrMsg { get; }
+        public int ErrCode { get; set; }
+        public string ErrMsg { get; set; }
 
         public string GetSettingKey() => "Age_CustomerUpdPwd";
 

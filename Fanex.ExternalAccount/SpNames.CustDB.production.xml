@@ -212,7 +212,9 @@
 		<Setting Key="Acc_CustomerSelClearBalance" SpName="Acc_CustomerSelClearBalance" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
 		<Setting Key="Acc_CustomerUpdMaster_DisableAutoMPT" SpName="Acc_CustomerUpdMaster_DisableAutoMPT" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
 		<Setting Key="Acc_CustomerUpdClosed" SpName="Acc_CustomerUpdClosed" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-		<Setting Key="Acc_CustomerList_CloseInfoSel" SpName="Acc_CustomerList_CloseInfoSel" DbName="DBCust.CustDB.wsv_xnap" />
+		<Setting Key="Acc_CustomerList_CloseInfoSel" SpName="Acc_CustomerList_CloseInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
+			<Mapping DataField="closed" ObjectProperty="IsClosed" class="CustomerClosedStatusRow" />
+		</Setting>
 		<Setting Key="Acc_Customer_CloseInfoSel" SpName="Acc_Customer_CloseInfoSel" DbName="DBCust.CustDB.wsv_xnap" >
 			<Mapping DataField="roleid" ObjectProperty="Level" class="SingleOpenAffectedDownline" />
 			<Mapping DataField="cntAffected" ObjectProperty="AffectedDownlines" class="SingleOpenAffectedDownline" />

@@ -74,9 +74,9 @@
         public IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
             => _dynamicRepository.Fetch<MemberUsedCreditItem>(new GetMemberUsedCreditItemsCriteria(custId));
 
-        public Result ResetMemberCredit(int custId, int uplineId, bool closedOnly)
+        public Result ResetMemberCredit(int userId, int uplineId, bool closedOnly)
         {
-            var command = new ResetMemberCreditCommand(custId, uplineId, closedOnly, HttpContext.Current.Request.UserHostAddress);
+            var command = new ResetMemberCreditCommand(userId, uplineId, closedOnly, HttpContext.Current.Request.UserHostAddress);
             _dynamicRepository.Execute(command);
             return new Result(command.ErrCode, command.ErrMsg);
         }

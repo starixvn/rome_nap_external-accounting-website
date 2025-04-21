@@ -22,21 +22,21 @@ namespace Fanex.ExternalAccount.HeadlineList.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class ViewLang {
+    public class ViewLang {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ViewLang() {
+        public ViewLang() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fanex.ExternalAccount.HeadlineList.Resources.ViewLang", typeof(ViewLang).Assembly);
@@ -51,7 +51,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Headline.
         /// </summary>
-        internal static string Headline {
+        public static string Headline {
             get {
                 return ResourceManager.GetString("Headline", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Headline List.
         /// </summary>
-        internal static string HeadlineList {
+        public static string HeadlineList {
             get {
                 return ResourceManager.GetString("HeadlineList", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Resources {
         /// <summary>
         ///   Looks up a localized string similar to There is no data..
         /// </summary>
-        internal static string NoData {
+        public static string NoData {
             get {
                 return ResourceManager.GetString("NoData", resourceCulture);
             }

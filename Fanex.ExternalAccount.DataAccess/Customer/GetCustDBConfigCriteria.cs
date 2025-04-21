@@ -22,6 +22,6 @@
 
         public override string GetSettingKey() => "Acc_ServerDBConfigSelByCust";
 
-        public override bool IsValid() => CustId > 0 || !string.IsNullOrWhiteSpace(UserName);
+        public override bool IsValid() => true;
     }
 }
