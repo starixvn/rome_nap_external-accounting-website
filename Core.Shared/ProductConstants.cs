@@ -39,6 +39,7 @@ namespace Fanex.ExternalAccount.Core.Shared
         public const int HOTDOT = 95;
         public const int ODIN = 105;
         public const int MicrogamingLive = 107;
+        public const int RichGaming = 108;
         public const int DummyRNGProductId = 53;
 
         public static readonly List<int> ProductListForTooltipsRNGCasino = new List<int>
@@ -61,7 +62,8 @@ namespace Fanex.ExternalAccount.Core.Shared
             ASKMESLOT,
             HOTDOT,
             MicrogamingLive,
-            ODIN
+            ODIN,
+            RichGaming
         };
     }
 }
