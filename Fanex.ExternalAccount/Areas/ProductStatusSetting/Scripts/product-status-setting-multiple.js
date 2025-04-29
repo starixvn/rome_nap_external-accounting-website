@@ -15751,7 +15751,7 @@ class ProductStatusSettingMultipe extends ProductStatusSettingBase {
                 this.$(row).find('input[type=checkbox]').toArray().forEach((toggle) => {
                     return this.getproductStatus(toggle, data);
                 });
-                if (data.updateAllMasters || data.updateAllAgents || data.updateAllMembers) {
+                if (data.updateAllMasters || data.updateAllAgents || data.updateAllMembers || data.updateAllSuperDirectMembers || data.updateAllMasterDirectMembers) {
                     return data;
                 }
             }
