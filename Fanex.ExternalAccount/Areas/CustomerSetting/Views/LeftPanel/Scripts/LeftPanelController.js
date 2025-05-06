@@ -67,6 +67,11 @@ function GetDownline(isDirectDownline, custId, pageIndex) {
 
             $('#downlines').scrollTop(0);
         }
+        else {
+            $('#pages').empty();
+            $('#pages').hide();
+            $('#page').hide();
+        }
 
         $('#downlines').css('height', '240px');
 

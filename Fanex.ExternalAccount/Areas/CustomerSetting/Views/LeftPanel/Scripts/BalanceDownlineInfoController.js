@@ -62,6 +62,11 @@
 
                 $('#downlines').scrollTop(0);
             }
+            else {
+                $('#pages').empty();
+                $('#page').hide();
+                $('#pages').hide();
+            }
 
             $('#downlines').css('height', '240px');
 
