@@ -835,7 +835,7 @@ class WinLossDetailMC {
             }else if(this.viewlevel === 3) {
                 footerData.push({
                     Columns: [
-                        { Name: "Username", Value: this.totalSource[i].Username, MergeColNumber: 3, CellAlign: "right" },
+                        { Name: "Username", Value: this.totalSource[i].TotalName, MergeColNumber: 3, CellAlign: "right" },
                         { Name: "Turnover", Value: this.totalSource[i].Turnover },
                         { Name: "NetTurnover", Value: this.totalSource[i].NetTurnover },
                         { Name: "GrossComm", Value: this.totalSource[i].GrossComm },
