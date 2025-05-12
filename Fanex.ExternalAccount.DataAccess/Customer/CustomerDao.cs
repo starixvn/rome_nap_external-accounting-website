@@ -187,26 +187,26 @@
             var result2 = dbResult.Item2.ToList();
             if (result2.Any())
             {
-                foreach (var item in result1)
+                foreach (var item in result2)
                 {
                     var custid = item.CustId;
-                    var row = result2.FirstOrDefault(m => m.CustId == custid);
+                    var row = result1.FirstOrDefault(m => m.CustId == custid);
                     if (row != null)
                     {
-                        var roleid = row.RoleId;
+                        var roleid = item.RoleId;
                         switch (roleid)
                         {
                             case Role.Master:
-                                item.AffectedMaster = row.CntAffected;
-                                item.RemainUnchangedMaster = row.CntUnchanged;
+                                row.AffectedMaster = item.CntAffected;
+                                row.RemainUnchangedMaster = item.CntUnchanged;
                                 break;
                             case Role.Agent:
-                                item.AffectedAgent = row.CntAffected;
-                                item.RemainUnchangedAgent = row.CntUnchanged;
+                                row.AffectedAgent = item.CntAffected;
+                                row.RemainUnchangedAgent = item.CntUnchanged;
                                 break;
                             default:
-                                item.AffectedMember = row.CntAffected;
-                                item.RemainUnchangedMember = row.CntUnchanged;
+                                row.AffectedMember = item.CntAffected;
+                                row.RemainUnchangedMember = item.CntUnchanged;
                                 break;
                         }
                     }

@@ -40,16 +40,32 @@
             => _dynamicRepository.Execute(criteria);
 
         public IEnumerable<DailyWinLoss> EAS_Rpt_WinLossDaily_Com(GetCompanyDailyWinlossCriteria criteria)
-            => _dynamicRepository.Fetch<DailyWinLoss>(criteria);
+            => _dynamicRepository.Fetch<DailyWinLoss>(criteria).Select((item, index) =>
+            {
+                item.No = index + 1;
+                return item;
+            });
 
         public IEnumerable<DailyWinLoss> EAS_Rpt_WinLossDaily_SAg(GetSuperDailyWinlossCriteria criteria)
-            => _dynamicRepository.Fetch<DailyWinLoss>(criteria);
+            => _dynamicRepository.Fetch<DailyWinLoss>(criteria).Select((item, index) =>
+            {
+                item.No = index + 1;
+                return item;
+            });
 
         public IEnumerable<DailyWinLoss> EAS_Rpt_WinLossDaily_MAg(GetMasterDailyWinlossCriteria criteria)
-            => _dynamicRepository.Fetch<DailyWinLoss>(criteria);
+            => _dynamicRepository.Fetch<DailyWinLoss>(criteria).Select((item, index) =>
+            {
+                item.No = index + 1;
+                return item;
+            });
 
         public IEnumerable<DailyWinLoss> EAS_Rpt_WinLossDaily_Ag(GetAgentDailyWinlossCriteria criteria)
-            => _dynamicRepository.Fetch<DailyWinLoss>(criteria);
+            => _dynamicRepository.Fetch<DailyWinLoss>(criteria).Select((item, index) =>
+            {
+                item.No = index + 1;
+                return item;
+            });
 
         public IEnumerable<WinLossDetailExtra> EAS_Rpt_WinLossDetail_Com(GetSuperWinlossDetailCriteria criteria)
             => _dynamicRepository.Fetch<WinLossDetailExtra>(criteria);

@@ -90,7 +90,6 @@
             {
                 CustId = custId,
                 MasterId = masterId > 0 ? masterId : null,
-                MemberId = 0,
                 FromDate = fromDate,
                 ToDate = toDate,
                 ProductIds = productIds,
@@ -109,7 +108,6 @@
             => _reportDao.EAS_Rpt_WinLossDetail_SAg(new GetMasterWinlossDetailCriteria
             {
                 CustId = custId,
-                MasterId = 0,
                 MemberId = memberId > 0 ? memberId : null,
                 FromDate = fromDate,
                 ToDate = toDate,
@@ -130,7 +128,6 @@
             {
                 CustId = custId,
                 AgentId = agentId > 0 ? agentId : null,
-                MemberId = 0,
                 FromDate = fromDate,
                 ToDate = toDate,
                 ProductIds = productIds,
@@ -149,7 +146,6 @@
             => _reportDao.EAS_Rpt_WinLossDetail_MAg(new GetAgentWinlossDetailCriteria
             {
                 CustId = custId,
-                AgentId = 0,
                 MemberId = memberId > 0 ? memberId : null,
                 FromDate = fromDate,
                 ToDate = toDate,
