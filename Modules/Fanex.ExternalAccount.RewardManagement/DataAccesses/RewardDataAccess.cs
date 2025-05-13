@@ -4,6 +4,7 @@ namespace Fanex.ExternalAccount.RewardManagement.DataAccesses
     using Fanex.ExternalAccount.RewardManagement.Criteria;
     using Fanex.ExternalAccount.RewardManagement.Models;
     using Fanex.Data.Repository;
+    using System.Linq;
 
     public interface IRewardDataAccess
     {
@@ -24,7 +25,14 @@ namespace Fanex.ExternalAccount.RewardManagement.DataAccesses
 
         public RewardReport GetReport(GetRewardRecordCriteria criteria)
         {
-            var dbResult = repository.Fetch<RewardRecord>(criteria);
+            var dbResult = repository.Fetch<RewardRecord>(criteria)
+                .Select(o => {
+                    o.AgentUsername = o.AgentUsername ?? "";
+                    o.MasterUsername = o.MasterUsername ?? "";
+                    o.SuperUsername = o.SuperUsername ?? "";
+                    o.MemberUsername = o.MemberUsername ?? "";
+                    return o;
+                });
             return new RewardReport
             {
                 Items = dbResult,
