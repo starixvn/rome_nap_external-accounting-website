@@ -3,24 +3,25 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
     using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DTO;
 
-    public class GetTotalAmountCriteria : CriteriaBase
+    public class GetTotalAmountCommand : INonQueryCommand
     {
         public int CustId { get; }
         public SiteDB SiteDB { get; }
+        public decimal TotalAmt { get; set; }
 
-        public GetTotalAmountCriteria(int custId, SiteDB siteDB)
+        public GetTotalAmountCommand(int custId, SiteDB siteDB)
         {
             CustId = custId;
             SiteDB = siteDB;
         }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
         {
             var prefixSp = SiteDB.IsSiteDB ? $"SiteDB{SiteDB.SiteDBGroupID}_" : string.Empty;
             return $"{prefixSp}Acc_CustomerTotalAmountSel";
         }
 
-        public override bool IsValid()
+        public bool IsValid()
         {
             return CustId > 0;
         }

@@ -107,12 +107,10 @@
 
         public decimal GetTotalAmount(int custId, SiteDB siteDB)
         {
-            var criteria = new GetTotalAmountCriteria(custId, siteDB);
-            var dataSet = _dynamicRepository.FetchDataSet(criteria);
+            var command = new GetTotalAmountCommand(custId, siteDB);
+            _dynamicRepository.Execute(command);
 
-            return dataSet != null && dataSet.Tables.Count > 0 && dataSet.Tables[0].Rows.Count > 0
-                ? Utils.ToDecimal(dataSet.Tables[0].Rows[0]["totalamt"])
-                : 0;
+            return command.TotalAmt;
         }
 
         public Result CloseCustomer(int custId, bool closed, bool clearCredit, string custName)
