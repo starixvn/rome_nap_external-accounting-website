@@ -342,12 +342,14 @@
 			<Mapping DataField="transdate" ObjectProperty="StatementDate" />
 			<Mapping DataField="transtype" ObjectProperty="TransactionType" />
 			<Mapping DataField="transdesc" ObjectProperty="Description" />
+			<Mapping DataField="Amount" ObjectProperty="TransferAmount" />
 			<Mapping DataField="ExRate" ObjectProperty="ExchangeRate" />
 		</Setting >
 		<Setting Key="Statement_Report_TransferDetails_WH" SpName="Acc_StatementSelTransfer_Old" DbName="DBARC.bodb_Archive.wsv_xnap" Plain="0" >
 			<Mapping DataField="transdate" ObjectProperty="StatementDate" />
 			<Mapping DataField="transtype" ObjectProperty="TransactionType" />
 			<Mapping DataField="transdesc" ObjectProperty="Description" />
+			<Mapping DataField="Amount" ObjectProperty="TransferAmount" />
 			<Mapping DataField="ExRate" ObjectProperty="ExchangeRate" />
 		</Setting >
 		<Setting Key="Statement_Report_GetCustomerInformationByUsername" SpName="Acc_CustomerSelSiteByUserName" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >
