@@ -39,7 +39,7 @@
 		<Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
 		<Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
 			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-			<Mapping DataField="ExtraWinLost" ObjectProperty="ExtraWinLoss" />
+			<Mapping DataField="ExtraWinLoss" ObjectProperty="ExtraWinLost" />
 		</Setting>
 		<Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
 			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
@@ -49,7 +49,6 @@
 		</Setting>
 		<Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
 			<Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
-			<Mapping DataField="ExtraWinLost" ObjectProperty="ExtraWinLoss" />
 		</Setting>
 		<Setting Key="EAS_Rpt_WinLossDetailExtra_Com" SpName="EAS_Rpt_WinLossDetailExtra_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
 		<Setting Key="EAS_Rpt_WinLossDaily_SortingOrder" SpName="EAS_Rpt_WinLossDaily_SortingOrder" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
