@@ -49,6 +49,6 @@
         
         public override bool IsValid() => true;
         
-        public int TotalRecords { get; }
+        public int TotalRecords { get; set; }
     }
 }
