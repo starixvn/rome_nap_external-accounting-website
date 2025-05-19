@@ -8,7 +8,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
         public int CustId { get; }
         public int PageSize { get; }
         public int PageIndex { get; }
-        public int TotalPages { get; }
+        public int TotalPages { get; set; }
 
         public GetDownlineListCriteria(bool isDirectDownline, int custId, int pageSize, int pageIndex, int totalPages)
         {

@@ -54,8 +54,9 @@
         public DataSet GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex, out int totalPages)
         {
             var criteria = new GetDownlineListCriteria(isDirectDownline, custid, pageSize, pageIndex, 0);
+            var result = _dynamicRepository.FetchDataSet(criteria);
             totalPages = criteria.TotalPages;
-            return _dynamicRepository.FetchDataSet(criteria);
+            return result;
         }
 
         public DataSet GetOnlineList(int custid)
