@@ -15,18 +15,18 @@
             IsValidSuperPrefix = isValidSuperPrefix;
         }
 
-        public int? CustId { get; private set; }
+        public int? CustId { get; set; }
 
-        public string Username { get; private set; }
+        public string Username { get; set; }
 
-        public int RoleId { get; private set; }
+        public int RoleId { get; set; }
 
-        public bool IsExistGroup { get; private set; }
+        public bool IsExistGroup { get; set; }
 
-        public int Currency { get; private set; }
+        public int Currency { get; set; }
 
-        public string Site { get; private set; }
+        public string Site { get; set; }
 
-        public bool IsValidSuperPrefix { get; private set; }
+        public bool IsValidSuperPrefix { get; set; }
     }
 }
