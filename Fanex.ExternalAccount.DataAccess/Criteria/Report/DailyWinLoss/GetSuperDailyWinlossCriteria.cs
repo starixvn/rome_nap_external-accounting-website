@@ -6,11 +6,12 @@
 
     public class GetSuperDailyWinlossCriteria : CriteriaBase
     {
-        public GetSuperDailyWinlossCriteria(DateTime winLossDate, int custId, int? masterId, DateTime moveBetsDate)
+        public GetSuperDailyWinlossCriteria(DateTime winLossDate, int custId, int? masterId, int? memberId, DateTime moveBetsDate)
         {
             this.WinLossDate = winLossDate;
             this.CustId = custId;
             this.MasterId = masterId > 0 ? masterId : null;
+            this.MemberId = memberId > 0 ? memberId : null;
             this.MoveBetsDate = moveBetsDate;
         }
         
@@ -20,6 +21,8 @@
         public int CustId { get; }
 
         public int? MasterId { get; }
+
+        public int? MemberId { get; }
 
         [SpParam(Ignored = true)]
         public DateTime MoveBetsDate { get; }
