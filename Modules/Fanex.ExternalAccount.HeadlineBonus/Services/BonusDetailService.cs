@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Fanex.CustomerSetting.Module.Core.Models;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.HeadlineBonus.Criteria;
     using Fanex.ExternalAccount.HeadlineBonus.DataAccesses;
     using Fanex.ExternalAccount.HeadlineBonus.Models;
@@ -49,7 +49,7 @@
             var criteria = new GetMemberBonusCriteria(groupName, username, fromDate, toDate, statusId, isComplained, pageIndex, pageSize);
             var rawData = dataAccess.GetMemberBonus(criteria);
 
-            return GetBonusDetailReport(rawData, criteria.TotalItems);
+            return GetBonusDetailReport(rawData, criteria.TotalRows);
         }
 
         private static BonusDetailReport GetBonusDetailReport(IEnumerable<MemberBonusEntity> rawData, int totalItems)
@@ -96,7 +96,7 @@
 
         public Result CancelPending(string groupName, int custId, long transId, int userId, string ip)
         { 
-            var result = dataAccess.ExecuteNonQuery(new CancelPendingBonusCriteria(groupName, custId, transId, userId, ip));
+            var result = dataAccess.CancelPendingBonus(new CancelPendingBonusCriteria(groupName, custId, transId, userId, ip));
 
             if (result.IsSuccess)
             {
@@ -112,7 +112,7 @@
 
             if (result.IsSuccess)
             {
-                result = dataAccess.ExecuteNonQuery(new AddNewBonusCriteria(groupName, result.ErrorMessage, amount, userId, ip));
+                result = dataAccess.AddNewBonus(new AddNewBonusCriteria(groupName, result.ErrorMessage, amount, userId, ip));
 
                 if (result.IsSuccess)
                 {

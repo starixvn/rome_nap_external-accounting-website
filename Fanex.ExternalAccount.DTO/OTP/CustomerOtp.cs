@@ -1,4 +1,6 @@
-﻿namespace Fanex.ExternalAccount.DTO.OTP
+﻿using System;
+
+namespace Fanex.ExternalAccount.DTO.OTP
 {
     public class CustomerOtp
     {
@@ -6,6 +8,8 @@
 
         public bool Enabled { get; set; }
 
-        public string ModifiedDate { get; set; }
+        public DateTime ModifiedDate { get; set; }
+
+        public string ModifiedDateToString => ModifiedDate.Ticks.ToString();
     }
 }

@@ -5,89 +5,55 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Data.DNAide;
     using DTO;
     using DTO.Customer;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.DataAccess.Criteria.Customer;
     using Interface.Customer;
 
     public class MasterDao : CustomerDao, IMasterDao
     {
-        public DataTable GetData(
-            int? userId,
-            int? recommend = null,
-            int? custId = null,
-            bool? enabled = null,
-            bool? closed = null,
-            bool? suspended = null)
-        {
-            var param = new Hashtable
-            {
-                {"srecommend", recommend},
-#pragma warning disable S1192 // String literals should not be duplicated
-                {"custid", custId},
-#pragma warning restore S1192 // String literals should not be duplicated
-                {"enabled", enabled},
-                {"closed", closed},
-                {"suspended", suspended},
-                {"userid", userId}
-            };
+        private readonly IDynamicRepository _dynamicRepository;
 
-            return DbHelper.ExecuteDataTable("EAS_CustomerSelBySAg", param);
+        public MasterDao() : this(null)
+        {
         }
 
-        public IEnumerable<int> GetSuperInAutomateTransfer(int custId)
+        public MasterDao(IDynamicRepository dynamicRepository)
         {
-            var param = new Hashtable { { "custid", custId }};
-
-            var result = DbHelper.ExecuteDbResult("Acc_CustomerSelSuperAutoTransfer", param);
-
-            return result.ResultSet.Tables[0].Rows.Cast<DataRow>().Select(row => int.Parse(row["custId"].ToString()));
+            _dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public Transfer GetTransferOption(int custId)
-        {
-            var param = new Hashtable { { "custid", custId }, { "transferoption", "00000000" } };
+        public IEnumerable<int> GetSuperInAutomateTransfer(GetSuperInAutomateTransferCriteria criteria)
+            => _dynamicRepository.Fetch<int>(criteria);
 
-            var result = DbHelper.ExecuteDbResult("Acc_CustomerSelTransferOption", param);
-            var transferOption = result.Outputs["transferoption"].ToString();
-            if (transferOption.Length > 0)
+        public Transfer GetTransferOption(GetTransferOptionCriteria criteria)
+        {
+            _dynamicRepository.Execute(criteria);
+            return criteria.TransferOption.Length > 0 ? new Transfer
             {
-                return new Transfer
-                {
 #pragma warning disable S109 // Magic numbers should not be used
-                    Weekly = Convert.ToBoolean(int.Parse(transferOption[7].ToString())),
-                    Mon = Convert.ToBoolean(int.Parse(transferOption[1].ToString())),
-                    Tue = Convert.ToBoolean(int.Parse(transferOption[2].ToString())),
-                    Wed = Convert.ToBoolean(int.Parse(transferOption[3].ToString())),
-                    Thu = Convert.ToBoolean(int.Parse(transferOption[4].ToString())),
-                    Fri = Convert.ToBoolean(int.Parse(transferOption[5].ToString())),
-                    Sat = Convert.ToBoolean(int.Parse(transferOption[6].ToString())),
-                    Sun = Convert.ToBoolean(int.Parse(transferOption[0].ToString()))
+                Weekly = Convert.ToBoolean(int.Parse(criteria.TransferOption[7].ToString())),
+                Mon = Convert.ToBoolean(int.Parse(criteria.TransferOption[1].ToString())),
+                Tue = Convert.ToBoolean(int.Parse(criteria.TransferOption[2].ToString())),
+                Wed = Convert.ToBoolean(int.Parse(criteria.TransferOption[3].ToString())),
+                Thu = Convert.ToBoolean(int.Parse(criteria.TransferOption[4].ToString())),
+                Fri = Convert.ToBoolean(int.Parse(criteria.TransferOption[5].ToString())),
+                Sat = Convert.ToBoolean(int.Parse(criteria.TransferOption[6].ToString())),
+                Sun = Convert.ToBoolean(int.Parse(criteria.TransferOption[0].ToString()))
 #pragma warning restore S109 // Magic numbers should not be used
-                };
-            }
-
-            return null;
+            } : null;
         }
 
-        public DbResult EditTransferOption(string transferOption, int autoTransferCondition, int custId, int userId, string ip, int subAccId, string language)
+        public Result EditTransferOption(EditTransferOptionCriteria criteria)
         {
-            var param = new Hashtable
+            var dataSet = _dynamicRepository.FetchDataSet(criteria);
+            return new Result
             {
-                {"custid", custId},
-                {"transferoption", transferOption},
-                {"turnoffautotransfer", autoTransferCondition},
-                {"userid", userId},
-                {"ip", ip},
-                {"subaccid", subAccId},
-                {"language", language},
-                {"returnerrcode", false},
-                {"errcode", 0},
-                {"errmsg", string.Empty}
+                ErrorCode = criteria.ErrCode.ToString(),
+                ErrorMessage = criteria.ErrMsg,
+                ResultData = dataSet
             };
-
-            var result = DbHelper.ExecuteDbResult("EAS_CustomerUpdTransferOption", param);
-            return result;
         }
     }
 }

@@ -129,7 +129,7 @@
             currentSession.OTPEncryptCode = Encryptor.RandomCaptcha;
             currentSession.EnabledOTP = customerOtp.Enabled;
             currentSession.OTPSecretKey = customerOtp.SecretKey;
-            currentSession.OTPModifiedDate = customerOtp.ModifiedDate;
+            currentSession.OTPModifiedDate = customerOtp.ModifiedDateToString;
         }
 
         private static void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)

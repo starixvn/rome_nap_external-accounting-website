@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using Fanex.Data;
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DataAccess.Criteria.Customer.MarkAccountType;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
@@ -16,30 +17,25 @@
     {
         private const string ErrorUsernameFormat = "{0}: {1}";
         private const string CommonErrorCode = "1";
-        public Result Add(AddMarkAccountCriteria criteria)
+        private readonly IDynamicRepository _dynamicRepository;
+
+        public MarkAccountTypeDao() : this(null)
         {
-            var errorUsernames = new List<string> { };
+        }
+
+        public MarkAccountTypeDao(IDynamicRepository dynamicRepository)
+        {
+            _dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
+        public Result Add(AddMarkAccountCommand criteria)
+        {
+            var addResult = _dynamicRepository.Fetch<ErrorMarkAccount>(criteria);
             var result = new Result();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            if (addResult.Any(r => !r.Isfinished))
             {
-                var reader = objDb.ExecuteReader(criteria.GetSpParams());
-                while (reader.Read())
-                {
-                    if (!Utils.ToBoolean(reader["Isfinished"]))
-                    {
-                        errorUsernames.Add(Utils.ToString(reader["Username"]));
-                    }
-                }
-
-                reader.Close();
-
-                if(errorUsernames.Count == 0)
-                {
-                    return result;
-                }
-
                 result.ErrorCode = CommonErrorCode;
-                result.ErrorMessage = string.Join(", ", errorUsernames);
+                result.ErrorMessage = string.Join(", ", addResult.Where(r => !r.Isfinished).Select(r => r.Username));
             }
 
             return result;
@@ -47,41 +43,24 @@
 
         public Result Check(CheckMarkAccountCriteria criteria)
         {
-            var errorUsernames = new List<ErrorMarkAccount>();
+            var errorUsernames = _dynamicRepository.Fetch<ErrorMarkAccount>(criteria);
             var result = new Result();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
+            if (!errorUsernames.Any(e => e.ErrCode > 0))
             {
-                var reader = objDb.ExecuteReader(criteria.GetSpParams());
-                while (reader.Read())
-                {
-                    errorUsernames.Add(new ErrorMarkAccount
-                    {
-                        CustId = Utils.ToInt32(reader["CustId"]),
-                        Username = Utils.ToString(reader["Username"]),
-                        ErrCode = Utils.ToInt32(reader["ErrCode"]),
-                        ErrMsg = Utils.ToString(reader["ErrMsg"]),
-                    });
-                }
-
-                reader.Close();
-                errorUsernames.RemoveAll(err => err.ErrCode <= 0);
-                if (errorUsernames.Count == 0)
-                {
-                    return result;
-                }
-
-                var errors = errorUsernames.Where(err => err.ErrCode > 0).GroupBy(err => err.ErrMsg);
-                result.ErrorCode = CommonErrorCode;
-                var errorMsg = new StringBuilder();
-                foreach (var error in errors)
-                {
-                    var usernames = string.Join(", ", error.Select(cust => cust.Username)) + "</br>";
-
-                    errorMsg.AppendFormat(ErrorUsernameFormat, error.Key, usernames);
-                }
-
-                result.ErrorMessage = errorMsg.ToString();
+                return result;
             }
+
+            var errors = errorUsernames.Where(err => err.ErrCode > 0).GroupBy(err => err.ErrMsg);
+            result.ErrorCode = CommonErrorCode;
+            var errorMsg = new StringBuilder();
+            foreach (var error in errors)
+            {
+                var usernames = string.Join(", ", error.Select(cust => cust.Username)) + "</br>";
+
+                errorMsg.AppendFormat(ErrorUsernameFormat, error.Key, usernames);
+            }
+
+            result.ErrorMessage = errorMsg.ToString();
 
             return result;
         }
@@ -89,60 +68,22 @@
         public MarkAccountViewModel SearchMarkAccount(SearchMarkAccountCriteria criteria)
         {
             var result = new MarkAccountViewModel();
-            var customers = new List<MarkAccount>();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var reader = objDb.ExecuteReader(criteria.GetSpParams());
-                while (reader.Read())
-                {
-                    customers.Add(new MarkAccount
-                    {
-                        CustId = Utils.ToInt32(reader["CustID"]),
-                        Username = Utils.ToString(reader["Username"]),
-                        Level = Utils.ToInt32(reader["RoleID"]),
-                        TypeId = Utils.ToInt32(reader["TypeID"]),
-                        MarkDateTime = Utils.ToStringExt(Utils.HasColumn(reader, "MarkedDate") ? Utils.ToDateTime(reader["MarkedDate"]) : DateTime.MinValue),
-                        Remark = Utils.ToString(reader["Remark"]),
-                        AgentId = Utils.ToInt32(reader["AgentId"])
-
-                    });
-                }
-
-                result.Customers = customers;
-                reader.Close();
-                result.PageIndex = criteria.PageIndex;
-                result.TotalRows = Utils.ToInt32(objDb.GetOuputParams()["totalrows"]);
-            }
-
+            result.Customers = _dynamicRepository.Fetch<MarkAccount>(criteria);
+            result.PageIndex = criteria.PageIndex;
+            result.TotalRows = criteria.TotalRows;
             return result;
         }
 
-        public Result Unmark(UnmarkMarkAccountCriteria criteria)
+        public Result Unmark(UnmarkMarkAccountCommand command)
         {
-            var result = new Result();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.ExecuteNonQuery(criteria.GetSpParams());
-                var outputs = objDb.GetOuputParams();
-                result.ErrorCode = outputs["errcode"].ToString();
-                result.ErrorMessage = outputs["errmsg"].ToString();
-            }
-
-            return result;
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg);
         }
 
-        public Result Update(UpdateMarkAccountCriteria criteria)
+        public Result Update(UpdateMarkAccountCommand command)
         {
-            var result = new Result();
-            using (var objDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                objDb.ExecuteNonQuery(criteria.GetSpParams());
-                var outputs = objDb.GetOuputParams();
-                result.ErrorCode = outputs["errcode"].ToString();
-                result.ErrorMessage = outputs["errmsg"].ToString();
-            }
-
-            return result;
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg);
         }
     }
 }

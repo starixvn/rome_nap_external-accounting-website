@@ -1,7 +1,7 @@
 namespace Fanex.ExternalAccount.MatchWinLossReports.Models
 {
     using Fanex.ExternalAccount.Core.Shared;
-
+    using Fanex.Data;
     public class SportModel
     {
         public int SportType { get; set; }
@@ -9,7 +9,7 @@ namespace Fanex.ExternalAccount.MatchWinLossReports.Models
         public int ResourceId { get; set; }
 
         public string RefId { get; set; }
-
+        
         public string SportName
         {
             get

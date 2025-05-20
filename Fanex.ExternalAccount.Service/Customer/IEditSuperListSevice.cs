@@ -49,7 +49,7 @@ namespace Fanex.ExternalAccount.Service.Customer
             var custIds = string.Join(",", superIdNameList.Select(idname => idname.Split(';')[0]));
             if (request.IsUpdateInfo)
             {
-                var criteriaInfo = new UpdateMultipleSuperInfoCriteria
+                var command = new UpdateMultipleSuperInfoCommand
                 {
                     CustIDList = custIds,
                     FirstName = request.IsChangeFirstName && string.IsNullOrEmpty(request.FirstName)? string.Empty : request.FirstName,
@@ -60,7 +60,7 @@ namespace Fanex.ExternalAccount.Service.Customer
                     IP = ip
                 };
 
-                var resultInfo = dataAccess.ExecuteUpdate(criteriaInfo);
+                var resultInfo = dataAccess.ExecuteUpdate(command);
                 if (!string.IsNullOrEmpty(resultInfo))
                 {
                     errorList.AddRange(ParseErrMsg(ErrorUpdateInfo, resultInfo, superIdNameList));
@@ -69,7 +69,7 @@ namespace Fanex.ExternalAccount.Service.Customer
 
             if (request.IsUpdatePassword)
             {
-                var criteriaInfo = new UpdateMultipleSuperPasswordCirteria
+                var command = new UpdateMultipleSuperPasswordCommand
                 {
                     CustIDList = custIds,
                     UserPwd = Cryptography.CfsEnCode(request.Password),
@@ -77,7 +77,7 @@ namespace Fanex.ExternalAccount.Service.Customer
                     LoginIP = ip
                 };
 
-                var resultPwd = dataAccess.ExecuteUpdate(criteriaInfo);
+                var resultPwd = dataAccess.ExecuteUpdate(command);
                 if (!string.IsNullOrEmpty(resultPwd))
                 {
                     errorList.AddRange(ParseErrMsg(ErrorUpdatePassword, resultPwd, superIdNameList));
@@ -86,7 +86,7 @@ namespace Fanex.ExternalAccount.Service.Customer
             
             if (request.IsUpdateSecurityCode)
             {
-                var criteriaInfo = new UpdateMultipleSuperSecurityCodeCriteria
+                var command = new UpdateMultipleSuperSecurityCodeCommand
                 {
                     CustIDList = BuildUpdateCodeXML(custIds, request.SecurityCode),
                     IsForcedChangeSecurityCode = request.IsForceChange,
@@ -95,7 +95,7 @@ namespace Fanex.ExternalAccount.Service.Customer
                     System = "EXTERNAL"
                 };
 
-                var resultCode = dataAccess.ExecuteUpdate(criteriaInfo);
+                var resultCode = dataAccess.ExecuteUpdate(command);
                 if (!string.IsNullOrEmpty(resultCode))
                 {
                     errorList.AddRange(ParseErrMsg(ErrorUpdateCode, resultCode, superIdNameList));

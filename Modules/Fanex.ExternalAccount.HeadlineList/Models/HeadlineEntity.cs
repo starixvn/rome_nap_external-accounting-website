@@ -10,7 +10,7 @@ namespace Fanex.ExternalAccount.HeadlineList.Models
         
         public string Username { get; set; }
         
-        public string Status { get; set; }
+       // public string Status { get; set; }
         
         public bool IsEnable { get; set; }
         
@@ -20,6 +20,6 @@ namespace Fanex.ExternalAccount.HeadlineList.Models
         
         public byte ClosedReason { get; set; }
         
-        
+        public string Status => !IsEnable ? "Disabled" : IsClosed ? "Closed" : IsSuspend ? "Suspended" : "Open";
     }
 }

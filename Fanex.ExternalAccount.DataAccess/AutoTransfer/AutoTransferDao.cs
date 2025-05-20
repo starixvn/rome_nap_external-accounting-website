@@ -3,75 +3,49 @@ using Fanex.Data;
 using Fanex.ExternalAccount.DataAccess.Criteria.AutoTransfer;
 using Fanex.ExternalAccount.Core.Shared.Extensions;
 using Fanex.ExternalAccount.DTO;
-using Fanex.NAP.Framework.Data;
+using Fanex.Data.Repository;
 
 namespace Fanex.ExternalAccount.DataAccess.AutoTransfer
 {
     public interface IAutoTransferDao
     {
-        bool GetAutoTransferJobStatus(int custId, SiteDB siteDB);
-        Result InsertToastMessage(ICriteria criteria);
-        long InsertPersonalMessage(ICriteria criteria);
-        void AssignPersonalMessage(long messageId, int custId, string custName);
+        bool GetAutoTransferJobStatus(GetAutoTransferJobStatusCommand command);
+        Result InsertToastMessage(InsertToastMessageCommand command);
+        long InsertPersonalMessage(InsertPersonalMessageCommand command);
+        void AssignPersonalMessage(AssignPersonalMessageCommand command);
     }
 
     public class AutoTransferDao : IAutoTransferDao
     {
-        public bool GetAutoTransferJobStatus(int custId, SiteDB siteDB)
+        private readonly IDynamicRepository _dynamicRepository;
+
+        public AutoTransferDao() : this(null)
+        { }
+
+        public AutoTransferDao(IDynamicRepository dynamicRepository)
         {
-            bool result = false;
-            var criteria = new GetAutoTransferJobStatusCriteria(siteDB);
-            var key = criteria.GetSettingKey();
-
-            using (var db = new ObjectDb(key))
-            {
-                db.ExecuteNonQueryScaleoutDB(criteria.GetSpParams(), siteDB.AGIP);
-                result = Converter.ToBool(db.GetParameterValue("IsAutoJobRunning"));
-            }
-
-            return result;
+            this._dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
 
-        public Result InsertToastMessage(ICriteria criteria)
+        public bool GetAutoTransferJobStatus(GetAutoTransferJobStatusCommand command)
         {
-            Result result;
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-
-                var outputs = db.GetOuputParams();
-                result = new Result(outputs["errcode"].ToString(), outputs["errmsg"].ToString());
-            }
-
-            return result;
+            _dynamicRepository.Execute(command);
+            return command.IsAutoJobRunning;
         }
 
-        public long InsertPersonalMessage(ICriteria criteria)
+        public Result InsertToastMessage(InsertToastMessageCommand command)
         {
-            long result = 0;
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var reader = db.ExecuteReader(criteria.GetSpParams());
-
-                while (reader.Read())
-                {
-                    result = long.Parse(reader["MessageId"].ToString());
-                }
-            }
-
-            return result;
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg);
         }
 
-        public void AssignPersonalMessage(long messageId, int custId, string custName)
+        public long InsertPersonalMessage(InsertPersonalMessageCommand command)
         {
-            var criteria = new AssignPersonalMessageCriteria(messageId, custId, custName);
-
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-            }
+            _dynamicRepository.Execute(command);
+            return command.MessageIDOutput;
         }
+
+        public void AssignPersonalMessage(AssignPersonalMessageCommand command)
+            => _dynamicRepository.Execute(command);
     }
 }

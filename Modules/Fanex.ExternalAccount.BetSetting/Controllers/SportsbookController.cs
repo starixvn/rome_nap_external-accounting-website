@@ -1,19 +1,17 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using ExternalAccount.Core.Shared;
-    using Security.Authenticate;
-    using Security.Configurations;
+    using Fanex.ExternalAccount.Core.Base;
+    using Fanex.Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using Fanex.CustomerSetting.Module.Core.Web;
-    using Fanex.CustomerSetting.Module.Core.Constants;
-    using System.Linq;
-    using System.Collections.Generic;
-    using System.Collections;
-    using Fanex.Logging.Extensions.Web;
-    using Fanex.CustomerSetting.Module.Core.Web.Controllers;
+    using Security.Authenticate;
+    using Security.Configurations;
 
     public class SportsbookController : BaseController
     {

@@ -2,7 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Fanex.Data;
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
     using Product = Fanex.ProductStatus.Setting.Configuration.Product;
@@ -11,28 +13,27 @@
     {
         private const byte ProductGroupType = 2;
 
+        private static IDynamicRepository dynamicRepository = new DynamicRepository();  
+
+
         public static IEnumerable<Product> GetProductList()
         {
             var criteria = new GetProductListCriteria(ExtRequest.Instance.GetGroupId());
+            var productTypeEntities = dynamicRepository.Fetch<ProductTypeEntity>(criteria).ToList();
+            var productList = productTypeEntities.Select(p => {
+                return new Product(p.ProductId, 
+                    p.ProductType == ProductGroupType ? CacheRef.GetProductGroupName(p.ProductId) : CacheRef.GetProductName(p.ProductId),
+                    p.ProductType == ProductGroupType);
+            });
 
-            if (criteria.IsValid())
-            {
-                using (var db = new ObjectDb(criteria.GetSettingKey()))
-                {
-                    using (var reader = db.ExecuteReader(criteria.GetSpParams()))
-                    {
-                        while (reader.Read())
-                        {
-                            var productType = Convert.ToByte(reader["product_type"]);
-                            var productId = Convert.ToInt32(reader["productid"]);
-                            yield return new Product(
-                                productId,
-                                productType == ProductGroupType ? CacheRef.GetProductGroupName(productId) : CacheRef.GetProductName(productId),
-                                productType == ProductGroupType);
-                        }
-                    }
-                }
-            }
+            return productList;
         }
+    }
+
+    public class ProductTypeEntity
+    {
+        public int ProductType { get; set; }
+
+        public int ProductId { get; set; }
     }
 }

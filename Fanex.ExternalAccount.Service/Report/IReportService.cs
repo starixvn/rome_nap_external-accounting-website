@@ -9,37 +9,33 @@
 
     public interface IReportService
     {
-        DataTable GetCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
-
         LineInfo SearchCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo);
 
-        List<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName);
+        IEnumerable<SuggestedUserName> GetSuggestedUserName(int custId, string username, string groupName);
 
-        List<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName);
+        IEnumerable<DailyWinLoss> GetDailyWinLoss(DateTime winlostDate, int custId, string groupName);
 
-        List<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId, int memberId);
+        IEnumerable<DailyWinLoss> GetDailyWinLossSuper(DateTime winlostDate, int custId, int masterId, int memberId);
 
-        List<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, int memberId);
+        IEnumerable<DailyWinLoss> GetDailyWinLossMaster(DateTime winlostDate, int custId, int agentId, int memberId);
 
-        List<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId);
+        IEnumerable<DailyWinLoss> GetDailyWinLossAgent(DateTime winlostDate, int custId, int memberId);
 
-        List<WinLossDetailExtra> GetSuperWinLossDetail(string groupname, int custId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+        IEnumerable<WinLossDetailExtra> GetSuperWinLossDetail(string groupname, int? custId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
-        List<WinLossDetail> GetMasterWinLossDetail(int custId, int masterId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+        IEnumerable<WinLossDetail> GetMasterWinLossDetail(int custId, int? masterId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+
+        IEnumerable<WinLossDetail> GetDirectMemberOfSuperWinLossDetail(int custId, int? memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
         
-        List<WinLossDetail> GetDirectMemberOfSuperWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
-        
-        List<WinLossDetailMAg> GetAgentWinLossDetail(int custId, int agentId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
-        
-        List<WinLossDetailMAg> GetDirectMemberOfMasterWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+        IEnumerable<WinLossDetailMAg> GetAgentWinLossDetail(int custId, int? agentId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
-        List<WinLossDetailAg> GetMemberWinLossDetail(int custId, int memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
+        IEnumerable<WinLossDetailMAg> GetDirectMemberOfMasterWinLossDetail(int custId, int? memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
-        List<WinLossDetailIBCBetLiveCasino> GetSuperWinLossDetailIBCBetLiveCasino(string groupname, DateTime fromDate, DateTime toDate);
+        IEnumerable<WinLossDetailAg> GetMemberWinLossDetail(int custId, int? memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
-        ArrayList GetSortingOrderList(string groupname);
+        IEnumerable<int> GetSortingOrderList(string groupname);
 
-        List<ExtraPTModel> GetExtraPT(string groupName);
+        IEnumerable<ExtraPTModel> GetExtraPT(string groupName);
 
         string BuildTooltipsForLiveCasino(int userId,string groupName, int groupId);
 

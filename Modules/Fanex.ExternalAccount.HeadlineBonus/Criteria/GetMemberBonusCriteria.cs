@@ -1,8 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineBonus.Criteria
 {
     using System;
-    using Fanex.NAP.Framework.Data;
-
+    using Fanex.Data.Repository;
     internal class GetMemberBonusCriteria : CriteriaBase
     {
         public GetMemberBonusCriteria(
@@ -41,7 +40,7 @@
 
         public int PageSize { get; }
 
-        public int TotalItems { get; set; }
+        public int TotalRows { get; set; }
 
         public override string GetSettingKey()
             => "EAS_Bonus_Sel";

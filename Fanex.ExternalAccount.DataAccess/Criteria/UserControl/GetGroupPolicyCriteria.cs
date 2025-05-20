@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.UserControl
 {
-    using NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetGroupPolicyCriteria : CriteriaBase
     {

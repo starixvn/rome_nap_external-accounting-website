@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerStatus
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetSuspendCustomerDetailInfoCriteria : CriteriaBase
     {
@@ -28,14 +28,10 @@
 
         public int PageIndex { get; }
 
-        public override string GetSettingKey()
-        {
-            return "Acc_Customer_SuspendInfoDetailSel";
-        }
+        public int TotalRows { get; set; }
 
-        public override bool IsValid()
-        {
-            return CustId > 0;
-        }
+        public override string GetSettingKey()=> "Acc_Customer_SuspendInfoDetailSel";
+
+        public override bool IsValid() => CustId > 0;
     }
 }

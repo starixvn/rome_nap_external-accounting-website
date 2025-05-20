@@ -1,11 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Service.Products
 {
     using DTO.Products;
-    using Fanex.Data;
     using Fanex.ExternalAccount.DataAccess.Products;
-    using Fanex.NAP.Framework.Data;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Data.Repository;
 
     public interface IProductService
     {
@@ -19,9 +18,11 @@
     public class ProductService : IProductService
     {
         private readonly IDynamicRepository dynamicRepository;
+        public ProductService() : this(null)
+        {
+        }
 
-        public ProductService(
-            IDynamicRepository dynamicRepository = null)
+        public ProductService(IDynamicRepository dynamicRepository)
         {
             this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
         }
@@ -41,18 +42,23 @@
 
         private IEnumerable<ProductEntity> GetRawProducts(string groupName, int? groupId)
         {
-            return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupName, (groupId == null) ? null : GetShowProducts(groupId)));
+            return dynamicRepository.Fetch<ProductEntity>(new GetProductsCriteria(groupName,
+                (groupId == null) ? null : GetShowProducts(groupId)));
         }
 
         private string GetShowProducts(int? GroupId = null)
         {
             var criteria = new GetShowProductsCriteria(GroupId);
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var ouputParams = db.GetOuputParams();
-                return ouputParams["products"] == null ? string.Empty : ouputParams["products"].ToString();
-            }
+            // using (var db = new ObjectDb(criteria.GetSettingKey()))
+            // {
+            //     db.ExecuteNonQuery(criteria.GetSpParams());
+            //     var ouputParams = db.GetOuputParams();
+            //     return ouputParams["products"] == null ? string.Empty : ouputParams["products"].ToString();
+            // }
+
+            dynamicRepository.Execute(criteria);
+            return criteria.Products ?? string.Empty;
+
         }
 
         private static IEnumerable<ProductDto> GroupProducts(IEnumerable<ProductEntity> products)
@@ -69,7 +75,8 @@
                     }
                     else
                     {
-                        productList.Add(new ProductDto(grp.Key, products: grp.Select(p => new ProductDto(p.ProductId, p.ProductName))));
+                        productList.Add(new ProductDto(grp.Key,
+                            products: grp.Select(p => new ProductDto(p.ProductId, p.ProductName))));
                     }
                 });
 

@@ -27,7 +27,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly:
     SuppressMessage("Sonar Code Smell", "S2325:Methods and properties that don't access instance data should be static",
         Justification = "<Pending>", Scope = "member",
-        Target = "~P:Fanex.ExternalAccount.Module.LeftPanel.Criteria.RemoveOtpCriteria.Language")]
+        Target = "~P:Fanex.ExternalAccount.Module.LeftPanel.Criteria.RemoveOtpCommand.Language")]
 
 [assembly:
     SuppressMessage("Sonar Code Smell", "S3776:Cognitive Complexity of methods should not be too high",

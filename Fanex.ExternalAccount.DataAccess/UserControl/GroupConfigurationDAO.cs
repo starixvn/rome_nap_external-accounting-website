@@ -1,25 +1,40 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.UserControl
 {
-    using Common;
     using Criteria.GroupConfiguration;
-    using Fanex.Data.DNAide;
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.DTO;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.ExternalAccount.DTO.UserControl;
+    using Fanex.ExternalAccount.Utilities.Reports.WinLossDetail;
 
+    
     public interface IGroupConfigurationDAO
     {
+        IEnumerable<GroupConfigurationModel> Get(GetGroupConfigurationCriteria criteria);
         Result Update(UpdateGroupConfigurationCriteria criteria);
     }
 
     public class GroupConfigurationDAO : IGroupConfigurationDAO
     {
+        private readonly IDynamicRepository dynamicRepository;
+
+        public GroupConfigurationDAO(IDynamicRepository dynamicRepository = null)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public Result Update(UpdateGroupConfigurationCriteria criteria)
         {
-            var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
+        }
 
-            var errorCode = Converter.ToInt(result.Outputs["errorcode"]);
-            var errorMessage = Converter.ToInt(result.Outputs["errormessage"]);
+        public IEnumerable<GroupConfigurationModel> Get(GetGroupConfigurationCriteria criteria)
+        {
+            var configurations = dynamicRepository.Fetch<GroupConfigurationModel>(criteria);
 
-            return new Result(errorCode, errorMessage);
+            return configurations.Where(i => !Group.IsOfficeGroup(i.GroupName));
         }
     }
 }

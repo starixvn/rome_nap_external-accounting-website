@@ -16,7 +16,6 @@
     using ONEbook.UM.Services;
     using Service.Impl.Login;
     using Service.Interface.Login;
-    using Service.Interface.UserControl;
     using Utilities;
 
     [SessionState(SessionStateBehavior.Default)]

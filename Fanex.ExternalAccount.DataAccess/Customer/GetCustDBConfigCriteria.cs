@@ -1,10 +1,16 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.ExternalAccount.DataAccess.Customer
+﻿namespace Fanex.ExternalAccount.DataAccess.Customer
 {
+    using Fanex.Data.Repository;
+
     public class GetCustDBConfigByCustCriteria : CriteriaBase
     {
-        public GetCustDBConfigByCustCriteria(int? custId = null, string userName = null)
+        public GetCustDBConfigByCustCriteria() : this(null, null) { }
+
+        public GetCustDBConfigByCustCriteria(int? custId) : this(custId, null) { }
+
+        public GetCustDBConfigByCustCriteria(string userName) : this(null, userName) { }
+
+        public GetCustDBConfigByCustCriteria(int? custId, string userName)
         {
             CustId = custId;
             UserName = userName;
@@ -16,6 +22,6 @@ namespace Fanex.ExternalAccount.DataAccess.Customer
 
         public override string GetSettingKey() => "Acc_ServerDBConfigSelByCust";
 
-        public override bool IsValid() => CustId > 0 || !string.IsNullOrWhiteSpace(UserName);
+        public override bool IsValid() => true;
     }
 }

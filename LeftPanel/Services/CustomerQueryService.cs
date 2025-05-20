@@ -24,9 +24,9 @@
 
         DownlineList GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex);
 
-        IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);
+        IEnumerable<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);
 
-        IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
+        IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
 
         DataTable CustomerSelectClearBalance(int custId);
     }
@@ -52,22 +52,23 @@
 
         public CustomerModel SearchCustomer(int actorId, string custName, string groupName, byte settingStatus, Result result)
         {
-            var personalInfoDataSet = customerDataAccess.GetPersonalInfo(
+            var getPersonalInfoCriteria = new Criteria.GetPersonalInfoCriteria(
                 string.IsNullOrWhiteSpace(custName)
                     ? string.Empty
                     : custName,
                 groupName,
                 actorId);
+            var personalInfoDataSet = customerDataAccess.GetPersonalInfo(getPersonalInfoCriteria);
 
-            if (personalInfoDataSet.ResultSet == null || personalInfoDataSet.ResultSet.Tables.Count <= 0)
+            if (personalInfoDataSet == null || personalInfoDataSet.Tables.Count <= 0)
             {
-                result.ErrorCode = personalInfoDataSet.Outputs["errcode"].ToString();
-                result.ErrorMessage = Convert.ToInt32(result.ErrorCode) > 0 ? personalInfoDataSet.Outputs["errmsg"].ToString() : "There is no information.";
+                result.ErrorCode = getPersonalInfoCriteria.ErrCode.ToString();
+                result.ErrorMessage = getPersonalInfoCriteria.ErrCode > 0 ? getPersonalInfoCriteria.ErrMsg : "There is no information.";
                 return null;
             }
 
-            var custId = personalInfoDataSet.ResultSet.Tables[0].Rows[0].CustId();
-            var roleId = personalInfoDataSet.ResultSet.Tables[0].Rows[0].RoleId();
+            var custId = personalInfoDataSet.Tables[0].Rows[0].CustId();
+            var roleId = personalInfoDataSet.Tables[0].Rows[0].RoleId();
             var memberBalanceInfoModel = new MemberBalanceInfoModel();
             if(roleId == Role.Member)
             {
@@ -79,7 +80,7 @@
                 actorId, 
                 custName, 
                 groupName,
-                personalInfoDataSet.ResultSet,
+                personalInfoDataSet,
                 customerDataAccess.GetLoginInfo(custId, groupName),
                 customerDataAccess.GetBalanceInfo(custId),
                 customerDataAccess.GetCustomerStatusInfo(custId, settingStatus),
@@ -99,12 +100,15 @@
         }
 
         public DownlineList GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex)
-            => new DownlineList(customerDataAccess.GetDownlineList(isDirectDownline, custid, pageSize, pageIndex), pageIndex);
+        {
+            var downlineListDataSet = customerDataAccess.GetDownlineList( isDirectDownline,custid, pageSize, pageIndex, out int totalPages);
+            return new DownlineList(downlineListDataSet, pageIndex, totalPages);
+        }
 
-        public IList<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
+        public IEnumerable<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
             => customerDataAccess.MasterAgentUsedCreditItems(custId, roleId);
 
-        public IList<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
+        public IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
             => customerDataAccess.MemberUsedCreditItems(custId);
 
         public DataTable CustomerSelectClearBalance(int custId)

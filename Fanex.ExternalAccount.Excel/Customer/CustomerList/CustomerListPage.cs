@@ -98,7 +98,7 @@
 
         private void WriteMemberReport(
             ISheet resultSheet,
-            List<CustomerListDTO> data,
+            IEnumerable<CustomerListDTO> data,
             int lastColumnIndex,
             bool isMultipleCurrency)
         {
@@ -143,7 +143,7 @@
 
         private void WriteOthersReport(
             ISheet resultSheet,
-            List<CustomerListDTO> data,
+            IEnumerable<CustomerListDTO> data,
             int lastColumnIndex,
             bool hasSubGroups,
             bool isMultipleCurrency)

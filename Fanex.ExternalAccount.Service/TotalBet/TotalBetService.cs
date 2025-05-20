@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Fanex.CustomerSetting.Module.Core.Services.Impl;
+using Fanex.Data.Repository;
+using Fanex.ExternalAccount.Core.Shared;
 using Fanex.ExternalAccount.DataAccess.Criteria.TotalBet;
 using Fanex.ExternalAccount.DTO;
 using Fanex.ExternalAccount.DTO.TotalBet;
 using Fanex.ExternalAccount.Service.Params;
-using Fanex.NAP.Framework.Data;
 
 namespace Fanex.ExternalAccount.Service.TotalBet
 {
@@ -29,7 +29,7 @@ namespace Fanex.ExternalAccount.Service.TotalBet
 
             foreach (var d in data)
             {
-                d.LeagueName = CacheRef.GetLeagueName(d.LeagueId);
+                d.LeagueName = CacheRef.GetLeagueName(d.LeagueId.ToString());
             }
 
             return data;
@@ -42,8 +42,8 @@ namespace Fanex.ExternalAccount.Service.TotalBet
 
             foreach (var d in data)
             {
-                d.MatchName = CacheRef.GetTeamName(d.HomeId) + (d.IsNeutral ? " (N)" : string.Empty) + " -vs- " +
-                              CacheRef.GetTeamName(d.AwayId);
+                d.MatchName = CacheRef.GetTeamName(d.HomeId.ToString()) + (d.IsNeutral ? " (N)" : string.Empty) + " -vs- " +
+                              CacheRef.GetTeamName(d.AwayId.ToString());
             }
 
             return data;
@@ -71,15 +71,15 @@ namespace Fanex.ExternalAccount.Service.TotalBet
                     d.OUHT = RoundNumber(d.OUHT);
 
                     d.IsLatest = !league.Any(x => x.MatchId == d.MatchId && x.TotalScore > d.TotalScore);
-                    d.HomeName = CacheRef.GetTeamName(d.HomeId);
-                    d.AwayName = CacheRef.GetTeamName(d.AwayId);
+                    d.HomeName = CacheRef.GetTeamName(d.HomeId.ToString());
+                    d.AwayName = CacheRef.GetTeamName(d.AwayId.ToString());
                     events.Add(d);
                 }
 
                 result.Add(new TotalBetLeagueModel
                 {
                     LeagueId = league.Key,
-                    LeagueName = CacheRef.GetLeagueName(league.Key),
+                    LeagueName = CacheRef.GetLeagueName(league.Key.ToString()),
                     Events = events
                 });
             }

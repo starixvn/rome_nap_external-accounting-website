@@ -7,9 +7,9 @@
     {
         Result Login(string username, string password, string browser, string ip, string domain, string countryCode, string platForm, out int custId);
 
-        Result Logout(int custId, string username);
+        void Logout(int custId, string username);
 
-        Result Checkin(int custId, string netSessionId, string ip, out int onuserId);
+        int Checkin(int custId, string netSessionId, string ip);
 
         bool IsKickedOut(int custId);        
 

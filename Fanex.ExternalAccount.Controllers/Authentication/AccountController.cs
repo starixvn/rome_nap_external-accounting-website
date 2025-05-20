@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Authentication
 {
     using System;
+    using System.Configuration;
     using System.Diagnostics;
     using System.Linq;
     using System.Web.Mvc;
@@ -9,21 +10,18 @@
     using CaptchaMvc.HtmlHelpers;
     using Core.Context;
     using Core.Helpers;
-    using CustomerSetting.Module.Core.Web;
     using DTO;
     using DTO.UserControl;
     using Logging.Extensions.Web;
+    using RSACryptoPad;
     using Service.Impl.Login;
     using Service.Impl.UserControl;
     using Service.Interface.Login;
-    using Service.Interface.UserControl;
     using Utilities;
     using ViewModel.Account;
     using ViewModels;
     using CurrentContext = Core.Context.CurrentContext;
     using CurrentSession = Core.Context.CurrentSession;
-    using RSACryptoPad;
-    using System.Configuration;
 
     public class AccountController : DefaultCaptchaController
     {

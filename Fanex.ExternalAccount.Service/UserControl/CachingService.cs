@@ -5,10 +5,15 @@
     using Fanex.Caching.Memory;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Impl.UserControl;
-    using Fanex.ExternalAccount.DataAccess.Interface.UserControl;
     using Fanex.ExternalAccount.DTO.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.UserControl;
-
+    
+    public interface ICachingService
+    {
+        UserCache GetUserCache(int userId, string groupName);
+        void ClearUserCache();
+        void RemoveUserCache(int userId);
+    }
+    
     public class CachingService : ICachingService
     {
         private readonly ICacheService UserCache = new CacheService(new MemoryCache(new MemoryCacheOptions()));

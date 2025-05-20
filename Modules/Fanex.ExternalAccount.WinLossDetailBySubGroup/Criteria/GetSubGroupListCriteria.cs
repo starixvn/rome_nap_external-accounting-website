@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Products
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class GetSubGroupListCriteria : CriteriaBase
+    public class GetSubGroupListCriteria : INonQueryCommand
     {
         public GetSubGroupListCriteria(int groupId, string subGroup)
         {
@@ -14,8 +14,11 @@
 
         public int GroupId { get; }
 
-        public override string GetSettingKey() => "EAS_GetSubGroupList";
+        public string GetSettingKey() => "EAS_GetSubGroupList";
 
-        public override bool IsValid() => true;
+        public bool IsValid() => true;
+        
+        
+        public string Subgrouplist { get; set; }
     }
 }

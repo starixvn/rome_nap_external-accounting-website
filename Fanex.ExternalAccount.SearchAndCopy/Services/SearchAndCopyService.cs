@@ -1,8 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Services
 {
-    using Fanex.CustomerSetting.Module.Core.Criteria;
-    using Fanex.CustomerSetting.Module.Core.Services.Impl;
-    using Fanex.CustomerSetting.Module.Core.Services.Interface;
+    using System;
+    using System.Linq;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DTO;
@@ -13,8 +12,6 @@
     using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Utilities;
     using IBCUtils;
-    using System;
-    using System.Linq;
 
     public interface ISearchAndCopyService
     {
@@ -30,21 +27,18 @@
     public class SearchAndCopyService : ISearchAndCopyService
     {
         private readonly ISearchAndCopyRepository searchAndCopyRepository;
-        private readonly IServiceBase serviceBase;
         private readonly ISiteDBConfigService siteDBConfigService;
 
         public SearchAndCopyService()
-            : this(null, null, null)
+            : this(null, null)
         {
         }
 
         public SearchAndCopyService(
             ISearchAndCopyRepository searchAndCopyRepository,
-            ISiteDBConfigService siteDBConfigService,
-            IServiceBase serviceBase)
+            ISiteDBConfigService siteDBConfigService)
         {
             this.searchAndCopyRepository = searchAndCopyRepository ?? new SearchAndCopyRepository();
-            this.serviceBase = serviceBase ?? new ServiceBase();
             this.siteDBConfigService = siteDBConfigService ?? new SiteDBConfigService();
         }
 
@@ -98,9 +92,9 @@
             var headlineID_Old = resultData.HeadlineID_Old;
             var headlineID_New = resultData.HeadlineID_New;
 
-            serviceBase.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACriteria(newCustId, 0, Role.Super));
+            searchAndCopyRepository.AddMsgAfterCreateNewSMA(new AddMsgAfterCreateNewSMACommand(newCustId, 0, Role.Super));
 
-            var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCriteria
+            var cloneSettingExtraPTCriteria = new CloneSettingExtraPTCommand
             {
                 CustId = newCustId,
                 ExistingCustId = context.ExistingCustId,
@@ -117,15 +111,15 @@
             if (_case != 0)
             {
                 var updateCRMHeadlineInfoCriteria = new UpdateCrmHeadlineInfoCriteria
-                {
-                    CustId = newCustId,
-                    UserName = string.Empty,
-                    LoginIP = context.CurrentContext.Ip4Address,
-                    UserId = context.CurrentSession.CustId,
-                    Case = _case,
-                    Old_Headline = headlineID_Old,
-                    New_Headline = headlineID_New
-                };
+                (
+                    newCustId,
+                    string.Empty,
+                    _case,
+                     headlineID_Old,
+                     headlineID_New,
+                    context.CurrentSession.CustId,
+                    context.CurrentContext.Ip4Address
+                );
 
                 context.Result = searchAndCopyRepository.UpdateCRMHeadlineInfo(updateCRMHeadlineInfoCriteria);
 
@@ -141,7 +135,7 @@
         private void CopyCustomer(CloneSettingContext context)
         {
             var siteDBGroupId = siteDBConfigService.GetSiteDBConfigBySite(context.Site).CustDBGroupID;
-            context.Result = searchAndCopyRepository.ValidateSettingComm(new ValidateCloneSettingComCriteria
+            context.Result = searchAndCopyRepository.ValidateSettingComm(new ValidateCloneSettingComCommand
             {
                 Username = context.Request.Username,
                 Credit = context.Request.Credit,
@@ -154,7 +148,7 @@
                 return;
             }
 
-            context.Result = searchAndCopyRepository.RegisterCustomer(new RegisterCustomerCriteria
+            context.Result = searchAndCopyRepository.RegisterCustomer(new RegisterCustomerCommand
             {
                 Username = context.Request.Username,
                 SiteDbGroupId = siteDBGroupId,
@@ -175,7 +169,7 @@
 
             });
 
-            context.Result = searchAndCopyRepository.CloneSettingComm(new CloneSettingComCriteria
+            context.Result = searchAndCopyRepository.CloneSettingComm(new CloneSettingComCommand
             {
                 CustId = newCustId,
                 Username = context.Request.Username,
@@ -197,7 +191,7 @@
 
             if (!context.Result.IsSuccess)
             {
-                searchAndCopyRepository.RollBackCustomer(new RollbackCustomerInsertCriteria
+                searchAndCopyRepository.RollBackCustomer(new RollbackCustomerInsertCommand
                 {
                     CustId = newCustId
                 });

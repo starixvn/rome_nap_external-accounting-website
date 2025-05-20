@@ -10,8 +10,7 @@
             string ip) : base(funcId, policy, oldPolicy, userId, ip)
         {
         }
-
-        public override string GetSettingKey()
-            => "EAS_UserPolicyUpdMultiple";
+        
+        public override string GetSettingKey() => "EAS_UserPolicyUpdMultiple";
     }
 }

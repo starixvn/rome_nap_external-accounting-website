@@ -13,7 +13,7 @@
 
         DetailReportResult GetDetailReportResult(DetailReportQuery query);
 
-        IEnumerable<SportModel> GetSports(int? productId);
+        IEnumerable<SportModel> GetSports();
 
         IEnumerable<LeagueModel> GetLeagues(int sportId, string groupName, DateTime fromDate, DateTime toDate);
 
@@ -27,6 +27,7 @@
     public class MatchWinLossReportsService : IMatchWinLossReportsService
     {
         private readonly IMatchWinLossReportsDataAccess _dataAccess;
+        
 
         public MatchWinLossReportsService(IMatchWinLossReportsDataAccess dataAccess = null)
         {
@@ -83,7 +84,7 @@
                     var match2Id = i < dbResult.Mains.Count - 1 ? dbResult.Mains[i + 1].MatchId : 0;
                     var subTotal = dbResult.SubTotals.First(e => e.MatchId == match1.MatchId);
                     match1.KickOffTime = subTotal.KickOffTime;
-                    match1.KickOffTimeStr = subTotal.KickOffTimeStr;
+                    //match1.KickOffTimeStr = subTotal.KickOffTimeStr;
                     match1.HomeId = subTotal.HomeId;
                     match1.AwayId = subTotal.AwayId;
                     match1.IsNeutral = subTotal.IsNeutral;
@@ -99,8 +100,8 @@
             return dbResult;
         }
         
-        public IEnumerable<SportModel> GetSports(int? productId)
-            => _dataAccess.GetSports(new SportsCriteria { ProductId = productId });
+        public IEnumerable<SportModel> GetSports()
+            => _dataAccess.GetSports(new SportsCriteria());
 
         public IEnumerable<LeagueModel> GetLeagues(int sportId, string groupName, DateTime fromDate, DateTime toDate)
             => _dataAccess.GetLeagues(new LeaguesCriteria

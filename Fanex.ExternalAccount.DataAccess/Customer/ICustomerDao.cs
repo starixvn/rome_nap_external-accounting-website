@@ -24,15 +24,15 @@
             int subAccId,
             string language);
 
-        Result ResetPassword(ResetPasswordCriteria criteria);
+        Result ResetPassword(ResetPasswordCommand command);
 
-        Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria);
+        Result ConfigDoubleComm(UpdateDoubleCommCommand command);
 
-        void KickoutCustomer(KickoutCustomerCriteria criteria);
+        void KickoutCustomer(KickoutCustomerCommand command);
 
-        List<SingleUpdateAffectedDownline> GetSingleUpdateSuspendAffectedDownlines(GetSingleSuspendCustomerInfoCriteria criteria);
+        IEnumerable<SingleUpdateAffectedDownline> GetSingleUpdateSuspendAffectedDownlines(GetSingleSuspendCustomerInfoCriteria criteria);
 
-        Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria);
+        Result SuspendCustomer(UpdateSuspendCustomerCommand command);
 
         SuspendedCustomerDetailViewModel GetSuspendDownlinesDetail(GetSuspendCustomerDetailInfoCriteria criteria);
 
@@ -40,7 +40,7 @@
 
         CustomerStatusDTO GetCustomerAllStatus(GetCustomerAllStatusCriteria criteria);
 
-        bool CheckLimitNewDownline(CheckLimitNewDownlineCriteria criteria);
+        bool CheckLimitNewDownline(CheckLimitNewDownlineCommand command);
 
         IEnumerable<SingleOpenAffectedDownline> GetSingleOpenAffectedDownlines(GetSingleOpenCustomerInfoCriteria criteria);
 

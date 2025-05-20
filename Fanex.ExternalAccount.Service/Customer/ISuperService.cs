@@ -2,12 +2,13 @@
 {
     using DataAccess.Criteria.Customer;
     using DTO.Customer;
+    using Fanex.ExternalAccount.DTO;
 
     public interface ISuperService
     {
         CustomerInfo GetSuperInfo(int superId);
 
-        DTO.Result UpdateSuperInfo(UpdateSuperInfoCriteria criteria);
+        Result UpdateSuperInfo(UpdateSuperInfoCommand criteria);
 
     }
 }

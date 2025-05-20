@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerStatus
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetMultipleSuspendCustomerInfoCriteria : CriteriaBase
     {
@@ -14,14 +14,8 @@
 
         public int RoleId { get; }
 
-        public override string GetSettingKey()
-        {
-            return "Acc_CustomerList_SuspendInfoSel";
-        }
+        public override string GetSettingKey() => "Acc_CustomerList_SuspendInfoSel";
 
-        public override bool IsValid()
-        {
-            return string.IsNullOrWhiteSpace(CustIdList);
-        }
+        public override bool IsValid() => !string.IsNullOrWhiteSpace(CustIdList);
     }
 }

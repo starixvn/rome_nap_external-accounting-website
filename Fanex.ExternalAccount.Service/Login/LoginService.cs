@@ -1,12 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Service.Impl.Login
 {
+    using System;
     using Common.Helper;
     using DataAccess.Impl.Login;
     using DataAccess.Interface.Login;
     using DTO;
     using Interface.Login;
-    using Interface.UserControl;
-    using System;
     using UserControl;
 
     public class LoginService : ILoginService
@@ -38,7 +37,7 @@
 
             if (result.IsSuccess)
             {
-                _loginDao.Checkin(custId, request.NetSessionId, request.IP, out onuserId);
+                onuserId = _loginDao.Checkin(custId, request.NetSessionId, request.IP);
 
 #pragma warning disable S109 // Magic numbers should not be used
                 hasMultipleGroupsPermission = _loginDao.CheckExternalGroup(custId, 11, "ExternalGroup");
@@ -50,13 +49,13 @@
             return result;
         }
 
-        public Result Logout(int custId, string username)
+        public void Logout(int custId, string username)
         {
             Check.Argument.IsNotNegative(custId, "custId");
             Check.Argument.IsNotNull(username, "username");
             Check.Argument.IsNotEmpty(username, "username");
 
-            return _loginDao.Logout(custId, username);
+            _loginDao.Logout(custId, username);
         }
 
         public bool IsKickedOut(int custId) => _loginDao.IsKickedOut(custId);

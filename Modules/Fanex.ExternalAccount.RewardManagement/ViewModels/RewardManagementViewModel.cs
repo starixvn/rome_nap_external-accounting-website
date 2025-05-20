@@ -2,7 +2,7 @@ namespace Fanex.ExternalAccount.RewardManagement.ViewModels
 {
     using System;
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Module.Core.Extensions;
+    using Fanex.ExternalAccount.Core.Shared.Extensions;
     using Fanex.ExternalAccount.RewardManagement.Models;
 
     public class RewardManagementViewModel
@@ -12,9 +12,9 @@ namespace Fanex.ExternalAccount.RewardManagement.ViewModels
             Programs = programs;
         }
 
-        public string FormatedToday { get; } = DateTime.Today.ToShortFormatedDateWithSlash();
+        public string FormatedToday { get; } = DateTime.Today.ToShortDateWithSlash();
 
-        public string FormatedMinDate { get; } = DateTime.Today.AddMonths(-3).FirstDayOfMonth().ToShortFormatedDateWithSlash();
+        public string FormatedMinDate { get; } = DateTime.Today.AddMonths(-3).FirstDayOfMonth().ToShortDateWithSlash();
 
         public IEnumerable<Program> Programs { get; }
     }

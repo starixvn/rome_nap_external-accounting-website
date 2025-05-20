@@ -16,23 +16,26 @@ namespace Fanex.ExternalAccount.RewardManagement.Controllers
     public class RewardManagementController : BaseController
     {
         // RewardManagement
-        private readonly IRewardManagementService service;
-
-        public RewardManagementController() : base()
+        private readonly IRewardManagementService _service;
+        public RewardManagementController() : this(null)
         {
-            service = new RewardManagementService();
         }
 
+        public RewardManagementController(IRewardManagementService service)
+        {
+            _service = service ?? new RewardManagementService();
+        }
+        
         public ActionResult Index()
         {
-            var programs = service.GetPrograms();
+            var programs = _service.GetPrograms();
             var viewModel = new RewardManagementViewModel(programs);
             return PartialViewBase(viewModel);
         }
 
         public ActionResult GetPrograms()
         {
-            var programs = service.GetPrograms();
+            var programs = _service.GetPrograms();
             return Json(programs, JsonRequestBehavior.AllowGet);
         }
 
@@ -40,7 +43,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Controllers
         {
             request.GroupName = CurrentSession.CurrencyGroup;
             request.Username = HttpUtility.HtmlEncode(request.Username);
-            var result = service.GetReport(request);
+            var result = _service.GetReport(request);
             return this.JsonExt(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
         
@@ -48,7 +51,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Controllers
         {
             request.GroupName = CurrentSession.CurrencyGroup;
             request.Username = HttpUtility.HtmlEncode(request.Username);
-            var reportData = service.GetReport(request);
+            var reportData = _service.GetReport(request);
             var fileName = $"RewardDetail_{request.FromDate.ToString("MMddyyyy")}_{request.ToDate.ToString("MMddyyyy")}.xls";
 
             using (var excel = new RewardDetailExcel

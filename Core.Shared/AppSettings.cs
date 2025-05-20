@@ -20,7 +20,7 @@
 
         public static string PT3DecimalSites => Configs["PT3DecimalSites"] ?? "789y";
 
-        public static string DefaultLanguage = "en-US";
+        public static string DefaultLanguage => "en-US";
 
         public static Uri TelegramBotClientUri => new Uri(Configs["TelegramBotClientUri"]);
 

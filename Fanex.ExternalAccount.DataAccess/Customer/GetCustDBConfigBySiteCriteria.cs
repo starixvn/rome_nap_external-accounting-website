@@ -1,10 +1,12 @@
-﻿using Fanex.NAP.Framework.Data;
-
-namespace Fanex.ExternalAccount.DataAccess.Customer
+﻿namespace Fanex.ExternalAccount.DataAccess.Customer
 {
+    using Fanex.Data.Repository;
+
     public class GetCustDBConfigBySiteCriteria : CriteriaBase
     {
-        public GetCustDBConfigBySiteCriteria(string site = null)
+        public GetCustDBConfigBySiteCriteria() : this(null) { }
+
+        public GetCustDBConfigBySiteCriteria(string site)
         {
             Site = site;
         }

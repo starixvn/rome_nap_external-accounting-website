@@ -6,7 +6,7 @@
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
-    using Fanex.CustomerSetting.Module.Core.Web.Controllers;
+    using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Service.Params;
     using Fanex.ExternalAccount.Service.TotalBet;

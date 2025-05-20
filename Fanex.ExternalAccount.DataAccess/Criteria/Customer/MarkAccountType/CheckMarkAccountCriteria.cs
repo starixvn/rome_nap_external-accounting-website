@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.MarkAccountType
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class CheckMarkAccountCriteria : CriteriaBase
     {
@@ -10,5 +10,7 @@
 
         public override string GetSettingKey()
             => "EAS_AccountType_Check";
+
+        public override bool IsValid() => true;
     }
 }

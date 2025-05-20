@@ -7,6 +7,8 @@
         public int RoleId { get; set; }
         
         public string Username { get; set; }
+        
+        public string TotalName { get; set; }
 
         public double Turnover { get; set; }
 

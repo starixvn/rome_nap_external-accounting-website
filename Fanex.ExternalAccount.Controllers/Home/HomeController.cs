@@ -6,7 +6,6 @@
     using Core.Context;
     using Fanex.Caching;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Logging.Extensions.Web;
     using ViewModels;
     using CurrentSession = Core.Context.CurrentSession;

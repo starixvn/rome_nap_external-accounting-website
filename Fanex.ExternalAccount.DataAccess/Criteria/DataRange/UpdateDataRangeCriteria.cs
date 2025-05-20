@@ -1,11 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.DataRange
 {
     using System;
-    using System.Configuration;
-    using Fanex.ExternalAccount.Utilities;
-    using NAP.Framework.Data;
-
-    public class UpdateDataRangeCriteria : CriteriaBase
+    using Fanex.Data.Repository;
+    using Fanex.Data;
+    
+    public class UpdateDataRangeCriteria : NonQueryCommand
     {
         [SpParam(SqlParamName = "ListCustID")]
         public string CustIds { get; set; }
@@ -19,9 +18,9 @@
 
         public int UserId { get; set; }
 
-        public int ErrCode { get; set; }
+        public int ErrorCode { get; set; }
 
-        public string ErrMsg { get; set; }
+        public string ErrorMessage { get; set; }
 
         public override string GetSettingKey() => "EAS_CustomerDateLimitMultipleUpd";
 

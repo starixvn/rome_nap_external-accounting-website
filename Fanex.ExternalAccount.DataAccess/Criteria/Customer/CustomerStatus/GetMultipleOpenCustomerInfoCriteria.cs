@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerStatus
 {
-    using NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetMultipleOpenCustomerInfoCriteria : CriteriaBase
     {
@@ -16,6 +16,6 @@
 
         public override string GetSettingKey() => "Acc_CustomerList_CloseInfoSel";
 
-        public override bool IsValid() => string.IsNullOrWhiteSpace(CustIdList);
+        public override bool IsValid() => !string.IsNullOrWhiteSpace(CustIdList);
     }
 }

@@ -4,13 +4,12 @@ namespace Fanex.ExternalAccount.RewardManagement.Services
     using System.Collections.Generic;
     using System.IO;
     using System.Web;
-    using Fanex.CustomerSetting.Module.Core.Extensions;
+    using Fanex.ExternalAccount.Core.Shared.Extensions;
     using Fanex.ExternalAccount.Excel;
     using Fanex.ExternalAccount.Excel.Utility;
-    //using Fanex.ExternalAccount.WhiteLabelWinLossReports.Models;
+    using Fanex.ExternalAccount.RewardManagement.Models;
     using NPOI.HSSF.UserModel;
     using NPOI.SS.UserModel;
-    using Fanex.ExternalAccount.RewardManagement.Models;
 
     public class RewardDetailExcel : TemplateReport, IReportBuilder
     {

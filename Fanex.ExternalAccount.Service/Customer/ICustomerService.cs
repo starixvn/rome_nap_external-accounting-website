@@ -22,15 +22,15 @@
             int subAccId,
             string language);
 
-        Result ResetPassword(ResetPasswordCriteria criteria);
+        Result ResetPassword(ResetPasswordCommand criteria);
 
-        Result ConfigDoubleComm(UpdateDoubleCommCriteria criteria);
+        Result ConfigDoubleComm(UpdateDoubleCommCommand criteria);
 
         void KickoutCustomer(int custId, byte roleId, string ip, string mode = null);
 
         SingleUpdateViewModel GetSingleUpdateSuspendViewModel(int custId, string userName);
 
-        Result SuspendCustomer(UpdateSuspendCustomerCriteria criteria);
+        Result SuspendCustomer(UpdateSuspendCustomerCommand criteria);
 
         List<CustomerSuspendStatusRow> GetMultipleSuspendCustomerViewModel(GetMultipleSuspendCustomerInfoCriteria criteria);
 

@@ -4,7 +4,6 @@
     using System.Globalization;
     using System.Linq;
     using System.Web;
-    using CustomerSetting.Module.Core.Web;
     using Utilities;
 
     public class CurrentSession : ICurrentSession

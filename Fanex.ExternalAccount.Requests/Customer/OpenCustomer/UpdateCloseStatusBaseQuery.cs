@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.Requests.Customer.OpenCustomer
 {
-    using Fanex.CustomerSetting.Module.Core.Web;
     using Fanex.ExternalAccount.Utilities;
 
     public class UpdateCloseStatusBaseQuery
@@ -13,7 +12,7 @@
 
         public string Language { get; set; }
 
-        public string Ip => CurrentContext.Instance.Ip4Address;
+        public string Ip { get; set; }
 
         public int SystemId => Config.SystemId;
     }

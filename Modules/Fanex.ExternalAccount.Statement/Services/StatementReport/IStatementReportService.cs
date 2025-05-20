@@ -21,7 +21,6 @@
         MemoryStream ExportTransferDetails(TransferDetailsCriteria criteria, StatementReportModel data);
 
         CustomerInformationModel GetCustomerInfo(GetCustomerInformationByUsername criteria);
-
-        bool CheckInternalByUsername(CheckInternalByUsernameCriteria criteria);
+        
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Statement.Criteria
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class CheckInternalByUsernameCriteria : CriteriaBase
     {

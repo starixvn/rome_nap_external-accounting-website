@@ -1,37 +1,39 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Belonging
 {
     using System;
-    using Fanex.Data;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.DataAccess.Criteria.Belonging;
 
     public interface IBelongingDataAccess
     {
-        bool IsBelonging(ICriteria criteria);
-        bool CheckCustomerBelongingCriteria(ICriteria criteria);
+        bool IsBelonging(CheckBelongingCommand command);
+
+        bool CheckCustomerBelongingCriteria(CheckCustomerBelongingCommand command);
     }
 
     public class BelongingDataAccess : IBelongingDataAccess
     {
-        public bool IsBelonging(ICriteria criteria)
-        {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var ouputParams = db.GetOuputParams();
+        private readonly IDynamicRepository dynamicRepository;
 
-                return Convert.ToBoolean(ouputParams["isbelonging"]);
-            }
+        public BelongingDataAccess() : this(null)
+        {
         }
 
-        public bool CheckCustomerBelongingCriteria(ICriteria criteria)
+        public BelongingDataAccess(IDynamicRepository dynamicRepository)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-                var ouputParams = db.GetOuputParams();
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
 
-                return Convert.ToBoolean(ouputParams["isbelonging"]);
-            }
+        public bool IsBelonging(CheckBelongingCommand command)
+        {
+            dynamicRepository.Execute(command);
+            return command.IsBelonging;
+        }
+
+        public bool CheckCustomerBelongingCriteria(CheckCustomerBelongingCommand command)
+        {
+            dynamicRepository.Execute(command);
+            return command.IsBelonging;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Fanex.NAP.Framework.Data;
+﻿using Fanex.Data.Repository;
 
 namespace Fanex.ExternalAccount.DataAccess.Criteria.TotalBet
 {
@@ -12,5 +12,7 @@ namespace Fanex.ExternalAccount.DataAccess.Criteria.TotalBet
         public bool IsTest { get; set; }
 
         public override string GetSettingKey() => "EAS_TotalBet_LeagueSel";
+
+        public override bool IsValid() => true;
     }
 }

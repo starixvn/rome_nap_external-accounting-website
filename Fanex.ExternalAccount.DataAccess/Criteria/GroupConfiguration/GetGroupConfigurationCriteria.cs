@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.GroupConfiguration
 {
-    using NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetGroupConfigurationCriteria : CriteriaBase
     {

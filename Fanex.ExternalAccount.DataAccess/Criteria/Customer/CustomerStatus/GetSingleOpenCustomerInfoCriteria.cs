@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerStatus
 {
-    using NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class GetSingleOpenCustomerInfoCriteria : CriteriaBase
     {

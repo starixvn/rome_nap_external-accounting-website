@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model == null || Model.MemberUsedCreditItems == null || Model.MemberUsedCreditItems.Count == 0)
+        @if (Model == null || Model.MemberUsedCreditItems == null || !Model.MemberUsedCreditItems.Any())
         {
             <tr>
                 <td class="title C" colspan="4">There is no information available.</td>
@@ -62,7 +62,7 @@
         </tr>
     </thead>
     <tbody>
-        @if (Model == null || Model.MemberUsedCreditItems == null || Model.MemberUsedCreditItems.Count == 0)
+        @if (Model == null || Model.MemberUsedCreditItems == null || !Model.MemberUsedCreditItems.Any())
         {
             <tr>
                 <td class="title C" colspan="4">There is no information available.</td>

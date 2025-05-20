@@ -1,10 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.OTP
 {
-    using System.Collections;
-    using Common;
-    using Data;
     using DTO.OTP;
-    using Utilities;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.DataAccess.Criteria.OTP;
 
     public interface ICustomerOtpDataAccess
     {
@@ -13,34 +11,19 @@
 
     public class CustomerOtpDataAccess : ICustomerOtpDataAccess
     {
-        public CustomerOtp GetCustomerOtpDto(int custId)
+
+        private readonly IDynamicRepository _dynamicRepository;
+
+        public CustomerOtpDataAccess() : this(null)
         {
-            // Cannot use dynamic mapping here due to old fanex.data
-            var enabled = false;
-            var secretKey = string.Empty;
-            var modifiedDate = string.Empty;
-
-            using (var db = new ObjectDb("EAS_OTP_CustomerOTPSel"))
-            {
-                var reader = db.ExecuteReader(new Hashtable
-                    {
-                        { "custid", custId }
-                    });
-
-                while (reader.Read())
-                {
-                    enabled = reader.ToBoolean("Enabled");
-                    secretKey = reader.ToString("SecretKey"); 
-                    modifiedDate = Converter.ToDateTime(reader.ToString("ModifiedDate")).Ticks.ToString();
-                }
-
-                return new CustomerOtp
-                {
-                    Enabled = enabled,
-                    SecretKey = secretKey,
-                    ModifiedDate = modifiedDate
-                };
-            }
         }
+
+        public CustomerOtpDataAccess(IDynamicRepository dynamicRepository)
+        {
+            _dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
+        public CustomerOtp GetCustomerOtpDto(int custId)
+            => _dynamicRepository.Get<CustomerOtp>(new GetCustomerOtpDtoCriteria(custId)) ?? new CustomerOtp();
     }
 }

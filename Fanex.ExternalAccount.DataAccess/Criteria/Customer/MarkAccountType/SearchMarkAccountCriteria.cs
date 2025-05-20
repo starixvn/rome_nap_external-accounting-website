@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.MarkAccountType
 {
-    using Fanex.NAP.Framework.Data;
     using System;
+    using Fanex.Data.Repository;
 
     public class SearchMarkAccountCriteria : CriteriaBase
     {

@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.CustomerStatus
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class UpdateProtectedStatusCriteria : CriteriaBase
+    public class UpdateProtectedStatusCriteria : INonQueryCommand
     {
         public UpdateProtectedStatusCriteria(int custId, bool isProtectionMode, int userId, string ip)
         {
@@ -20,10 +20,14 @@
 
         public string IP { get; }
 
-        public override string GetSettingKey()
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
+        public string GetSettingKey()
             => "Age_CustomerUpdProtectedMode";
 
-        public override bool IsValid()
+        public bool IsValid()
             => CustId > 0 && UserId > 0;
     }
 }

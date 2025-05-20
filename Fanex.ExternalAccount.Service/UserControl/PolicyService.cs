@@ -8,10 +8,21 @@
     using DTO;
     using DTO.UserControl;
     using Impl.UserControl;
-    using Interface.UserControl;
-    using NAP.Framework.Data;
     using Utilities;
+    
+    public interface IPolicyService
+    {
+        IEnumerable<HierarchicalFunction> GetHierarchicalFunctions();
 
+        IEnumerable<GroupPolicy> GetGroupPolicies(int functionId);
+
+        IEnumerable<UserPolicy> GetUserPolicies(int functionId);
+
+        DTO.Result UpdateMultipleGroupPolicies(int functionId, string policy, int userId, string ip);
+
+        DTO.Result UpdateMultipleUserPolicies(int functionId, string policy, int userId, string ip);
+    }
+    
     public class PolicyService : IPolicyService
     {
         private readonly IPolicyDao policyDAO;
@@ -79,13 +90,21 @@
             => policyDAO.GetUserPolicies(new GetUserPolicyCriteria(functionId));
 
         public Result UpdateMultipleGroupPolicies(int functionId, string policy, int userId, string ip)
-            => UpdatePolicies(new UpdateMultipleGroupPolicyCriteria(
+        {
+            var result = policyDAO.UpdateMultipleGroupPolicy(new UpdateMultipleGroupPolicyCriteria(
                 functionId,
                 policy,
                 GetOldGroupPolicies(functionId),
                 userId,
                 ip));
+            if (result.IsSuccess)
+            {
+                result.ErrorMessage = ViewLang.UpdateSuccessfully;
+            }
 
+            return result;
+        }
+        
         private string GetOldGroupPolicies(int functionId)
         {
             var oldGroupPolicies = GetGroupPolicies(functionId);
@@ -96,25 +115,13 @@
         }
 
         public Result UpdateMultipleUserPolicies(int functionId, string policy, int userId, string ip)
-            => UpdatePolicies(new UpdateMultipleUserPolicyCriteria(
+        {
+            var result = policyDAO.UpdateMultipleUserPolicy(new UpdateMultipleUserPolicyCriteria(
                 functionId,
                 policy,
                 GetOldUserPolicies(functionId),
                 userId,
                 ip));
-
-        private string GetOldUserPolicies(int functionId)
-        {
-            var oldUserPolicies = GetUserPolicies(functionId);
-
-            return oldUserPolicies?.Any() == false
-                ? string.Empty
-                : string.Join(";", oldUserPolicies.Select(policy => $"{policy.CustId},{policy.Policy}"));
-        }
-
-        private Result UpdatePolicies(ICriteria criteria)
-        {
-            var result = policyDAO.UpdatePolicies(criteria);
 
             if (result.IsSuccess)
             {
@@ -122,6 +129,15 @@
             }
 
             return result;
+        }
+        
+        private string GetOldUserPolicies(int functionId)
+        {
+            var oldUserPolicies = GetUserPolicies(functionId);
+
+            return oldUserPolicies?.Any() == false
+                ? string.Empty
+                : string.Join(";", oldUserPolicies.Select(policy => $"{policy.CustId},{policy.Policy}"));
         }
     }
 }

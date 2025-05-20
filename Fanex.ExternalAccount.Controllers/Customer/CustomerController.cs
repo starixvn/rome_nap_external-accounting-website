@@ -474,7 +474,7 @@
         public ActionResult ConfigDoubleComm(int custid, bool allow)
         {
             var result = _superService.ConfigDoubleComm(
-                new UpdateDoubleCommCriteria(
+                new UpdateDoubleCommCommand(
                     custid,
                     allow,
                     CurrentSession.UserId,
@@ -553,7 +553,7 @@
         {
             var rawPassword = Encryptor.Decrypt(password, Encryptor.RandomCaptcha);
             var result = _customerService.ResetPassword(
-                new ResetPasswordCriteria(
+                new ResetPasswordCommand(
                     custId,
                     rawPassword,
                     CurrentSession.UserId,
@@ -600,7 +600,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Host)]
         public JsonResult UpdateSuspendSingle(int custId, bool suspended)
         {
-            return Json(_customerService.SuspendCustomer(new UpdateSuspendCustomerCriteria(CurrentSession.UserId, custId, suspended, "E", CurrentContext.Ip4Address)));
+            return Json(_customerService.SuspendCustomer(new UpdateSuspendCustomerCommand(CurrentSession.UserId, custId, suspended, "E", CurrentContext.Ip4Address)));
         }
 
         [HttpPost]

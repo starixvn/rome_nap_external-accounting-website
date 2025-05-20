@@ -4,11 +4,11 @@
     using CaptchaMvc.Interface;
     using Core.Authorization.ProductStatus;
     using Core.Filters;
-    using Data.Configuration;
     using Fanex.Caching;
     using Fanex.Customer.Client;
     using Fanex.Customer.Client.Configurations;
     using Fanex.Customer.Client.NETFramework;
+    using Fanex.Data;
     using Fanex.ExternalAccount.Core.Configurations;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.UI.Helpers;
@@ -17,6 +17,7 @@
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.RabbitMQ;
     using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.ProductStatus.Setting.Configuration;
     using Logging.Extensions.Web;
     using ONEbook.UM;
     using ONEbook.UM.AspNetMVC.Filters;
@@ -25,7 +26,7 @@
     using ONEbook.UM.NETFramework;
     using ONEbook.UM.Services;
     using ONEbook.UM.Transport;
-    using ProductStatus.Setting.Configuration;
+    //using ProductStatus.Setting.Configuration;
     using SharpRaven;
     using System;
     using System.Collections.Generic;
@@ -128,7 +129,11 @@
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
-            DbSettingProviderManager.Current.Start();
+            DbSettingProviderManager
+                 .StartNewSession()
+                 .Register(true)
+                 .Run();
+
             StaticResources.Init();
 
             var defaultCaptchaManager = (DefaultCaptchaManager)CaptchaUtils.CaptchaManager;

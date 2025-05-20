@@ -1,49 +1,52 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.DataRange
 {
-    using System;
-    using Common;
     using Core.Shared;
     using Criteria.DataRange;
-    using Data.DNAide;
+    using Fanex.Data.Repository;
     using DTO;
     using DTO.DataRange;
 
     public class DataRangeDao : IDataRangeDao
     {
+        private readonly IDynamicRepository dynamicRepository;
+
+        public DataRangeDao() : this(null)
+        { }
+
+        public DataRangeDao(IDynamicRepository dynamicRepository)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public Result Update(UpdateDataRangeCriteria criteria)
         {
-            var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
-
-            var errorCode = Converter.ToInt(result.Outputs["errcode"]);
-            var errorMessage = Converter.ToString2(result.Outputs["errmsg"]);
-
-            return new Result(errorCode, errorMessage);
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrorCode, criteria.ErrorMessage);
         }
 
         public CustomerDataRange Select(SelectDataRangeCriteria criteria)
         {
-            var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
+            var dataRangeModel = dynamicRepository.Get<DataRangeModel>(criteria);
 
-            var dataTable = result.ResultSet.Tables[0];
-            if (dataTable.Rows.Count == 0)
+            if (dataRangeModel == null)
             {
                 return new CustomerDataRange { Type = CustomerDataRangeType.None };
             }
 
-            var minDate = dataTable.Rows[0]["MinDate"];
-            var limitDays = dataTable.Rows[0]["LimitDays"];
+            var minDate = dataRangeModel.MinDate;
+            var limitDays = dataRangeModel.LimitDays;
 #pragma warning disable S3358 // Ternary operators should not be nested
-            var type = minDate != DBNull.Value
+            var type = minDate.HasValue
                 ? CustomerDataRangeType.MinDate
-                : limitDays != DBNull.Value && Converter.ToInt(limitDays) != 0 ? CustomerDataRangeType.TimePeriod
+                : limitDays.HasValue && limitDays.Value != 0 ? CustomerDataRangeType.TimePeriod
                 : CustomerDataRangeType.None;
 #pragma warning restore S3358 // Ternary operators should not be nested
 
             return new CustomerDataRange
             {
                 Type = type,
-                MinDate = minDate == DBNull.Value ? (DateTime?)null : Converter.ToDateTime(minDate),
-                LimitDays = limitDays == DBNull.Value ? (int?)null : Converter.ToInt(limitDays)
+                MinDate = minDate,
+                LimitDays = limitDays
             };
         }
     }

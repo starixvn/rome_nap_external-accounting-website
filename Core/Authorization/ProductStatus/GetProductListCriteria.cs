@@ -1,10 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Core.Authorization.ProductStatus
 {
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.NAP.Framework.Data;
 
     internal class GetProductListCriteria : CriteriaBase
     {
+        internal GetProductListCriteria() : this(0) { }
+
         internal GetProductListCriteria(int groupId)
         {
             GroupId = groupId;

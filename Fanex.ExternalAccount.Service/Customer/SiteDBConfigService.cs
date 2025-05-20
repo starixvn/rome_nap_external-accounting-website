@@ -1,7 +1,7 @@
 ﻿using Fanex.Caching;
+using Fanex.Data.Repository;
 using Fanex.ExternalAccount.DataAccess.Customer;
 using Fanex.ExternalAccount.DTO;
-using Fanex.NAP.Framework.Data;
 using System;
 
 namespace Fanex.ExternalAccount.Service.Impl.Customer

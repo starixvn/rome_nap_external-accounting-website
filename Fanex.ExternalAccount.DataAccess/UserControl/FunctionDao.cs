@@ -4,150 +4,109 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Linq;
-    using Base;
+    using Criteria.UserControl;
     using Data;
     using DTO;
     using DTO.UserControl;
-    using Interface.UserControl;
+    using Fanex.Data.Repository;
     using Utilities;
-
-    public class FunctionDao : DAOBase, IFunctionDao
+    
+    public interface IFunctionDao
     {
+        Result CreateFunction(Function function, int custId, string ip, string assignedGroupIDs);
+
+        Result UpdateFunction(Function function, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs);
+
+        IEnumerable<Function> GetAllFunctions();
+
+        Function GetFunctionPolicy(int funcId);
+
+        Result UpdateStatus(int id, bool isTest, int custId, string ip);
+    }
+    
+    public class FunctionDao: IFunctionDao
+    {
+        private readonly IDynamicRepository dynamicRepository;
+
+        public FunctionDao(IDynamicRepository dynamicRepository = null)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public Result CreateFunction(Function function, int custId, string ip, string assignedGroupIDs)
         {
-            using (var db = new ObjectDb("EAS_FunctionIns"))
+            var criteria = new CreateFunctionCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("ParentId", DbType.Int32, function.ParentID);
-                db.AddInParameter("DisplayOrder", DbType.Int32, function.DisplayOrder);
-                db.AddInParameter("IsTest", DbType.Boolean, false);
+                UserId = custId,
+                ParentId = function.ParentID,
+                DisplayOrder = function.DisplayOrder,
+                IsTest = false,
+                ParentName = function.ParentName,
+                FuncName = function.FuncName,
+                FuncDesc = function.FuncDesc,
+                FuncKey = function.FuncKey,
+                IP = ip,
+                AssignedGroupIDs = assignedGroupIDs
+            };
 
-                db.AddInParameter("ParentName", DbType.String, function.ParentName);
-                db.AddInParameter("FuncName", DbType.String, function.FuncName);
-                db.AddInParameter("FuncDesc", DbType.String, function.FuncDesc);
-                db.AddInParameter("FuncKey", DbType.String, function.FuncKey);
-                db.AddInParameter("IP", DbType.String, ip);
-                db.AddInParameter("AssigedGroupIDs", DbType.String, assignedGroupIDs);
-
-#pragma warning disable S1192 // String literals should not be duplicated
-                db.AddOutParameter("FuncId", DbType.Int32, sizeof(int));
-#pragma warning restore S1192 // String literals should not be duplicated
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result UpdateFunction(Function function, int custId, string ip, string oldAssignedGroupIDs, string assignedGroupIDs)
         {
-            using (var db = new ObjectDb("EAS_FunctionUpd"))
+            var criteria = new UpdateFunctionCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("FuncId", DbType.Int32, function.FuncID);
-                db.AddInParameter("ParentId", DbType.Int32, function.ParentID);
-                db.AddInParameter("DisplayOrder", DbType.Int32, function.DisplayOrder);
+                UserId = custId,
+                FuncId = function.FuncID,
+                ParentId = function.ParentID,
+                DisplayOrder = function.DisplayOrder,
+                ParentName = function.ParentName ?? "",
+                FuncName = function.FuncName,
+                FuncDesc = function.FuncDesc ?? "",
+                IP = ip,
+                AssignedGroupIDs = assignedGroupIDs,
+                OldAssignedGroupIDs = oldAssignedGroupIDs
+            };
 
-                db.AddInParameter("ParentName", DbType.String, function.ParentName);
-                db.AddInParameter("FuncName", DbType.String, function.FuncName);
-                db.AddInParameter("FuncDesc", DbType.String, function.FuncDesc);
-                db.AddInParameter("IP", DbType.String, ip);
-                db.AddInParameter("AssigedGroupIDs", DbType.String, assignedGroupIDs);
-                db.AddInParameter("OldAssigedGroupIDs", DbType.String, oldAssignedGroupIDs);
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public IEnumerable<Function> GetAllFunctions()
         {
-            var result = new List<Function>();
-
-            using (var db = new ObjectDb("EAS_FunctionSel"))
-            {
-                using (var reader = db.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-                        while (reader.Read())
-                        {
-                            result.Add(new Function
-                            {
-                                ModifiedDate = reader.ToString("ModifiedDate"),
-                                DisplayOrder = reader.ToInt32("DisplayOrder"),
-                                FuncDesc = reader.ToString("FuncDesc"),
-                                FuncID = reader.ToInt32("FuncId"),
-                                FuncKey = reader.ToString("FuncKey"),
-                                FuncName = reader.ToString("FuncName"),
-                                IsTest = reader.ToBoolean("IsTest"),
-                                ParentID = reader.ToInt32("ParentId"),
-                                ParentName = reader.ToString("ParentName")
-                            });
-                        }
-
-                        return result;
-                    }
-                }
-
-#pragma warning disable S1168 // Empty arrays and collections should be returned instead of null
-                return null;
-#pragma warning restore S1168 // Empty arrays and collections should be returned instead of null
-            }
+            var criteria = new GetAllFunctionsCriteria();
+            var dbResult = dynamicRepository.Fetch<Function>(criteria);
+            return dbResult ?? new List<Function>();
         }
 
         public Function GetFunctionPolicy(int funcId)
         {
             var func = GetAllFunctions().FirstOrDefault(o => o.FuncID == funcId);
-
-            using (var db = new ObjectDb("EAS_FunctionSelEdit"))
+            if (func == null)
             {
-                db.AddInParameter("funcId", DbType.Int32, funcId);
-
-                using (var reader = db.ExecuteReader())
-                {
-                    if (reader != null)
-                    {
-                        var groups = new List<FunctionPolicy>();
-
-                        while (reader.Read())
-                        {
-                            groups.Add(new FunctionPolicy
-                            {
-                                GroupID = reader.ToInt32("GroupID"),
-                                GroupName = reader.ToString("GroupName"),
-                                HasPermission = Convert.ToBoolean(reader["HasPermission"])
-                            });
-                        }
-
-                        func.AssignGroups = groups;
-                    }
-                }
+                return null;
             }
+
+            var criteria = new GetFunctionPolicyCriteria { FuncId = funcId };
+            var groups = dynamicRepository.Fetch<FunctionPolicy>(criteria) ?? new List<FunctionPolicy>();
+            func.AssignGroups = groups;
 
             return func;
         }
 
         public Result UpdateStatus(int id, bool isTest, int custId, string ip)
         {
-            using (var db = new ObjectDb("EAS_FuncUpdStatus"))
+            var criteria = new UpdateStatusCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("FuncId", DbType.Int32, id);
-                db.AddInParameter("IsTest", DbType.Boolean, isTest);
-                db.AddInParameter("IP", DbType.String, ip);
+                UserId = custId,
+                FuncId = id,
+                IsTest = isTest,
+                IP = ip
+            };
 
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
     }
 }

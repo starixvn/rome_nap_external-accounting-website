@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineBonus.Criteria
 {
-    using Fanex.NAP.Framework.Data;
-
-    internal class AddNewBonusCriteria : CriteriaBase
+    //using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
+    internal class AddNewBonusCriteria : INonQueryCommand
     {
         public AddNewBonusCriteria(
             string groupName,
@@ -28,12 +28,16 @@
 
         public string LoginIP { get; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
             => "EAS_Bonus_Ins";
 
-        public override bool IsValid()
+        public bool IsValid()
             => !string.IsNullOrWhiteSpace(GroupName)
             && !string.IsNullOrWhiteSpace(Usernames)
             && Amount > 0;
+        
+        public int Errcode { get; set; }
+        
+        public string Errmsg { get; set; }
     }
 }

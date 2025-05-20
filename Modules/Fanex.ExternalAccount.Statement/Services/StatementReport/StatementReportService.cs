@@ -1,18 +1,15 @@
 ﻿namespace Fanex.ExternalAccount.Statement.Services.StatementReport
 {
-    using CustomerSetting.Module.Core.Criteria;
-    using CustomerSetting.Module.Core.Web;
-    using Fanex.CustomerSetting.Module.Core.Services.Impl;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
     using Fanex.ExternalAccount.Statement.Criteria;
     using Fanex.ExternalAccount.Statement.Criteria.StatementReport;
     using Fanex.ExternalAccount.Statement.Models;
     using Fanex.ExternalAccount.Statement.Models.StatementReport;
     using Fanex.ExternalAccount.Statement.Repositories.StatementReport;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-    using System.IO;
-    using System.Linq;
+    using Fanex.Logging;
 
     public class StatementReportService : IStatementReportService
     {
@@ -56,7 +53,7 @@
             }
             catch (Exception ex)
             {
-                LoggingHandler.Log(ex);
+                LogService.Error(ex.Message, ex);
             }
 
             return result;
@@ -92,7 +89,7 @@
                 }
                 catch (Exception ex)
                 {
-                    LoggingHandler.Log(ex);
+                    LogService.Error(ex.Message, ex);
                 }
             }
 
@@ -113,7 +110,7 @@
             }
             catch (Exception ex)
             {
-                LoggingHandler.Log(ex);
+                LogService.Error(ex.Message, ex);
             }
 
             return result;
@@ -166,32 +163,12 @@
             }
             catch (Exception ex)
             {
-                LoggingHandler.Log(ex);
+                LogService.Error(ex.Message, ex);
             }
 
             return result;
         }
-
-        public bool CheckInternalByUsername(CheckInternalByUsernameCriteria criteria)
-        {
-            if (!criteria.IsValid())
-            {
-                return false;
-            }
-
-            bool result = false;
-            try
-            {
-                result = _statementReportRepository.CheckInternalByUsername(criteria);
-            }
-            catch (Exception ex)
-            {
-                LoggingHandler.Log(ex);
-            }
-
-            return result;
-        }
-
+        
         private List<StatementReportCriteria> GetReportDateRange(StatementReportCriteria criteria)
         {
             criteria.FromDate = criteria.FromDate.Year <= 1753 ||

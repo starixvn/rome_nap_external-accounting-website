@@ -14,7 +14,10 @@
 
         public byte ClosedReason { get; set; }
 
-        public CustomerLockedAccess LockedAccess { get; set; }
+        public byte Locked { get; set; }
+
+
+        public CustomerLockedAccess LockedAccess => new CustomerLockedAccess(this.Locked);
 
         public bool Suspended { get; set; }
 

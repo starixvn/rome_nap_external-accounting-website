@@ -11,7 +11,6 @@
     using DTO.UserControl;
     using Newtonsoft.Json;
     using Service.Impl.UserControl;
-    using Service.Interface.UserControl;
 
     public class MenuController : BaseController
     {

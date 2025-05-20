@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.UserControl
 {
-    using NAP.Framework.Data;
-
-    public class UpdateMultipleGroupPolicyCriteria : CriteriaBase
+    using Fanex.Data.Repository;
+    
+    public class UpdateMultipleGroupPolicyCriteria : NonQueryCommand
     {
         public UpdateMultipleGroupPolicyCriteria(
             int funcId,
@@ -28,12 +28,16 @@
 
         public string IP { get; }
 
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
         public override string GetSettingKey()
             => "EAS_GroupPolicyUpdMultiple";
 
         public override bool IsValid()
             => FuncId > 0
-            && !string.IsNullOrWhiteSpace(Policy)
-            && UserId > 0;
+               && !string.IsNullOrWhiteSpace(Policy)
+               && UserId > 0;
     }
 }

@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Statement.Criteria.StatementReport
 {
     using Fanex.ExternalAccount.Statement.Services;
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data;
 
     public class SMAStatementCriteria : StatementReportCriteria
     {

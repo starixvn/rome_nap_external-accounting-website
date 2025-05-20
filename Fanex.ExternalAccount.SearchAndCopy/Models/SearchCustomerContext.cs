@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Models
 {
-    using Fanex.CustomerSetting.Module.Core.Web;
+    using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.SearchAndCopy.Requests;
 
     public class SearchCustomerContext

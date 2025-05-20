@@ -1,15 +1,26 @@
 var DailyWinLossReport = /** @class */ (function () {
     function DailyWinLossReport() {
         this.typeReport = "daily-win-loss";
+        this.gridComponentConfig = {
+            reportId: "daily-win-loss",
+            isMobile: isMobile,
+            gridId: "daily-win-loss-jqgrid",
+            gridContainerId: "daily-win-loss-mainGrid",
+            selectColumnsId: "daily-win-loss-ddl-columns",
+            selectColumnsContainerId: "daily-win-loss-ddl-columns-container",
+            msgNoInfoId: "daily-win-loss-msgNoInfo",
+            excelBtnId: "daily-win-loss-excel",
+            copyBtnId: "daily-win-loss-copy",
+            pageSizeOptions: []
+        };
         this.filterComponents = new DailyWinLossFilters($);
-        this.gridComponent = new DailyWinLossGrid(isMobile);
+        this.gridComponent = new DailyWinLossGrid(this.gridComponentConfig);
     }
     DailyWinLossReport.prototype.init = function () {
         var _this = this;
         this.initDateRangePicker();
         this.initWhiteLabelsDropdown(JSON.parse($("#inp-whitelabels").val()));
         this.initUsernameFilter();
-        this.grid = $("#" + this.typeReport + "-jqgrid");
         $("#" + this.typeReport + "-submit-btn").click(function () { return _this.submit(); });
     };
     DailyWinLossReport.prototype.initDateRangePicker = function () {
@@ -35,7 +46,8 @@ var DailyWinLossReport = /** @class */ (function () {
         this.filterComponents.registerDropdownComponent({
             dropdownId: this.typeReport + "-ddl-white-label",
             dropdownName: "WhiteLabels",
-            dropdownOptions: mappedDataDropDown,
+            dropdownData: mappedDataDropDown,
+            dropdownType: "fanexMultiSelect",
             minWidth: maxWhiteLabelLength > 200 ? maxWhiteLabelLength : 200
         });
     };
@@ -54,7 +66,7 @@ var DailyWinLossReport = /** @class */ (function () {
         Fanex.ExtAcc.BlockUI();
         if (this.unValidUserName()) {
             Fanex.ExtAcc.UnBlockUI();
-            this.hideNoInfo(false);
+            this.gridComponent.hideNoInfo(false);
         }
         else {
             $.ajax({
@@ -86,33 +98,21 @@ var DailyWinLossReport = /** @class */ (function () {
             return;
         }
         if (result.Items.length) {
-            this.hideNoInfo(true);
+            this.gridComponent.hideNoInfo(true);
             this.renderGrid(result);
             this.registerExportExcelBtn();
         }
         else {
-            this.hideNoInfo(false);
+            this.gridComponent.hideNoInfo(false);
         }
         Fanex.ExtAcc.UnBlockUI();
     };
     DailyWinLossReport.prototype.registerExportExcelBtn = function () {
         var _this = this;
-        $("#" + DailyWinLossGrid.ExcelBtnId).off().click(function () {
+        $("#" + this.gridComponentConfig.excelBtnId).off().click(function () {
             var url = resolveClientUrl("WhiteLabelReport/ExportDailyWinLoss" + _this.getQueryString());
             window.top.exportExcel(url, document);
         });
-    };
-    DailyWinLossReport.prototype.hideNoInfo = function (isHide) {
-        var msgNoInfo = $("#" + this.typeReport + "-msgNoinfo");
-        var gridContainer = $("#" + this.typeReport + "-mainGrid");
-        if (isHide) {
-            msgNoInfo.hide();
-            gridContainer.show();
-        }
-        else {
-            msgNoInfo.show();
-            gridContainer.hide();
-        }
     };
     DailyWinLossReport.prototype.renderGrid = function (data) {
         try {
@@ -120,9 +120,9 @@ var DailyWinLossReport = /** @class */ (function () {
             gridOptions.titleInfo.text = this.reportTitle();
             gridOptions.bodyRows = this.gridComponent.buildBodyRows(data.Items);
             gridOptions.footerRows = this.gridComponent.buildFooterRows(data.RowTotal);
-            this.gridOptions = gridOptions;
             setPagerOptionOnMobile(gridOptions);
-            this.grid.fanexGrid(gridOptions);
+            this.gridComponent.setGridOptions(gridOptions);
+            this.gridComponent.fanexGrid(gridOptions);
             workaroundForGridOnPhone();
         }
         catch (e) {

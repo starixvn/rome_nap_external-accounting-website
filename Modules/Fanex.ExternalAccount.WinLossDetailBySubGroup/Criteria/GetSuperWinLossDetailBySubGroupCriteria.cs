@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Criteria
 {
     using System;
-    using Fanex.NAP.Framework.Data;
-
+    //using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
     public class GetSuperWinLossDetailBySubGroupCriteria : CriteriaBase
     {
         public GetSuperWinLossDetailBySubGroupCriteria(
@@ -49,11 +49,11 @@
 
         public DateTime MoveBetsDay { get; }
 
-        public int PageIndex { get; }
+        public int PageIndex { get; set; }
 
-        public int PageSize { get; }
+        public int PageSize { get; set; }
 
-        public int TotalRecords { get; }
+        public int TotalRecords { get; set; }
 
         public override string GetSettingKey() => "EAS_Rpt_WinLossDetail_bySubGroup";
 

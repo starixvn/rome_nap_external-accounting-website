@@ -1,20 +1,10 @@
 namespace Fanex.ExternalAccount.MatchWinLossReports.Criteria
 {
-    using Fanex.NAP.Framework.Data;
-
+    using Fanex.Data.Repository;
     public class SportsCriteria : CriteriaBase
     {
-        public string FromDate { get; set; }
+        public override string GetSettingKey() => "EAS_MatchWinloss_SportSel";
 
-        public string ToDate { get; set; }
-
-        public int? ProductId { get; set; }
-
-        public override string GetSettingKey()
-        {
-            return "EAS_MatchWinloss_SportSel";
-        }
-
-        public override bool IsValid() => !string.IsNullOrEmpty(FromDate) && !string.IsNullOrEmpty(ToDate);
+        public override bool IsValid() => true;
     }
 }

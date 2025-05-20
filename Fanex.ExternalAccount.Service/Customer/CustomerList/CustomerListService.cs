@@ -7,7 +7,6 @@
     using Fanex.ExternalAccount.DataAccess.Customer.CustomerList;
     using Fanex.ExternalAccount.Service.Customer.CustomerList.Params;
     using Fanex.ExternalAccount.Service.Impl.UserControl;
-    using Fanex.ExternalAccount.Service.Interface.UserControl;
     using Fanex.ExternalAccount.Utilities;
 
     public interface ICustomerListService

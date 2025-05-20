@@ -1,9 +1,9 @@
 ﻿namespace Fanex.Tarus.Customer.Criteria.ParlayMaxPayout
 {
-    using Fanex.ExternalAccount.DTO.Requests.ParlayMaxPayout;
-    using Fanex.NAP.Framework.Data;
     using System.Collections.Generic;
     using System.Text;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.DTO.Requests.ParlayMaxPayout;
 
     public class MaxPayoutCheckCriteria : CriteriaBase
     {

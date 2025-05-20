@@ -2,11 +2,10 @@ namespace Fanex.ExternalAccount.RewardManagement.Services
 {
     using System.Collections.Generic;
     using Fanex.ExternalAccount.RewardManagement.Models;
-    using Fanex.NAP.Framework.Data;
     using Fanex.ExternalAccount.RewardManagement.Criteria;
     using Fanex.ExternalAccount.RewardManagement.DataAccesses;
     using Fanex.ExternalAccount.RewardManagement.Requests;
-
+    
     public interface IRewardManagementService
     {
         RewardReport GetReport(RewardReportRequest request);
@@ -17,14 +16,24 @@ namespace Fanex.ExternalAccount.RewardManagement.Services
     public class RewardManagementService : IRewardManagementService
     {
         private readonly IRewardDataAccess _dataAccess;
+        
 
-        public RewardManagementService(IDynamicRepository repository = null, IRewardDataAccess dataAccess = null)
+        public RewardManagementService(IRewardDataAccess dataAccess = null)
         {
             _dataAccess = dataAccess ?? new RewardDataAccess();
         }
 
-        public RewardReport GetReport(RewardReportRequest request) =>
-            _dataAccess.GetReport(new GetRewardRecordCriteria(request));
+        public RewardReport GetReport(RewardReportRequest request) => _dataAccess.GetReport(new GetRewardRecordCriteria
+        {
+            FromDate = request.FromDate,
+            ToDate = request.ToDate,
+            UserName = request.Username ?? string.Empty,
+            ProgramIds = request.ProgramIds,
+            PaymentStatus = request.MemberPaymentStatus,
+            GroupName = request.GroupName,
+            PageSize = request.PageSize,
+            PageIndex = request.Page,
+        });
 
         public IEnumerable<Program> GetPrograms() => _dataAccess.GetPrograms(new GeProgramCriteria());
     }

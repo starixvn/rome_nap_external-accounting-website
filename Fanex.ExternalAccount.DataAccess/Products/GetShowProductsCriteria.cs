@@ -1,8 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Products
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class GetShowProductsCriteria : CriteriaBase
+    public class GetShowProductsCriteria : INonQueryCommand
     {
         public GetShowProductsCriteria(int? groupId)
         {
@@ -11,9 +11,10 @@
 
         public int? GroupId { get; }
 
+        public string Products { get; set; }
 
-        public override string GetSettingKey() => "EAS_GetProductID_ByGroupConfiguration";
+        public string GetSettingKey() => "EAS_GetProductID_ByGroupConfiguration";
 
-        public override bool IsValid() => true;
+        public bool IsValid() => true;
     }
 }

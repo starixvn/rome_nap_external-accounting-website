@@ -1,13 +1,13 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.SubGroup
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
-    public class UpdateCustomerSubGroupCriteria : CriteriaBase
+    public class UpdateCustomerSubGroupCriteria : INonQueryCommand
     {
         public string CustList { get; set; }
 
         public string GroupName { get; set; }
-        
+
         public bool IsCheck { get; set; }
 
         public string IP { get; set; }
@@ -18,10 +18,10 @@
 
         public string ErrMsg { get; set; }
 
-        public override string GetSettingKey()
+        public string GetSettingKey()
             => "EAS_CustomerUpdSubGroup";
 
-        public override bool IsValid()
+        public bool IsValid()
             => !string.IsNullOrWhiteSpace(GroupName) && !string.IsNullOrWhiteSpace(CustList);
     }
 }

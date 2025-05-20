@@ -48,43 +48,44 @@
 
         public string SubGroup { get; set; }
 
-        public string Username { get; }
+        public string Username { get; set; }
 
-        public decimal Turnover { get; }
+        public decimal Turnover { get; set; }
 
-        public decimal NetTurnover { get; }
+        public decimal NetTurnover { get; set; }
 
-        public decimal GrossComm { get; }
+        public decimal GrossComm { get; set; }
 
-        public decimal MemberWinLoss { get; }
+        public decimal MemberWinLoss { get; set; }
 
-        public decimal MemberComm { get; }
+        public decimal MemberComm { get; set; }
 
-        public decimal MemberTotal { get; }
+        public decimal MemberTotal { get; set; }
 
-        public decimal AgentWinLoss { get; }
+        public decimal AgentWinLoss { get; set; }
 
-        public decimal AgentComm { get; }
+        public decimal AgentComm { get; set; }
 
-        public decimal AgentTotal { get; }
+        public decimal AgentTotal { get; set; }
 
-        public decimal MasterWinLoss { get; }
+        public decimal MasterWinLoss { get; set; }
 
-        public decimal MasterComm { get; }
+        public decimal MasterComm { get; set; }
 
-        public decimal MasterTotal { get; }
+        public decimal MasterTotal { get; set; }
 
-        public decimal SuperWinLoss { get; }
+        public decimal SuperWinLoss { get; set; }
 
-        public decimal SuperComm { get; }
+        public decimal SuperComm { get; set; }
 
-        public decimal SuperTotal { get; }
+        public decimal SuperTotal { get; set; }
 
-        public decimal Company { get; }
+        public decimal Company { get; set; }
 
         public IEnumerable<SuperWinLossDetailBySubGroupModel> SuperWinLossDetails { get; set; }
 
-        public static SuperWinLossDetailBySubGroupModel operator +(SuperWinLossDetailBySubGroupModel source, SuperWinLossDetailBySubGroupModel destination)
+        public static SuperWinLossDetailBySubGroupModel operator +(SuperWinLossDetailBySubGroupModel source,
+            SuperWinLossDetailBySubGroupModel destination)
             => new SuperWinLossDetailBySubGroupModel(
                 null,
                 source.Turnover + destination.Turnover,

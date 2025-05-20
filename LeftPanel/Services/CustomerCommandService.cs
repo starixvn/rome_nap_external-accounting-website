@@ -1,9 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Services
 {
+    using System.Threading.Tasks;
     using Core.Authorization;
     using Core.Shared;
     using Criteria;
-    using CustomerSetting.Module.Core.Web;
     using CustomerSetting.Security.Authenticate;
     using DataAccesses;
     using DTO;
@@ -13,7 +13,6 @@
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Service.TelegramBot;
     using Sunplus.Agent.Utilities;
-    using System.Threading.Tasks;
     using Utilities;
     using Encryptor = Sunplus.Agent.Utilities.Encryptor;
 
@@ -21,7 +20,7 @@
     {
         Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
 
-        Result ResetMemberCredit(int custId, int agentId, bool closedOnly);
+        Result ResetMemberCredit(int userId, int uplineId, bool closedOnly);
 
         Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip);
 
@@ -82,8 +81,8 @@
         }
 
 
-        public Result ResetMemberCredit(int custId, int uplineId, bool closedOnly) =>
-            customerDataAccess.ResetMemberCredit(custId, uplineId, closedOnly);
+        public Result ResetMemberCredit(int userId, int uplineId, bool closedOnly) =>
+            customerDataAccess.ResetMemberCredit(userId, uplineId, closedOnly);
 
         public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
         {
@@ -105,7 +104,7 @@
                 return new Result(1, ViewLang.DontHavePermission);
             }
 
-            var result = customerDataAccess.CloseCutomer(custId, close, clearCredit, custName);
+            var result = customerDataAccess.CloseCustomer(custId, close, clearCredit, custName);
             if (result.IsSuccess && clearCredit)
             {
                 if (custInfo.RoleId == Role.Member)
@@ -123,7 +122,7 @@
         }
 
         public Result UnlockAccess(int custId, int userId, string ip4Address)
-            => customerDataAccess.UnlockAccess(new UnlockAccessCriteria(custId, userId, 0, ip4Address, (byte)Config.SystemId));
+            => customerDataAccess.UnlockAccess(new UnlockAccessCommand(custId, userId, 0, ip4Address, (byte)Config.SystemId));
 
         public Result AllowOutright(int custId, bool allow)
             => customerDataAccess.AllowOutright(custId, allow);
@@ -154,12 +153,7 @@
 
         public async Task<Result> RemoveOtp(int custId, int userId, string ip4Address)
         {
-            var result = customerDataAccess.RemoveOTP(new RemoveOtpCriteria
-            {
-                Custid = custId,
-                Userid = userId,
-                IP = ip4Address
-            });
+            var result = customerDataAccess.RemoveOTP(new RemoveOtpCommand(custId, userId, ip4Address));
 
             var messenger = await telegramBotService.GetMessenger(custId, 0);
             if (telegramBotService.IsEnabledOTPViaTelegram(messenger))

@@ -46,7 +46,7 @@
 
         public DateTime KickOffTime { get; set; }
 
-        public string KickOffTimeStr { get; set; }
+        public string KickOffTimeStr  => KickOffTime.ToString();
 
         public int LeagueId { get; set; }
 

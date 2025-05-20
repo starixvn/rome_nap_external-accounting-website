@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.EditSuperList
 {
-    using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
 
     public class CheckMultipleSupersCriteria : CriteriaBase
     {
@@ -18,6 +18,12 @@
 
         public bool IsCopy { get; }
 
+        public int ErrCode { get; set; }
+
+        public string ErrMsg { get; set; }
+
         public override string GetSettingKey() => "EAS_CustomerInfo_MultiCheck";
+
+        public override bool IsValid() => true;
     }
 }

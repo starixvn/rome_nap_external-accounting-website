@@ -30,7 +30,7 @@
             this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
-        private Func<int, int, DateTime, DateTime, string, string, object> GetWinLossDetailFunction(int roleId)
+        private Func<int, int?, DateTime, DateTime, string, string, object> GetWinLossDetailFunction(int roleId)
         {
             switch (roleId)
             {
@@ -142,7 +142,7 @@
 
         public dynamic SearchWinLossDetail(ISearchWinLossDetailRequest request)
         {
-            var sortingOrderList = reportService.GetSortingOrderList(request.GroupName);
+            var sortingOrderList = new ArrayList(reportService.GetSortingOrderList(request.GroupName).ToArray());
 
             var customerInfo = new LineInfo { RoleId = Role.Super };
 

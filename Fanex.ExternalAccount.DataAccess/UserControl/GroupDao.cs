@@ -3,229 +3,132 @@
     using System;
     using System.Collections.Generic;
     using System.Data;
-    using Base;
     using Common.Extensions;
+    using Criteria.UserControl.Group;
     using Data;
     using DTO;
     using DTO.UserControl;
-    using Interface.UserControl;
+    using Fanex.Data.Repository;
+    using System.Linq;
 
-    public class GroupDao : DAOBase, IGroupDao
+    public interface IGroupDao
     {
+        IEnumerable<Group> GetListGroup();
+
+        IEnumerable<Group> GetAllGroup(int mode);
+
+        IEnumerable<Group> GetExternalGroup();
+
+        IEnumerable<Function> GetAllGroupPolicy(int groupId);
+
+        IEnumerable<Group> GetGroupById(int groupId, byte mode);
+
+        Result CreateGroup(string groupName, string description, int parentId, int custId,  string ip);
+
+        Result EditGroup(string groupName, string description, int custId, string ip, int groupId);
+
+        Result EditGroupPolicy(string oldGroupPolicy, string groupPolicy, int custId, string ip, int groupId);
+
+        Result DeleteGroup(int groupId, int userId);
+
+        Group GetGroupByName(string groupName);
+    }
+    
+    public class GroupDao: IGroupDao
+    {
+        private readonly IDynamicRepository dynamicRepository;
+
+        public GroupDao(IDynamicRepository dynamicRepository = null)
+        {
+            this.dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public IEnumerable<Group> GetListGroup()
         {
-            var result = new List<Group>();
-
-            using (var db = new ObjectDb("EAS_GroupInfoSel"))
-            {
-                using (var reader = db.ExecuteReader())
-                {
-                    while (reader?.Read() == true)
-                    {
-                        result.Add(new Group
-                        {
-#pragma warning disable S1192 // String literals should not be duplicated
-                            GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.ToString("GroupName"),
-                            NoUsers = reader.ToInt("NoUsers"),
-                            Description = reader.ToString("Description"),
-                            Creator = reader.ToString("Creator"),
-                            CreatedDate = reader.ToString("CreatedDate")
-#pragma warning restore S1192 // String literals should not be duplicated
-                        });
-                    }
-                }
-
-                return result;
-            }
+            var criteria = new GetListGroupCriteria();
+            return dynamicRepository.Fetch<Group>(criteria) ?? new List<Group>();
         }
 
         public IEnumerable<Group> GetAllGroup(int mode)
         {
-            var result = new List<Group>();
-
-            using (var db = new ObjectDb("EAS_GroupInfoSelAllGroup"))
-            {
-                db.AddInParameter("Mode", DbType.Int16, mode);
-                using (var reader = db.ExecuteReader())
-                {
-                    while (reader?.Read() == true)
-                    {
-                        result.Add(new Group
-                        {
-                            GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.ToString("GroupName")
-                        });
-                    }
-                }
-
-                return result;
-            }
+            var criteria = new GetAllGroupCriteria { Mode = mode };
+            return dynamicRepository.Fetch<Group>(criteria) ?? new List<Group>();
         }
 
         public IEnumerable<Group> GetExternalGroup()
         {
-            using (var db = new ObjectDb("EAS_GroupInfoSelExternalGroup"))
-            {
-                using (var reader = db.ExecuteReader())
-                {
-                    while (reader?.Read() == true)
-                    {
-                        yield return new Group
-                        {
-                            GroupID = reader.ToInt("GroupID"),
-                            GroupName = reader.To<string>("GroupName")
-                        };
-                    }
-                }
-            }
+            var criteria = new GetExternalGroupCriteria();
+            return dynamicRepository.Fetch<Group>(criteria) ?? new List<Group>();
         }
 
         public IEnumerable<Function> GetAllGroupPolicy(int groupId)
         {
-            var result = new List<Function>();
-
-            using (var db = new ObjectDb("EAS_GroupPolicySel"))
-            {
-                db.AddInParameter("GroupID", DbType.Int32, groupId);
-
-                using (var reader = db.ExecuteReader())
-                {
-                    while (reader?.Read() == true)
-                    {
-                        result.Add(new Function
-                        {
-                            FuncID = reader.ToInt("FuncId"),
-                            FuncKey = reader.ToString("FuncKey"),
-                            FuncName = reader.ToString("FuncName"),
-                            DisplayOrder = reader.ToInt("DisplayOrder"),
-                            ParentID = reader.ToInt("ParentId"),
-                            ParentName = reader.ToString("ParentName"),
-                            GroupPolicy = (EPolicy)Convert.ToInt32(reader["Policy"]),
-                            FuncDesc = reader.ToString("FuncDesc")
-                        });
-                    }
-                }
-            }
-
-            return result;
+            var criteria = new GetAllGroupPolicyCriteria { GroupId = groupId };
+            return dynamicRepository.Fetch<Function>(criteria) ?? new List<Function>();
         }
 
         public IEnumerable<Group> GetGroupById(int groupId, byte mode)
         {
-            using (var db = new ObjectDb("EAS_GroupInfoSelByGroupID"))
-            {
-                db.AddInParameter("GroupID", DbType.Int32, groupId);
-                db.AddInParameter("Mode", DbType.Byte, mode);
-
-                using (var reader = db.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        yield return GetGroup(reader);
-                    }
-                }
-            }
+            var criteria = new GetGroupByIdCriteria { GroupId = groupId, Mode = mode };
+            return dynamicRepository.Fetch<Group>(criteria) ?? new List<Group>();
         }
-
-        private static Group GetGroup(IDataReader reader)
-            => new Group
-            {
-                GroupID = reader.ToInt("GroupID"),
-                GroupName = reader.ToString("GroupName"),
-                Description = reader.ToString("Description"),
-                ParentGroupName = reader.ToString("ParentGroup"),
-                ParentGroupId = reader.ToInt("ParentId")
-            };
+        
+        public Group GetGroupByName(string groupName)
+        {
+            var criteria = new GetGroupByNameCriteria { GroupName = groupName };
+            return dynamicRepository.Fetch<Group>(criteria).FirstOrDefault();
+        }
 
         public Result CreateGroup(string groupName, string description, int parentId, int custId, string ip)
         {
-            using (var db = new ObjectDb("EAS_GroupInfoIns"))
+            var criteria = new CreateGroupCriteria
             {
-#pragma warning disable S1192 // String literals should not be duplicated
-                db.AddInParameter("UserID", DbType.Int32, custId);
-#pragma warning restore S1192 // String literals should not be duplicated
-                db.AddInParameter("GroupName", DbType.String, groupName);
-                db.AddInParameter("Description", DbType.String, description);
-                db.AddInParameter("ParentID", DbType.Int32, parentId);
-                db.AddInParameter("IP", DbType.String, ip);
-                db.AddOutParameter("GroupID", DbType.Int32, sizeof(int));
+                UserId = custId,
+                GroupName = groupName,
+                Description = description,
+                ParentId = parentId,
+                IP = ip
+            };
 
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result EditGroup(string groupName, string description, int custId, string ip, int groupId)
         {
-            using (var db = new ObjectDb("EAS_GroupInfoUpd"))
+            var criteria = new EditGroupCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("GroupID", DbType.Int32, groupId);
-                db.AddInParameter("GroupName", DbType.String, groupName);
-                db.AddInParameter("Description", DbType.String, description);
-                db.AddInParameter("IP", DbType.String, ip);
+                UserId = custId,
+                GroupId = groupId,
+                GroupName = groupName,
+                Description = description,
+                IP = ip
+            };
 
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result EditGroupPolicy(string oldGroupPolicy, string groupPolicy, int custId, string ip, int groupId)
         {
-            using (var db = new ObjectDb("EAS_GroupPolicyUpd"))
+            var criteria = new EditGroupPolicyCriteria
             {
-                db.AddInParameter("UserID", DbType.Int32, custId);
-                db.AddInParameter("GroupID", DbType.Int32, groupId);
-                db.AddInParameter("OldGroupPolicy", DbType.String, oldGroupPolicy);
-                db.AddInParameter("GroupPolicy", DbType.String, groupPolicy);
-                db.AddInParameter("IP", DbType.String, ip);
+                UserId = custId,
+                GroupId = groupId,
+                OldGroupPolicy = oldGroupPolicy,
+                GroupPolicy = groupPolicy,
+                IP = ip
+            };
 
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
 
         public Result DeleteGroup(int groupId, int userId)
         {
-            using (var db = new ObjectDb("EAS_GroupInfoDel"))
-            {
-                db.AddInParameter("GroupID", DbType.Int32, groupId);
-                db.AddInParameter("UserID", DbType.Int32, userId);
-
-                AddResultParams(db.Database, db.DbCommand);
-
-                db.ExecuteNonQuery();
-
-                return GetResultParams(db.Database, db.DbCommand);
-            }
-        }
-
-        public Group GetGroupByName(string groupName)
-        {
-            using (var db = new ObjectDb("EAS_GroupInfoSelByGroupName"))
-            {
-                db.AddInParameter("GroupName", DbType.String, groupName);
-
-                using (var reader = db.ExecuteReader())
-                {
-                    if (reader.Read())
-                    {
-                        return GetGroup(reader);
-                    }
-                }
-            }
-
-            return null;
+            var criteria = new DeleteGroupCriteria { GroupId = groupId, UserId = userId };
+            dynamicRepository.Execute(criteria);
+            return new Result(criteria.ErrCode, criteria.ErrMsg);
         }
     }
 }

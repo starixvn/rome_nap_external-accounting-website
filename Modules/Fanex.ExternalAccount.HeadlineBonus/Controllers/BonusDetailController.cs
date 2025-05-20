@@ -2,11 +2,11 @@
 {
     using System.Net;
     using System.Web.Mvc;
-    using Fanex.CustomerSetting.Module.Core.Models;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.HeadlineBonus.Services;
     using Fanex.ExternalAccount.HeadlineBonus.ViewModels;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;

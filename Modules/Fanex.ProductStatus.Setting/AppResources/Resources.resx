@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Agent" xml:space="preserve">
+    <value>Agent</value>
+  </data>
+  <data name="AllAgents" xml:space="preserve">
+    <value>All Agents</value>
+  </data>
+  <data name="AllDownlines" xml:space="preserve">
+    <value>All Downlines</value>
+  </data>
+  <data name="AllMasterDirectMember" xml:space="preserve">
+    <value>All Master Direct Members</value>
+  </data>
+  <data name="AllMasters" xml:space="preserve">
+    <value>All Masters</value>
+  </data>
+  <data name="AllMembers" xml:space="preserve">
+    <value>All Members</value>
+  </data>
+  <data name="AllProducts" xml:space="preserve">
+    <value>All products</value>
+  </data>
+  <data name="AllSuperDirectMember" xml:space="preserve">
+    <value>All Super Direct Members</value>
+  </data>
+  <data name="AllSupers" xml:space="preserve">
+    <value>All Supers</value>
+  </data>
+  <data name="BadRequest" xml:space="preserve">
+    <value>You are not allowed to perform this action.</value>
+  </data>
+  <data name="ConfirmBeforeMultipleUpdate" xml:space="preserve">
+    <value>The listed product status of all sport/bettypes will be applied for all selected accounts. Do you want to proceed?</value>
+  </data>
+  <data name="CopyAllTooltip" xml:space="preserve">
+    <value>Click to duplicate the values</value>
+  </data>
+  <data name="CustomerSettings" xml:space="preserve">
+    <value>Customer Settings</value>
+  </data>
+  <data name="Disable" xml:space="preserve">
+    <value>Disable</value>
+  </data>
+  <data name="DisableAll" xml:space="preserve">
+    <value>Disable All</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Disabled</value>
+  </data>
+  <data name="Enable" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="EnableAll" xml:space="preserve">
+    <value>Enable All</value>
+  </data>
+  <data name="Enabled" xml:space="preserve">
+    <value>Enabled</value>
+  </data>
+  <data name="HeaderTooltip" xml:space="preserve">
+    <value>Click to {0} {1} all rows</value>
+  </data>
+  <data name="InternalServerError" xml:space="preserve">
+    <value>Internal server error.</value>
+  </data>
+  <data name="Master" xml:space="preserve">
+    <value>Master</value>
+  </data>
+  <data name="MasterDirectMember" xml:space="preserve">
+    <value>Master Direct Member</value>
+  </data>
+  <data name="Member" xml:space="preserve">
+    <value>Member</value>
+  </data>
+  <data name="Msg60033" xml:space="preserve">
+    <value>Unable to edit downline's Product Status because the account disabled for this product.</value>
+  </data>
+  <data name="Msg60035" xml:space="preserve">
+    <value>You are not allowed to disable downline's product.</value>
+  </data>
+  <data name="Msg60037" xml:space="preserve">
+    <value>You cannot Enable {0} when {1} is Disabled. </value>
+  </data>
+  <data name="Msg90012" xml:space="preserve">
+    <value>You are not allowed to perform this action.</value>
+  </data>
+  <data name="ProductStatus" xml:space="preserve">
+    <value>Product Status</value>
+  </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="SearchAccountTBodyTooltip" xml:space="preserve">
+    <value>Click to {0} {1}</value>
+  </data>
+  <data name="SearchAccountTHeadMulitpleTooltip" xml:space="preserve">
+    <value>Click to {0} all {1} on all rows</value>
+  </data>
+  <data name="SearchAccountTHeadTooltip" xml:space="preserve">
+    <value>Click to {0} {1} all rows</value>
+  </data>
+  <data name="StatusUpdatedSuccessfully" xml:space="preserve">
+    <value>Status updated successfully.</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Super" xml:space="preserve">
+    <value>Super</value>
+  </data>
+  <data name="SuperDirectMember" xml:space="preserve">
+    <value>Super Direct Member</value>
+  </data>
+  <data name="TBodyDownlineTooltip" xml:space="preserve">
+    <value>Click to {0} all {1}</value>
+  </data>
+  <data name="ThereIsNoChange" xml:space="preserve">
+    <value>There is no change.</value>
+  </data>
+  <data name="ThereIsNoData" xml:space="preserve">
+    <value>There Is No Data.</value>
+  </data>
+  <data name="UMProductStatus" xml:space="preserve">
+    <value>Unable to Update because of the maintenance of the settings below (GMT +8):</value>
+  </data>
+  <data name="UMProductStatusPattern" xml:space="preserve">
+    <value>- {0}: {1} ({2} to {3})</value>
+  </data>
+  <data name="UnauthorizeMessage" xml:space="preserve">
+    <value>You are not authorized on this function.</value>
+  </data>
+  <data name="UnauthorizeProductMessage" xml:space="preserve">
+    <value>You are not authorized on this product.</value>
+  </data>
+  <data name="UpdateStatusFailed" xml:space="preserve">
+    <value>Update Status Failed.</value>
+  </data>
+  <data name="UplineDisabled" xml:space="preserve">
+    <value>Upline Disabled</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+</root>

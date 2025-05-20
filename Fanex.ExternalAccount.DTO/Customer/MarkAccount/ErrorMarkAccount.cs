@@ -10,6 +10,6 @@
 
         public string ErrMsg { get; set; }
 
-        public string Isfinished { get; set; }
+        public bool Isfinished { get; set; }
     }
 }

@@ -1,11 +1,12 @@
 namespace Fanex.ExternalAccount.WhiteLabelWinLossReports.Services
 {
     using System.Collections.Generic;
-    using Fanex.CustomerSetting.Module.Core.Extensions;
+    // using Fanex.NAP.Framework.Data;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.Core.Shared.Extensions;
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.Criteria;
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.Models;
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.Requests;
-    using Fanex.NAP.Framework.Data;
 
     public interface IWhiteLabelReportService
     {

@@ -1,12 +1,14 @@
 ﻿namespace Fanex.ExternalAccount.ProblemAccount.Criteria
 {
     using System;
+    using Fanex.Data.Repository;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.ProblemAccount.ViewModels;
-    using Fanex.NAP.Framework.Data;
 
     public class GetProblemAccountCriteria : CriteriaBase
     {
+        public GetProblemAccountCriteria() { }
+
         public GetProblemAccountCriteria(GetListViewModel viewModel)
         {
             FromDate = viewModel.FromDate;

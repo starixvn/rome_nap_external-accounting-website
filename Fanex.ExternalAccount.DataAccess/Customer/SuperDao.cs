@@ -1,17 +1,28 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Impl.Customer
 {
     using Criteria.Customer;
-    using Data.DNAide;
     using DTO;
+    using Fanex.Data.Repository;
     using Interface.Customer;
 
     public class SuperDao : CustomerDao, ISuperDao
     {
-        public Result UpdateSuperInfo(UpdateSuperInfoCriteria criteria)
-        {
-            var result = DbHelper.ExecuteDbResult(criteria.GetSettingKey(), criteria.GetSpParams());
 
-            return new Result(result.Outputs["errcode"].ToString(), result.Outputs["errmsg"].ToString(), result.ResultSet);
+        private readonly IDynamicRepository _dynamicRepository;
+
+        public SuperDao() : this(null)
+        {
+        }
+
+        public SuperDao(IDynamicRepository dynamicRepository)
+        {
+            _dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
+        public Result UpdateSuperInfo(UpdateSuperInfoCommand command)
+        {
+            _dynamicRepository.Execute(command);
+            return new Result { ErrorCode = command.ErrCode.ToString(), ErrorMessage = command.ErrMsg };
         }
     }
 }

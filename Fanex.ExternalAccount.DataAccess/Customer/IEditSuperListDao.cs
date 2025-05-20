@@ -1,50 +1,55 @@
 ﻿namespace Fanex.ExternalAccount.DataAccess.Customer
 {
-    using Fanex.Data;
+    using System.Linq;
+    using Fanex.Common.Extensions;
+    using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Criteria.Customer.EditSuperList;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Utilities;
-    using Fanex.NAP.Framework.Data;
+
+    public class CheckSuperEntity
+    { 
+        public int CustId { get; set; }
+
+        public string UserName { get; set; }
+    }
 
     public interface IEditSuperListDao
     {
         Result CheckMultipleSupers(CheckMultipleSupersCriteria criteria);
 
-        string ExecuteUpdate(ICriteria criteria);
+        string ExecuteUpdate(INonQueryBaseCommand command);
     }
 
     public class EditSuperListDao : IEditSuperListDao
     {
+        private readonly IDynamicRepository _dynamicRepository;
+
+        public EditSuperListDao() : this(null)
+        {
+        }
+
+        public EditSuperListDao(IDynamicRepository dynamicRepository)
+        {
+            _dynamicRepository = dynamicRepository ?? new DynamicRepository();
+        }
+
         public Result CheckMultipleSupers(CheckMultipleSupersCriteria criteria)
         {
             var result = new Result();
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                using (var reader = db.ExecuteReader(criteria.GetSpParams()))
-                {
-                    while (reader != null && reader.Read())
-                    {
-                        result.ResultData += reader.ToInt32("CustID") + ";" + reader.ToInt32("UserName") + ",";
-                    }
-                }
 
-                var output = db.GetOuputParams();
-                result.ErrorCode = output["errcode"].ToString();
-                result.ErrorMessage = output["errmsg"].ToString();
-                result.ResultData = result.ResultData.ToString().TrimEnd(new[] { ',' });
-            }
-
+            var checkSuperEntities = _dynamicRepository.Fetch<CheckSuperEntity>(criteria);
+            result.ErrorCode = criteria.ErrCode.ToString();
+            result.ErrorMessage = criteria.ErrMsg;
+            result.ResultData = string.Join(",", checkSuperEntities.Select(x => $"{x.CustId};{x.UserName}"));
             return result;
         }
 
-        public string ExecuteUpdate(ICriteria criteria)
+        public string ExecuteUpdate(INonQueryBaseCommand command)
         {
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria.GetSpParams());
-
-                return db.GetOuputParams()["errmsg"].ToString();
-            }
+            _dynamicRepository.Execute(command);
+            return command.ErrMsg;
         }
     }
 }
