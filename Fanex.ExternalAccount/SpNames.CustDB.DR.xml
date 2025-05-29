@@ -14,10 +14,10 @@
 		<Setting Key="PositionTaking_RefSportTypeAndBetType" SpName="Acc_CustomerSelRefSport_Bettype" DbName="DBTXN.bodb02.wsv_xnap" Plain="0" />
 	</Function>
 	<Function Name="Login">
-		<Setting Key="EAS_UserLogin" SpName="EAS_UserLogin" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-		<Setting Key="EAS_UserLogout" SpName="EAS_UserLogout" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-		<Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
-		<Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserLogin" SpName="EAS_UserLogin_KL" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserLogout" SpName="EAS_UserLogout_KL" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserCheckIn" SpName="EAS_UserCheckIn_KL" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_UserRecheckIn" SpName="EAS_UserRecheckIn_KL" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
 		<Setting Key="EAS_UserCheckPermission" SpName="EAS_UserCheckPermission" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
 	</Function>
 	<Function Name="Report">
@@ -138,7 +138,7 @@
 		<Setting Key="EAS_CustomerUpdSubGroup" SpName="EAS_CustomerUpdSubGroup" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
 		<Setting Key="EAS_UserInfoSelBySubGroup" SpName="EAS_UserInfoSelBySubGroup" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
 		<Setting Key="EAS_UserInfoUpdSubGroupAdminPwd" SpName="EAS_UserInfoUpdSubGroupAdminPwd" DbName="DBCust.CustDB.wsv_xnap" Plain="0" />
-		<Setting Key="EAS_OnUser_ForceKickout" SpName="EAS_OnUser_ForceKickout" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_OnUser_ForceKickout" SpName="EAS_OnUser_ForceKickout_KL" DbName="DBPOL.Nap_UserControl.wsv_xnap" Plain="0" />
 	</Function>
 	<Function name="Group Configuration">
 		<Setting Key="EAS_GroupConfigurationSel" SpName="EAS_GroupConfigurationSel" DbName="DBPOL.Nap_UserControl.wsv_xnap" plain="0" />
