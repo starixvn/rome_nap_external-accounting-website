@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.SearchAndCopy.Criteria
 {
-    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class UpdateCrmHeadlineInfoCriteria : INonQueryCommand
@@ -29,10 +28,8 @@
 
         public int Case { get; }
 
-        [SpParam(SqlParamName = "Old_Headline")]
         public int OldHeadline { get; }
 
-        [SpParam(SqlParamName = "New_Headline")]
         public int NewHeadline { get; }
 
         public int UserId { get; }
