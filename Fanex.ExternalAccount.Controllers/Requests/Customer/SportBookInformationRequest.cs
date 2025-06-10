@@ -27,6 +27,12 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             isActive = TabIndex == 0,
         };
 
+        private object PotentialWinLimitTab => new
+        {
+            name = "PotentialWinLimit",
+            id = "PotentialWinLimitSettingTab",
+            isActive = TabIndex == 6,
+        };
 
         private object MaxPayoutSettingTab => new
         {
@@ -81,7 +87,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
                 PTSettingTab,
                 CommissionSettingTab,
                 ProductCategorySettingTab,
-                WinLossLimitTab
+                WinLossLimitTab,
+                PotentialWinLimitTab
             },
             roleId = RoleId,
             site = Site,
