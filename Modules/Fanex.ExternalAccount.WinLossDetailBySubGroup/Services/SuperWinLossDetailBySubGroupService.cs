@@ -80,7 +80,6 @@ namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services
 
                         total.SubGroup = key ?? "Unassigned Supers";
                         total.SuperWinLossDetails = superWinLossDetailsList;
-
                         return total;
                     });
             }

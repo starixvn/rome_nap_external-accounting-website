@@ -109,10 +109,11 @@ class SuperWinLossDetailBySubGroup {
     }
 
     private renderSuperWinLossDetailBySubGroup(data) {
-        this.gridOptions = this.gridOptions || this.initGridOptions();
+        var rewardHeader = this.getRewardHeaderText(data);
+        this.gridOptions = this.gridOptions || this.initGridOptions(rewardHeader);
         setPagerOptionOnMobile(this.gridOptions);
         this.gridOptions.titleInfo.text = this.buildGridTitle();
-        this.gridOptions.columns = this.initGridHeaderColumns();
+        this.gridOptions.columns = this.initGridHeaderColumns(rewardHeader);
         this.gridOptions.bodyRows = this.buildBodyRows(data.superWinLossDetails);
         this.gridOptions.footerRows = [this.buildGrandTotalColumns(data.total)];
 
@@ -130,13 +131,13 @@ class SuperWinLossDetailBySubGroup {
         workaroundForGridOnPhone();
     }
 
-    private initGridOptions() {
+    private initGridOptions(rewardHeader) {
         return {
             showTitle: true,
             titleInfo: { text: "" },
             customizeHeader: true,
-            groupHeaderRows: [{ Columns: this.initGridGroupHeaderColumns() }],
-            columns: this.initGridHeaderColumns(),
+            groupHeaderRows: [{ Columns: this.initGridGroupHeaderColumns(rewardHeader) }],
+            columns: this.initGridHeaderColumns(rewardHeader),
             numberOfFrozenColumn: this.topWindow.$(top.window).width() < 768 ? 1 : 3,
             autoCalculateGridExpandHeight: true,
             fullHeight: !isMobile.phone,
@@ -169,7 +170,7 @@ class SuperWinLossDetailBySubGroup {
         };
     }
 
-    private initGridGroupHeaderColumns() {
+    private initGridGroupHeaderColumns(rewardHeader) {
         const initMergeRow = function (text, name) {
             return { HeaderText: text, Name: name, MergeRowNumber: 2 };
         };
@@ -185,11 +186,12 @@ class SuperWinLossDetailBySubGroup {
             initMergeColumn("Agent", "colAgent"),
             initMergeColumn("Master", "colMaster"),
             initMergeColumn("Super", "colSuper"),
-            initMergeRow("Company", "colCompany")
+            initMergeRow("Company", "colCompany"),
+            initMergeRow(rewardHeader, "colRewardAmount")
         ];
     }
 
-    private initGridHeaderColumns() {
+    private initGridHeaderColumns(rewardHeader) {
         const initGridHeaderColumn = function (text, name) {
             return {
                 HeaderText: text,
@@ -220,7 +222,8 @@ class SuperWinLossDetailBySubGroup {
             initGridHeaderColumn("Win/Loss", "colSuper"),
             initGridHeaderColumn("Comm", "colSuperComm"),
             initGridHeaderColumn("Total", "colSuperTotal"),
-            initGridHeaderColumn("Company", "colCompany")
+            initGridHeaderColumn("Company", "colCompany"),
+            initGridHeaderColumn(`${rewardHeader}`, "colRewardAmount")
         ];
     }
 
@@ -237,6 +240,14 @@ class SuperWinLossDetailBySubGroup {
         }
 
         return title.join(" ");
+    }
+
+    private getRewardHeaderText(data) {
+        if (data.superWinLossDetails && data.superWinLossDetails.length > 0) {
+            return `Reward (${data.superWinLossDetails[0].rewardCurrency})`;
+        };
+
+        return "Reward";
     }
 
     private buildBodyRows(superWinLossDetailBySubGroups) {
@@ -291,7 +302,8 @@ class SuperWinLossDetailBySubGroup {
             { Name: "colSuper", Value: winloss.superWinLoss },
             { Name: "colSuperComm", Value: winloss.superComm },
             { Name: "colSuperTotal", Value: winloss.superTotal },
-            { Name: "colCompany", Value: winloss.company }
+            { Name: "colCompany", Value: winloss.company },
+            { Name: "colRewardAmount", Value: winloss.rewardAmount }
         ];
     }
 
