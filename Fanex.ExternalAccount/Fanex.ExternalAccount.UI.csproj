@@ -2960,8 +2960,8 @@
     <Content Include="Views\Customer\IndirectEditMember.cshtml" />
     <Content Include="Views\SuperInfo\Index.cshtml" />
     <Content Include="Views\Customer\Settings.cshtml" />
-    <None Include="Web.KLPROD.config" />
-    <None Include="Web.KLSIMPLE.config" />
+    <Content Include="Web.KLPROD.config" />
+    <Content Include="Web.KLSIMPLE.config" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>
