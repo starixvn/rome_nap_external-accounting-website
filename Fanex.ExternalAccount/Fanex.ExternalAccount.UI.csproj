@@ -1490,6 +1490,8 @@
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="SpNames.CustDB.KLPROD.xml" />
+    <Content Include="SpNames.CustDB.KLSIMPLE.xml" />
     <Content Include="Views\Customer\MultipleOpenCustomer.cshtml" />
     <Content Include="Views\Customer\SingleOpenCustomer.cshtml" />
     <Content Include="Views\Customer\SportBookInformation-Debug.cshtml" />
@@ -2791,6 +2793,14 @@
     <Content Include="Configurations\appSettings.DR.config">
       <DependentUpon>appSettings.config</DependentUpon>
     </Content>
+    <Content Include="Configurations\appSettings.KLPRO.config" />
+    <Content Include="Configurations\appSettings.KLSIMPLE.config" />
+    <Content Include="Configurations\connectionStrings.KLPROD.config" />
+    <Content Include="Configurations\connectionStrings.KLSIMPLE.config" />
+    <Content Include="Configurations\InternalUrlSection.KLPROD.config" />
+    <Content Include="Configurations\InternalUrlSection.KLSIMPLE.config" />
+    <Content Include="Configurations\SecurityCodeSection.KLPROD.config" />
+    <Content Include="Configurations\SecurityCodeSection.KLSIMPLE.config" />
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.production.config">
       <SubType>Designer</SubType>
@@ -2950,6 +2960,8 @@
     <Content Include="Views\Customer\IndirectEditMember.cshtml" />
     <Content Include="Views\SuperInfo\Index.cshtml" />
     <Content Include="Views\Customer\Settings.cshtml" />
+    <None Include="Web.KLPROD.config" />
+    <None Include="Web.KLSIMPLE.config" />
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>
