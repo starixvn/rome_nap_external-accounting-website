@@ -35,8 +35,10 @@
             {
                 var ctsClient = new WebClient();                
                 ctsClient.QueryString.Add("CustId", customer.CustId.ToString());
-                criteria.AssociationList = JsonConvert.DeserializeObject<string>(ctsClient.DownloadString(AppSettings.CTS_Url));
-                
+                string content = ctsClient.DownloadString(AppSettings.CTS_Url);
+                Logging.LogService.Error(content);
+                criteria.AssociationList = JsonConvert.DeserializeObject<string>(content);
+              
                 if (!string.IsNullOrEmpty(criteria.AssociationList))
                 {
                     return associationAccountDAO.Get(criteria);
