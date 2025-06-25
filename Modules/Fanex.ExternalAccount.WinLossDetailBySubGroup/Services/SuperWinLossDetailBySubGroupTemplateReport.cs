@@ -1,6 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services
 {
     using System;
+    using System.Linq;
     using System.Text;
     using Fanex.ExternalAccount.Excel;
     using Fanex.ExternalAccount.Excel.Utility;
@@ -11,7 +12,7 @@
 
     public class SuperWinLossDetailBySubGroupTemplateReport : TemplateReport, IReportBuilder
     {
-        private const int LastColumnIndex = 16;
+        private const int LastColumnIndex = 17;
         private const int ParentRowTemplateIndex = 1;
         private const int ChildRowTemplateIndex = 3;
         private readonly SuperWinLossDetailBySubGroupReport report;
@@ -38,6 +39,7 @@
             var reportSheet = HssfWorkbook.GetSheet("SuperWinLossDetailBySubGroup");
 
             BuildMainTitle(reportSheet);
+            if(report.SuperWinLossDetails.Any()) CreateRewardCell(reportSheet, LastColumnIndex);
             WriteBodyReport(reportSheet);
 
             HssfWorkbook.RemoveSheetAt(HssfWorkbook.GetSheetIndex(TemplateSheet));
@@ -107,7 +109,8 @@
                     winlossBySubGroup.SuperWinLoss,
                     winlossBySubGroup.SuperComm,
                     winlossBySubGroup.SuperTotal,
-                    winlossBySubGroup.Company
+                    winlossBySubGroup.Company,
+                    winlossBySubGroup.RewardAmount
                 };
 
                 resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, parentRowValues);
@@ -136,7 +139,8 @@
                         winloss.SuperWinLoss,
                         winloss.SuperComm,
                         winloss.SuperTotal,
-                        winloss.Company
+                        winloss.Company,
+                        winloss.RewardAmount
                     };
 
                     resultSheet.GetRow(toRowId).WriteCells(FirstColumnIndex, childRowValues);
@@ -175,10 +179,19 @@
                 total.SuperWinLoss,
                 total.SuperComm,
                 total.SuperTotal,
-                total.Company
+                total.Company,
+                total.RewardAmount
             };
 
             resultSheet.GetRow(totalRowIndex).WriteCells(FirstColumnIndex, totalRowValues);
+        }
+
+        private void CreateRewardCell(ISheet resultSheet, int rewardColumnIndex)
+        {
+            var headerRow = resultSheet.GetRow(1);
+            var currentCell = headerRow.GetCell(rewardColumnIndex);
+            var valueCell = $"Reward ({report.SuperWinLossDetails?.ElementAt(0)?.RewardCurrency ?? ""})";
+            currentCell.SetCellValue(valueCell);
         }
     }
 }

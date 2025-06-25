@@ -25,7 +25,9 @@
             decimal superWinLoss,
             decimal superComm,
             decimal superTotal,
-            decimal compay)
+            decimal compay,
+            decimal rewardAmount,
+            string rewardCurrency)
         {
             Username = username;
             Turnover = turnover;
@@ -44,6 +46,8 @@
             SuperComm = superComm;
             SuperTotal = superTotal;
             Company = compay;
+            RewardAmount = rewardAmount;
+            RewardCurrency = rewardCurrency;
         }
 
         public string SubGroup { get; set; }
@@ -82,6 +86,10 @@
 
         public decimal Company { get; set; }
 
+        public decimal RewardAmount { get; set; }
+
+        public string RewardCurrency { get; set; }
+
         public IEnumerable<SuperWinLossDetailBySubGroupModel> SuperWinLossDetails { get; set; }
 
         public static SuperWinLossDetailBySubGroupModel operator +(SuperWinLossDetailBySubGroupModel source,
@@ -103,6 +111,8 @@
                 source.SuperWinLoss + destination.SuperWinLoss,
                 source.SuperComm + destination.SuperComm,
                 source.SuperTotal + destination.SuperTotal,
-                source.Company + destination.Company);
+                source.Company + destination.Company,
+                source.RewardAmount + destination.RewardAmount,
+                source.RewardCurrency ?? destination.RewardCurrency);
     }
 }

@@ -83,10 +83,11 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
         }).done(Fanex.ExtAcc.UnBlockUI);
     };
     SuperWinLossDetailBySubGroup.prototype.renderSuperWinLossDetailBySubGroup = function (data) {
-        this.gridOptions = this.gridOptions || this.initGridOptions();
+        var rewardHeader = this.getRewardHeaderText(data);
+        this.gridOptions = this.gridOptions || this.initGridOptions(rewardHeader);
         setPagerOptionOnMobile(this.gridOptions);
         this.gridOptions.titleInfo.text = this.buildGridTitle();
-        this.gridOptions.columns = this.initGridHeaderColumns();
+        this.gridOptions.columns = this.initGridHeaderColumns(rewardHeader);
         this.gridOptions.bodyRows = this.buildBodyRows(data.superWinLossDetails);
         this.gridOptions.footerRows = [this.buildGrandTotalColumns(data.total)];
         this.gridOptions.pagerOption.currentPage = this.cacheFormData.pageIndex;
@@ -99,14 +100,14 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
         this.addTitleToSubGroupUsernameColumn();
         workaroundForGridOnPhone();
     };
-    SuperWinLossDetailBySubGroup.prototype.initGridOptions = function () {
+    SuperWinLossDetailBySubGroup.prototype.initGridOptions = function (rewardHeader) {
         var _this = this;
         return {
             showTitle: true,
             titleInfo: { text: "" },
             customizeHeader: true,
-            groupHeaderRows: [{ Columns: this.initGridGroupHeaderColumns() }],
-            columns: this.initGridHeaderColumns(),
+            groupHeaderRows: [{ Columns: this.initGridGroupHeaderColumns(rewardHeader) }],
+            columns: this.initGridHeaderColumns(rewardHeader),
             numberOfFrozenColumn: this.topWindow.$(top.window).width() < 768 ? 1 : 3,
             autoCalculateGridExpandHeight: true,
             fullHeight: !isMobile.phone,
@@ -138,7 +139,7 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
             allowTruncate: true
         };
     };
-    SuperWinLossDetailBySubGroup.prototype.initGridGroupHeaderColumns = function () {
+    SuperWinLossDetailBySubGroup.prototype.initGridGroupHeaderColumns = function (rewardHeader) {
         var initMergeRow = function (text, name) {
             return { HeaderText: text, Name: name, MergeRowNumber: 2 };
         };
@@ -154,10 +155,11 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
             initMergeColumn("Agent", "colAgent"),
             initMergeColumn("Master", "colMaster"),
             initMergeColumn("Super", "colSuper"),
-            initMergeRow("Company", "colCompany")
+            initMergeRow("Company", "colCompany"),
+            initMergeRow(rewardHeader, "colRewardAmount")
         ];
     };
-    SuperWinLossDetailBySubGroup.prototype.initGridHeaderColumns = function () {
+    SuperWinLossDetailBySubGroup.prototype.initGridHeaderColumns = function (rewardHeader) {
         var initGridHeaderColumn = function (text, name) {
             return {
                 HeaderText: text,
@@ -187,7 +189,8 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
             initGridHeaderColumn("Win/Loss", "colSuper"),
             initGridHeaderColumn("Comm", "colSuperComm"),
             initGridHeaderColumn("Total", "colSuperTotal"),
-            initGridHeaderColumn("Company", "colCompany")
+            initGridHeaderColumn("Company", "colCompany"),
+            initGridHeaderColumn("" + rewardHeader, "colRewardAmount")
         ];
     };
     SuperWinLossDetailBySubGroup.prototype.buildGridTitle = function () {
@@ -203,6 +206,13 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
             title.push(this.cacheFormData.toDate);
         }
         return title.join(" ");
+    };
+    SuperWinLossDetailBySubGroup.prototype.getRewardHeaderText = function (data) {
+        if (data.superWinLossDetails && data.superWinLossDetails.length > 0) {
+            return "Reward (" + data.superWinLossDetails[0].rewardCurrency + ")";
+        }
+        ;
+        return "Reward";
     };
     SuperWinLossDetailBySubGroup.prototype.buildBodyRows = function (superWinLossDetailBySubGroups) {
         var _this = this;
@@ -251,7 +261,8 @@ var SuperWinLossDetailBySubGroup = /** @class */ (function () {
             { Name: "colSuper", Value: winloss.superWinLoss },
             { Name: "colSuperComm", Value: winloss.superComm },
             { Name: "colSuperTotal", Value: winloss.superTotal },
-            { Name: "colCompany", Value: winloss.company }
+            { Name: "colCompany", Value: winloss.company },
+            { Name: "colRewardAmount", Value: winloss.rewardAmount }
         ];
     };
     SuperWinLossDetailBySubGroup.prototype.renderNoData = function () {
