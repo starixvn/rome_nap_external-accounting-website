@@ -22,16 +22,17 @@
             var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
             var custStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
             var cashRow = balanceInfoDataset.Tables[0].Rows[0];
+            var isCashService = custInfoRow.ServiceType() == 1;
             HasDownline = custStatusRow.HasDownline();
             UplineHasSecurityCode = custInfoRow.UplineHasSecurityCode();
             CurrencyId = cashRow.CurrencyId();
-            BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow.RoleId(), cashRow, balance, member3rdPendingTransfer, memberOustanding);
+            BalanceInfo = new BalanceInfo(isUpdateCredit && !isCashService, custInfoRow.RoleId(), cashRow, balance, member3rdPendingTransfer, memberOustanding);
             RewardInfo = new RewardInfo(custInfoRow.RoleId(), cashRow);
             PersonalInfo = new PersonalInfo(custInfoRow);
             Login = GetLoginInfo(loginInfoDataset, canViewVNIP, cashRow.LastTxn());
             DownlineList = new DownlineList();
             OnlineList = new OnlineList();
-            IsCashService = custInfoRow.ServiceType() == 1;
+            IsCashService = isCashService;
         }
 
         public PersonalInfo PersonalInfo { get; set; }
