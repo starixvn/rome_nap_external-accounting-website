@@ -42,5 +42,7 @@
         internal static string Site(this DataRow dataRow) => Utils.ToString(dataRow["site"]);
 
         internal static string SiteLabel(this DataRow dataRow) => Utils.ToString(dataRow["sitelabel"]);
+
+        internal static int ServiceType(this DataRow dataRow) => Utils.ToInt32(dataRow["serviceType"]);
     }
 }

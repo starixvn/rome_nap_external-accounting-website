@@ -31,6 +31,7 @@
             Login = GetLoginInfo(loginInfoDataset, canViewVNIP, cashRow.LastTxn());
             DownlineList = new DownlineList();
             OnlineList = new OnlineList();
+            IsCashService = custInfoRow.ServiceType() == 1;
         }
 
         public PersonalInfo PersonalInfo { get; set; }
@@ -88,5 +89,7 @@
         }
 
         public string GroupName { get; set; }
+        
+        public bool IsCashService { get; set; }
     }
 }
