@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'AlphaAdmin';
-  src:  url('fonts/AlphaAdmin.eot?vru76v');
-  src:  url('fonts/AlphaAdmin.eot?vru76v#iefix') format('embedded-opentype'),
-    url('fonts/AlphaAdmin.ttf?vru76v') format('truetype'),
-    url('fonts/AlphaAdmin.woff?vru76v') format('woff'),
-    url('fonts/AlphaAdmin.svg?vru76v#AlphaAdmin') format('svg');
+  src:  url('fonts/AlphaAdmin.eot?wvb9jk');
+  src:  url('fonts/AlphaAdmin.eot?wvb9jk#iefix') format('embedded-opentype'),
+    url('fonts/AlphaAdmin.ttf?wvb9jk') format('truetype'),
+    url('fonts/AlphaAdmin.woff?wvb9jk') format('woff'),
+    url('fonts/AlphaAdmin.svg?wvb9jk#AlphaAdmin') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -220,4 +220,7 @@
 }
 .icon-unfold-more-horizontal:before {
   content: "\e914";
+}
+.icon-cashservice:before {
+  content: "\e99a";
 }
