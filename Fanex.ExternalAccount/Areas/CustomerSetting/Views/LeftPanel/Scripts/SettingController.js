@@ -703,22 +703,33 @@
 
     $scope.Info = function () {
         parent.Fanex.ExtAcc.Customer.UserId = $scope.model.personalInfo.custId.value;
+        var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
+        var landscapeHeight = 280;
+        var portraitHeight = 500;
+        top.shouldCalculatePopupHeight = true;
+        var width = 500;
 
         var url = parent.resolveClientUrl('Customer/EditInfo/?' +
             'custId=' + $scope.model.personalInfo.custId.value +
             "&groupName=" + parent.$('#selectedGroupName').html());
-        if ($scope.model.personalInfo.roleId.value == 4) {
+        var isCashMember = $scope.model.isCashService && $scope.model.personalInfo.roleId.value == 1;
+
+        if (isCashMember) {
+            url = parent.resolveClientUrl('Customer/EditInfoCashMember/?' +
+                'custId=' + $scope.model.personalInfo.custId.value +
+                "&groupName=" + parent.$('#selectedGroupName').html());
+        }
+        else if ($scope.model.personalInfo.roleId.value == 4) {
             url = parent.resolveClientUrl('MainSuper/EditInfo/?' +
                 'custId=' + $scope.model.personalInfo.custId.value +
                 "&groupName=" + parent.$('#selectedGroupName').html());
         }
-
-        var title = parent.titles[0] + ': <font color="#6dcff6">' + $scope.model.personalInfo.currentLevel.value + '</font>';
-
-        var landscapeHeight = 280;
-        var portraitHeight = 500;
-        top.shouldCalculatePopupHeight = true;
-        parent.Fanex.ExtAcc.Form.Show(url, title, 500, $scope.getPopupHeight(landscapeHeight, portraitHeight), false);
+        if(isCashMember){
+            parent.Fanex.ExtAcc.Form.ShowFrame(url, title, width, $scope.getPopupHeight(landscapeHeight, portraitHeight), false, undefined, 0);
+        }
+        else{
+            parent.Fanex.ExtAcc.Form.Show(url, title, width, $scope.getPopupHeight(landscapeHeight, portraitHeight), false, undefined, 0);
+        }
     };
 
     $scope.DataRange = function () {

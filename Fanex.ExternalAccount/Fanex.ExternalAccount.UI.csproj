@@ -1492,6 +1492,8 @@
     </Content>
     <Content Include="SpNames.CustDB.KLPROD.xml" />
     <Content Include="SpNames.CustDB.KLSIMPLE.xml" />
+    <Content Include="Views\Customer\EditInfoCashMember-Debug.cshtml" />
+    <Content Include="Views\Customer\EditInfoCashMember.cshtml" />
     <Content Include="Views\Customer\MultipleOpenCustomer.cshtml" />
     <Content Include="Views\Customer\SingleOpenCustomer.cshtml" />
     <Content Include="Views\Customer\SportBookInformation-Debug.cshtml" />

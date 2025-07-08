@@ -507,6 +507,16 @@
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
         }
 
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
+        public ActionResult EditInfoCashMember(int custId)
+        {
+            //var model = _customerService.UserInfo(custId, Config.SettingStatus);
+            // Todo: cdn uri
+
+            return PartialViewBase(new object(), HttpContext.IsDebuggingEnabled ? "EditInfoCashMember-Debug" : "EditInfoCashMember");
+        }
+        
+
         [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticationType.Read)]
         public ActionResult ConfigMultipleDoubleComm(int id) => PartialViewBase(id);
 
