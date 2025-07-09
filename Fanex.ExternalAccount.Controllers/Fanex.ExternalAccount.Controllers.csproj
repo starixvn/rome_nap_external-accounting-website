@@ -440,6 +440,7 @@
     <Compile Include="ViewModels\Customer\CustomerBaseViewModel.cs" />
     <Compile Include="ViewModels\Customer\CustomerSettingsViewModel.cs" />
     <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customer\EditInfoCashMemberViewModel.cs" />
     <Compile Include="ViewModels\Customer\IndirectEditMemberViewModel.cs" />
     <Compile Include="ViewModels\Customer\SportBookInformationViewModel.cs" />
     <Compile Include="ViewModels\GroupConfigurationViewModel.cs" />

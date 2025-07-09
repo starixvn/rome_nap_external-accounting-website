@@ -1,3 +1,6 @@
+@model Fanex.ExternalAccount.Controllers.ViewModels.Customer.EditInfoCashMemberViewModel
+@using Newtonsoft.Json
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +15,17 @@
         function resolveClientUrl(relativeUrl) {
             return '@Url.Content("~/")' + relativeUrl;
         }
-
+        const updateInfoCustomerPageConfig = @Html.Raw(JsonConvert.SerializeObject(new {
+            custId = Model.CustId,
+            username = Model.Username,
+            isCashMember = Model.IsCashMember,
+            applicationPath = Model.ApplicationPath,
+            cdnUri = Model.CdnUri
+        }, Formatting.None, new JsonSerializerSettings
+        {
+            ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+            NullValueHandling = NullValueHandling.Ignore
+        }));
         @* const appConfig = @Html.Raw(Model.AppConfig);
         const params = @Html.Raw(Model.Params); *@
     </script>

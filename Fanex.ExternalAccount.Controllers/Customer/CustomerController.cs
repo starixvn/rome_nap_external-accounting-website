@@ -508,12 +508,26 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
+        public ActionResult GetCustomerInfo(int custId)
+        {
+            var model = _customerService.UserInfo(custId, Config.SettingStatus);
+            return JsonBase(model);
+        }
+        
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
         public ActionResult EditInfoCashMember(int custId)
         {
             //var model = _customerService.UserInfo(custId, Config.SettingStatus);
             // Todo: cdn uri
+            var model = new EditInfoCashMemberViewModel(
+                GetAssetsVersion(),
+                custId,
+                "",
+                false,
+                GetApplicationPath(),
+                cdnUri);
 
-            return PartialViewBase(new object(), HttpContext.IsDebuggingEnabled ? "EditInfoCashMember-Debug" : "EditInfoCashMember");
+            return PartialViewBase(model, HttpContext.IsDebuggingEnabled ? "EditInfoCashMember-Debug" : "EditInfoCashMember");
         }
         
 
