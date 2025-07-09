@@ -2793,7 +2793,7 @@
     <Content Include="Configurations\appSettings.DR.config">
       <DependentUpon>appSettings.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\appSettings.KLPRO.config" />
+    <Content Include="Configurations\appSettings.KLPROD.config" />
     <Content Include="Configurations\appSettings.KLSIMPLE.config" />
     <Content Include="Configurations\connectionStrings.KLPROD.config" />
     <Content Include="Configurations\connectionStrings.KLSIMPLE.config" />
