@@ -517,8 +517,6 @@
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
         public ActionResult EditInfoCashMember(int custId)
         {
-            //var model = _customerService.UserInfo(custId, Config.SettingStatus);
-            // Todo: cdn uri
             var model = new EditInfoCashMemberViewModel(
                 GetAssetsVersion(),
                 custId,
@@ -529,8 +527,11 @@
 
             return PartialViewBase(model, HttpContext.IsDebuggingEnabled ? "EditInfoCashMember-Debug" : "EditInfoCashMember");
         }
-        
 
+        [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
+        public async Task<string> GetCustomerBankInfo(int custId, int roleId)
+            => await customerServiceClient.GetCustomerBankInfo(custId, roleId);
+        
         [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticationType.Read)]
         public ActionResult ConfigMultipleDoubleComm(int id) => PartialViewBase(id);
 
@@ -645,5 +646,7 @@
 
         private ActionResult LimitationPage(string message)
             => PartialView("~/Views/Customer/LimitMemberCreation.cshtml", message);
+
+        
     }
 }

@@ -23,6 +23,8 @@
         public bool IsCashMember { get; }
 
         public int CustId { get; }
+        
+        public int AgentId { get; set; }
 
         public string Username { get; }
 
