@@ -2880,6 +2880,10 @@
     <Content Include="ExcelTemplates\Customer\SuperListSGMOMC.xls" />
     <Content Include="ExcelTemplates\Reports\WhiteLabelDailyWinLoss.xls" />
     <Content Include="ExcelTemplates\Reports\WhiteLabelSettlement.xls" />
+    <Content Include="IbcKeys\ibckey.snk" />
+    <Content Include="IbcKeys\ibckeydec.snk" />
+    <Content Include="IbcKeys\ibcpkey.snk" />
+    <Content Include="IbcKeys\Web.config" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
