@@ -35,8 +35,7 @@
             {
                 var ctsClient = new WebClient();                
                 ctsClient.QueryString.Add("CustId", customer.CustId.ToString());
-                string content = ctsClient.DownloadString(AppSettings.CTS_Url);
-                Logging.LogService.Error(content);
+                string content = ctsClient.DownloadString(AppSettings.CTS_Url);            
                 criteria.AssociationList = JsonConvert.DeserializeObject<string>(content);
               
                 if (!string.IsNullOrEmpty(criteria.AssociationList))
