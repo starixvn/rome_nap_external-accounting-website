@@ -23,7 +23,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             name = "BetSetting",
             id = "BetSettingTab",
-            napUrl = "",
+            url = ApplicationPath + "settings/Customer/GetBetLimitInformation?site=" + Site + "&siteLabel=" + SiteLabel,
             isActive = TabIndex == 0,
         };
 
