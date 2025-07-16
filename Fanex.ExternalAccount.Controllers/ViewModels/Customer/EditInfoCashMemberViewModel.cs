@@ -8,7 +8,8 @@
             string username,
             bool isCashMember,
             string applicationPath,
-            string cdnUri)
+            string cdnUri,
+            int systemId)
         {
             AssetsVersion = assetsVersion;
             CustId = custId;
@@ -16,6 +17,7 @@
             IsCashMember = isCashMember;
             ApplicationPath = applicationPath;
             CdnUri = cdnUri;
+            SystemId = systemId;
         }
 
         public string AssetsVersion { get; }
@@ -31,5 +33,7 @@
         public string CdnUri { get; }
         
         public string ApplicationPath { get; }
+
+        public int SystemId { get; }
     }
 }

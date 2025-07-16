@@ -521,9 +521,10 @@
                 GetAssetsVersion(),
                 custId,
                 "",
-                false,
+                true,
                 GetApplicationPath(),
-                cdnUri);
+                cdnUri,
+                CustomerClientManager.ClientConfigs.SystemId);
 
             return PartialViewBase(model, HttpContext.IsDebuggingEnabled ? "EditInfoCashMember-Debug" : "EditInfoCashMember");
         }
