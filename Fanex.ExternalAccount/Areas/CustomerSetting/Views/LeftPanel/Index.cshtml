@@ -120,7 +120,7 @@
                             {{balances[3].value.toFixed(2).formatNumber()}}
                         </div>
                     </div>
-                    <div class="row">
+                    <div data-ng-hide="{{$parent.$parent.model.isCashService && $parent.$parent.model.personalInfo.roleId.value == 1}}" class="row">
                         <div class="pull-left">{{balances[4].text}}</div>
                         <div class="{{myClass3}} pull-right bold" data-ng-init="myClass3 = balances[4].value < 0">
                             <div class="floatLeftBalance R" data-ng-hide="{{model.isUpdateCredit == false}}">

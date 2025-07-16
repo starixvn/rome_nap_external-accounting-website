@@ -26,7 +26,7 @@
             HasDownline = custStatusRow.HasDownline();
             UplineHasSecurityCode = custInfoRow.UplineHasSecurityCode();
             CurrencyId = cashRow.CurrencyId();
-            BalanceInfo = new BalanceInfo(isUpdateCredit && !isCashService, custInfoRow.RoleId(), cashRow, balance, member3rdPendingTransfer, memberOustanding);
+            BalanceInfo = new BalanceInfo(isUpdateCredit, custInfoRow.RoleId(), cashRow, balance, member3rdPendingTransfer, memberOustanding);
             RewardInfo = new RewardInfo(custInfoRow.RoleId(), cashRow);
             PersonalInfo = new PersonalInfo(custInfoRow);
             Login = GetLoginInfo(loginInfoDataset, canViewVNIP, cashRow.LastTxn());
