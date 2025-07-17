@@ -540,8 +540,14 @@
         [AntiXSRFFilter]
         public ActionResult EditInfoPost(DTO.Customer.Customer customer)
         {
+            customer.FirstName = HttpUtility.HtmlEncode(customer.FirstName);
+            customer.LastName = HttpUtility.HtmlEncode(customer.LastName);
+            customer.Phone = HttpUtility.HtmlEncode(customer.Phone);
+            customer.MobilePhone = HttpUtility.HtmlEncode(customer.MobilePhone);
+            customer.Email = HttpUtility.HtmlEncode(customer.Email);
+            customer.Fax = HttpUtility.HtmlEncode(customer.Fax);
+            customer.Remark = HttpUtility.HtmlEncode(customer.Remark);
             var result = _customerService.EditUserInfo(customer, CurrentContext.Ip4Address, CurrentSession.CustId, 0, "E");
-
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
         }
 
@@ -549,6 +555,13 @@
         public ActionResult GetCustomerInfo(int custId)
         {
             var model = _customerService.UserInfo(custId, Config.SettingStatus);
+            model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
+            model.LastName = HttpUtility.HtmlDecode(model.LastName);
+            model.Phone = HttpUtility.HtmlDecode(model.Phone);
+            model.MobilePhone = HttpUtility.HtmlDecode(model.MobilePhone);
+            model.Email = HttpUtility.HtmlDecode(model.Email);
+            model.Fax = HttpUtility.HtmlDecode(model.Fax);
+            model.Remark = HttpUtility.HtmlDecode(model.Remark);
             return JsonBase(model);
         }
         
