@@ -378,6 +378,9 @@
         public async Task<ActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")
             => Content(await customerServiceClient.GetCustomerCurrentWinLossAmounts(custId, sportType, betType, language));
 
+        public async Task<ActionResult> GetCurrentWinAmount(int custId, int sportType, int betType, string language = "en-US")
+            => Content(await customerServiceClient.GetCurrentWinAmounts(custId, sportType, betType, language));
+
         [ExternalCustomerAuthFilter(Function = eFunctions.CustomerList)]
         public async Task<ActionResult> CheckExistedCustomer(string username)
             => Json(await customerServiceClient.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
