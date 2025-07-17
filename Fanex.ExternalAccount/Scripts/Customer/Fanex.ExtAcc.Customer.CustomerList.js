@@ -18,6 +18,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         uplineRoleId: 0,
         previousParams: null,
         isDirectMember: 0,
+        serviceType: 2
     },
 
     Init: function (uplineId, uplineRoleId) {
@@ -26,6 +27,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         this.cachedParams.uplineRoleId = uplineRoleId;
         this.DOMElements.txtUsername = $('#txtUserName');
         this.DOMElements.selStatus = $('#selStatus');
+        this.DOMElements.selServiceType = $('#selServiceType');
         this.DOMElements.btnSearch = $('#btnSearch');
         this.DOMElements.icoExportExcel = $('#icoExportExcel');
         this.DOMElements.customerListGrid = $('#customerListGrid');
@@ -37,6 +39,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         this.DOMElements.chkIsNoDownlines = $('#chkIsNoDownlines');
         this.DOMElements.editMult = $('#editMult');
         this.DOMElements.breadcrumbs = $('#breadcrumbs');
+        this.DOMElements.selectAllNone = $('#select-all-none');
         this.DOMElements.levelTypeSuperView = $("#ddl-level-type-container-super-view");
         this.DOMElements.levelTypeMasterView = $("#ddl-level-type-container-master-view");
         this.BindingEvents();
@@ -99,6 +102,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         var isMember = uplineRoleId == 2 ? true : false;
         var isDirectMember = (uplineRoleId === 3 && $("#ddl-level-type-master-view").find(":selected").val() === "1")
             || (uplineRoleId === 4 && $("#ddl-level-type-super-view").find(":selected").val() === "1");
+        var serviceType = _this.DOMElements.selServiceType.val();
         _this.cachedParams.pageIndex = pageIndex;
         _this.cachedParams.pageSize = pageSize;
 
@@ -119,6 +123,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
             IsNoDownlines: this.DOMElements.chkIsNoDownlines.is(":checked"),
             uplineId: uplineId,
             isDirectMember: isDirectMember,
+            serviceType: serviceType,
             pageSize: pageSize,
             pageIndex: pageIndex + 1
         };
@@ -128,6 +133,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         }
 
         _this.cachedParams.isDirectMember = isDirectMember;
+        _this.cachedParams.serviceType = serviceType;
         Fanex.ExtAcc.Customer.isEditDirectMember = isDirectMember;
         _this.cachedParams.previousParams = params;
         _this.Search(params);
@@ -147,6 +153,14 @@ Fanex.ExtAcc.Customer.CustomerList = {
             _this.cachedParams.uplineRoleId = params.uplineRoleId;
             var numberOfFrozenColumn = 6;
             var widthDevice = top.$(top.window).width();
+            if (_this.DOMElements.selServiceType.val() == '2') {
+                _this.DOMElements.selectAllNone.hide();
+            }
+            else {
+                _this.DOMElements.selectAllNone.show();
+            }
+            
+
             if (widthDevice <= 768) {
                 numberOfFrozenColumn = 3;
             }
@@ -164,7 +178,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
                     CssClass: Fanex.ExtAcc.Customer.CustomerList.GetCSSRow(currentRow)
                 });
             }
-
+            
             gridOptions = {
                 groupHeaderRows: _this.GetGridGroupHeader(params.uplineRoleId, result.HasSubGroups, params.isDirectMember),
                 columns: _this.GetGridHeader(params.uplineRoleId, result.HasSubGroups, params.isDirectMember),
@@ -177,6 +191,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 customizeHeader: true,
                 highlightFrozenWidth: 2,
                 showPager: true,
+                hiddenColumns: _this.DOMElements.selServiceType.val() == '2' ? [1] : [],
+                enableHiddenColumns: false,
                 customPager: true,
                 showNumberColumn: true,
                 pagerOption: {

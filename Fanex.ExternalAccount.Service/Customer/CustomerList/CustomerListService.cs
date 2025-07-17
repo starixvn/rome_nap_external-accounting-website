@@ -118,6 +118,7 @@
                 Currencies = parameters.CurrencyIds,
                 UserId = parameters.UserId,
                 Status = parameters.Status,
+                ServiceType = parameters.ServiceType,
                 PageIndex = parameters.PageIndex,
                 PageSize = parameters.PageSize
             };

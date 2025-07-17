@@ -76,7 +76,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 CurrencyIds = request.CurrencyIds,
                 PageIndex = request.PageIndex ?? 1,
                 PageSize = request.PageSize ?? DefaultPageSize,
-                IsDirectMember = request.IsDirectMember
+                IsDirectMember = request.IsDirectMember,
+                ServiceType = request.ServiceType
             }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP)));
         }
 

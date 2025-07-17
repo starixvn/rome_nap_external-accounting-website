@@ -45,5 +45,7 @@
 #pragma warning restore S109 // Magic numbers should not be used
         
         public bool IsDirectMember { get; set; }
+
+        public int ServiceType { get; set; }
     }
 }

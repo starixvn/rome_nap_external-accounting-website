@@ -102,13 +102,13 @@
         }
 
         [ExternalCustomerAuthFilter]
-        public ActionResult EditCustomer(EditCustomerRequest request)
+        public async Task<ActionResult> EditCustomer(EditCustomerRequest request)
         {
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
             var userId = CurrentSession.UserId;
             request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
-
+            request.ServiceType = await customerServiceClient.GetCashServiceStatus(request.CustId);
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), systemCode),
                 cdnUri,
@@ -334,8 +334,46 @@
                 return Redirect(CustomerClientManager.ClientConfigs.AccessDeniedUrl);
             }
 
-            return Content(await customerServiceClient.GetCustomerSetting(request.CustId, request.RoleId, request.SystemId, request.UplineRoleId, request.Language, request.IsGetUpLine, request.ProductGroupId, request.SiteLabel, request.IsMultipleMode, request.GroupName, request.IsCopy, request.AgentId));
+            return Content(await customerServiceClient.GetCustomerSetting(
+                request.CustId, 
+                request.RoleId, 
+                request.SystemId, 
+                request.UplineRoleId, 
+                request.Language, 
+                request.IsGetUpLine, 
+                request.ProductGroupId, 
+                request.SiteLabel, 
+                request.IsMultipleMode, 
+                request.GroupName, 
+                request.IsCopy, 
+                request.AgentId));
         }
+
+        public async Task<ActionResult> GetCashCustomerSetting(GetCustomerSettingRequest request)
+        {
+            if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting, eFunctions.LiveAndRNGCasino, eFunctions.LiveAndRNGCasinoBetting }, CurrentSession.UserId))
+            {
+                return Redirect(CustomerClientManager.ClientConfigs.AccessDeniedUrl);
+            }
+
+            if (!AppSettings.IsOfferedCashService(CurrentSession.CurrencyGroup))
+            {
+                return Redirect(CustomerClientManager.ClientConfigs.AccessDeniedUrl);
+            }
+
+            return Content(await customerServiceClient.GetCashCustomerSetting(
+                request.CustId,
+                request.RoleId,
+                request.SystemId,
+                request.UplineRoleId,
+                request.Language,
+                request.IsGetUpLine,
+                request.ProductGroupId,
+                request.SiteLabel));
+        }
+
+        public async Task<ActionResult> GetCashServiceStatus(GetCustomerSettingRequest request)
+            => Json(await customerServiceClient.GetCashServiceStatus(request.CustId));
 
         public async Task<ActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")
             => Content(await customerServiceClient.GetCustomerCurrentWinLossAmounts(custId, sportType, betType, language));

@@ -31,5 +31,16 @@
         public static string SentryBackendUrl => Configs["Fanex.Logging:SentryBackendUrl"];
 
         internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
+
+        public static bool IsOfferedCashService(string groupName)
+        {
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                return false;
+            }
+
+            var sites = (Configs["OfferedCashServiceGroups"] ?? string.Empty);
+            return sites.Contains("*") || sites.Contains(groupName);
+        }
     }
 }
