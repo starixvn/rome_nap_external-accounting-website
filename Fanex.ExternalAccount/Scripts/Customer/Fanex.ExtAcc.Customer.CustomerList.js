@@ -49,8 +49,11 @@ Fanex.ExtAcc.Customer.CustomerList = {
         } else {
             this.DOMElements.btnSearch.click();
         }
-        this.DOMElements.selServiceType.toggle(Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member);
-        this.DOMElements.lblServiceType.toggle(Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member);
+
+        if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member && !Fanex.ExtAcc.Customer.isEditDirectMember) {
+            this.DOMElements.selServiceType.toggle(Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member);
+            this.DOMElements.lblServiceType.toggle(Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member);
+        }
     },
 
     InitCurrencyList: function () {
@@ -420,6 +423,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         var columns = [];
         var isSuperList = isNullOrUndefinedOrEmpty(uplineRoleId);
         var isMemberList = uplineRoleId === Fanex.ExtAcc.Customer.Agent;
+        var isCashMember = currentRow.ServiceType == '1';
         var showSubGroups = isSuperList && hasSubGroups;
         if (isDirectMember) {
             isSuperList = false;
@@ -428,7 +432,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         }
         columns.push({ Name: 'RowNumber', Value: currentIndex + pageSize * (pageIndex) });
         columns.push({ Name: 'Check', Value: currentRow });
-        columns.push({ Name: 'username', Value: currentRow });
+        columns.push({ Name: 'username', Value: currentRow, TdClass: isCashMember ? 'has-cash' : ''});
         if (isShowCurrency) { columns.push({ Name: 'currency', Value: currentRow.Currency }); }
         columns.push({ Name: 'Edit', Value: currentRow });
         columns.push({ Name: 'Status', Value: currentRow });
