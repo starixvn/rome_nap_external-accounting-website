@@ -259,7 +259,7 @@
     <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
       <Mapping DataField="Downlines" ObjectProperty="NoOfDownlines" />
     </Setting>
-    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
+    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg_UAT2" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
       <Mapping DataField="ugroup" ObjectProperty="UserGroup" />
     </Setting>
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">

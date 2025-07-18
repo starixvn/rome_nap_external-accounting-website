@@ -28,6 +28,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         this.DOMElements.txtUsername = $('#txtUserName');
         this.DOMElements.selStatus = $('#selStatus');
         this.DOMElements.selServiceType = $('#selServiceType');
+        this.DOMElements.lblServiceType=$('label[for="selServiceType"]');
         this.DOMElements.btnSearch = $('#btnSearch');
         this.DOMElements.icoExportExcel = $('#icoExportExcel');
         this.DOMElements.customerListGrid = $('#customerListGrid');
@@ -48,6 +49,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
         } else {
             this.DOMElements.btnSearch.click();
         }
+        this.DOMElements.selServiceType.toggle(Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member);
+        this.DOMElements.lblServiceType.toggle(Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member);
     },
 
     InitCurrencyList: function () {
@@ -108,6 +111,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
 
         Fanex.ExtAcc.BlockUI();
         Fanex.ExtAcc.Customer.CurrentLevel = isDirectMember ? Fanex.ExtAcc.Customer.Member : isSuperList ? Fanex.ExtAcc.Customer.Super : uplineRoleId - 1;
+        this.DOMElements.selServiceType.toggle(!isDirectMember && Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member);
+        this.DOMElements.lblServiceType.toggle(!isDirectMember && Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member);
         this.DOMElements.divSuperLimitDate.toggle(isSuperList);
         this.DOMElements.divIsNoDownlines.toggle(!isMember);
         Fanex.ExtAcc.Customer.superId = uplineRoleId === Fanex.ExtAcc.Customer.Super ? uplineId : Fanex.ExtAcc.Customer.superId;
