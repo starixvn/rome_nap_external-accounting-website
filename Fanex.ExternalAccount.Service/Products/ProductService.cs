@@ -10,14 +10,17 @@
     {
         IEnumerable<ProductDto> GetAllProducts();
 
-        IEnumerable<ProductDto> GetProducts(string groupName, int groupId);
+        IEnumerable<ProductDto> GetProducts(string groupName, int groupId, bool isWinLossDetail = false);
 
         IEnumerable<int> ValidateProductIds(string groupName, int groupId, IEnumerable<int> productIds);
     }
 
     public class ProductService : IProductService
     {
+        private const int CashBillingServiceProductId = 111;
+
         private readonly IDynamicRepository dynamicRepository;
+
         public ProductService() : this(null)
         {
         }
@@ -34,9 +37,17 @@
             return GroupProducts(products);
         }
 
-        public IEnumerable<ProductDto> GetProducts(string groupName, int groupId)
+        public IEnumerable<ProductDto> GetProducts(string groupName, int groupId, bool isWinLossDetail = false)
         {
             var products = GetRawProducts(groupName, groupId);
+
+            if(!isWinLossDetail)
+            {
+                var filterProduct = products.Where(p => p.ProductId != CashBillingServiceProductId);
+
+                return GroupProducts(filterProduct);
+            }
+            
             return GroupProducts(products);
         }
 

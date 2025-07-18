@@ -185,7 +185,7 @@ Fanex.ExtAcc.WinLossDetail = {
             context: $this,
             url: resolveClientUrl("Filter/ProductsList"),
             type: "GET",
-            data: { groupName: this.groupName, groupId: this.groupId },
+            data: { groupName: this.groupName, groupId: this.groupId, isWinLossDetail: true },
             dataType: "json",
             cache: false,
             success: function (result) {
