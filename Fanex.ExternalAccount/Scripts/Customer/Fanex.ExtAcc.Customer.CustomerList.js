@@ -329,8 +329,10 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 var unlockIcon = cell.Value.LockedAccess.IsLocked
                     ? '<span class="locked-icon" onclick="javascript:Fanex.ExtAcc.Customer.UnlockAccess(' + cell.Value.CustId + ',' + cell.Value.LockedAccess.Locked + ')" title="Click to unlock"></span>'
                     : "";
+
+                var cashIcon = cell.Value.ServiceType == '1' ? '<span class="icon-cashservice" style="color: #045ace" />': '';
                 return (uplineRoleId === Fanex.ExtAcc.Customer.Agent || isDirectMember) ?
-                    '<span title="' + tooltipUsername + '">' + shortUsername + '</span>' + unlockIcon :
+                    '<span title="' + tooltipUsername + '">' + shortUsername + '</span>' + unlockIcon + cashIcon :
                     '<a id="usr-' + cell.Value.CustId + '" href="' + func + '" title="' + tooltipUsername + '">' + shortUsername + '</a>' + unlockIcon;
             }
         });
