@@ -109,7 +109,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 CurrencyIds = request.CurrencyIds,
                 PageIndex = 1,
                 PageSize = Int32.MaxValue - 1,
-                IsDirectMember = request.IsDirectMember
+                IsDirectMember = request.IsDirectMember,
+                ServiceType = request.ServiceType
             }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP));
 
             var builder = new CustomerListPageBuilder(

@@ -254,7 +254,8 @@ Fanex.ExtAcc.Customer.CustomerList = {
                         isShowSuperLimitDate: _this.DOMElements.chkShowSuperLimitDate.is(":checked"),
                         IsNoDownlines: _this.DOMElements.chkIsNoDownlines.is(":checked"),
                         uplineId: _this.cachedParams.uplineId,
-                        isDirectMember: _this.cachedParams.isDirectMember
+                        isDirectMember: _this.cachedParams.isDirectMember,
+                        serviceType: _this.cachedParams.serviceType
                     };
 
                     if (isShowCurrency) {
