@@ -49,7 +49,6 @@ Fanex.ExtAcc.Customer.CustomerList = {
         } else {
             this.DOMElements.btnSearch.click();
         }
-
         if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member && !Fanex.ExtAcc.Customer.isEditDirectMember) {
             this.DOMElements.selServiceType.toggle(Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member);
             this.DOMElements.lblServiceType.toggle(Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member);
@@ -161,14 +160,15 @@ Fanex.ExtAcc.Customer.CustomerList = {
             _this.cachedParams.uplineRoleId = params.uplineRoleId;
             var numberOfFrozenColumn = 6;
             var widthDevice = top.$(top.window).width();
-            if (_this.DOMElements.selServiceType.val() == '2') {
+            if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member
+                && !Fanex.ExtAcc.Customer.isEditDirectMember
+                && _this.DOMElements.selServiceType.val() == '2') {
                 _this.DOMElements.selectAllNone.hide();
             }
             else {
                 _this.DOMElements.selectAllNone.show();
             }
             
-
             if (widthDevice <= 768) {
                 numberOfFrozenColumn = 3;
             }
@@ -199,7 +199,9 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 customizeHeader: true,
                 highlightFrozenWidth: 2,
                 showPager: true,
-                hiddenColumns: _this.DOMElements.selServiceType.val() == '2' ? [1] : [],
+                hiddenColumns: (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member
+                    && !Fanex.ExtAcc.Customer.isEditDirectMember
+                    && _this.DOMElements.selServiceType.val() == '2') ? [1] : [],
                 enableHiddenColumns: false,
                 customPager: true,
                 showNumberColumn: true,
