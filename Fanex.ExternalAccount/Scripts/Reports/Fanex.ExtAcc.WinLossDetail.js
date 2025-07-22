@@ -474,14 +474,14 @@ Fanex.ExtAcc.WinLossDetail = {
                 $this.custId = 0;
             }
 
-            $this.ToggleTabs('none', 'none', 'none', 'none', 4);
+            $this.ToggleTabs('none', 'none', 'none', 'none', 4, 'none');
             $this.Databind($this.supername);
         });
 
         $("#tabMaster").click(function (e) {
             $this.viewlevel = 4;
             $this.custId = $this.mastername === "" ? $this.srecommend : 0;
-            $this.ToggleTabs('block', 'block', 'none', 'none', 3);
+            $this.ToggleTabs('block', 'block', 'none', 'none', 3, 'none');
 
             $this.Databind($this.mastername);
         });
@@ -489,7 +489,15 @@ Fanex.ExtAcc.WinLossDetail = {
         $("#tabAgent").click(function (e) {
             $this.viewlevel = 3;
             $this.custId = $this.agentname === "" ? $this.mrecommend : 0;
-            $this.ToggleTabs('block', 'block', 'block', 'none', 2);
+            $this.ToggleTabs('block', 'block', 'block', 'none', 2, 'none');
+
+            $this.Databind($this.agentname);
+        });
+
+        $("#tabMember").click(function (e) {
+            $this.viewlevel = 2;
+            $this.custId = $this.agentname === "" ? $this.recommend : 0;
+            $this.ToggleTabs('block', 'block', 'block', 'none', 1, 'none');
 
             $this.Databind($this.agentname);
         });
@@ -536,10 +544,11 @@ Fanex.ExtAcc.WinLossDetail = {
         $this.resizeReportGrid();
         $this.hideFilter = !$this.hideFilter;
     },
-    ToggleTabs: function (levelLine, statusSAg, statusMAg, statusAg, status) {
+    ToggleTabs: function (levelLine, statusSAg, statusMAg, statusAg, status, statusAgMember) {
         $("#tabSuper").css("display", statusSAg);
         $("#tabMaster").css("display", statusMAg);
         $("#tabAgent").css("display", statusAg);
+        $("#tabMember").css("display", statusAgMember);
 
         $('#levelLine').css('display', levelLine);
         if (status == 1) {
@@ -1091,21 +1100,27 @@ Fanex.ExtAcc.WinLossDetail = {
     ChangeHeadlineTab: function () {
         if (this.viewlevel >= 4) {
             this.srecommend = this.custId;
-            this.ToggleTabs('none', 'none', 'none', 'none', 4);
+            this.ToggleTabs('none', 'none', 'none', 'none', 4, 'none');
         } else if (this.viewlevel == 3) {
             this.mrecommend = this.custId;
-            this.ToggleTabs('block', 'block', 'none', 'none', 3);
+            this.ToggleTabs('block', 'block', 'none', 'none', 3, 'none');
             $("#tabSuper").attr("class", "tabActiveSuper");
         } else if (this.viewlevel == 2) {
             this.recommend = this.custId;
-            this.ToggleTabs('block', 'block', 'block', 'none', 2);
+            this.ToggleTabs('block', 'block', 'block', 'none', 2, 'none');
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabActive");
-        } else {
-            this.ToggleTabs('block', 'block', 'block', 'block', 1);
+        } else if (this.viewlevel == 1) {
+            this.ToggleTabs('block', 'block', 'block', 'block', 1, 'none');
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabDisable");
             $("#tabAgent").attr("class", "tabActive");
+        } else {
+            this.ToggleTabs('block', 'block', 'block', 'block', 0, 'block');
+            $("#tabSuper").attr("class", "tabDisableSuper");
+            $("#tabMaster").attr("class", "tabDisable");
+            $("#tabAgent").attr("class", "tabDisable");
+            $("#tabMember").attr("class", "tabActive");
         }
         $("#headlineDaily").css("visibility", "visible");
     },
@@ -1336,7 +1351,7 @@ Fanex.ExtAcc.WinLossDetail = {
 
     GetCashFee: function (custId, custName) {
         Fanex.ExtAcc.BlockUI();
-
+        $this.viewlevel = 0;
         var url = resolveClientUrl('WinLossDetail/GetCashFee')
             + "?custId=" + custId
             + "&custName=" + custName
@@ -1349,15 +1364,16 @@ Fanex.ExtAcc.WinLossDetail = {
             dataType: 'json',
             cache: false
         })
-            .done(function (data) {
-                $this.RenderCashFee(data);
-            })
-            .fail(function (error) {
-                console.log(error);
-            })
-            .always(function () {
-                Fanex.ExtAcc.UnBlockUI();
-            });
+        .done(function (data) {
+            $this.RenderCashFee(data);
+            $this.ChangeHeadlineTab();
+        })
+        .fail(function (error) {
+            console.log(error);
+        })
+        .always(function () {
+            Fanex.ExtAcc.UnBlockUI();
+        });
     },
 
     RenderCashFee: function (data) {
