@@ -1490,8 +1490,18 @@
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="SpNames.CustDB.KLPROD.xml" />
-    <Content Include="SpNames.CustDB.KLSIMPLE.xml" />
+    <Content Include="SpNames.CustDB.KLSTG.xml">
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="SpNames.CustDB.KLPROD.xml">
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="SpNames.CustDB.KLSIMPLE.xml">
+      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\Customer\EditInfoCashMember-Debug.cshtml" />
     <Content Include="Views\Customer\EditInfoCashMember.cshtml" />
     <Content Include="Views\Customer\MultipleOpenCustomer.cshtml" />
@@ -2795,14 +2805,42 @@
     <Content Include="Configurations\appSettings.DR.config">
       <DependentUpon>appSettings.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\appSettings.KLPROD.config" />
-    <Content Include="Configurations\appSettings.KLSIMPLE.config" />
-    <Content Include="Configurations\connectionStrings.KLPROD.config" />
-    <Content Include="Configurations\connectionStrings.KLSIMPLE.config" />
-    <Content Include="Configurations\InternalUrlSection.KLPROD.config" />
-    <Content Include="Configurations\InternalUrlSection.KLSIMPLE.config" />
-    <Content Include="Configurations\SecurityCodeSection.KLPROD.config" />
-    <Content Include="Configurations\SecurityCodeSection.KLSIMPLE.config" />
+    <Content Include="Configurations\appSettings.KLPROD.config">
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\appSettings.KLSIMPLE.config">
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\connectionStrings.KLPROD.config">
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\connectionStrings.KLSIMPLE.config">
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\InternalUrlSection.KLPROD.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\InternalUrlSection.KLSIMPLE.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.KLPROD.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.KLSIMPLE.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\appSettings.KLSTG.config">
+      <DependentUpon>appSettings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\connectionStrings.KLSTG.config">
+      <DependentUpon>connectionStrings.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\InternalUrlSection.KLSTG.config">
+      <DependentUpon>InternalUrlSection.config</DependentUpon>
+    </Content>
+    <Content Include="Configurations\SecurityCodeSection.KLSTG.config">
+      <DependentUpon>SecurityCodeSection.config</DependentUpon>
+    </Content>
     <None Include="Content\Images\Thumbs.db" />
     <Content Include="Web.production.config">
       <SubType>Designer</SubType>
@@ -2966,8 +3004,18 @@
     <Content Include="Views\Customer\IndirectEditMember.cshtml" />
     <Content Include="Views\SuperInfo\Index.cshtml" />
     <Content Include="Views\Customer\Settings.cshtml" />
-    <Content Include="Web.KLPROD.config" />
-    <Content Include="Web.KLSIMPLE.config" />
+    <Content Include="Web.KLPROD.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.KLSIMPLE.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.KLSTG.config">
+      <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
     <TypeScriptCompile Include="Scripts\Reports\SuperWinLossDetailBySubGroup\Fanex.ExtAcc.SuperWinLossDetailBySubGroup.ts" />
   </ItemGroup>
   <ItemGroup>
