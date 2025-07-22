@@ -264,6 +264,7 @@
     <Compile Include="Criteria\Report\WinLossDetailReport\WinLossByCurrencyMAgCriteria.cs" />
     <Compile Include="Criteria\Report\WinLossDetailReport\WinLossByCurrencySAgCriteria.cs" />
     <Compile Include="Criteria\Report\WinLossDetail\GetAgentWinlossDetailCriteria.cs" />
+    <Compile Include="Criteria\Report\WinLossDetail\GetCashFeeCriteria.cs" />
     <Compile Include="Criteria\Report\WinLossDetail\GetMasterWinlossDetailCriteria.cs" />
     <Compile Include="Criteria\Report\WinLossDetail\GetMemberWinlossDetailCriteria.cs" />
     <Compile Include="Criteria\Report\WinLossDetail\GetSuperWinlossDetailCriteria.cs" />

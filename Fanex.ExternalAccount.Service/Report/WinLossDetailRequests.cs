@@ -42,4 +42,13 @@
         bool IsMultipleCurrency { get; }
         bool IsValid { get; }
     }
+
+    public interface IDrillDownCashFeeRequest
+    {
+        int CustId { get;  }
+
+        DateTime FromDate { get; } 
+
+        DateTime ToDate { get; } 
+    }
 }

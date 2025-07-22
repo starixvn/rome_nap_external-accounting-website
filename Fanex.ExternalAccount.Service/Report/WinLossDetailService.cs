@@ -9,5 +9,7 @@
         dynamic SearchWinLossDetail(ISearchWinLossDetailRequest request);
 
         dynamic GetExtraPT(IViewExtraPTRequest request);
+
+        dynamic DrillDownCashFee(IDrillDownCashFeeRequest request);
     }
 }

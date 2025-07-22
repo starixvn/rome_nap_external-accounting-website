@@ -229,6 +229,9 @@ span.selectedMonth {
     text-decoration: none;
     margin: 0;
 }
+.subTotal {
+    font-weight:bold;
+}
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     .monPickrDropDown, .dayPickrDropDown {

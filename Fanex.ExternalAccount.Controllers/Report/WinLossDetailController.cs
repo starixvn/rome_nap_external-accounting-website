@@ -136,6 +136,14 @@
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
 
+        [AntiXSRFFilter]
+        public ActionResult GetCashFee(DrillDownCashFeeRequest request)
+        {
+            var cashFee = winLossDetailService.DrillDownCashFee(request);
+
+            return Json(cashFee);
+        }
+
     }
 
     public class ExportWinLossDetailRequest : WinLossDetailRequest

@@ -74,6 +74,7 @@ Fanex.ExtAcc.WinLossDetail = {
     $multiSelectProduct: null,
     $multiSelectProductDetail: null,
     $this: null,
+    drillDownName: "",
     SetRange: function () {
         return {
             minDate: new Date($("#MinDate").val()),
@@ -557,6 +558,14 @@ Fanex.ExtAcc.WinLossDetail = {
 
     RenderUsernameColumn: function (cell) {
         var isDormantAccounts = cell.Value.CustId === 0;
+
+        if (cell.Value.Username === "CASH SERVICE BILLING") {
+            var drillDownCashFeefunc = "javascript: Fanex.ExtAcc.WinLossDetail.GetCashFee('" + cell.Value.CustId + "','" + this.drillDownName + "')";
+            return html = '<div class="cash-fee-row" style="line-height: 22px; text-align: left;">' +
+                '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + drillDownCashFeefunc + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
+                '</div>';
+        }
+
         if (cell == null || cell.Value.Username == "Grand Total" || $this.viewlevel < 2 || cell.Value.RoleId == 1) {
             return isDormantAccounts
                 ? $this.RenderDormantAccountsCell()
@@ -567,7 +576,7 @@ Fanex.ExtAcc.WinLossDetail = {
             return $this.RenderDormantAccountsCell();
         }
 
-        var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "')";
+        var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "','" + cell.Value.Username + "')";
         return html = '<div style="line-height: 22px; text-align: left;">' +
             '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
             '</div>';
@@ -1100,9 +1109,10 @@ Fanex.ExtAcc.WinLossDetail = {
         }
         $("#headlineDaily").css("visibility", "visible");
     },
-    GetDownlineWinLossDetail: function (custId) {
+    GetDownlineWinLossDetail: function (custId, custName) {
         this.custId = custId;
         this.username = "";
+        this.drillDownName = custName;
         this.Databind(this.username);
     },
     InitShowHideControls: function (status) {
@@ -1322,6 +1332,124 @@ Fanex.ExtAcc.WinLossDetail = {
         }
 
         return -1;
+    },
+
+    GetCashFee: function (custId, custName) {
+        Fanex.ExtAcc.BlockUI();
+
+        var url = resolveClientUrl('WinLossDetail/GetCashFee')
+            + "?custId=" + custId
+            + "&custName=" + custName
+            + "&fromDate=" + $this.fromdate
+            + "&toDate=" + $this.todate;
+        $.ajax({
+            context: $this,
+            url,
+            type: 'post',
+            dataType: 'json',
+            cache: false
+        })
+            .done(function (data) {
+                $this.RenderCashFee(data);
+            })
+            .fail(function (error) {
+                console.log(error);
+            })
+            .always(function () {
+                Fanex.ExtAcc.UnBlockUI();
+            });
+    },
+
+    RenderCashFee: function (data) {
+        var headerColumns = [
+            { HeaderText: "Type", Width: 140, Name: "ColType", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: "Fee", Width: 100, Name: "ColFee", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00" },
+            { HeaderText: "Count", Width: 100, Name: "ColCount", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0" },
+            { HeaderText: "Agent", Width: 100, Name: "ColAgent", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00" },
+            { HeaderText: "Company", Width: 100, Name: "ColCompany", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00" }
+        ];
+
+        var bodyData = [];
+        var footerData = [];
+
+        if (data && data.FeeGroups.length > 0) {
+            var reportLength = data.FeeGroups.length;
+            var dataItemColumns = null;
+
+            for (var i = 0; i < reportLength; i++) {
+                var feeGroup = data.FeeGroups[i];
+
+                var dataItemColumns = [
+                    { Name: "ColType", Value: feeGroup.Total.DisplayType },
+                    { Name: "ColFee", Value: "" },
+                    { Name: "ColCount", Value: feeGroup.Total.Count },
+                    { Name: "ColAgent", Value: feeGroup.Total.Agent },
+                    { Name: "ColCompany", Value: feeGroup.Total.Company }
+                ];
+
+                bodyData.push({
+                    CssClass: "subTotal",
+                    Columns: dataItemColumns
+                });
+
+                if (feeGroup && feeGroup.FeeItems.length > 0) {
+                    var groupLength = feeGroup.FeeItems.length;
+                    for (var j = 0; j < groupLength; j++) {
+                        var dataItem = feeGroup.FeeItems[j];
+                        dataItemColumns = [
+                            { Name: "ColType", Value: dataItem.DisplayType },
+                            { Name: "ColFee", Value: dataItem.Fee },
+                            { Name: "ColCount", Value: dataItem.Count },
+                            { Name: "ColAgent", Value: dataItem.Agent },
+                            { Name: "ColCompany", Value: dataItem.Company }
+                        ];
+
+                        bodyData.push({
+                            Columns: dataItemColumns
+                        });
+                    }
+                }
+            }
+
+            var grandTotal = data.GrandTotal; 
+            footerData.push({
+                Columns: [{ Name: "ColType", Value: grandTotal.DisplayType, MergeColNumber: 3, CssClass: "text-right" },
+                    { Name: "ColAgent", Value: grandTotal.Agent },
+                    { Name: "ColCompany", Value: grandTotal.Company }]
+            });
+        }
+
+        var dateInfo = "";
+        if (this.fromdate == this.todate) {
+            dateInfo = 'on ' + this.fromdate;
+        }
+        else {
+            dateInfo = 'from ' + (new Date(Date.parse(this.fromdate))).toStringFormat('MMM dd, yyyy') + ' to ' + (new Date(Date.parse(this.todate))).toStringFormat('MMM dd, yyyy');
+        }
+
+        var gridOptions = {
+            columns: headerColumns,
+            showTitle: true,
+            showFooter: true,
+            titleInfo:
+            {
+                text: "CASH SERVICE BILLING " + dateInfo + " - " + $this.drillDownName,
+                showExcelButton: false,
+                exportExcelFunction: function () {
+                    console.log("Export excel")
+                }
+            },
+            showTree: false,
+            bodyRows: bodyData,
+            footerRows: footerData,
+            gridExpandHeight: 230,
+            showDistinctRow: false,
+            showHighlightRow: false,
+            noDataText: "There is no information",
+            marginRight: 20
+        };
+
+        $("#jqgrid").fanexGrid(gridOptions);
     }
 };
 
