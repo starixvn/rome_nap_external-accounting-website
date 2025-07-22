@@ -442,17 +442,27 @@ Fanex.ExtAcc.WinLossDetail = {
         });
 
         $("#exporttoexcel").click(function () {
-            var params = "fromdate=" + $this.fromdate +
-                "&todate=" + $this.todate +
-                "&viewlevel=" + $this.viewlevel +
-                "&custid=" + $this.custId +
-                "&groupId=" + Fanex.ExtAcc.WinLossDetail.groupId +
-                "&groupname=" + $this.groupName +
-                "&username=" + Fanex.ExtAcc.WinLossDetail.username;
-            var url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") +
-                params +
-                Fanex.ExtAcc.WinLossDetail.getParameterProducts() +
-                Fanex.ExtAcc.WinLossDetail.getParameterProductDetails();
+            var url = "";
+            var params = "";
+            if ($this.viewlevel !== 0) { 
+                 params = "fromdate=" + $this.fromdate +
+                    "&todate=" + $this.todate +
+                    "&viewlevel=" + $this.viewlevel +
+                    "&custid=" + $this.custId +
+                    "&groupId=" + Fanex.ExtAcc.WinLossDetail.groupId +
+                    "&groupname=" + $this.groupName +
+                    "&username=" + Fanex.ExtAcc.WinLossDetail.username;
+                url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") +
+                    params +
+                    Fanex.ExtAcc.WinLossDetail.getParameterProducts() +
+                    Fanex.ExtAcc.WinLossDetail.getParameterProductDetails();
+        } else {
+                params = "fromdate=" + $this.fromdate +
+                    "&todate=" + $this.todate +
+                    "&custid=" + $this.custId +
+                    "&username=" + $this.drillDownName;
+                url = resolveClientUrl("WinLossDetail/ExportCashFeeToExcel?") + params;
+        }
 
             top.exportExcel(url, document);
         });
@@ -1450,10 +1460,7 @@ Fanex.ExtAcc.WinLossDetail = {
             titleInfo:
             {
                 text: "CASH SERVICE BILLING " + dateInfo + " - " + $this.drillDownName,
-                showExcelButton: false,
-                exportExcelFunction: function () {
-                    console.log("Export excel")
-                }
+                showExcelButton: false
             },
             showTree: false,
             bodyRows: bodyData,

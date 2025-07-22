@@ -7,6 +7,8 @@ namespace Fanex.ExternalAccount.Controllers.Requests
     {
         public int CustId { get; set; }
 
+        public string UserName { get; set; }
+
         public DateTime FromDate { get; set; }
 
         public DateTime ToDate { get; set; }

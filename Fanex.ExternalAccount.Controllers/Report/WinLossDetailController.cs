@@ -144,6 +144,28 @@
             return Json(cashFee);
         }
 
+        public void ExportCashFeeToExcel(ExportCashFeeRequest request)
+        {
+            ICashFeeBuilder builder;
+          
+            var cashFee = winLossDetailService.DrillDownCashFee(request); 
+           
+            builder = new CashFeeBuilder(
+                            cashFee,
+                            request.FromDate,
+                            request.ToDate,
+                            request.UserName);
+
+
+            var memoryStream = builder.Build(string.Empty, request.UserName);
+
+            if (memoryStream != null)
+            {
+                ExportToExcel(memoryStream, request.FileName);
+                memoryStream.Dispose();
+            }
+        }
+
     }
 
     public class ExportWinLossDetailRequest : WinLossDetailRequest
@@ -152,5 +174,13 @@
 
         public string FileName =>
             $"{Viewlevel.DisplayRoleName()}WinLossDetail_{Fromdate.ToString(DateFormat)}_{Todate.ToString(DateFormat)}.xls";
+    }
+
+    public class ExportCashFeeRequest : DrillDownCashFeeRequest
+    {
+        private const string DateFormat = "yyyyMMdd";
+
+        public string FileName =>
+            $"CASH_SERVICE_BILLING_{FromDate.ToString(DateFormat)}_{ToDate.ToString(DateFormat)}.xls";
     }
 }

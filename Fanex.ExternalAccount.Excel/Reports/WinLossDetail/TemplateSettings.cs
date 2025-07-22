@@ -58,5 +58,10 @@
                     return "Direct member";
             }
         }
+
+        public string CashFeePath()
+        {
+            return Path.Combine(_dir, "CashFee.xls");
+        }
     }
 }
