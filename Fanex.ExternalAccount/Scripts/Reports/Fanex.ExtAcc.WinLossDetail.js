@@ -1325,7 +1325,7 @@ Fanex.ExtAcc.WinLossDetail = {
         }
 
         rows.sort(function (row1, row2) {
-            if (row1.Columns[0].Value.Username === null) { // 'Dormant Accounts'
+            if (row1.Columns[0].Value.Username === null || row1.Columns[0].Value.Username === "CASH SERVICE BILLING") { // 'Dormant Accounts, CASH SERVICE BILLING'
                 return 1;
             }
 
