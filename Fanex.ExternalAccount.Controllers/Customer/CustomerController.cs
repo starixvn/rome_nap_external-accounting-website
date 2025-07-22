@@ -298,10 +298,17 @@
         }
 
         [ExternalCustomerAuthFilter]
-        public ActionResult EditMultiple(EditMultipleCustomerRequest request)
+        public async Task<ActionResult> EditMultiple(EditMultipleCustomerRequest request)
         {
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
+            int firstCustId = 0;
+            if (!string.IsNullOrWhiteSpace(request.CustIds))
+            {
+                var firstIdStr = request.CustIds.Split(',').FirstOrDefault(s => !string.IsNullOrWhiteSpace(s)) ?? "0";
+                int.TryParse(firstIdStr, out firstCustId);
+            }
+            request.ServiceType = await customerServiceClient.GetCashServiceStatus(firstCustId);
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), systemCode),
                 cdnUri,
