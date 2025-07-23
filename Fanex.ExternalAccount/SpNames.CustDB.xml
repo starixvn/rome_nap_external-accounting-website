@@ -197,7 +197,7 @@
     <Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.wsv_xnap" Plain="0" />
     <Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit_UAT2" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
@@ -234,14 +234,14 @@
     <Setting Key="Acc_CustomerUpdDisableOutright" SpName="Acc_CustomerUpdDisableOutright" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_UpdCSStatus" SpName="Acc_UpdCSStatus_Cust" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdSecurityCode" SpName="Acc_CustomerUpdSecurityCode" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo_UAT2" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelAllInfo" SpName="EAS_CustomerSelAllInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerSelAllStatus" SpName="EAS_CustomerSelAllStatus" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_CustomerSelLoginInfo" SpName="EAS_CustomerSelLoginInfo" DbName="DBACC.bodb02.wsv_xnap" Plain="0">
       <Mapping DataField="creatdate" ObjectProperty="CreatedDate" />
       <Mapping DataField="lastlogged" ObjectProperty="LastLoggedIn" />
       <Mapping DataField="pwdexpiry" ObjectProperty="PasswordExpired" />
     </Setting>
-    <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+    <Setting Key="EAS_CustomerSelBalanceInfo" SpName="EAS_CustomerSelBalanceInfo" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerUpdLocked" SpName="Acc_CustomerUpdLocked" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Dot_BalanceDebitInitialize" SpName="Dot_BalanceDebitInitialize" DbName="DBTXN.bodb02.wsv_xnap" />
     <Setting Key="Dot_BalanceCreditInitialize" SpName="Dot_BalanceCreditInitialize" DbName="DBTXN.bodb02.wsv_xnap" />
@@ -259,7 +259,7 @@
     <Setting Key="EAS_CustomerSelByMAg" SpName="EAS_CustomerSelByMAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
       <Mapping DataField="Downlines" ObjectProperty="NoOfDownlines" />
     </Setting>
-    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg_UAT2" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
+    <Setting Key="EAS_CustomerSelByAg" SpName="EAS_CustomerSelByAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
       <Mapping DataField="ugroup" ObjectProperty="UserGroup" />
     </Setting>
     <Setting Key="Age_CustomerSelUserInfo" SpName="Age_CustomerSelUserInfo" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
@@ -535,7 +535,7 @@
   </Function>
   <Function Name="Manage Admin">
     <Setting Key="EAS_eaUserInfo_Ins" SpName="EAS_eaUserInfo_Ins" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerInsUserInfo_Rollback" SpName="Acc_CustomerInsUserInfo_Rollback_UAT2" DbName="DBSITE03.CustDB.wsv_xnap" Plain="0" />
+    <Setting Key="Acc_CustomerInsUserInfo_Rollback" SpName="Acc_CustomerInsUserInfo_Rollback" DbName="DBSITE03.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="EAS_WriteLog_UserLog_UserControl_Wrapper" SpName="EAS_WriteLog_UserLog_UserControl_Wrapper" DbName="DBPOL.NAP_UserControl.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Scaleout DBCUST">
