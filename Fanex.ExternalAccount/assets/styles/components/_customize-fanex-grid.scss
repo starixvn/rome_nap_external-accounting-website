@@ -49,6 +49,22 @@
 
     td, .grid-fixed-table td {
         font-size: $font-size;
+
+        &.has-cash {
+            .table-cell {
+                display: flex;
+                align-items: center;
+
+                 > span {
+                    &:nth-child(1) {
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
     }
 
     .freegrid-even td {

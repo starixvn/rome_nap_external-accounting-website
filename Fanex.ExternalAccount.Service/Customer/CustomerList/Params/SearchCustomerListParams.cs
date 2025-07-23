@@ -27,5 +27,7 @@
         public int PageIndex { get; set; }
         
         public bool IsDirectMember { get; set; }
+
+        public int ServiceType { get; set; }
     }
 }

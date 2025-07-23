@@ -30,6 +30,7 @@
                     <option value="5">@ViewLang.Locked</option>
                 </select>
             </div>
+
             @if (Model.IsMultipleCurrencyGroup)
             {
                 <div class="form-group multiple-currency">
@@ -40,8 +41,8 @@
                 </div>
             }
             <div class="form-group @(!Model.RoleId.HasValue || Model.RoleId.Value.IsSuper() ? string.Empty: "hidden") customer-limit-date">
-	            <input id="chkShowSuperLimitDate" type="checkbox" />
-	            <div class="label lbl-show-limit-date">@ViewLang.CustomersWithDataLimited</div>
+                <input id="chkShowSuperLimitDate" type="checkbox" />
+                <div class="label lbl-show-limit-date">@ViewLang.CustomersWithDataLimited</div>
             </div>
             <div id="ddl-level-type-container-super-view" class="form-group hidden">
                 <div class="label">@ViewLang.Level</div>
@@ -61,8 +62,17 @@
                     </select>
                 </div>
             </div>
+            @if (AppSettings.IsOfferedCashService(currentSession.CurrencyGroup))
+            {
+                <label for="selServiceType" class="pointer">@ViewLang.AccountType</label>
+                <select id="selServiceType" class="usernameInput group">
+                    <option value="2">@ViewLang.All</option>
+                    <option value="0">@ViewLang.Credit</option>
+                    <option value="1">@ViewLang.Cash</option>
+                </select>
+            }
             <div class="form-group @(!Model.RoleId.HasValue || Model.RoleId.Value.IsNotMember() ? string.Empty: "hidden") customer-limit-date">
-	            <input id="chkIsNoDownlines" type="checkbox" />
+                <input id="chkIsNoDownlines" type="checkbox" />
                 <div class="label lbl-show-limit-date">No Downline</div>
             </div>
             <div class="form-group">
@@ -73,7 +83,7 @@
             </div>
         </div>
     </div>
-    <div class="bgTitle titleSearch">
+    <div id="select-all-none" class="bgTitle titleSearch">
         <div class="pull-left searchBar">
             <span class="text-select">@ViewLang.Select:</span>
             <span id="spanSelectAll" class="status-select" onclick="Fanex.ExtAcc.Customer.SelectAll('menuActive')">@ViewLang.All</span>

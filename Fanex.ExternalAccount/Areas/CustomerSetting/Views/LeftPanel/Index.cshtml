@@ -38,6 +38,7 @@
             <div id="customerInfo" class="customer-info" data-ng-controller="PersonalInfoController" data-ng-hide="{{model==null}}">
                 <div class="currentUser">
                     <a title="{{personalInfo.status.tooltip}}" class="detail2 {{personalInfo.backgroundColor.value}}" href="javascript:;" data-ng-click="ViewUser('{{personalInfo.currentLevel.value}}')">{{personalInfo.currentLevel.value}}</a>
+                    <span class="icon-cashservice" data-ng-if="model.isCashService && model.personalInfo.roleId.value == 1"></span>
                     <span id="personalInfo" class="icon-collapse" data-ng-click="TooglePersonalInfo()"></span>
                 </div>
                 <div class="user-info" id="UserInfoContainer">
@@ -119,7 +120,7 @@
                             {{balances[3].value.toFixed(2).formatNumber()}}
                         </div>
                     </div>
-                    <div class="row">
+                    <div data-ng-hide="{{$parent.$parent.model.isCashService && $parent.$parent.model.personalInfo.roleId.value == 1}}" class="row">
                         <div class="pull-left">{{balances[4].text}}</div>
                         <div class="{{myClass3}} pull-right bold" data-ng-init="myClass3 = balances[4].value < 0">
                             <div class="floatLeftBalance R" data-ng-hide="{{model.isUpdateCredit == false}}">

@@ -22,6 +22,7 @@
             var custInfoRow = customerInfoDataset.Tables[0].Rows[0];
             var custStatusRow = customerStatusInfoDataset.Tables[0].Rows[0];
             var cashRow = balanceInfoDataset.Tables[0].Rows[0];
+            var isCashService = custInfoRow.ServiceType() == 1;
             HasDownline = custStatusRow.HasDownline();
             UplineHasSecurityCode = custInfoRow.UplineHasSecurityCode();
             CurrencyId = cashRow.CurrencyId();
@@ -31,6 +32,7 @@
             Login = GetLoginInfo(loginInfoDataset, canViewVNIP, cashRow.LastTxn());
             DownlineList = new DownlineList();
             OnlineList = new OnlineList();
+            IsCashService = isCashService;
         }
 
         public PersonalInfo PersonalInfo { get; set; }
@@ -88,5 +90,7 @@
         }
 
         public string GroupName { get; set; }
+        
+        public bool IsCashService { get; set; }
     }
 }

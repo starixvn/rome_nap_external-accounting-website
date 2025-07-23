@@ -91,7 +91,8 @@
                         UserId = parameters.UserId,
                         Status = parameters.Status,
                         PageIndex = parameters.PageIndex,
-                        PageSize = parameters.PageSize
+                        PageSize = parameters.PageSize,
+                        ServiceType = parameters.ServiceType
                     };
                 default:
                     return new SearchSuperListCriteria
@@ -118,6 +119,7 @@
                 Currencies = parameters.CurrencyIds,
                 UserId = parameters.UserId,
                 Status = parameters.Status,
+                ServiceType = parameters.ServiceType,
                 PageIndex = parameters.PageIndex,
                 PageSize = parameters.PageSize
             };
