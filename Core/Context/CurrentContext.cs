@@ -66,7 +66,12 @@
         {
             try
             {
-                return new RegionInfo(ipInformationService.GetFromIP(Ip4Address).CountryShort);
+                var ipInfo = ipInformationService.GetFromIP(Ip4Address);
+                if (ipInfo == null || string.IsNullOrWhiteSpace(ipInfo.CountryShort))
+                {
+                    return null;
+                }
+                return new RegionInfo(ipInfo.CountryShort);
             }
             catch
             {
