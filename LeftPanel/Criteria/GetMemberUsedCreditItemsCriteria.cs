@@ -8,9 +8,12 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
         [SpParam(SqlParamName = "uplineid")]
         public int CustId { get; }
 
-        public GetMemberUsedCreditItemsCriteria(int custId)
+        public int ServiceType { get; }
+
+        public GetMemberUsedCreditItemsCriteria(int custId, int serviceType)
         {
             CustId = custId;
+            ServiceType = serviceType;
         }
 
         public override string GetSettingKey()

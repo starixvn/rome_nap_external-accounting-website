@@ -200,7 +200,7 @@
     <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
+    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag_UAT2" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
       <Mapping DataField="credit" ObjectProperty="Amount" />
       <Mapping DataField="closed" ObjectProperty="IsClosed" />
     </Setting>

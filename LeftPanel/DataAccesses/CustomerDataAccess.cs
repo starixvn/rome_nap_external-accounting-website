@@ -27,7 +27,7 @@
 
         IEnumerable<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int role);
 
-        IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
+        IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId, int serviceType);
 
         Result ResetMemberCredit(int userId, int uplineId, bool closedOnly);
 

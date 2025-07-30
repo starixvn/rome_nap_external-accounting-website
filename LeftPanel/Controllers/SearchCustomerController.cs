@@ -79,7 +79,7 @@
             if (roleId.IsSuper() || roleId.IsMaster())
             {
                 var items = customerQueryService.MasterAgentUsedCreditItems(custId, roleId);
-                var directMembers = customerQueryService.MemberUsedCreditItems(custId);
+                var directMembers = customerQueryService.MemberUsedCreditItems(custId, 0);
                 return View(
                     MasterAgentCreditViewl,
                     new UserCreditModel
@@ -97,13 +97,14 @@
             }
             else
             {
-                var items = customerQueryService.MemberUsedCreditItems(custId);
-
+                var items = customerQueryService.MemberUsedCreditItems(custId, 0);
+                var cashMembers = customerQueryService.MemberUsedCreditItems(custId, 1);
                 return View(
                     MemberCreditView,
                     new MemberUsedCreditModel
                     {
-                        MemberUsedCreditItems = items
+                        MemberUsedCreditItems = items,
+                        CashMemberUsedCreditItems = cashMembers
                     });
             }
         }

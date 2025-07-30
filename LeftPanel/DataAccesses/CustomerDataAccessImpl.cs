@@ -72,8 +72,8 @@
             return role.IsMaster() ? AgentUsedCreditItems(custId) : null;
         }
 
-        public IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
-            => _dynamicRepository.Fetch<MemberUsedCreditItem>(new GetMemberUsedCreditItemsCriteria(custId));
+        public IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId, int serviceType)
+            => _dynamicRepository.Fetch<MemberUsedCreditItem>(new GetMemberUsedCreditItemsCriteria(custId, serviceType));
 
         public Result ResetMemberCredit(int userId, int uplineId, bool closedOnly)
         {
