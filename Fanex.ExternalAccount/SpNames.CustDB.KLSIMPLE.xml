@@ -75,7 +75,7 @@
 			<Mapping DataField="SAgComm" ObjectProperty="SuperComm" />
 			<Mapping DataField="SAgTotal" ObjectProperty="SuperTotal" />
 		</Setting >
-		<Setting Key="Age_Rpt_CashServiceBilling" SpName="Age_Rpt_CashServiceBilling_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+		<Setting Key="Age_Rpt_CashServiceBilling" SpName="Age_Rpt_CashServiceBilling" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
 	</Function>
 	<Function Name="Report By Currency">
 		<Setting Key="EAS_GetCurrencyList" SpName="EAS_GetCurrencyList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
