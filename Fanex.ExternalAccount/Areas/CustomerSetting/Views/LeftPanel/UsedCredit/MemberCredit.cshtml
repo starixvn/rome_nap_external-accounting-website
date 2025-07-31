@@ -11,7 +11,7 @@
                 <a href="#tabs-1">@ViewLang.Member</a>
             </li>
 
-            @if (Model == null || Model.CashMemberUsedCreditItems == null || !Model.CashMemberUsedCreditItems.Any())
+            @if (Model != null && Model.CashMemberUsedCreditItems != null && Model.CashMemberUsedCreditItems.Any())
             {
                 <li>
                     <a href="#tabs-2">@ViewLang.CashMember</a>
@@ -121,7 +121,7 @@
                 </tbody>
             </table>
         </div>
-        @if (Model == null || Model.CashMemberUsedCreditItems == null || !Model.CashMemberUsedCreditItems.Any())
+        @if (Model != null && Model.CashMemberUsedCreditItems != null && Model.CashMemberUsedCreditItems.Any())
         {
             <div id="tabs-2">
                 <table id="tblInner" class="table width-700" style="margin: 10px 0 10px 0">
@@ -137,20 +137,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        var index = 0;
+                        @{var index = 0;
 
-                        foreach (var item in Model.ActiveCashMemberUsedCreditItems)
-                        {
-                        var className = index % 2 == 0 ? string.Empty : "odd";
+                            foreach (var item in Model.ActiveCashMemberUsedCreditItems)
+                            {
+                                var className = index % 2 == 0 ? string.Empty : "odd";
 
-                        <tr>
-                            <td class="C @className">@item.Username.DecodeHtml()</td>
-                            <td class="C @className">@item.FirstName.DecodeHtml()</td>
-                            <td class="C @className">@item.LastName.DecodeHtml()</td>
-                            <td class="R @className">@Html.Raw(item.Amount.ToStringFormat())</td>
-                        </tr>
+                                <tr>
+                                    <td class="C @className">@item.Username.DecodeHtml()</td>
+                                    <td class="C @className">@item.FirstName.DecodeHtml()</td>
+                                    <td class="C @className">@item.LastName.DecodeHtml()</td>
+                                    <td class="R @className">@Html.Raw(item.Amount.ToStringFormat())</td>
+                                </tr>
 
-                        index++;
+                                index++;
+                            }
                         }
                         <tr>
                             <td class="total bold R" colspan="3">TOTAL</td>
@@ -180,7 +181,7 @@
                         }
                         else
                         {
-                            var index = 0;
+                            index = 0;
                             var grandTotal = Model.TotalActiveCashMemberUsedCredit + Model.TotalInactiveCashMemberUsedCredit;
 
                             foreach (var item in Model.InactiveCashMemberUsedCreditItems)

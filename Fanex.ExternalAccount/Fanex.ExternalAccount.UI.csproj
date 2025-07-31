@@ -1486,10 +1486,6 @@
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
     <Content Include="Scripts\TotalBet\Fanex.ExtAcc.TotalBet.js" />
     <Content Include="Scripts\TotalBet\Fanex.ExtAcc.TotalBetMC.js" />
-    <Content Include="SpNames.CustDB.DR.xml">
-      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="SpNames.CustDB.KLSTG.xml">
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
       <SubType>Designer</SubType>
