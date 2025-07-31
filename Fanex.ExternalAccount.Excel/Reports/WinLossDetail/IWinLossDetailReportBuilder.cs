@@ -2,14 +2,12 @@
 {
     using System.IO;
 
-    public interface IWinLossDetailReportBuilder
+    public interface ICashFeeBuilder
     {
-
         bool IsBold { get; }
-        int RoleId { get; }
-        int UplineRoleId { get; }
         string FromDate { get; }
         string ToDate { get; }
-        MemoryStream Build(string products = null);
+        string UserName { get; }
+        MemoryStream Build(string products = null, string userName = null);
     }
 }

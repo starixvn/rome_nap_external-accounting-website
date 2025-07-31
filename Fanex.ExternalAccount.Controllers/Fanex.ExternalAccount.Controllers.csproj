@@ -390,6 +390,7 @@
     <Compile Include="Requests\Customer\SportBookInformationRequest.cs" />
     <Compile Include="Requests\Customer\UpdateCustomerRequest.cs" />
     <Compile Include="Requests\Customer\UpdateMultipleCustomerCommand.cs" />
+    <Compile Include="Requests\DrillDownCashFeeRequest.cs" />
     <Compile Include="Requests\GetExchangeRateRequest.cs" />
     <Compile Include="Requests\MarkAccountType\NewMarkAccountRequest.cs" />
     <Compile Include="Requests\MarkAccountType\SearchMarkAccountRequest.cs" />

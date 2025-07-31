@@ -2924,6 +2924,9 @@
     <Content Include="IbcKeys\ibckeydec.snk" />
     <Content Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
+    <Content Include="ExcelTemplates\Reports\CashFee.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

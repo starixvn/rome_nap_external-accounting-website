@@ -8,6 +8,7 @@
     using Fanex.Caching.Memory;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Criteria.Report;
+    using Fanex.ExternalAccount.DataAccess.Criteria.Report.WinLossDetail;
     using Fanex.ExternalAccount.Service.Products;
     using Interface.Report;
     using Microsoft.Extensions.Logging;
@@ -270,6 +271,16 @@
            => productIds == null
            ? string.Empty
            : string.Join(", ", productIds.Select(id => productNames.TryGetValue(id, out var name) ? name : CacheRef.GetProductName(id)));
+
+        public CashFee GetCashFee(int custId, DateTime fromDate, DateTime toDate)
+            => _reportDao.GetCashFee(new GetCashFeeCriteria
+                {
+                    CustId = custId,
+                    FromDate = fromDate,
+                    ToDate = toDate,
+                    BalanceUpDay = _reportUtils.BalanceUpDate,
+                    MoveBetsDay = _reportUtils.MoveBetsDate
+                });
 #pragma warning restore S109 // Magic numbers should not be used
     }
 }
