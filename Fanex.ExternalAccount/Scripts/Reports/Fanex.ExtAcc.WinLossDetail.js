@@ -1431,6 +1431,7 @@ Fanex.ExtAcc.WinLossDetail = {
                         ];
 
                         bodyData.push({
+                            CssClass: "dataSubTotal",
                             Columns: dataItemColumns
                         });
                     }

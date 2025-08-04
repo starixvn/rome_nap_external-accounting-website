@@ -232,6 +232,10 @@ span.selectedMonth {
 .subTotal {
     font-weight:bold;
 }
+.dataSubTotal td:first-child .table-cell {
+    padding-left: 15px;
+    box-sizing: border-box;
+}
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
     .monPickrDropDown, .dayPickrDropDown {
