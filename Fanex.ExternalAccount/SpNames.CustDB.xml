@@ -37,17 +37,17 @@
     <Setting Key="EAS_Rpt_WinLossDaily_MAg" SpName="EAS_Rpt_WinLossDaily_MAg" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Ag14" SpName="EAS_Rpt_WinLossDaily_Ag14" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
     <Setting Key="EAS_Rpt_WinLossDaily_Ag" SpName="EAS_Rpt_WinLossDaily_Ag" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
-		<Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com_UAT2" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
+		<Setting Key="EAS_Rpt_WinLossDetail_Com" SpName="EAS_Rpt_WinLossDetail_Com" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
       <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
       <Mapping DataField="ExtraWinLoss" ObjectProperty="ExtraWinLost" />
     </Setting>
-		<Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg_UAT2" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
+		<Setting Key="EAS_Rpt_WinLossDetail_SAg" SpName="EAS_Rpt_WinLossDetail_SAg" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
       <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
     </Setting>
-		<Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg_UAT2" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
+		<Setting Key="EAS_Rpt_WinLossDetail_MAg" SpName="EAS_Rpt_WinLossDetail_MAg" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
       <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
     </Setting>
-		<Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag_UAT2" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
+		<Setting Key="EAS_Rpt_WinLossDetail_Ag" SpName="EAS_Rpt_WinLossDetail_Ag" DbName="DB053.bodb02.wsv_xnap" Plain="0" TimeOut="600" >
       <Mapping DataField="TurnoverNoDraw" ObjectProperty="NetTurnover" />
     </Setting>
     <Setting Key="EAS_Rpt_WinLossDetailExtra_Com" SpName="EAS_Rpt_WinLossDetailExtra_Com" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" TimeOut="600" />
@@ -75,7 +75,7 @@
       <Mapping DataField="SAgComm" ObjectProperty="SuperComm" />
       <Mapping DataField="SAgTotal" ObjectProperty="SuperTotal" />
     </Setting>
-	<Setting Key="Age_Rpt_CashServiceBilling" SpName="Age_Rpt_CashServiceBilling_UAT2" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
+	<Setting Key="Age_Rpt_CashServiceBilling" SpName="Age_Rpt_CashServiceBilling" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
   </Function>
   <Function Name="Report By Currency">
     <Setting Key="EAS_GetCurrencyList" SpName="EAS_GetCurrencyList" DbName="DBAGE.bodb02.wsv_xnap" Plain="0" />
@@ -201,7 +201,7 @@
     <Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
     <Setting Key="Acc_CustomerSelUsedCredit_MAg" SpName="Acc_CustomerSelUsedCredit_MAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
-    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag_UAT2" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
+    <Setting Key="Acc_CustomerSelUsedCredit_Ag" SpName="Acc_CustomerSelUsedCredit_Ag" DbName="DBCUST.CustDB.wsv_xnap" Plain="0">
       <Mapping DataField="credit" ObjectProperty="Amount" />
       <Mapping DataField="closed" ObjectProperty="IsClosed" />
     </Setting>
