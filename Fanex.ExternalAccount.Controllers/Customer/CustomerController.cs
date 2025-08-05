@@ -397,10 +397,6 @@
             => customerServiceClient.GetSuggestUsername(actorName, roleId);
 
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public Task<string> GetMaxPayoutSettingInformation(string site, string siteLabel, string language = "en-US")
-            => customerServiceClient.GetMaxPayoutSettingInformation(site, siteLabel, language);
-
-        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public Task<string> GetPTSettingInformation(int? custId, string site, string language = "en-US")
             => customerServiceClient.GetPTSettingInformation(custId, false, site, language);
 
