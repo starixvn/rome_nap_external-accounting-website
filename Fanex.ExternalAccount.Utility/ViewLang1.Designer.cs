@@ -349,6 +349,15 @@ namespace Fanex.ExternalAccount.Utilities {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cash Member.
+        /// </summary>
+        public static string CashMember {
+            get {
+                return ResourceManager.GetString("CashMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Casino.
         /// </summary>
         public static string Casino {

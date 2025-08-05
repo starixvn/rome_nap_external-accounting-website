@@ -74,6 +74,7 @@ Fanex.ExtAcc.WinLossDetail = {
     $multiSelectProduct: null,
     $multiSelectProductDetail: null,
     $this: null,
+    drillDownName: "",
     SetRange: function () {
         return {
             minDate: new Date($("#MinDate").val()),
@@ -185,7 +186,7 @@ Fanex.ExtAcc.WinLossDetail = {
             context: $this,
             url: resolveClientUrl("Filter/ProductsList"),
             type: "GET",
-            data: { groupName: this.groupName, groupId: this.groupId },
+            data: { groupName: this.groupName, groupId: this.groupId, isWinLossDetail: true },
             dataType: "json",
             cache: false,
             success: function (result) {
@@ -441,17 +442,27 @@ Fanex.ExtAcc.WinLossDetail = {
         });
 
         $("#exporttoexcel").click(function () {
-            var params = "fromdate=" + $this.fromdate +
-                "&todate=" + $this.todate +
-                "&viewlevel=" + $this.viewlevel +
-                "&custid=" + $this.custId +
-                "&groupId=" + Fanex.ExtAcc.WinLossDetail.groupId +
-                "&groupname=" + $this.groupName +
-                "&username=" + Fanex.ExtAcc.WinLossDetail.username;
-            var url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") +
-                params +
-                Fanex.ExtAcc.WinLossDetail.getParameterProducts() +
-                Fanex.ExtAcc.WinLossDetail.getParameterProductDetails();
+            var url = "";
+            var params = "";
+            if ($this.viewlevel !== 0) { 
+                 params = "fromdate=" + $this.fromdate +
+                    "&todate=" + $this.todate +
+                    "&viewlevel=" + $this.viewlevel +
+                    "&custid=" + $this.custId +
+                    "&groupId=" + Fanex.ExtAcc.WinLossDetail.groupId +
+                    "&groupname=" + $this.groupName +
+                    "&username=" + Fanex.ExtAcc.WinLossDetail.username;
+                url = resolveClientUrl("WinLossDetail/ExportWinLossDetailToExcel?") +
+                    params +
+                    Fanex.ExtAcc.WinLossDetail.getParameterProducts() +
+                    Fanex.ExtAcc.WinLossDetail.getParameterProductDetails();
+        } else {
+                params = "fromdate=" + $this.fromdate +
+                    "&todate=" + $this.todate +
+                    "&custid=" + $this.custId +
+                    "&username=" + $this.drillDownName;
+                url = resolveClientUrl("WinLossDetail/ExportCashFeeToExcel?") + params;
+        }
 
             top.exportExcel(url, document);
         });
@@ -473,14 +484,14 @@ Fanex.ExtAcc.WinLossDetail = {
                 $this.custId = 0;
             }
 
-            $this.ToggleTabs('none', 'none', 'none', 'none', 4);
+            $this.ToggleTabs('none', 'none', 'none', 'none', 4, 'none');
             $this.Databind($this.supername);
         });
 
         $("#tabMaster").click(function (e) {
             $this.viewlevel = 4;
             $this.custId = $this.mastername === "" ? $this.srecommend : 0;
-            $this.ToggleTabs('block', 'block', 'none', 'none', 3);
+            $this.ToggleTabs('block', 'block', 'none', 'none', 3, 'none');
 
             $this.Databind($this.mastername);
         });
@@ -488,7 +499,15 @@ Fanex.ExtAcc.WinLossDetail = {
         $("#tabAgent").click(function (e) {
             $this.viewlevel = 3;
             $this.custId = $this.agentname === "" ? $this.mrecommend : 0;
-            $this.ToggleTabs('block', 'block', 'block', 'none', 2);
+            $this.ToggleTabs('block', 'block', 'block', 'none', 2, 'none');
+
+            $this.Databind($this.agentname);
+        });
+
+        $("#tabMember").click(function (e) {
+            $this.viewlevel = 2;
+            $this.custId = $this.agentname === "" ? $this.recommend : 0;
+            $this.ToggleTabs('block', 'block', 'block', 'none', 1, 'none');
 
             $this.Databind($this.agentname);
         });
@@ -535,10 +554,11 @@ Fanex.ExtAcc.WinLossDetail = {
         $this.resizeReportGrid();
         $this.hideFilter = !$this.hideFilter;
     },
-    ToggleTabs: function (levelLine, statusSAg, statusMAg, statusAg, status) {
+    ToggleTabs: function (levelLine, statusSAg, statusMAg, statusAg, status, statusAgMember) {
         $("#tabSuper").css("display", statusSAg);
         $("#tabMaster").css("display", statusMAg);
         $("#tabAgent").css("display", statusAg);
+        $("#tabMember").css("display", statusAgMember);
 
         $('#levelLine').css('display', levelLine);
         if (status == 1) {
@@ -557,6 +577,14 @@ Fanex.ExtAcc.WinLossDetail = {
 
     RenderUsernameColumn: function (cell) {
         var isDormantAccounts = cell.Value.CustId === 0;
+
+        if (cell.Value.Username === "CASH SERVICE BILLING") {
+            var drillDownCashFeefunc = "javascript: Fanex.ExtAcc.WinLossDetail.GetCashFee('" + cell.Value.CustId + "','" + this.drillDownName + "')";
+            return html = '<div class="cash-fee-row" style="line-height: 22px; text-align: left;">' +
+                '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + drillDownCashFeefunc + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
+                '</div>';
+        }
+
         if (cell == null || cell.Value.Username == "Grand Total" || $this.viewlevel < 2 || cell.Value.RoleId == 1) {
             return isDormantAccounts
                 ? $this.RenderDormantAccountsCell()
@@ -567,7 +595,7 @@ Fanex.ExtAcc.WinLossDetail = {
             return $this.RenderDormantAccountsCell();
         }
 
-        var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "')";
+        var func = "javascript: Fanex.ExtAcc.WinLossDetail.GetDownlineWinLossDetail('" + cell.Value.CustId + "','" + cell.Value.Username + "')";
         return html = '<div style="line-height: 22px; text-align: left;">' +
             '<a class="text-truncate" style="text-decoration: none; margin: 0" href="' + func + '" title="' + cell.Value.Username + '">' + cell.Value.Username + '</a>' +
             '</div>';
@@ -1082,27 +1110,34 @@ Fanex.ExtAcc.WinLossDetail = {
     ChangeHeadlineTab: function () {
         if (this.viewlevel >= 4) {
             this.srecommend = this.custId;
-            this.ToggleTabs('none', 'none', 'none', 'none', 4);
+            this.ToggleTabs('none', 'none', 'none', 'none', 4, 'none');
         } else if (this.viewlevel == 3) {
             this.mrecommend = this.custId;
-            this.ToggleTabs('block', 'block', 'none', 'none', 3);
+            this.ToggleTabs('block', 'block', 'none', 'none', 3, 'none');
             $("#tabSuper").attr("class", "tabActiveSuper");
         } else if (this.viewlevel == 2) {
             this.recommend = this.custId;
-            this.ToggleTabs('block', 'block', 'block', 'none', 2);
+            this.ToggleTabs('block', 'block', 'block', 'none', 2, 'none');
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabActive");
-        } else {
-            this.ToggleTabs('block', 'block', 'block', 'block', 1);
+        } else if (this.viewlevel == 1) {
+            this.ToggleTabs('block', 'block', 'block', 'block', 1, 'none');
             $("#tabSuper").attr("class", "tabDisableSuper");
             $("#tabMaster").attr("class", "tabDisable");
             $("#tabAgent").attr("class", "tabActive");
+        } else {
+            this.ToggleTabs('block', 'block', 'block', 'block', 0, 'block');
+            $("#tabSuper").attr("class", "tabDisableSuper");
+            $("#tabMaster").attr("class", "tabDisable");
+            $("#tabAgent").attr("class", "tabDisable");
+            $("#tabMember").attr("class", "tabActive");
         }
         $("#headlineDaily").css("visibility", "visible");
     },
-    GetDownlineWinLossDetail: function (custId) {
+    GetDownlineWinLossDetail: function (custId, custName) {
         this.custId = custId;
         this.username = "";
+        this.drillDownName = custName;
         this.Databind(this.username);
     },
     InitShowHideControls: function (status) {
@@ -1290,7 +1325,7 @@ Fanex.ExtAcc.WinLossDetail = {
         }
 
         rows.sort(function (row1, row2) {
-            if (row1.Columns[0].Value.Username === null) { // 'Dormant Accounts'
+            if (row1.Columns[0].Value.Username === null || row1.Columns[0].Value.Username === "CASH SERVICE BILLING") { // 'Dormant Accounts, CASH SERVICE BILLING'
                 return 1;
             }
 
@@ -1322,6 +1357,123 @@ Fanex.ExtAcc.WinLossDetail = {
         }
 
         return -1;
+    },
+
+    GetCashFee: function (custId, custName) {
+        Fanex.ExtAcc.BlockUI();
+        $this.viewlevel = 0;
+        var url = resolveClientUrl('WinLossDetail/GetCashFee')
+            + "?custId=" + custId
+            + "&custName=" + custName
+            + "&fromDate=" + $this.fromdate
+            + "&toDate=" + $this.todate;
+        $.ajax({
+            context: $this,
+            url,
+            type: 'post',
+            dataType: 'json',
+            cache: false
+        })
+        .done(function (data) {
+            $this.RenderCashFee(data);
+            $this.ChangeHeadlineTab();
+        })
+        .fail(function (error) {
+            console.log(error);
+        })
+        .always(function () {
+            Fanex.ExtAcc.UnBlockUI();
+        });
+    },
+
+    RenderCashFee: function (data) {
+        var headerColumns = [
+            { HeaderText: "Type", Width: 140, Name: "ColType", HeaderAlign: "center", CellAlign: "left" },
+            { HeaderText: "Fee", Width: 100, Name: "ColFee", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00" },
+            { HeaderText: "Count", Width: 100, Name: "ColCount", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0" },
+            { HeaderText: "Agent", Width: 100, Name: "ColAgent", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00" },
+            { HeaderText: "Company", Width: 100, Name: "ColCompany", HeaderAlign: "center", CellAlign: "right", FormatNumber: "0,0.00" }
+        ];
+
+        var bodyData = [];
+        var footerData = [];
+
+        if (data && data.FeeGroups.length > 0) {
+            var reportLength = data.FeeGroups.length;
+            var dataItemColumns = null;
+
+            for (var i = 0; i < reportLength; i++) {
+                var feeGroup = data.FeeGroups[i];
+
+                var dataItemColumns = [
+                    { Name: "ColType", Value: feeGroup.Total.DisplayType },
+                    { Name: "ColFee", Value: "" },
+                    { Name: "ColCount", Value: feeGroup.Total.Count },
+                    { Name: "ColAgent", Value: feeGroup.Total.Agent },
+                    { Name: "ColCompany", Value: feeGroup.Total.Company }
+                ];
+
+                bodyData.push({
+                    CssClass: "subTotal",
+                    Columns: dataItemColumns
+                });
+
+                if (feeGroup && feeGroup.FeeItems.length > 0) {
+                    var groupLength = feeGroup.FeeItems.length;
+                    for (var j = 0; j < groupLength; j++) {
+                        var dataItem = feeGroup.FeeItems[j];
+                        dataItemColumns = [
+                            { Name: "ColType", Value: dataItem.DisplayType },
+                            { Name: "ColFee", Value: dataItem.Fee },
+                            { Name: "ColCount", Value: dataItem.Count },
+                            { Name: "ColAgent", Value: dataItem.Agent },
+                            { Name: "ColCompany", Value: dataItem.Company }
+                        ];
+
+                        bodyData.push({
+                            CssClass: "dataSubTotal",
+                            Columns: dataItemColumns
+                        });
+                    }
+                }
+            }
+
+            var grandTotal = data.GrandTotal; 
+            footerData.push({
+                Columns: [{ Name: "ColType", Value: grandTotal.DisplayType, MergeColNumber: 3, CssClass: "text-right" },
+                    { Name: "ColAgent", Value: grandTotal.Agent },
+                    { Name: "ColCompany", Value: grandTotal.Company }]
+            });
+        }
+
+        var dateInfo = "";
+        if (this.fromdate == this.todate) {
+            dateInfo = 'on ' + this.fromdate;
+        }
+        else {
+            dateInfo = 'from ' + (new Date(Date.parse(this.fromdate))).toStringFormat('MMM dd, yyyy') + ' to ' + (new Date(Date.parse(this.todate))).toStringFormat('MMM dd, yyyy');
+        }
+
+        var gridOptions = {
+            columns: headerColumns,
+            showTitle: true,
+            showFooter: true,
+            titleInfo:
+            {
+                text: "CASH SERVICE BILLING " + dateInfo + " - " + $this.drillDownName,
+                showExcelButton: false
+            },
+            showTree: false,
+            bodyRows: bodyData,
+            footerRows: footerData,
+            gridExpandHeight: 230,
+            showDistinctRow: false,
+            showHighlightRow: false,
+            noDataText: "There is no information",
+            marginRight: 20
+        };
+
+        $("#jqgrid").fanexGrid(gridOptions);
     }
 };
 

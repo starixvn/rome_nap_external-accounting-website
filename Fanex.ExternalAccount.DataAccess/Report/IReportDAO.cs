@@ -3,10 +3,8 @@
     using DTO.Customer;
     using DTO.Report;
     using Fanex.ExternalAccount.DataAccess.Criteria.Report;
-    using System;
-    using System.Collections;
+    using Fanex.ExternalAccount.DataAccess.Criteria.Report.WinLossDetail;
     using System.Collections.Generic;
-    using System.Data;
 
     public interface IReportDao
     {
@@ -41,5 +39,6 @@
         IEnumerable<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_MAg(GetAgentWinlossDetailMultiCurrencyCriteria criteria);
 
         IEnumerable<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_Ag(GetMemberWinlossDetailMultiCurrencyCriteria criteria);
+        CashFee GetCashFee(GetCashFeeCriteria criteria);
     }
 }

@@ -203,6 +203,9 @@
     <Compile Include="Products\ProductDto.cs" />
     <Compile Include="Products\ProductEntity.cs" />
     <Compile Include="Products\ProductStatusDto.cs" />
+    <Compile Include="Report\CashFeeGroup.cs" />
+    <Compile Include="Report\CashFeeItem.cs" />
+    <Compile Include="Report\CashFee.cs" />
     <Compile Include="Report\ExchangeRateModel.cs" />
     <Compile Include="Report\MultipleCurrency\WinLossByCurrency.cs" />
     <Compile Include="Report\MultipleCurrency\WinLossByCurrencyAg.cs" />

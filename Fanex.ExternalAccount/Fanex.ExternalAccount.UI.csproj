@@ -1486,10 +1486,6 @@
     <Content Include="Scripts\Manage\Fanex.ExtAcc.SubGroup.js" />
     <Content Include="Scripts\TotalBet\Fanex.ExtAcc.TotalBet.js" />
     <Content Include="Scripts\TotalBet\Fanex.ExtAcc.TotalBetMC.js" />
-    <Content Include="SpNames.CustDB.DR.xml">
-      <DependentUpon>SpNames.CustDB.xml</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="SpNames.CustDB.KLSTG.xml">
       <DependentUpon>SpNames.CustDB.xml</DependentUpon>
       <SubType>Designer</SubType>
@@ -2924,6 +2920,9 @@
     <Content Include="IbcKeys\ibckeydec.snk" />
     <Content Include="IbcKeys\ibcpkey.snk" />
     <Content Include="IbcKeys\Web.config" />
+    <Content Include="ExcelTemplates\Reports\CashFee.xls">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

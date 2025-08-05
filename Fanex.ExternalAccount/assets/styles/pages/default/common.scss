@@ -857,7 +857,15 @@ div#contentSplitter > div#msg {
     float: right;
 }
 
+#tabMember {
+    float: right;
+    cursor: pointer;
+    color: #0090ff;
+}
 
+#tabMember:hover {
+    float: right;
+}
 
 .bgWLDaily {
     background: #F6F6F6 url(../images/bg-Line-Title.png) repeat-x 0px 0px;

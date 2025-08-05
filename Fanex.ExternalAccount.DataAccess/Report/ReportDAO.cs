@@ -6,7 +6,9 @@
     using DTO.Customer;
     using DTO.Report;
     using Fanex.Data.Repository;
+    using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Criteria.Report;
+    using Fanex.ExternalAccount.DataAccess.Criteria.Report.WinLossDetail;
     using Interface.Report;
 
     public partial class ReportDao : IReportDao
@@ -97,5 +99,46 @@
 
         public IEnumerable<WinLossByCurrencyDetail> EAS_Rpt_WinLossMCDetail_Ag(GetMemberWinlossDetailMultiCurrencyCriteria criteria)
             => _dynamicRepository.Fetch<WinLossByCurrencyDetail>(criteria);
+
+        public CashFee GetCashFee(GetCashFeeCriteria criteria)
+        {
+            var result = new CashFee();
+            var grandTotal = new CashFeeItem
+            {
+                DisplayType = "Total"
+            };
+
+            var rawData = _dynamicRepository.Fetch<CashFeeItem>(criteria);
+
+            var groups = rawData.GroupBy(x => x.FeeType);
+
+            foreach (var group in groups)
+            {
+                var groupItem = new CashFeeGroup
+                {
+                    GroupName = CacheRef.GetResourceDataByRefIdAndResourceId("CashServiceBilling", group.Key.ToString())
+                };
+
+                var total = new CashFeeItem
+                {
+                    DisplayType = CacheRef.GetResourceDataByRefIdAndResourceId("CashServiceBilling", group.Key.ToString())
+                };
+
+                foreach (var item in group)
+                {
+                    item.DisplayType = CacheRef.GetResourceDataByRefIdAndResourceId("CashServiceBilling", item.Type.ToString());
+                    groupItem.FeeItems.Add(item);
+                    total += item;
+                    grandTotal += item;
+                }
+
+                groupItem.Total = total;
+                result.FeeGroups.Add(groupItem);
+            }
+
+            result.GrandTotal = grandTotal;
+
+            return result;
+        }
     }
 }

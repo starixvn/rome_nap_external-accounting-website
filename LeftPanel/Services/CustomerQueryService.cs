@@ -26,7 +26,7 @@
 
         IEnumerable<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId);
 
-        IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId);
+        IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId, int serviceType);
 
         DataTable CustomerSelectClearBalance(int custId);
     }
@@ -108,8 +108,8 @@
         public IEnumerable<MasterAgentUsedCreditItem> MasterAgentUsedCreditItems(int custId, int roleId)
             => customerDataAccess.MasterAgentUsedCreditItems(custId, roleId);
 
-        public IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId)
-            => customerDataAccess.MemberUsedCreditItems(custId);
+        public IEnumerable<MemberUsedCreditItem> MemberUsedCreditItems(int custId, int serviceType)
+            => customerDataAccess.MemberUsedCreditItems(custId, serviceType);
 
         public DataTable CustomerSelectClearBalance(int custId)
             => customerDataAccess.CustomerSelectClearBalance(custId);

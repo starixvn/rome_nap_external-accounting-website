@@ -1006,4 +1006,7 @@ Note: Country and city information is provided by IP2Location™ and DNSstuff wh
   <data name="Cash" xml:space="preserve">
     <value>Cash</value>
   </data>
+  <data name="CashMember" xml:space="preserve">
+    <value>Cash Member</value>
+  </data>
 </root>

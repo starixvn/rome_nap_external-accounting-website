@@ -164,6 +164,8 @@
     <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReport.cs" />
     <Compile Include="Reports\WinLossDetailIBCBetLiveCasino\WinLossDetailIBCBetLiveCasinoReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetail\AgentWinLossByCurrencyDetailReportBuilder.cs" />
+    <Compile Include="Reports\WinLossDetail\CashFeeReport.cs" />
+    <Compile Include="Reports\WinLossDetail\ICashFeeBuilder.cs" />
     <Compile Include="Reports\WinLossDetail\IWinLossDetailReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetail\MemberWinLossByCurrencyReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossByCurrencyDetailReportAg.cs" />
@@ -172,6 +174,7 @@
     <Compile Include="Reports\WinLossDetail\WinLossDetailExtraReport.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossDetailExtraReportBuilder.cs" />
     <Compile Include="Reports\WinLossDetail\WinLossByCurrencyDetailReport.cs" />
+    <Compile Include="Reports\WinLossDetail\CashFeeBuilder.cs" />
     <Compile Include="Statement\StatementPage\StatementPage.cs" />
     <Compile Include="Statement\StatementPage\StatementPageBuilder.cs" />
     <Compile Include="Statement\StatementPage\TemplateSettings.cs" />

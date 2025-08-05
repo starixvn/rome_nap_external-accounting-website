@@ -319,5 +319,8 @@
             sortingorderlist = sortingOrderList,
             tooltips = toolTipsProducts
         };
+
+        public dynamic DrillDownCashFee(IDrillDownCashFeeRequest request)
+            => reportService.GetCashFee(request.CustId, request.FromDate, request.ToDate);
     }
 }

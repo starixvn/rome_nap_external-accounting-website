@@ -38,9 +38,9 @@
             this.currentSession = currentSession ?? new CurrentSession();
         }
 
-        public ActionResult ProductsList()
+        public ActionResult ProductsList(bool isWinLossDetail)
         {
-            var products = productService.GetProducts(ExtRequest.GetGroupName(), ExtRequest.GetGroupId());
+            var products = productService.GetProducts(ExtRequest.GetGroupName(), ExtRequest.GetGroupId(), isWinLossDetail);
             var productDetails = productDetailService.GetProductDetails(products, currentSession.ParentGroupName);
 
             return JsonBase(new { products, productDetails }, new JsonSerializerSettings());

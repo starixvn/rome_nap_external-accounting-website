@@ -1,11 +1,9 @@
 ﻿namespace Fanex.ExternalAccount.Service.Interface.Report
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data;
     using DTO.Customer;
     using DTO.Report;
+    using System;
+    using System.Collections.Generic;
 
     public interface IReportService
     {
@@ -26,7 +24,7 @@
         IEnumerable<WinLossDetail> GetMasterWinLossDetail(int custId, int? masterId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
         IEnumerable<WinLossDetail> GetDirectMemberOfSuperWinLossDetail(int custId, int? memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
-        
+
         IEnumerable<WinLossDetailMAg> GetAgentWinLossDetail(int custId, int? agentId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
 
         IEnumerable<WinLossDetailMAg> GetDirectMemberOfMasterWinLossDetail(int custId, int? memberId, DateTime fromDate, DateTime toDate, string productIds, string productDetailsXML);
@@ -37,10 +35,12 @@
 
         IEnumerable<ExtraPTModel> GetExtraPT(string groupName);
 
-        string BuildTooltipsForLiveCasino(int userId,string groupName, int groupId);
+        string BuildTooltipsForLiveCasino(int userId, string groupName, int groupId);
 
-        string BuildTooltipsForRNGCasino(int userId,string groupName, int groupId);
+        string BuildTooltipsForRNGCasino(int userId, string groupName, int groupId);
 
         string ConcatProductName(string productIds, string resourceIds, string groupName);
+
+        CashFee GetCashFee(int custId, DateTime fromDate, DateTime toDate);
     }
 }
