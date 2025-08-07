@@ -37,9 +37,16 @@
         public DataSet GetBalanceInfo(int custId)
             => _dynamicRepository.FetchDataSet(new GetBalanceInfoCriteria(custId));
 
-        public Result UpdateMemberGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal totalAmt)
+        public Result UpdateMemberGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal totalAmt, decimal accumCreditAllCashMember)
         {
-            var command = new UpdateMemberGivenCreditCommand(id, uplineId, newGivenCredit, totalAmt, CurrentContext.Instance.Ip4Address);
+            var command = new UpdateMemberGivenCreditCommand(id, uplineId, newGivenCredit, totalAmt, accumCreditAllCashMember, CurrentContext.Instance.Ip4Address);
+            _dynamicRepository.Execute(command);
+            return new Result(command.ErrCode, command.ErrMsg);
+        }
+
+        public Result UpdateAgentGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal accumCreditAllCashMember)
+        {
+            var command = new UpdateAgentGivenCreditCommand(id, uplineId, newGivenCredit, accumCreditAllCashMember, CurrentContext.Instance.Ip4Address);
             _dynamicRepository.Execute(command);
             return new Result(command.ErrCode, command.ErrMsg);
         }
@@ -112,6 +119,14 @@
             _dynamicRepository.Execute(command);
 
             return command.TotalAmt;
+        }
+
+        public decimal GetCashAccumCredit(int custId)
+        {
+            var command = new GetCashAccumCreditCommand(custId);
+            _dynamicRepository.Execute(command);
+
+            return command.AccumCreditReturn;
         }
 
         public Result CloseCustomer(int custId, bool closed, bool clearCredit, string custName)

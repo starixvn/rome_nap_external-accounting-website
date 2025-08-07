@@ -2789,17 +2789,8 @@
     <Content Include="Configurations\SecurityCodeSection.uat.config">
       <DependentUpon>SecurityCodeSection.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\connectionStrings.DR.config">
-      <DependentUpon>connectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\InternalUrlSection.DR.config">
-      <DependentUpon>InternalUrlSection.config</DependentUpon>
-    </Content>
     <Content Include="Configurations\SecurityCodeSection.DR.config">
       <DependentUpon>SecurityCodeSection.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\appSettings.DR.config">
-      <DependentUpon>appSettings.config</DependentUpon>
     </Content>
     <Content Include="Configurations\appSettings.KLPROD.config">
       <DependentUpon>appSettings.config</DependentUpon>

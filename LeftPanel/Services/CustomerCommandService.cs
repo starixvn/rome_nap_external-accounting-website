@@ -69,14 +69,24 @@
         public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
         {
             var custInfo = reportService.SearchCustomerInfo(ExtRequest.Instance.GetGroupName(), id, string.Empty, false);
+            var siteDB = siteDBService.GetSiteDBConfigByCustId(id);
+
             if (custInfo.RoleId == Role.Member)
             {
-                var siteDB = siteDBService.GetSiteDBConfigByCustId(id);
                 var totalAmt = customerDataAccess.GetTotalAmount(id, siteDB);
+                var accumCreditAllCashMember = customerDataAccess.GetCashAccumCredit(uplineId);
 
-                return customerDataAccess.UpdateMemberGivenCredit(id, uplineId, newGivenCredit, totalAmt);
+                return customerDataAccess.UpdateMemberGivenCredit(id, uplineId, newGivenCredit, totalAmt, accumCreditAllCashMember);
             }
 
+            if (custInfo.RoleId == Role.Agent)
+            {
+                var accumCreditAllCashMember = customerDataAccess.GetCashAccumCredit(id);
+
+                return customerDataAccess.UpdateAgentGivenCredit(id, uplineId, newGivenCredit, accumCreditAllCashMember);
+            }
+
+            // Super and Master levels (SMA)
             return customerDataAccess.UpdateSMAGivenCredit(id, uplineId, newGivenCredit);
         }
 

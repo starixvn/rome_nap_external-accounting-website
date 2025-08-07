@@ -19,7 +19,9 @@
 
         Result UpdateSMAGivenCredit(int id, int uplineId, decimal newGivenCredit);
 
-        Result UpdateMemberGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal totalAmt);
+        Result UpdateAgentGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal accumCreditAllCashMember);
+
+        Result UpdateMemberGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal totalAmt, decimal accumCreditAllCashMember);
 
         DataSet GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex, out int totalPages);
 
@@ -52,6 +54,8 @@
         decimal GetMemberOustanding(int custId);
 
         decimal GetTotalAmount(int custId, SiteDB siteDB);
+
+        decimal GetCashAccumCredit(int custId);
 
         Result ClearMemberCredit(decimal totalAmt, string username = null);
 
