@@ -416,6 +416,10 @@
         public Task<string> GetWinLossLimitInformation(int? custId, string site, string siteLabel, int currency, string language = "en-US")
             => customerServiceClient.GetWinLossLimitInformation(custId, site, siteLabel, currency, language);
 
+        [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
+        public Task<string> GetBetLimitInformation(string site, string siteLabel, string language = "en-US")
+            => customerServiceClient.GetBetLimitInformation(site, siteLabel, language);
+
         private string GetApplicationPath()
         {
             var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
