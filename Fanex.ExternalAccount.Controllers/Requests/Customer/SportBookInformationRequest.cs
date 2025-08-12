@@ -38,7 +38,6 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             name = "MaxPayout",
             id = "MaxPayoutSettingTab",
-            url = ApplicationPath + "Customer/GetMaxPayoutSettingInformation?site=" + Site + "&siteLabel=" + SiteLabel,
             isActive = TabIndex == 1,
         };
 
