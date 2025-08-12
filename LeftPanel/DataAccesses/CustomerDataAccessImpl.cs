@@ -37,23 +37,23 @@
         public DataSet GetBalanceInfo(int custId)
             => _dynamicRepository.FetchDataSet(new GetBalanceInfoCriteria(custId));
 
-        public Result UpdateMemberGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal totalAmt, decimal accumCreditAllCashMember)
+        public Result UpdateMemberGivenCredit(int id, int userId, decimal newGivenCredit, decimal totalAmt, decimal accumCreditAllCashMember)
         {
-            var command = new UpdateMemberGivenCreditCommand(id, uplineId, newGivenCredit, totalAmt, accumCreditAllCashMember, CurrentContext.Instance.Ip4Address);
+            var command = new UpdateMemberGivenCreditCommand(id, userId, newGivenCredit, totalAmt, accumCreditAllCashMember, CurrentContext.Instance.Ip4Address);
             _dynamicRepository.Execute(command);
             return new Result(command.ErrCode, command.ErrMsg);
         }
 
-        public Result UpdateAgentGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal accumCreditAllCashMember)
+        public Result UpdateAgentGivenCredit(int id, int userId, decimal newGivenCredit, decimal accumCreditAllCashMember)
         {
-            var command = new UpdateAgentGivenCreditCommand(id, uplineId, newGivenCredit, accumCreditAllCashMember, CurrentContext.Instance.Ip4Address);
+            var command = new UpdateAgentGivenCreditCommand(id, userId, newGivenCredit, accumCreditAllCashMember, CurrentContext.Instance.Ip4Address);
             _dynamicRepository.Execute(command);
             return new Result(command.ErrCode, command.ErrMsg);
         }
 
-        public Result UpdateSMAGivenCredit(int id, int uplineId, decimal newGivenCredit)
+        public Result UpdateSMAGivenCredit(int id, int userId, decimal newGivenCredit)
         {
-            var command = new UpdateSMAGivenCreditCommand(id, uplineId, newGivenCredit, CurrentContext.Instance.Ip4Address);
+            var command = new UpdateSMAGivenCreditCommand(id, userId, newGivenCredit, CurrentContext.Instance.Ip4Address);
             _dynamicRepository.Execute(command);
             return new Result(command.ErrCode, command.ErrMsg);
         }

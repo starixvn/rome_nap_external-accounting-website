@@ -35,8 +35,8 @@
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateCredit,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdateGivenCreditPost(int custId, int uplineId, decimal newGivenCredit)
-            => JsonBase(customerCommandService.UpdateGivenCredit(custId, uplineId, newGivenCredit));
+        public ActionResult UpdateGivenCreditPost(int custId, int uplineId, int userId, decimal newGivenCredit)
+            => JsonBase(customerCommandService.UpdateGivenCredit(custId, uplineId, userId, newGivenCredit));
 
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
             Policy = AuthenticateAction.AuthenticationType.Host)]

@@ -18,7 +18,7 @@
 
     public interface CustomerCommandService
     {
-        Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit);
+        Result UpdateGivenCredit(int id, int uplineId, int userId, decimal newGivenCredit);
 
         Result ResetMemberCredit(int userId, int uplineId, bool closedOnly);
 
@@ -66,7 +66,7 @@
             this.siteDBService = siteDBService ?? new SiteDBConfigService();
         }
 
-        public Result UpdateGivenCredit(int id, int uplineId, decimal newGivenCredit)
+        public Result UpdateGivenCredit(int id, int uplineId, int userId, decimal newGivenCredit)
         {
             var custInfo = reportService.SearchCustomerInfo(ExtRequest.Instance.GetGroupName(), id, string.Empty, false);
             var siteDB = siteDBService.GetSiteDBConfigByCustId(id);
@@ -76,18 +76,18 @@
                 var totalAmt = customerDataAccess.GetTotalAmount(id, siteDB);
                 var accumCreditAllCashMember = customerDataAccess.GetCashAccumCredit(uplineId);
 
-                return customerDataAccess.UpdateMemberGivenCredit(id, uplineId, newGivenCredit, totalAmt, accumCreditAllCashMember);
+                return customerDataAccess.UpdateMemberGivenCredit(id, userId, newGivenCredit, totalAmt, accumCreditAllCashMember);
             }
 
             if (custInfo.RoleId == Role.Agent)
             {
                 var accumCreditAllCashMember = customerDataAccess.GetCashAccumCredit(id);
 
-                return customerDataAccess.UpdateAgentGivenCredit(id, uplineId, newGivenCredit, accumCreditAllCashMember);
+                return customerDataAccess.UpdateAgentGivenCredit(id, userId, newGivenCredit, accumCreditAllCashMember);
             }
 
             // Super and Master levels (SMA)
-            return customerDataAccess.UpdateSMAGivenCredit(id, uplineId, newGivenCredit);
+            return customerDataAccess.UpdateSMAGivenCredit(id, userId, newGivenCredit);
         }
 
 

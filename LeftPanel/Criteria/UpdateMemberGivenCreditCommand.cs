@@ -10,8 +10,8 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
         [SpParam(SqlParamName = "accumcreditallcashmember")]
         public decimal AccumCreditAllCashMember { get; }
 
-        public UpdateMemberGivenCreditCommand(int id, int uplineId, decimal newGivenCredit, decimal totalAmt, decimal accumCreditAllCashMember, string ip)
-            : base(id, uplineId, newGivenCredit, ip)
+        public UpdateMemberGivenCreditCommand(int id, int userId, decimal newGivenCredit, decimal totalAmt, decimal accumCreditAllCashMember, string ip)
+            : base(id, userId, newGivenCredit, ip)
         {
             TotalAmt = totalAmt;
             AccumCreditAllCashMember = accumCreditAllCashMember;

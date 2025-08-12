@@ -9,8 +9,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
         [SpParam(SqlParamName = "custid")]
         public int Id { get; }
 
-        [SpParam(SqlParamName = "userid")]
-        public int UplineId { get; }
+        public int UserId { get; }
 
         [SpParam(SqlParamName = "newcredit")]
         public decimal NewGivenCredit { get; }
@@ -24,10 +23,10 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
 
         public string ErrMsg { get; set; }
 
-        public UpdateAgentGivenCreditCommand(int id, int uplineId, decimal newGivenCredit, decimal accumCreditAllCashMember, string ip)
+        public UpdateAgentGivenCreditCommand(int id, int userId, decimal newGivenCredit, decimal accumCreditAllCashMember, string ip)
         {
             Id = id;
-            UplineId = uplineId;
+            UserId = userId;
             NewGivenCredit = newGivenCredit;
             AccumCreditAllCashMember = accumCreditAllCashMember;
             Ip = ip;
@@ -40,7 +39,7 @@ namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
 
         public virtual bool IsValid()
         {
-            return Id > 0 && UplineId > 0;
+            return Id > 0 && UserId > 0;
         }
     }
 }

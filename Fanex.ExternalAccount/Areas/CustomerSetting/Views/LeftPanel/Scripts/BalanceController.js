@@ -40,7 +40,7 @@
         var keyCode = event.keyCode;
         var value = event.target.value;
         var id = $scope.personalInfo.custId.value;
-        var uplineId = userId;
+        var uplineId = $scope.personalInfo.roleId.value == 4 ? 0 : $scope.personalInfo.uplineId.value;
 
         if (keyCode == 13 && value != '') {
             parent.Fanex.ExtAcc.BlockUI();
@@ -48,7 +48,7 @@
 
 
             $.ajax({
-                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateGivenCreditPost?custId=' + id + '&uplineId=' + uplineId + '&newGivenCredit=' + value + '&groupName=' + parent.$('#selectedGroupName').html()),
+                url: parent.resolveClientUrl('CustomerSetting/LeftPanel/UpdateCustomer/UpdateGivenCreditPost?custId=' + id + '&uplineId=' + uplineId + '&userId=' + userId + '&newGivenCredit=' + value + '&groupName=' + parent.$('#selectedGroupName').html()),
                 method: 'post'
             })
                 .success(function (result) {

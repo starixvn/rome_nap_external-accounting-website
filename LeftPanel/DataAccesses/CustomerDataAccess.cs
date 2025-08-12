@@ -17,11 +17,11 @@
 
         DataSet GetBalanceInfo(int custId);
 
-        Result UpdateSMAGivenCredit(int id, int uplineId, decimal newGivenCredit);
+        Result UpdateSMAGivenCredit(int id, int userId, decimal newGivenCredit);
 
-        Result UpdateAgentGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal accumCreditAllCashMember);
+        Result UpdateAgentGivenCredit(int id, int userId, decimal newGivenCredit, decimal accumCreditAllCashMember);
 
-        Result UpdateMemberGivenCredit(int id, int uplineId, decimal newGivenCredit, decimal totalAmt, decimal accumCreditAllCashMember);
+        Result UpdateMemberGivenCredit(int id, int userId, decimal newGivenCredit, decimal totalAmt, decimal accumCreditAllCashMember);
 
         DataSet GetDownlineList(bool isDirectDownline, int custid, int pageSize, int pageIndex, out int totalPages);
 
