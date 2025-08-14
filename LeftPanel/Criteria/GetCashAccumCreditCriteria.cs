@@ -1,11 +1,9 @@
 namespace Fanex.ExternalAccount.Module.LeftPanel.Criteria
 {
-    using Fanex.Data;
     using Fanex.Data.Repository;
 
     public class GetCashAccumCreditCommand : INonQueryCommand
     {
-        [SpParam(SqlParamName = "CustId")]
         public int CustId { get; }
 
         public decimal AccumCreditReturn { get; set; }

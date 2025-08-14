@@ -57,6 +57,8 @@
 
         decimal GetCashAccumCredit(int custId);
 
+        int GetUplineByCustId(int custId);
+
         Result ClearMemberCredit(decimal totalAmt, string username = null);
 
         Result ClearSMACredit(string username = null);

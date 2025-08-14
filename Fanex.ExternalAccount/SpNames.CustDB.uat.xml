@@ -198,6 +198,7 @@
 		<Setting Key="Acc_CustomerSelList" SpName="Acc_CustomerSelList" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
 		<Setting Key="Acc_CustomerSelOnline" SpName="Acc_CustomerSelOnline" DbName="DBONUSER.ON_USER.wsv_xnap" Plain="0" />
 		<Setting Key="Age_LoginAdminVerifyTicket" SpName="Age_LoginAdminVerifyTicket" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+        <Setting Key="Age_CustSetting_GetUplineByCustID" SpName="Age_CustSetting_GetUplineByCustID" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
 		<Setting Key="Acc_CustomerUpdCredit" SpName="Acc_CustomerUpdCredit" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
         <Setting Key="Age_CashAccumCredit_AgSel" SpName="Age_CashAccumCredit_AgSel" DbName="DBSIC.bodb02.wsv_xnap" Plain="0" />
 		<Setting Key="Acc_CustomerSelUsedCredit_SAg" SpName="Acc_CustomerSelUsedCredit_SAg" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />

@@ -129,6 +129,14 @@
             return command.AccumCreditReturn;
         }
 
+        public int GetUplineByCustId(int custId)
+        {
+            var command = new GetUplineByCustIdCommand(custId);
+            _dynamicRepository.Execute(command);
+
+            return command.UplineId;
+        }
+
         public Result CloseCustomer(int custId, bool closed, bool clearCredit, string custName)
         {
             var command = new CloseCustomerCommand(

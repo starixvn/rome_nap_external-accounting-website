@@ -18,7 +18,7 @@
 
     public interface CustomerCommandService
     {
-        Result UpdateGivenCredit(int id, int uplineId, int userId, decimal newGivenCredit);
+        Result UpdateGivenCredit(int id, int userId, decimal newGivenCredit);
 
         Result ResetMemberCredit(int userId, int uplineId, bool closedOnly);
 
@@ -66,7 +66,7 @@
             this.siteDBService = siteDBService ?? new SiteDBConfigService();
         }
 
-        public Result UpdateGivenCredit(int id, int uplineId, int userId, decimal newGivenCredit)
+        public Result UpdateGivenCredit(int id, int userId, decimal newGivenCredit)
         {
             var custInfo = reportService.SearchCustomerInfo(ExtRequest.Instance.GetGroupName(), id, string.Empty, false);
             var siteDB = siteDBService.GetSiteDBConfigByCustId(id);
@@ -74,6 +74,7 @@
             if (custInfo.RoleId == Role.Member)
             {
                 var totalAmt = customerDataAccess.GetTotalAmount(id, siteDB);
+                var uplineId = customerDataAccess.GetUplineByCustId(id);
                 var accumCreditAllCashMember = customerDataAccess.GetCashAccumCredit(uplineId);
 
                 return customerDataAccess.UpdateMemberGivenCredit(id, userId, newGivenCredit, totalAmt, accumCreditAllCashMember);

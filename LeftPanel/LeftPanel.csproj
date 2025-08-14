@@ -250,6 +250,7 @@
     <Compile Include="Criteria\GetOnlineListCriteria.cs" />
     <Compile Include="Criteria\GetPersonalInfoCriteria.cs" />
     <Compile Include="Criteria\GetTotalAmountCommand.cs" />
+    <Compile Include="Criteria\GetUplineByCustIdCommand.cs" />
     <Compile Include="Criteria\RemoveOtpCommand.cs" />
     <Compile Include="Criteria\ResetMemberCreditCommand.cs" />
     <Compile Include="Criteria\ResetSecurityCodeCommand.cs" />
