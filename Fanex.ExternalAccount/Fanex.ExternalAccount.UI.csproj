@@ -117,8 +117,9 @@
     <Reference Include="Fanex.Cryptography.Aes, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Cryptography.Aes.1.0.0.0\lib\net461\Fanex.Cryptography.Aes.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Customer.Client, Version=1.0.3.5, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Customer.Client.1.0.3.5\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+    <Reference Include="Fanex.Customer.Client, Version=1.0.3.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Customer.Client.1.0.3.6\lib\netstandard2.0\Fanex.Customer.Client.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Fanex.Customer.Client.NETFramework, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Customer.Client.NETFramework.1.0.0\lib\net461\Fanex.Customer.Client.NETFramework.dll</HintPath>
@@ -2789,17 +2790,8 @@
     <Content Include="Configurations\SecurityCodeSection.uat.config">
       <DependentUpon>SecurityCodeSection.config</DependentUpon>
     </Content>
-    <Content Include="Configurations\connectionStrings.DR.config">
-      <DependentUpon>connectionStrings.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\InternalUrlSection.DR.config">
-      <DependentUpon>InternalUrlSection.config</DependentUpon>
-    </Content>
     <Content Include="Configurations\SecurityCodeSection.DR.config">
       <DependentUpon>SecurityCodeSection.config</DependentUpon>
-    </Content>
-    <Content Include="Configurations\appSettings.DR.config">
-      <DependentUpon>appSettings.config</DependentUpon>
     </Content>
     <Content Include="Configurations\appSettings.KLPROD.config">
       <DependentUpon>appSettings.config</DependentUpon>

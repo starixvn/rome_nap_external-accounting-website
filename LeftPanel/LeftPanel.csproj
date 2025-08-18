@@ -238,6 +238,7 @@
     <Compile Include="Criteria\CustomerInsertClearBalanceCommand.cs" />
     <Compile Include="Criteria\GetAgentUsedCreditItemsCriteria.cs" />
     <Compile Include="Criteria\GetBalanceInfoCriteria.cs" />
+    <Compile Include="Criteria\GetCashAccumCreditCriteria.cs" />
     <Compile Include="Criteria\GetCustomerSelectClearBalanceCriteria.cs" />
     <Compile Include="Criteria\GetCustomerStatusInfoCriteria.cs" />
     <Compile Include="Criteria\GetDownlineListCriteria.cs" />
@@ -249,10 +250,12 @@
     <Compile Include="Criteria\GetOnlineListCriteria.cs" />
     <Compile Include="Criteria\GetPersonalInfoCriteria.cs" />
     <Compile Include="Criteria\GetTotalAmountCommand.cs" />
+    <Compile Include="Criteria\GetUplineByCustIdCommand.cs" />
     <Compile Include="Criteria\RemoveOtpCommand.cs" />
     <Compile Include="Criteria\ResetMemberCreditCommand.cs" />
     <Compile Include="Criteria\ResetSecurityCodeCommand.cs" />
     <Compile Include="Criteria\UnlockAccessCommand.cs" />
+    <Compile Include="Criteria\UpdateAgentGivenCreditCommand.cs" />
     <Compile Include="Criteria\UpdateMemberGivenCreditCommand.cs" />
     <Compile Include="Criteria\UpdateSMAGivenCreditCommand.cs" />
     <Compile Include="Extensions\LoginInfoDataRowExtensions.cs" />
