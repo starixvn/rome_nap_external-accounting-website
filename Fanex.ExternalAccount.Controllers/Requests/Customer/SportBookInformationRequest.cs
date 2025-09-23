@@ -9,7 +9,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
 
         public int RoleId { get; set; }
 
-        public int TabIndex { get; set; }
+        public string TabName { get; set; }
 
         public string Site { get; set; }
 
@@ -24,14 +24,14 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             name = "BetSetting",
             id = "BetSettingTab",
             url = ApplicationPath + "Customer/GetBetLimitInformation?site=" + Site + "&siteLabel=" + SiteLabel,
-            isActive = TabIndex == 0,
+            isActive = TabName == "BetSettingTab",
         };
 
         private object PotentialWinLimitTab => new
         {
             name = "PotentialWinLimit",
             id = "PotentialWinLimitSettingTab",
-            isActive = TabIndex == 6,
+            isActive = TabName == "PotentialWinLimitSettingTab",
         };
 
         private object MaxPayoutSettingTab => new
@@ -39,7 +39,15 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             name = "MaxPayout",
             id = "MaxPayoutSettingTab",
             url = ApplicationPath + "Customer/GetMaxPayoutSettingInformation?site=" + Site + "&siteLabel=" + SiteLabel,
-            isActive = TabIndex == 1,
+            isActive = TabName == "MaxPayoutSettingTab",
+        };
+
+        private object MaxWinSettingTab => new
+        {
+            name = "MaxWinSettingTabTitle",
+            id = "MaxWinSettingTab",
+            url = "",
+            isActive = TabName == "MaxWinSettingTab",
         };
 
 
@@ -48,7 +56,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             name = "PositionTaking",
             id = "PTSettingTab",
             url = ApplicationPath + "Customer/GetPTSettingInformation?custId=" + CustId + "&site=" + Site,
-            isActive = TabIndex == 2,
+            isActive = TabName == "PTSettingTab",
         };
 
 
@@ -57,7 +65,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             name = "Commission",
             id = "CommissionHintTab",
             url = ApplicationPath + "Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site,
-            isActive = TabIndex == 3,
+            isActive = TabName == "CommissionHintTab",
         };
 
 
@@ -66,7 +74,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             name = "ProductCategories",
             id = "ProductCategorySettingTab",
             url = ApplicationPath + "Customer/GetProductCategories?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
-            isActive = TabIndex == 4,
+            isActive = TabName == "ProductCategorySettingTab",
         };
 
 
@@ -75,7 +83,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             name = "WinLossLimit",
             id = "WinLossLimitTab",
             url = ApplicationPath + "Customer/GetWinLossLimitInformation?custId=" + CustId + "&site=" + Site + "&currency=" + Currency,
-            isActive = TabIndex == 5,
+            isActive = TabName == "WinLossLimitTab",
         };
 
         internal string ToJson() => JsonConvert.SerializeObject(new
@@ -84,6 +92,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
             {
                 BetSettingTab,
                 MaxPayoutSettingTab,
+                MaxWinSettingTab,
                 PTSettingTab,
                 CommissionSettingTab,
                 ProductCategorySettingTab,
