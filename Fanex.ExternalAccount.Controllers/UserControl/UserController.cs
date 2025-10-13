@@ -278,7 +278,7 @@
 
             if (isBelonging)
             {
-                var param = string.Join("&", username, CurrentSession.UserId, loginService.GetDbTime().Ticks);
+                var param = string.Join("&", username, CurrentSession.UserId, loginService.GetDbTime().Ticks, "ExtNAP");
                 param = AesExtension.Encrypt(param, "!@#$");
 
                 var CustomerSite = checkCustomerBelongToSpecialSiteResult.Site;
