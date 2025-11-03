@@ -1,0 +1,125 @@
+@import 'ExtAccounting/variables.less';
+/* table */
+@font-face {
+    font-family: 'Tahoma Custom';
+    src: url('../../../assets/styles/fonts/AlphaAdmin/fonts/Tahoma Regular font.ttf?3d71m2#iefix') format('truetype'), url('../../../assets/styles/fonts/AlphaAdmin/fonts/TAHOMA_0.ttf?3d71m2') format('truetype'), url('../../../assets/styles/fonts/AlphaAdmin/fonts/TAHOMAB0.ttf?3d71m2') format('truetype'), url('../../../assets/styles/fonts/AlphaAdmin/fonts/TAHOMABD.ttf?3d71m2') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    background: url(@body-background) repeat;
+    margin: 0;
+    padding: 0;
+    font-family: 'Tahoma Custom';
+    font-size: 12px;
+    color: @body-color;
+}
+.right {
+text-align: right;
+}
+.left {
+text-align: left;
+}
+.followedByCol {
+width: 35%;
+}
+.bettypeCol {
+	width: 30%;
+}
+.container {
+padding: 15px;
+}
+.note-box {
+	background: url(@notebox-background) repeat-x left bottom @notebox-colorbg;
+	border: 1px solid @notebox-border;
+	.note {
+		margin-left: 20px;
+		width: 40px;
+		text-align: center;
+		background: @note-colorbg;
+		color: @note-color;
+		padding: 2px 0;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		border: 1px solid @note-border;
+		font-size: 11px;
+		border-top: none;
+	}
+	.text-note {
+		padding: 10px 10px 10px 20px;
+	}
+}
+.content {
+	.title {
+		padding: 15px 0;
+		font-weight: bold;
+	}
+	>p {
+		margin: 0 0 15px;
+	}
+	.sport {
+		width: 70%;
+		.header-sport {
+			background: @header-sport-colorbg;
+			color: @header-sport-color;
+			cursor: pointer;
+			padding: 5px;
+			border: 1px solid @table-border;
+			text-align: left;
+			font-weight: bold;
+			border-top: none;
+			&.first-child {
+				border-top: 1px solid @table-border;
+			}
+			.iconBox {
+				text-align: center;
+				font-weight: bold;
+				margin-right: 5px;
+				font-size: 13px;
+				display: inline-block;
+				width: 11px;
+				height: 11px;
+				position: relative;
+				top: 1px;
+				border: 1px solid @iconbox-border;
+				&.collapse-icon {
+					background: url(@expandicon-url) no-repeat @iconbox-colorbg center;
+				}
+				&.expand-icon {
+					background: url(@collapseicon-url) no-repeat @iconbox-colorbg center;
+				}
+			}
+		}
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			background: @table-colorbg;
+			thead {
+				color: @thead-color;
+				background: @thead-colorbg;
+				font-weight: bold;
+				text-align: center;
+				th {
+					padding: 5px;
+					border: 1px solid @table-border;
+					border-top: none;
+				}
+			}
+			tbody td {
+				padding: 5px;
+				border: 1px solid @table-border;
+				&.bettype {
+					background: @bettype-colorbg;
+					text-align: center;
+				}
+			}
+		}
+		.hide {
+            display: none;
+            visibility: hidden;
+        }
+	}
+
+}
+

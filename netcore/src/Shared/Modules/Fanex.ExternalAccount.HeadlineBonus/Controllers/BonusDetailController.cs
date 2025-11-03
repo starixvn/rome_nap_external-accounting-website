@@ -1,0 +1,72 @@
+﻿namespace Fanex.ExternalAccount.HeadlineBonus.Controllers
+{
+    using System.Net;
+    using System.Web.Mvc;
+    using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.Core.Base;
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.ExternalAccount.DTO;
+    using Fanex.ExternalAccount.HeadlineBonus.Services;
+    using Fanex.ExternalAccount.HeadlineBonus.ViewModels;
+    using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
+
+    public class BonusDetailController : BaseController
+    {
+        private readonly IBonusDetailService service;
+
+        public BonusDetailController() : this(null)
+        {
+        }
+
+        internal BonusDetailController(IBonusDetailService service)
+        {
+            this.service = service ?? new BonusDetailService();
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.BonusDetail, Policy = AuthenticationType.Read)]
+        public ActionResult Index()
+        {
+            var hasHostPermission = AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.BonusDetail, AuthenticationType.Host);
+
+            return PartialViewBase(new BonusDetailViewModel(hasHostPermission));
+        }
+
+        [ExternalAccountAuthenticate(Function = eFunctions.BonusDetail, Policy = AuthenticationType.Read)]
+        public ActionResult Search(SearchBonusViewModel viewModel)
+            => Json(service.GetBonusDetailReport(
+                viewModel.GroupName,
+                viewModel.Member,
+                viewModel.FromDate,
+                viewModel.ToDate,
+                viewModel.StatusId,
+                viewModel.IsComplained,
+                viewModel.PageIndex + 1,
+                viewModel.PageSize), JsonRequestBehavior.AllowGet);
+
+        [HttpPost, AntiXSRFFilter]
+        [ExternalAccountAuthenticate(Function = eFunctions.BonusDetail, Policy = AuthenticationType.Host)]
+        public ActionResult CancelPending(CancelPendingViewModel viewModel)
+        {
+            var result = viewModel.IsValid()
+                ? service.CancelPending(viewModel.GroupName, viewModel.CustId, viewModel.TransId, CurrentSession.UserId, CurrentContext.Ip4Address)
+                : GetBadRequestResult();
+
+            return Json(result);
+        }
+
+        [HttpPost, AntiXSRFFilter]
+        [ExternalAccountAuthenticate(Function = eFunctions.BonusDetail, Policy = AuthenticationType.Host)]
+        public ActionResult AddNew(AddNewBonusViewModel viewModel)
+        {
+            var result = viewModel.IsValid()
+                ? service.AddNew(viewModel.GroupName, viewModel.Usernames, viewModel.AmountValue, CurrentSession.UserId, CurrentContext.Ip4Address)
+                : GetBadRequestResult();
+
+            return Json(result);
+        }
+
+        private static Result GetBadRequestResult()
+            => new Result((int)HttpStatusCode.BadRequest, "Bad Request");
+    }
+}

@@ -1,0 +1,65 @@
+﻿@using Fanex.ExternalAccount.DTO.Customer
+@model IEnumerable<CustomerProtectedStatus>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <title>Edit Multiple Protection Status</title>
+    @StaticResources.RenderStyles("~/assets/bundles/common")
+    @StaticResources.RenderStyles("~/assets/bundles/protectedstatus/multiple")
+</head>
+<body>
+    <div id="msg-container" class="ui-helper-hidden"></div>
+    <div class="table-container">
+        <table class="table w100 table-protected-status">
+            <thead>
+                <tr>
+                    <th rowspan="2">Username</th>
+                    <th>Protection Status</th>
+                </tr>
+                <tr>
+                    <th>
+                        <span id="protected-all" class="protected-all">Protected</span>
+                        <span id="unprotected-all" class="unprotected-all">Unprotected</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var row in Model)
+                {
+                    string switchClassName, protectedStatusText;
+                    if (row.IsProtectedMode)
+                    {
+                        switchClassName = "suspend-switch";
+                        protectedStatusText = "Protected";
+                    }
+                    else
+                    {
+                        switchClassName = "unsuspend-switch";
+                        protectedStatusText = "Unprotected";
+                    }
+                    <tr>
+                        <td>@row.Username</td>
+                        <td class="text-center">
+                            <span class="protected-status @switchClassName"
+                                  data-custid="@row.CustId"
+                                  data-username="@row.Username"
+                                  data-roleid="@row.RoleId"
+                                  data-origin="@(row.IsProtectedMode ? 1 : 0)"
+                                  data-new="@(row.IsProtectedMode ? 1 : 0)">@protectedStatusText</span>
+                            </td>
+                        </tr>
+                    }
+            </tbody>
+        </table>
+    </div>
+    <div class="text-right pt3">
+        <input id="btn-reset" type="button" class="btn -list" value="Reset" />
+        <input id="btn-submit" type="button" class="btn -list ui-state-disabled" value="Submit" disabled />
+    </div>
+    @Html.AntiForgeryToken()
+    @StaticResources.RenderScripts("~/assets/bundles/protectedstatus/multiple")
+</body>
+</html>

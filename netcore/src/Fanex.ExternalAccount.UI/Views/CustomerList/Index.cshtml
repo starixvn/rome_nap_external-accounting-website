@@ -1,0 +1,149 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.Core.Context;
+@model Fanex.ExternalAccount.ViewModel.Customer.CustomerList.CustomerListViewModel
+    @{ 
+        var currentSession = new CurrentSession();
+    }
+<div id="customerList">
+    <div class="page-title">
+        <div class="wlDetail">
+            Customer List
+        </div>
+        <div id="breadcrumbs">
+        </div>
+        <span class="icon-filter active"></span>
+    </div>
+    <div id="searchBar" class="search-form filterbox filter-winloss-detail filter-customer-list">
+        <div class="searchBar">
+            <div class="form-group">
+                <div class="label">@ViewLang.Username</div>
+                <input id="txtUserName" type="text" class="usernameInput" autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <label for="selStatus" class="pointer">@ViewLang.Status</label>
+                <select id="selStatus" class="usernameInput group">
+                    <option value="0">@ViewLang.All</option>
+                    <option value="1" selected>@ViewLang.Open</option>
+                    <option value="2">@ViewLang.Suspended</option>
+                    <option value="3">@ViewLang.Closed</option>
+                    <option value="4">@ViewLang.Disabled</option>
+                    <option value="5">@ViewLang.Locked</option>
+                </select>
+            </div>
+
+            @if (Model.IsMultipleCurrencyGroup)
+            {
+                <div class="form-group multiple-currency">
+                    <label for="selStatus" class="pointer">@ViewLang.Currency</label>
+                    <div class="user-group ddl-product">
+                        <div id="ddl-currency"></div>
+                    </div>
+                </div>
+            }
+            <div class="form-group @(!Model.RoleId.HasValue || Model.RoleId.Value.IsSuper() ? string.Empty: "hidden") customer-limit-date">
+                <input id="chkShowSuperLimitDate" type="checkbox" />
+                <div class="label lbl-show-limit-date">@ViewLang.CustomersWithDataLimited</div>
+            </div>
+            <div id="ddl-level-type-container-super-view" class="form-group hidden">
+                <div class="label">@ViewLang.Level</div>
+                <div class="user-group pull-left" style="width: 120px">
+                    <select name="ddl-level-type-super-view" style="width: 100%" id="ddl-level-type-super-view">
+                        <option value="0" selected>Master agent</option>
+                        <option value="1">Direct member</option>
+                    </select>
+                </div>
+            </div>
+            <div id="ddl-level-type-container-master-view" class="form-group hidden">
+                <div class="label">@ViewLang.Level</div>
+                <div class="user-group pull-left" style="width: 120px">
+                    <select name="ddl-level-type-master-view" style="width: 100%" id="ddl-level-type-master-view">
+                        <option value="0" selected>Agent</option>
+                        <option value="1">Direct member</option>
+                    </select>
+                </div>
+            </div>
+            @if (AppSettings.IsOfferedCashService(currentSession.CurrencyGroup))
+            {
+                <label for="selServiceType" class="pointer">@ViewLang.AccountType</label>
+                <select id="selServiceType" class="usernameInput group">
+                    <option value="2">@ViewLang.All</option>
+                    <option value="0">@ViewLang.Credit</option>
+                    <option value="1">@ViewLang.Cash</option>
+                </select>
+            }
+            <div class="form-group @(!Model.RoleId.HasValue || Model.RoleId.Value.IsNotMember() ? string.Empty: "hidden") customer-limit-date">
+                <input id="chkIsNoDownlines" type="checkbox" />
+                <div class="label lbl-show-limit-date">No Downline</div>
+            </div>
+            <div class="form-group">
+                <input id="btnSearch" type="button" value="Submit" class="btn -submit" />
+            </div>
+            <div class="form-group">
+                <span style="display: none" id="icoExportExcel" title="@ViewLang.ExportExcel" class="icon-excel"></span>
+            </div>
+        </div>
+    </div>
+    <div id="select-all-none" class="bgTitle titleSearch">
+        <div class="pull-left searchBar">
+            <span class="text-select">@ViewLang.Select:</span>
+            <span id="spanSelectAll" class="status-select" onclick="Fanex.ExtAcc.Customer.SelectAll('menuActive')">@ViewLang.All</span>
+            <span class="character">
+                |
+            </span>
+            <span id="spanSelectNone" class="status-select" onclick="Fanex.ExtAcc.Customer.SelectAll('menuInactive')">@ViewLang.None</span>
+        </div>
+    </div>
+    <div id="customerListGrid">
+        <div id="jqgrid" class="removeRadius freegrid content-grid">
+        </div>
+        <div id="msgNoinfo">
+            There is no data.
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+<form id="targetForm" method="post" target="windowPopup" action="">
+    <input type="hidden" id="uplineId" name="uplineId" value="" />
+    <input type="hidden" id="parentId" name="parentId" value="" />
+    <input type="hidden" id="customerIds" name="customerIds" value="" />
+    <input type="hidden" id="customerNames" name="customerNames" value="" />
+    <input type="hidden" id="syncStatuses" name="syncStatuses" value="" />
+    <input type="hidden" id="usernames" name="usernames" value="" />
+    <input type="hidden" id="uplineLevel" name="uplineLevel" value="" />
+    <input type="hidden" id="customerLevel" name="customerLevel" value="" />
+    <input type="hidden" id="actorId" name="actorId" value="" />
+    <input type="hidden" id="actorIdUsername" name="actorIdUsername" value="" />
+    <input type="hidden" id="subAccId" name="subAccId" value="" />
+    <input type="hidden" id="language" name="language" value="" />
+    <input type="hidden" id="groupName" name="groupName" value="" />
+    <input type="hidden" id="productId" name="productId" value="" />
+    <input type="hidden" id="customerId" name="customerId" value="" />
+    <input type="hidden" id="isMultiple" name="isMultiple" value="false" />
+    <input type="hidden" id="IsReadOnly" name="IsReadOnly" value="false" />
+    <input type="hidden" id="formType" name="formType" value="1" />
+    <input type="hidden" id="isForcingMode" name="isForcingMode" value="false" />
+</form>
+<form id="targetProductStatusSettingForm" method="post" target="windowPopup" action="" class="hide">
+    <input type="hidden" id="productIds" name="productIds" value="" />
+    <input type="hidden" id="custIds" name="custIds" value="" />
+    <input type="hidden" id="custNames" name="custNames" value="" />
+    <input type="hidden" id="custRole" name="custRole" value="" />
+    <input type="hidden" id="groupId" name="groupId" value="" />
+    <input type="hidden" id="recommend" name="recommend" value="" />
+</form>
+<form id="targetParlayMaxPayoutForm" method="post" target="windowPopup" action="" class="hide">
+    <input type="hidden" id="custIds" name="custIds" value="" />
+    <input type="hidden" id="custNames" name="custNames" value="" />
+    <input type="hidden" id="custRole" name="custRole" value="" />
+</form>
+<form id="targetProtectedStatusForm" method="post" target="windowPopup" class="hide">
+    <input type="hidden" id="protectedstatus-groupName" name="groupName" />
+    <input type="hidden" id="protectedstatus-custIds" name="custIds" />
+    <input type="hidden" id="protectedstatus-roleId" name="roleId" />
+</form>
+<script>
+    var isShowCurrency = @Json.Encode(Model.IsMultipleCurrencyGroup);
+    Fanex.ExtAcc.Customer.CustomerList.Init(@Html.Raw(Json.Encode(Model.CustId)), @Html.Raw(Json.Encode(Model.RoleId)));
+    var isBelongToSpecialGroups = @Json.Encode(currentSession.IsBelongToSpecialGroups);
+    var hasReadProtectCustomerFunction = @Json.Encode(Model.HasReadProtectCustomerFunction);
+</script>

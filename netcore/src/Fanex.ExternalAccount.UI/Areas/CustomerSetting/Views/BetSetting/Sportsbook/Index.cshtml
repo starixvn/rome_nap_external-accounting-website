@@ -1,0 +1,22 @@
+﻿@using Fanex.ExternalAccount.Utilities;
+@model bool
+@{
+    var id = Utils.ToInt32(Request["custId"]);
+    var uplineId = Utils.ToInt32(Request["uplineId"]);
+    var userId = Utils.ToInt32(Request["userId"]);
+    var siteName = Request["groupName"];
+    var roleId = Utils.ToInt32(Request["roleId"]);
+
+    Layout = "~/Areas/CustomerSetting/Views/BetSetting/Shared/_Layout.cshtml";
+}
+@section Sportsbook{
+
+    @if (Model)
+    {
+        <div class="errMsg">There is no information available</div>
+    }
+    else
+    {
+        <iframe id="product-1" width="1250" height="750" frameborder="0" src="@Url.Content("~/Customer/EditSuperBetSetting?theme=nap&custId=" + id + "&roleId=" + roleId + "&uplineRoleId=" + (roleId+1) + "&productGroupId=1" + "&userId=" + userId + "&groupName=" + siteName)"></iframe>
+    }
+}

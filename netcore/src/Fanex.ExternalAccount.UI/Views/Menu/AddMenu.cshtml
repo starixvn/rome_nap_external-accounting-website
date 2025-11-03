@@ -1,0 +1,93 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.DTO.UserControl
+@model Menu
+@{
+    var menuList = (IEnumerable<Menu>)ViewBag.MenuList;
+    var funcList = (IEnumerable<Function>)ViewBag.FunctionList;
+
+}
+<link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
+
+<div class="form-add">
+    <div id="errMsg" class="successMsg hide">
+    </div>
+
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.HiddenFor(m => m.MenuId) @Html.LabelFor(m => m.MenuName, ViewLang.MenuItem, new { @class = "label" })
+        </div>
+        <div class="pull-left width-250">
+            @Html.TextBoxFor(m => m.MenuName, new { @class = "form-control width-250" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.MenuDesc, ViewLang.Description, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextAreaFor(m => m.MenuDesc, new { @class = "form-control width-250 textarea" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.Url, ViewLang.Url, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextBoxFor(m => m.Url, new { @class = "form-control width-250" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.FuncId, ViewLang.Function, new { @class = "label" })
+        </div>
+        <div class="pull-left groupCboMenu">
+            <select id="FuncID" name="FuncID" class="form-control">
+                @foreach (var item in funcList)
+                {
+                    <option value="@item.FuncID" @(item.FuncID == Model.FuncId ? "selected=selected" : "") @(item.ParentID != 0 ? "class=subItem" : "")>@item.FuncName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.ParentName, ViewLang.Parent, new { @class = "label" })
+        </div>
+        <div class="pull-left groupCboMenu">           
+            <select id="ParentName" name="ParentName" class="cboControl form-control">
+                <option value="-1">@ViewLang.None</option>
+                @foreach (var item in menuList)
+                {
+                    <option value="@item.MenuId" @(item.MenuId == Model.ParentId ? "selected=selected" : "") @(item.ParentId != 0 ? "class=subItem" : "")>@item.MenuName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.DisplayOrder, ViewLang.Order, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextBoxFor(m => m.DisplayOrder, new { @class = "form-control order", @maxlength = "3", @onpaste = "return false;", @onkeypress = "return Fanex.ExtAcc.CheckNumber(event, this)", @onkeyup = "return Fanex.ExtAcc.CheckNumber(event, this)" })
+        </div>
+    </div>
+    <div class="group form-action">
+        <input class="buttonPopup btn -submit" type="button" value="Submit" onclick="Fanex.ExtAcc.Menus.Add()" />
+    </div>
+</div>
+
+<script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $('#FuncID').combobox();
+    $('#ParentName').combobox();
+    $(document).ready(function () {
+        var select = document.getElementById('FuncID');
+        var sParent = document.getElementById('ParentName');
+        $('.groupCboMenu input').first().val(select.options[0].text);
+        $('.groupCboMenu input').last().val(sParent.options[0].text);
+        $(".groupCboMenu input").attr("readonly", "true");
+        $(".groupCboMenu input").bind("click", function () {
+            $(this).autocomplete("search", '');
+        });
+    });
+</script>

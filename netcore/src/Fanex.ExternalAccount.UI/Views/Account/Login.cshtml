@@ -1,0 +1,83 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using CaptchaMvc.HtmlHelpers
+@using System.Web.Configuration
+@model Fanex.ExternalAccount.ViewModel.Account.LoginModel
+@{
+    ViewBag.Title = ViewLang.LoginTitle;
+    Layout = null;
+
+    var domains = WebConfigurationManager.AppSettings["Domains"].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+    var currentDomain = Request.Headers["Host"] +
+        (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
+
+    var currentLine = currentDomain;
+    foreach (var domain in domains)
+    {
+        if (domain.IndexOf(currentDomain) != -1)
+        {
+            currentLine = domain.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries).ElementAt(1);
+            break;
+        }
+    }
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @StaticResources.RenderStyles("~/assets/bundles/login/login")
+</head>
+<body>
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(m => m.BrowserSize)
+        <div class="block-login">
+            <div class="row">
+                <div class="login-logo icon-outline-lock"></div>
+            </div>
+            <div id="err-message" class="row errMsg @(!string.IsNullOrWhiteSpace(Model.LoginFailedMessage) ? "" :"hide")">
+                @Model.LoginFailedMessage
+            </div>
+            <div class="row">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @maxlength = 50, @placeholder = "Username" })
+                <span class="icon-user"></span>
+            </div>
+            <div class="row">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control", @maxlength = 50, @autocomplete = "off", @placeholder = "Password" })
+                <span class="icon-lock"></span>
+            </div>
+
+            @if (Model.IsVisibleCaptcha)
+            {
+                <div class="row captcha-container" id="captcha">
+                    @try
+                    {
+                        @Html.Captcha(5, "~/Areas/CustomerSetting/Views/SylouCaptcha/SylouCaptchaPartialView.cshtml", ViewData)
+                    }
+                    catch (Exception ex)
+                    {
+                        Fanex.Logging.Extensions.Web.ExceptionHandler.Handle(ex);
+                    }
+                </div>
+            }
+
+            <div class="row">
+                <button id="btnLogin" class="btnLogin">@ViewLang.LoginTitle</button>
+            </div>
+        </div>
+        @Html.Hidden("Code", Model.Code)
+        @Html.Hidden("Line", currentLine)
+        @Html.AntiForgeryToken()
+    }
+
+    <script type="text/javascript">
+        function resolveClientUrl(relativeUrl) {
+            return '@Url.Content("~/")' + relativeUrl;
+        }
+    </script>
+    @StaticResources.RenderScripts("~/assets/bundles/login/login")
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+</body>
+</html>

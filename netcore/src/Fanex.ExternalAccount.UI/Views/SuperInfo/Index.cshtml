@@ -1,0 +1,158 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@{
+    ViewBag.Title = "Edit Super Info";
+    var notesPwd = "*Password must be at least 8 characters without white-space and contain at least 1 uppercase letter, 1 lowercase letter, 1 numeric digit. (e.g. 493abcDE, 59D7!4$h) Notes: your password is cAsE sEnSiTiVe.";
+    var notesSecCode = "*Security Code must be a 6-digit number, contains at least 2 different digits and must not be consecutive numbers. For example: 123456, 765432, 456789, etc.are NOT allowed.";
+}
+@StaticResources.RenderStyles("~/assets/styles/pages/customer/superinfo")
+<div id="superInfo">
+    <div class="page-title">
+        <div class="wlDetail">
+            Edit Super Info
+        </div>
+        <div id="breadcrumbs">
+        </div>
+    </div>
+    <div class="bgTitle titleSearch mt10">
+        <div id="errMsg" style="display: none" class="errMsg">
+        </div>
+        <div class="searchBar">
+            <span class="text-select">@ViewLang.NoteUsernameSuperInfo:</span>
+        </div>
+        <div>
+            <textarea id="superInfoList" class="input-super-list" cols="100" rows="5"></textarea>
+        </div>
+        <div class="mt10">
+            <input type="button" id="btnSelectSupers" class="btn -submit" value="Select">
+            <input type="button" id="btnResetSelect" class="btn -submit -disabled" disabled="disabled" value="Reset">
+        </div>
+        <div class="super-list mt10" style="display: none" id="selectedSupers">
+        </div>
+    </div>
+    <div id="updateSuperInfoContent" style="display: none;">
+        <div class="update-selection">
+            <p>Selection:</p>
+            <div class="selections">
+                <div class="select-item">
+                    <input type="checkbox" id="ckbPersonalInfo" checked />
+                    <label for="ckbPersonalInfo">Update Personal Info</label>
+                </div>
+                <div class="select-item">
+                    <input type="checkbox" id="ckbResetPwd" checked />
+                    <label for="ckbResetPwd">Reset Password</label>
+                </div>
+                <div class="select-item">
+                    <input type="checkbox" id="ckbResetSecCode" checked />
+                    <label for="ckbResetSecCode">Reset Security Code</label>
+                </div>
+            </div>
+        </div>
+        <div class="update-content">
+            <div id="updateInfoTab">
+                <div class="form-title">
+                    Update Personal Info
+                </div>
+                <form class="form-super-update form-add">
+                    <div class="group">
+                        <div class="pull-left width-140">
+                            <input type="checkbox" id="ckbSuperFirstName" checked />
+                            <label class="label" for="SuperFirstName">First Name</label>
+                        </div>
+                        <div class="pull-left">
+                            <input class="form-control width-info" id="SuperFirstName" name="FirstName" maxlength="50" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="pull-left width-140">
+                            <input type="checkbox" id="ckbSuperLastName" checked />
+                            <label class="label" for="SuperLastName">Last Name</label>
+                        </div>
+                        <div class="pull-left">
+                            <input class="form-control width-info" id="SuperLastName" name="LastName" maxlength="50" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="pull-left width-140">
+                            <input type="checkbox" id="ckbSuperPhone" checked />
+                            <label class="label" for="SuperPhone">Phone</label>
+                        </div>
+                        <div class="pull-left">
+                            <input class="form-control width-info" id="SuperPhone" name="Phone" maxlength="50" type="text" value="">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="pull-left width-140">
+                            <input type="checkbox" id="ckbSuperMobilePhone" />
+                            <label class="label" for="SuperMobilePhone">Mobile Phone</label>
+                        </div>
+                        <div class="pull-left">
+                            <input class="form-control width-info" id="SuperMobilePhone" name="MobilePhone" maxlength="50" type="text" value="" disabled>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="updatePwdTab">
+                <div class="form-title">
+                    Reset Password
+                </div>
+                <form class="form-super-update form-add">
+                    <div class="group">
+                        <div class="pull-left width-140">
+                            <label class="label" for="SuperPassword">Password<span class="icon-alert-circle-outline" id="notesPwd" title="@notesPwd" data-toggle="@notesPwd" data-placement="right"></span></label>
+                        </div>
+                        <div class="pull-left input-password-container">
+                            <input class="form-control width-info" id="SuperPassword" maxlength="10" name="Password" type="password" autocomplete="new-password">
+                            <span class="ic-pwd-eye ic-pwd-eye-visible" data-id="SuperPassword"></span>
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="pull-left width-140">
+                            <label for="SuperConfirmPwd" class="label">Confirm password</label>
+                        </div>
+                        <div class="pull-left input-password-container">
+                            <input id="SuperConfirmPwd" type="password" class="form-control width-info" maxlength="10" autocomplete="new-password">
+                            <span class="ic-pwd-eye ic-pwd-eye-visible" data-id="SuperConfirmPwd"></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="updateSecCodeTab">
+                <div class="form-title">
+                    Reset Security Code
+                </div>
+                <form class="form-super-update form-add">
+                    <div class="group">
+                        <div class="pull-left width-140">
+                            <label for="SuperSecCode" class="label">Security Code<span class="icon-alert-circle-outline" id="notesSecCode" title="@notesSecCode" data-toggle="@notesSecCode" data-placement="right"></span></label>
+                        </div>
+                        <div class="pull-left">
+                            <input id="SuperSecCode" maxlength="6" type="text" class="form-control width-info">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="pull-left width-140">
+                            <label for="SuperConfirmSecCode" class="label">Confirm Security Code</label>
+                        </div>
+                        <div class="pull-left">
+                            <input type="text" id="SuperConfirmSecCode" maxlength="6" class="form-control width-info">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <div class="pull-left width-140">
+                            <label for="SuperForceChange" class="label">Force change</label>
+                        </div>
+                        <div class="pull-left" style="line-height: 23px;">
+                            <input id="SuperForceChange" type="checkbox" checked="checked" class="checkbox">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="div-submit">
+                <input id="btnSubmitUpdate" class="btn -submit buttonPopup pull-right" type="button" value="Submit">
+            </div>
+        </div>
+    </div>
+    @Html.Hidden("SCode", (string)ViewBag.Code)
+</div>
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+@StaticResources.RenderScripts("~/assets/bundles/customer/superinfo")

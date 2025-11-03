@@ -1,0 +1,27 @@
+# Statement Service Dockerfile
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+COPY ["*.sln", "."]
+COPY ["StatementService/StatementService.csproj", "StatementService/"]
+COPY ["Core/Core.csproj", "Core/"]
+COPY ["Core.Shared/Core.Shared.csproj", "Core.Shared/"]
+COPY ["Fanex.ExternalAccount.Service/Fanex.ExternalAccount.Service.csproj", "Fanex.ExternalAccount.Service/"]
+COPY ["Fanex.ExternalAccount.DataAccess/Fanex.ExternalAccount.DataAccess.csproj", "Fanex.ExternalAccount.DataAccess/"]
+
+RUN dotnet restore "StatementService/StatementService.csproj"
+
+COPY . .
+
+WORKDIR "/src/StatementService"
+RUN dotnet build "StatementService.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "StatementService.csproj" -c Release -o /app/publish
+
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+EXPOSE 80
+ENTRYPOINT ["dotnet", "StatementService.dll"]
+

@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>Fanex.ExternalAccount.SearchAndCopy</RootNamespace>
+    <AssemblyName>Fanex.ExternalAccount.SearchAndCopy</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Common.Logging" Version="3.0.0" />
+    <PackageReference Include="Common.Logging.Core" Version="3.0.0" />
+    <PackageReference Include="EasyNetQ" Version="2.3.3" />
+    <PackageReference Include="Fanex.Common" Version="1.1.0.1" />
+    <PackageReference Include="Fanex.CustomerSetting.Security" Version="2.0.0.6" />
+    <PackageReference Include="Fanex.Data.ProxyClient" Version="1.0.4.2" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.1" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
+    <PackageReference Include="Fanex.Logging.Extensions.Web" Version="1.0.8" />
+    <PackageReference Include="Fanex.MailStation" Version="1.1.0.1" />
+    <PackageReference Include="IBCUtils" Version="1.0.0.1" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
+    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <PackageReference Include="Microsoft.Web.Infrastructure" Version="1.0.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Quartz" Version="2.3.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="5.0.1" />
+    <PackageReference Include="RestSharp" Version="105.2.3" />
+    <PackageReference Include="VaultSharp" Version="1.17.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Core.Shared\Fanex.ExternalAccount.Core.Shared.csproj" />
+    <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj" />
+    <ProjectReference Include="..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj" />
+    <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj" />
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Lang.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lang.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
+

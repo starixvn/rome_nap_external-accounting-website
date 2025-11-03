@@ -1,0 +1,116 @@
+﻿<div id="searchAndCopySuper">
+    @Html.AntiForgeryToken()
+    <div class="page-title">
+        <div class="wlDetail">
+            Search and Copy Super
+        </div>
+    </div>
+    <div class="filterbox">
+        <div class="d-inline-block">
+            <p id="validation_message"></p>
+            <template id="passwordTemplate">
+                Password must be at least 8 characters without white-space and contain at least 3 of the following:
+                <ul>
+                    <li>Uppercase letter [A-Z]</li>
+                    <li>Lowercase letter [a-z]</li>
+                    <li>Numeric [0-9]</li>
+                    <li>Special character (!,&#64;,#,etc..)</li>
+                </ul>
+                For example: 59D7!4$h, 493abcDE
+                Notes: your password is cAsE sEnSiTiVe
+            </template>
+            <div id="steps" class="steps clearfix">
+                <div id="step1" class="step step1-active">Step 1: Search Existing Super</div>
+                <div id="step2" class="step step2-inactive">Step 2: Enter information</div>
+            </div>
+            <div id="step1Panel" class="step-panel">
+                <div class="row-empty"></div>
+                <div class="row-username">
+                    <label>Username</label>
+                    <input type="text" autocomplete="off" id="username" maxlength="30" />
+                    <span id="usernameMessage"></span>
+                </div>
+                <div class="row-info">
+                    * All settings will be copied from entered username
+                </div>
+                <div id="notAllowedSuperPrefixes" class=""></div>
+            </div>
+            <div id="step2Panel" class="step-panel">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="4">
+                                General Information
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td width="90px">
+                                <label for="txtUsername">Username</label>
+                            </td>
+                            <td>
+                                <input id="txtUsername" type="text" autocomplete="off" maxlength="30" />
+                            </td>
+                            <td width="90px">
+                                <label for="txtPassword">Password</label>
+                            </td>
+                            <td>
+                                <input id="txtPassword" type="password" autocomplete="off" maxlength="50" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="txtFirstName">First Name</label>
+                            </td>
+                            <td>
+                                <input id="txtFirstName" type="text" autocomplete="off" maxlength="50" />
+                            </td>
+                            <td>
+                                <label for="txtLastName">Last Name</label>
+                            </td>
+                            <td>
+                                <input id="txtLastName" type="text" autocomplete="off" maxlength="50" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="txtPhone">Phone</label>
+                            </td>
+                            <td>
+                                <input id="txtPhone" type="text" autocomplete="off" maxlength="50" />
+                            </td>
+                            <td>
+                                <label for="txtMobilePhone">Mobile Phone</label>
+                            </td>
+                            <td>
+                                <input id="txtMobilePhone" type="text" autocomplete="off" maxlength="50" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label for="txtFax">Fax</label>
+                            </td>
+                            <td>
+                                <input id="txtFax" type="text" autocomplete="off" maxlength="50" />
+                            </td>
+                            <td>
+                                <label for="txtMaxCredit">Max Credit</label>
+                            </td>
+                            <td>
+                                <input id="txtMaxCredit" type="text" autocomplete="off" maxlength="18" onkeypress="return Fanex.ExtAcc.CheckNumber(event, this, true)" onkeyup="return Fanex.ExtAcc.CheckNumber(event, this, true)" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mt10">
+                <input id="btnNext" type="button" value="Next" class="btn -submit">
+                <input id="btnPrevious" type="button" value="Previous" class="btn -submit">
+                <input id="btnSubmit" type="button" value="Submit" class="btn -submit">
+            </div>
+        </div>
+    </div>
+    @Html.Hidden("SCCode", (string)ViewBag.Code)
+</div>
+@StaticResources.RenderScripts("~/assets/bundles/searchandcopy/index")

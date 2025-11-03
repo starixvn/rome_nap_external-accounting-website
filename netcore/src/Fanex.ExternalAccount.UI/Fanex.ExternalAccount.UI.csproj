@@ -1,0 +1,129 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>Fanex.ExternalAccount.UI</RootNamespace>
+    <AssemblyName>Fanex.ExternalAccount.UI</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="2.2.1" />
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.2.1" />
+    <PackageReference Include="CaptchaMVC" Version="2.4.1" />
+    <PackageReference Include="Common.Logging" Version="3.0.0" />
+    <PackageReference Include="Common.Logging.Core" Version="3.0.0" />
+    <PackageReference Include="dotless" Version="1.4.1.0" />
+    <PackageReference Include="DotNetZip" Version="1.9.1.5" />
+    <PackageReference Include="EasyNetQ" Version="2.3.3" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Caching" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
+    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <PackageReference Include="Enums.NET" Version="4.0.1" />
+    <PackageReference Include="Fanex.Caching" Version="2.2.8" />
+    <PackageReference Include="Fanex.Caching.Redis" Version="2.2.8" />
+    <PackageReference Include="Fanex.Common" Version="1.1.0.1" />
+    <PackageReference Include="Fanex.Crypt" Version="1.1.0.0" />
+    <PackageReference Include="Fanex.Cryptography.Aes" Version="1.0.0.0" />
+    <PackageReference Include="Fanex.Customer.Client" Version="1.0.3.7" />
+    <PackageReference Include="Fanex.Customer.Client.NETFramework" Version="1.0.0" />
+    <PackageReference Include="Fanex.CustomerSetting.EnableStatus.AllInOne" Version="2.0.3.4" />
+    <PackageReference Include="Fanex.CustomerSetting.Security" Version="2.0.0.6" />
+    <PackageReference Include="Fanex.Data.ProxyClient" Version="1.0.4.2" />
+    <PackageReference Include="Fanex.File" Version="1.0.0" />
+    <PackageReference Include="Fanex.Grid" Version="1.1.1.3" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.1" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
+    <PackageReference Include="Fanex.Logging.Extensions.Database.V59" Version="1.0.3" />
+    <PackageReference Include="Fanex.Logging.Extensions.Web" Version="1.0.8" />
+    <PackageReference Include="Fanex.Logging.RabbitMQ" Version="1.0.1" />
+    <PackageReference Include="Fanex.Logging.Sentry.RavenClient" Version="1.0.1" />
+    <PackageReference Include="Fanex.MailStation" Version="1.1.0.1" />
+    <PackageReference Include="Fanex.PTSetting.BettypeReference" Version="1.0.0.6" />
+    <PackageReference Include="Fanex.RemotingRef" Version="1.5.1" />
+    <PackageReference Include="FluentValidation" Version="3.2.0.0" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.15.0" />
+    <PackageReference Include="MessagePack" Version="3.1.1" />
+    <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Xml" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Web.RedisSessionStateProvider" Version="2.2.6" />
+    <PackageReference Include="MvcPager" Version="1.5.0.28157" />
+    <PackageReference Include="NetUtility" Version="4.5.6325.30210" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NPOI" Version="2.6.1" />
+    <PackageReference Include="ONEbook.UM" Version="3.1.1" />
+    <PackageReference Include="ONEbook.UM.AspNetMVC" Version="3.1.1" />
+    <PackageReference Include="ONEBook.UM.NETFramework" Version="3.1.5" />
+    <PackageReference Include="ONEbook.UM.Transport" Version="3.1.1" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
+    <PackageReference Include="Quartz" Version="2.3.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="5.0.1" />
+    <PackageReference Include="RestSharp" Version="105.2.3" />
+    <PackageReference Include="SharpRaven" Version="2.4.0" />
+    <PackageReference Include="SharpZipLib" Version="1.3.3" />
+    <PackageReference Include="SixLabors.Fonts" Version="1.0.0" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="2.1.4" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
+    <PackageReference Include="StackExchange.Redis.StrongName" Version="1.2.1" />
+    <PackageReference Include="Sunplus.Agent.Utilities" Version="3.0.2" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.5.0" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.1" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
+    <PackageReference Include="VaultSharp" Version="1.17.5.1" />
+    <PackageReference Include="WebGrease" Version="1.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shared\Core\Core.csproj" />
+    <ProjectReference Include="..\Shared\Fanex.ExternalAccount.Controllers\Fanex.ExternalAccount.Controllers.csproj" />
+    <ProjectReference Include="..\Shared\Fanex.ExternalAccount.Core.Shared\Fanex.ExternalAccount.Core.Shared.csproj" />
+    <ProjectReference Include="..\Shared\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj" />
+    <ProjectReference Include="..\Shared\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj" />
+    <ProjectReference Include="..\Shared\Fanex.ExternalAccount.Excel\Fanex.ExternalAccount.Excel.csproj" />
+    <ProjectReference Include="..\Shared\Fanex.ExternalAccount.Resources\Fanex.ExternalAccount.Resources.csproj" />
+    <ProjectReference Include="..\Shared\Fanex.ExternalAccount.SearchAndCopy\Fanex.ExternalAccount.SearchAndCopy.csproj" />
+    <ProjectReference Include="..\Shared\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj" />
+    <ProjectReference Include="..\Shared\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj" />
+    <ProjectReference Include="..\Shared\Fanex.ExternalAccount.ViewModel\Fanex.ExternalAccount.ViewModel.csproj" />
+    <ProjectReference Include="..\Shared\LeftPanel\LeftPanel.csproj" />
+    <ProjectReference Include="..\Shared\Modules\Fanex.ExternalAccount.BetSetting\Fanex.ExternalAccount.BetSetting.csproj" />
+    <ProjectReference Include="..\Shared\Modules\Fanex.ExternalAccount.HeadlineBonus\Fanex.ExternalAccount.HeadlineBonus.csproj" />
+    <ProjectReference Include="..\Shared\Modules\Fanex.ExternalAccount.HeadlineList\Fanex.ExternalAccount.HeadlineList.csproj" />
+    <ProjectReference Include="..\Shared\Modules\Fanex.ExternalAccount.MatchWinLossReports\Fanex.ExternalAccount.MatchWinLossReports.csproj" />
+    <ProjectReference Include="..\Shared\Modules\Fanex.ExternalAccount.ProblemAccount\Fanex.ExternalAccount.ProblemAccount.csproj" />
+    <ProjectReference Include="..\Shared\Modules\Fanex.ExternalAccount.RewardManagement\Fanex.ExternalAccount.RewardManagement.csproj" />
+    <ProjectReference Include="..\Shared\Modules\Fanex.ExternalAccount.Statement\Fanex.ExternalAccount.Statement.csproj" />
+    <ProjectReference Include="..\Shared\Modules\Fanex.ExternalAccount.WhiteLabelWinLossReports\Fanex.ExternalAccount.WhiteLabelWinLossReports.csproj" />
+    <ProjectReference Include="..\Shared\Modules\Fanex.ExternalAccount.WinLossDetailBySubGroup\Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.csproj" />
+    <ProjectReference Include="..\Shared\Modules\Fanex.ProductStatus.Setting\Fanex.ProductStatus.Setting.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\**\*.cshtml" CopyToPublishDirectory="PreserveNewest" />
+    <Content Update="Content\**\*" CopyToPublishDirectory="PreserveNewest" />
+    <Content Update="Scripts\**\*" CopyToPublishDirectory="PreserveNewest" />
+    <Content Update="Areas\**\*" CopyToPublishDirectory="PreserveNewest" />
+    <Content Update="Images\**\*" CopyToPublishDirectory="PreserveNewest" />
+    <Content Update="Configurations\**\*" CopyToPublishDirectory="PreserveNewest" />
+    <Content Update="ExcelTemplates\**\*" CopyToPublishDirectory="PreserveNewest" />
+    <None Update="Web.config" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="App_GlobalResources\*.resx" />
+  </ItemGroup>
+
+</Project>

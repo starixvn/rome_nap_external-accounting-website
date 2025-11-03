@@ -1,0 +1,154 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@model TransferConditionViewModel
+@{
+    var custId = ViewBag.CustId;
+}
+<link href="@Url.Content("~/assets/styles/pages/customer/customer-setting.css")" rel="stylesheet" type="text/css" />
+<div class="transfer-condition">
+    <table border="0" cellpadding="2" class="tbl-transfer">
+        <tr>
+            <td colspan="8" style="padding-top: 10px;">
+                <div id="errMsg" style="display: none;" class="successMsg">
+                </div>
+            </td>
+        </tr>
+        <tr class="rowTransferCondition headerTransferCondition">
+            <td colspan="8">
+                @ViewLang.accbalanceTransferCondition
+            </td>
+        </tr>
+        @if (!string.IsNullOrEmpty(Model.TransferConditionWarning))
+        {
+            <tr>
+                <td colspan="8">
+                    <div class="errMsg">@Model.TransferConditionWarning</div>
+                </td>
+            </tr>
+        }
+
+        <tr class="rowTransferCondition">
+            <td style="text-align: left; padding-left: 5px;" colspan="8">
+                @Html.RadioButtonFor(m => m.Transfer.Daily, "true") @Html.LabelFor(m => m.Transfer.Daily)
+            </td>
+        </tr>
+        <tr class="rowTransferCondition">
+            <td style="text-align: left; padding-left: 5px;">
+                @if (Model.IsSuperInAutomateTransfer)
+                {
+                    @Html.RadioButtonFor(m => m.Transfer.Weekly, "true", new { disabled = "disabled" })
+                }
+                else
+                {
+                    @Html.RadioButtonFor(m => m.Transfer.Weekly, "true")
+                }
+                @Html.LabelFor(m => m.Transfer.Weekly)
+            </td>
+            <td style="text-align: left">
+                @if (Model.IsSuperInAutomateTransfer)
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Mon, new { @disabled = "disabled" })
+                }
+                else
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Mon)
+                }
+
+                @Html.LabelFor(m => m.Transfer.Mon)
+            </td>
+            <td style="text-align: left">
+                @if (Model.IsSuperInAutomateTransfer)
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Tue, new { @disabled = "disabled" })
+                }
+                else
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Tue)
+                }
+                @Html.LabelFor(m => m.Transfer.Tue)
+            </td>
+            <td style="text-align: left">
+                @if (Model.IsSuperInAutomateTransfer)
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Wed, new { @disabled = "disabled" })
+                }
+                else
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Wed)
+                }
+                @Html.LabelFor(m => m.Transfer.Wed)
+            </td>
+            <td style="text-align: left">
+                @if (Model.IsSuperInAutomateTransfer)
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Thu, new { @disabled = "disabled" })
+                }
+                else
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Thu)
+                }
+                @Html.LabelFor(m => m.Transfer.Thu)
+            </td>
+            <td style="text-align: left">
+                @if (Model.IsSuperInAutomateTransfer)
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Fri, new { @disabled = "disabled" })
+                }
+                else
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Fri)
+                }
+                @Html.LabelFor(m => m.Transfer.Fri)
+            </td>
+            <td style="text-align: left">
+                @if (Model.IsSuperInAutomateTransfer)
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Sat, new { @disabled = "disabled" })
+                }
+                else
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Sat)
+                }
+                @Html.LabelFor(m => m.Transfer.Sat)
+            </td>
+            <td style="text-align: left">
+                @if (Model.IsSuperInAutomateTransfer)
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Sun, new { @disabled = "disabled" })
+                }
+                else
+                {
+                    @Html.CheckBoxFor(m => m.Transfer.Sun)
+                }
+                @Html.LabelFor(m => m.Transfer.Sun)
+            </td>
+        </tr>
+        <tr class="rowTransferCondition note @(Model.Transfer.Daily ? "hidden":"")">
+            <td class="l" colspan="8">
+                <div>
+                    @ViewLang.changeTransferCondition_Note
+                </div>
+                <div>
+                    <input id="rad-on-auto-transfer" type="radio" name="rad-change-affect" class="rad-change-affect" value="0" checked="checked" />
+                    <label for="rad-on-auto-transfer">@ViewLang.changeTransferCondition_On</label>
+                </div>
+                <div>
+                    <input id="rad-off-auto-transfer" type="radio" name="rad-change-affect" class="rad-change-affect" value="1" />
+                    <label for="rad-off-auto-transfer">@ViewLang.changeTransferCondition_Off</label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="8">
+                <div style="float: right; padding-top: 10px; padding-right: 0px; margin-right: 0px">
+                    <input class="btn -submit buttonPopup" type="button" @(Model.IsSuperInAutomateTransfer ? "disabled" : string.Empty) value="Submit" onclick="Fanex.ExtAcc.Customer.TransferCondition.EditTransferCondition()" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    @Html.AntiForgeryToken()
+</div>
+<script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.TransferCondition.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    var custId = parseInt('@custId');
+    var messages = ['@ViewLang.changeTransferCondition_NoteOn', '@ViewLang.changeTransferCondition_NoteOff'];
+</script>

@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Test Sentry Log";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        throw new Error("Sentry Test Exception");
+    </script>
+}

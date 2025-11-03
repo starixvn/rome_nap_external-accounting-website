@@ -1,0 +1,29 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.DTO.UserControl
+<link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
+<div id='jqWidget'>
+    <div class="page-title">
+        <div class="pull-left">
+            Association Account List
+        </div>
+
+    </div>
+    <div class="search-form filterbox">
+        <div class="form-group">
+            <label class="label">
+                @ViewLang.Username
+            </label>
+            <input id="Username" type="text" class="usernameInput" />
+        </div>
+
+        <div class="form-group">
+            <input id="btnSearch" class="btn -submit" type="button" value="Submit"/>
+        </div>
+    </div>
+    <div id="mainGrid">
+        <div id="jqgrid-user" class="removeRadius freegrid content-grid">
+        </div>
+    </div>
+
+</div>
+@StaticResources.RenderScripts("~/assets/bundles/associationaccount/index")

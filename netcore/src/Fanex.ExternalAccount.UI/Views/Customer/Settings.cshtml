@@ -1,0 +1,99 @@
+﻿@using Newtonsoft.Json
+@using Newtonsoft.Json.Serialization
+@using Fanex.ExternalAccount.Controllers.ViewModels.Customer
+@model CustomerSettingsViewModel
+@{
+    var HideCasino = ViewBag.HideCasino;
+    var status = new
+    {
+        hideCasino = HideCasino,
+    };
+    var statusJSON = JsonConvert.SerializeObject(status, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
+}
+@StaticResources.RenderStyles("~/assets/bundles/common")
+<link href="@Url.Content("~/Scripts/Lib/jquery-ui-1.9.1/themes/base/jquery-ui.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/assets/styles/pages/customer/pt-engine.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/assets/styles/pages/customer/customer-setting.css")" rel="stylesheet" type="text/css" />
+
+<div id="tabs" style="border:none">
+    <ul id="tabs-list" class="tabs">
+
+        @foreach (var product in Model.ProductGroups)
+        {
+            <li id="tab-group-@(product.Id)" class="group-setting-tab" data-product-group-id="@(product.Id)">
+                <a class="height-auto" href="#content-group-@(product.Id)">
+                    @(product.Name)
+                </a>
+            </li>
+        }
+
+        @foreach (var product in Model.Products)
+        {
+            <li id="tab@(product.Id)" class="dynamic-setting-tab" data-product-id="@(product.Id)">
+                <a class="height-auto" href="#tabs-@(product.Id)">
+                    @(product.Name)
+                </a>
+            </li>
+        }
+    </ul>
+
+    @foreach (var product in Model.ProductGroups)
+    {
+        <div id="content-group-@(product.Id)" class="divTab" data-product-group-id="@(product.Id)" style="padding: 0px">
+            <iframe id="Frame_group_@(product.Id)" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
+        </div>
+    }
+
+    @foreach (var product in Model.Products)
+    {
+        <div id="tabs-@(product.Id)" class="divTab" data-product-id="@(product.Id)" style="padding: 0px">
+            <iframe id="Frame_@(product.Id)" height="100%" width="100%" frameborder="0" style="overflow: auto"></iframe>
+        </div>
+    }
+</div>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
+<script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-ui-1.9.1.min.js")"></script>
+@StaticResources.RenderScripts("~/assets/bundles/common")
+
+<script type="text/javascript">
+     function resolveClientUrl(relativeUrl) {
+            return '@Url.Content("~/")' + relativeUrl;
+    }
+
+    if (typeof Fanex == 'undefined') {
+        Fanex = {};
+    }
+
+    if (typeof Fanex.ExtAcc == 'undefined') {
+        Fanex.ExtAcc = {};
+    }
+
+    if (typeof Fanex.ExtAcc.Customer == 'undefined') {
+        Fanex.ExtAcc.Customer = {};
+    }
+
+    var custStatus = $.parseJSON(Fanex.ExtAcc.DecodeHtml('@statusJSON'));
+
+    Fanex.ExtAcc.Customer.CurrentLevel = '@ViewBag.CurrentLevel';
+    Fanex.ExtAcc.Customer.IsMultiple = false;
+    Fanex.ExtAcc.Customer.UserId = '@ViewBag.UserId';
+    Fanex.ExtAcc.Customer.Master = @Role.Master;
+    Fanex.ExtAcc.Customer.Agent = @Role.Agent;
+    Fanex.ExtAcc.Customer.Member = @Role.Member;
+    Fanex.ExtAcc.Customer.superId = Fanex.ExtAcc.Customer.masterId = Fanex.ExtAcc.Customer.agentId = '@ViewBag.UplineId';
+    Fanex.ExtAcc.Customer.HideCasino = custStatus.hideCasino;
+    Fanex.ExtAcc.Customer.isSuperEditAgent = Fanex.ExtAcc.Customer.isSuperEditMember = Fanex.ExtAcc.Customer.isMasterEditMember = false;
+    Fanex.ExtAcc.Customer.CurrentLevel = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
+
+    Fanex.ExtAcc.Customer.CustomerInfo = function () {
+        var obj = new Object();
+
+        obj.custId = parseInt(Fanex.ExtAcc.Customer.UserId);
+        obj.roleId = parseInt(Fanex.ExtAcc.Customer.CurrentLevel);
+        obj.uplineId = parseInt(Fanex.ExtAcc.Customer.superId);
+        obj.uplineRoleId = parseInt(Fanex.ExtAcc.Customer.CurrentLevel) + 1;
+
+        return obj;
+    };
+</script>
+<script src="@Url.Content("~/Scripts/Customer/Fanex.ExtAcc.Customer.Settings.js")" type="text/javascript"></script>

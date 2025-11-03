@@ -1,0 +1,7 @@
+﻿{
+  "rabbitMQConnectionString": "host=rabbitmq.nexdev.net;virtualHost=/ActivityTracking;username=activity_tracking;password=oF3tWUKgUmET01W4wdWWAA==;",
+  "system": "NAP-External-Local",
+  "environment": "SIT",
+  "enabledTrackAllRequests": true,
+  "logCategory": "Activity-Tracking-SIT"
+}

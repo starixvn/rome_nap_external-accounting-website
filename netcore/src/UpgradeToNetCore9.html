@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kế hoạch nâng cấp dự án lên .NET Core 9</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .slide { background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 20px; }
+        h1 { color: #0056b3; }
+        h2 { color: #007bff; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 20px; }
+        ul { list-style-type: disc; margin-left: 20px; }
+        li { margin-bottom: 8px; }
+        .highlight { background-color: #e9ecef; padding: 5px; border-radius: 4px; }
+        .version { font-weight: bold; color: #dc3545; }
+    </style>
+</head>
+<body>
+
+    <div class="slide">
+        <h1>Kế hoạch nâng cấp dự án External Accounting Website lên .NET Core 9</h1>
+        <p>Dự án hiện tại đang sử dụng <span class="version">.NET Framework 4.7.2</span>. Mục tiêu là chuyển đổi và nâng cấp lên <span class="version">.NET Core 9</span>.</p>
+    </div>
+
+    <div class="slide">
+        <h2>1. Đánh giá và Lập kế hoạch</h2>
+        <ul>
+            <li><strong>1.1. Phân tích cấu trúc dự án:</strong> Xác định các project, dependencies, và cách chúng tương tác.</li>
+            <li><strong>1.2. Kiểm tra tương thích Dependency:</strong> Liệt kê tất cả các gói NuGet, thư viện bên thứ ba và các API không phải của Microsoft. Kiểm tra xem chúng có phiên bản tương thích với .NET Core/NET 9 hay không. Sử dụng công cụ như <span class="highlight">.NET Portability Analyzer</span>.</li>
+            <li><strong>1.3. Phân tích mã nguồn:</strong> Xác định các đoạn mã sử dụng các API chỉ có trong .NET Framework (ví dụ: System.Web, Enterprise Library). Lên kế hoạch thay thế hoặc refactor các đoạn mã này.</li>
+            <li><strong>1.4. Ước tính nguồn lực:</strong> Đánh giá thời gian, nhân lực và chi phí cần thiết cho quá trình chuyển đổi.</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>2. Chuyển đổi định dạng Project (.csproj)</h2>
+        <ul>
+            <li><strong>2.1. Sao lưu dự án:</strong> Luôn sao lưu toàn bộ dự án trước khi thực hiện bất kỳ thay đổi lớn nào.</li>
+            <li><strong>2.2. Chuyển đổi thủ công hoặc tự động:</strong>
+                <ul>
+                    <li>Sử dụng <span class="highlight">try-convert</span> tool hoặc <span class="highlight">.NET Upgrade Assistant</span> để tự động chuyển đổi định dạng <span class="highlight">.csproj</span> sang SDK-style.</li>
+                    <li>Nếu chuyển đổi thủ công, tạo file <span class="highlight">.csproj</span> mới với định dạng SDK-style và di chuyển các references, item groups.</li>
+                </ul>
+            </li>
+            <li><strong>2.3. Cập nhật TargetFramework:</strong> Thay đổi <span class="highlight"><code><TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion></code></span> thành <span class="highlight"><code><TargetFramework>net9.0</TargetFramework></code></span>.</li>
+            <li><strong>2.4. Xóa bỏ các file không cần thiết:</strong> Loại bỏ các file như <span class="highlight">packages.config</span> (NuGet sẽ quản lý trực tiếp trong .csproj).</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>3. Cập nhật các gói NuGet và Thư viện</h2>
+        <ul>
+            <li><strong>3.1. Nâng cấp các gói tương thích:</strong> Sử dụng NuGet Package Manager hoặc lệnh <span class="highlight"><code>dotnet add package [PackageName]</code></span> để nâng cấp các gói hiện có lên phiên bản mới nhất hỗ trợ .NET Core/NET 9.</li>
+            <li><strong>3.2. Thay thế các thư viện không tương thích:</strong>
+                <ul>
+                    <li>Tìm kiếm các thư viện thay thế cho .NET Core cho các gói không tương thích (ví dụ: Entity Framework 6 sang Entity Framework Core, ASP.NET Web API sang ASP.NET Core Web API).</li>
+                    <li>Sử dụng các phiên bản mới của Microsoft libraries (ví dụ: Microsoft.Extensions.*).</li>
+                </ul>
+            </li>
+            <li><strong>3.3. Giải quyết xung đột Dependency:</strong> Xử lý các lỗi do xung đột phiên bản giữa các gói.</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>4. Chuyển đổi Cấu hình</h2>
+        <ul>
+            <li><strong>4.1. Di chuyển Web.config sang appsettings.json:</strong>
+                <ul>
+                    <li>Chuyển đổi các phần tử cấu hình như connection strings, app settings sang file <span class="highlight">appsettings.json</span>.</li>
+                    <li>Tạo các file cấu hình theo môi trường (<span class="highlight">appsettings.Development.json</span>, <span class="highlight">appsettings.Production.json</span>).</li>
+                </ul>
+            </li>
+            <li><strong>4.2. Cấu hình biến môi trường và Secret:</strong> Sử dụng <span class="highlight">User Secrets</span> cho môi trường phát triển và các giải pháp quản lý secret khác cho môi trường sản xuất.</li>
+            <li><strong>4.3. Sử dụng API cấu hình mới:</strong> Tích hợp cấu hình vào <span class="highlight">Program.cs</span> hoặc <span class="highlight">Startup.cs</span> sử dụng <span class="highlight">IConfiguration</span>.</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>5. Điều chỉnh Mã nguồn (Refactoring)</h2>
+        <ul>
+            <li><strong>5.1. Cấu trúc ứng dụng:</strong>
+                <ul>
+                    <li>Tạo file <span class="highlight">Program.cs</span> và <span class="highlight">Startup.cs</span> (hoặc sử dụng Minimal APIs trong .NET 6+).</li>
+                    <li>Cấu hình <span class="highlight">Middleware</span> và <span class="highlight">Dependency Injection</span>.</li>
+                </ul>
+            </li>
+            <li><strong>5.2. Thay thế API:</strong>
+                <ul>
+                    <li>Thay thế <span class="highlight">System.Web.*</span> bằng các tương đương trong <span class="highlight">Microsoft.AspNetCore.*</span>.</li>
+                    <li>Cập nhật các phần liên quan đến File I/O, Networking để tương thích với .NET Core.</li>
+                    <li>Điều chỉnh Authentication và Authorization để sử dụng Identity trong ASP.NET Core.</li>
+                </ul>
+            </li>
+            <li><strong>5.3. Xử lý lỗi và Logging:</strong> Cập nhật hệ thống logging sang <span class="highlight">Microsoft.Extensions.Logging</span>.</li>
+            <li><strong>5.4. Async/Await:</strong> Đảm bảo sử dụng <span class="highlight">async/await</span> một cách nhất quán và hiệu quả.</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>6. Di chuyển Thành phần UI (nếu có)</h2>
+        <ul>
+            <li><strong>6.1. ASP.NET MVC cũ sang ASP.NET Core MVC/Razor Pages:</strong>
+                <ul>
+                    <li>Chuyển đổi Views (<span class="highlight">.cshtml</span>) để tương thích với cú pháp Razor của ASP.NET Core.</li>
+                    <li>Di chuyển Controllers và Models.</li>
+                    <li>Nếu sử dụng Web Forms, cân nhắc chuyển đổi sang Razor Pages hoặc một frontend framework hiện đại (React, Angular, Vue) với Web API backend.</li>
+                </ul>
+            </li>
+            <li><strong>6.2. Cập nhật Static Files:</strong> Đảm bảo các file CSS, JavaScript, hình ảnh được phục vụ đúng cách thông qua Middleware <span class="highlight">UseStaticFiles</span>.</li>
+            <li><strong>6.3. Client-side Libraries:</strong> Nâng cấp hoặc thay thế các thư viện JavaScript/CSS lỗi thời.</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>7. Cập nhật CI/CD</h2>
+        <ul>
+            <li><strong>7.1. Cập nhật Build Agents:</strong> Đảm bảo các build agent hoặc môi trường CI/CD có cài đặt <span class="highlight">.NET 9 SDK</span>.</li>
+            <li><strong>7.2. Điều chỉnh Build Script:</strong> Thay đổi các lệnh build từ <span class="highlight">MSBuild</span> hoặc <span class="highlight">.NET Framework-specific commands</span> sang <span class="highlight"><code>dotnet build</code></span>, <span class="highlight"><code>dotnet publish</code></span>.</li>
+            <li><strong>7.3. Cập nhật Deployment Strategy:</strong> Tùy chỉnh quy trình deploy để phù hợp với ứng dụng .NET Core (ví dụ: containerization với Docker, triển khai lên Azure App Service/AWS Elastic Beanstalk).</li>
+            <li><strong>7.4. Cấu hình Testing trong CI:</strong> Đảm bảo các bài kiểm thử được chạy tự động trong pipeline CI/CD.</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>8. Kiểm thử Toàn diện</h2>
+        <ul>
+            <li><strong>8.1. Kiểm thử đơn vị (Unit Test):</strong> Đảm bảo tất cả các unit test cũ hoạt động và viết thêm test cho các đoạn mã mới hoặc được refactor.</li>
+            <li><strong>8.2. Kiểm thử tích hợp (Integration Test):</strong> Kiểm tra sự tương tác giữa các thành phần của ứng dụng và với các dịch vụ bên ngoài (database, API khác).</li>
+            <li><strong>8.3. Kiểm thử hệ thống (System Test):</strong> Kiểm tra toàn bộ ứng dụng trong môi trường gần giống sản phẩm.</li>
+            <li><strong>8.4. Kiểm thử hiệu năng (Performance Test):</strong> Đánh giá hiệu suất của ứng dụng sau khi nâng cấp.</li>
+            <li><strong>8.5. Kiểm thử bảo mật (Security Test):</strong> Đảm bảo ứng dụng vẫn an toàn và tuân thủ các quy tắc bảo mật.</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>9. Các lưu ý quan trọng và Lời khuyên</h2>
+        <ul>
+            <li><strong>9.1. Thực hiện từng bước nhỏ:</strong> Tránh cố gắng nâng cấp tất cả cùng lúc. Thực hiện từng project một, từng module một.</li>
+            <li><strong>9.2. Sử dụng công cụ hỗ trợ:</strong> Tận dụng tối đa <span class="highlight">.NET Upgrade Assistant</span> và <span class="highlight">.NET Portability Analyzer</span>.</li>
+            <li><strong>9.3. Tham khảo tài liệu:</strong> Luôn tham khảo tài liệu chính thức của Microsoft về việc nâng cấp từ .NET Framework lên .NET Core/NET 9.</li>
+            <li><strong>9.4. Kiểm soát phiên bản:</strong> Sử dụng hệ thống kiểm soát phiên bản (Git) một cách hiệu quả, tạo các branch riêng cho quá trình nâng cấp.</li>
+            <li><strong>9.5. Đào tạo đội ngũ:</strong> Đảm bảo đội ngũ phát triển có kiến thức về .NET Core/NET 9.</li>
+        </ul>
+    </div>
+
+</body>
+</html>

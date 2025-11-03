@@ -1,0 +1,140 @@
+﻿@using Fanex.ExternalAccount.Core.Authorization
+@model bool
+@{
+    Layout = null;
+    var noteEditSetting = "- Update Supers Minbet won't cause adjust downlines.\n" +
+                "- Update Maxbet/ MaxperMatch/ MaxPayoutPerMatch/ MaxperNumber will adjust according setting value of downlines.\n" +
+                "- Update Super Maxbet < downlines Minbet, will adjust downlines Minbet = Super Maxbet.";
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="description">
+    <meta content="" name="author">
+    <link href="@Url.Content("~/Areas/CustomerSetting/Styles/jquery-ui.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/MultipleSportsbook/Styles/layout.css")" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="edit-super-betsetting-title">
+        Edit Super Bet Setting <span class="icon-info" title="@noteEditSetting" data-toggle="@noteEditSetting" data-placement="right"></span>
+        <hr />
+    </div>
+    <div id="tabs" class="tabs-container" style="width:1300px">
+        <ul class="tabs">
+            <li id="tab1" onclick="CopySB()"><a href="#tabs-1">Copy Bet Settings</a></li>
+            <li id="tab2" onclick="EditSB()"><a href="#tabs-2">Edit Bet Settings</a></li>
+        </ul>
+        <div style="padding: 1em 1.4em;">
+            @if (Model)
+            {
+                <div class="errMsg">There is no information available</div>
+            }
+            else
+            {
+                <div id="errMsg" style="display: none" class="errMsg">
+                </div>
+                <div id="tabs-1">
+                    <div>Source Super<span class="source-super-title">*</span>:</div>
+                    <div><input type="text" id="sourceSuper" class="source-super" maxlength="30" value="" /></div>
+                    <div>Copy setting to Supers<span class="source-super-title">*</span> (Maximum 50 supers, separated by comma ',')</div>
+                    <div><textarea id="superList" class="super-list" onblur="ReplaceChars(this)"></textarea></div>
+                    <div>
+                        <input type="button" id="selectButton" class="btn -submit" value="Select" />
+                        <input type="button" id="resetButton" class="btn -submit -disabled" disabled="disabled" value="Reset" />
+                    </div>
+                    <div>
+                        <div id="tabs-products-copy" class="tabs-products tabs-container hidden" style="width: 100%;">
+                            <ul class="tabs">
+                                <li id="tabs-product-1" class="tabs-product current" onclick="changeProduct_Copy(1)"><a href="#">Sportsbook</a></li>
+                                <li id="tabs-product-2" class="tabs-product" onclick="changeProduct_Copy(2)"><a href="#">RNG Games</a></li>
+                                <li id="tabs-product-3" class="tabs-product" onclick="changeProduct_Copy(3)"><a href="#">Live & RNG Casino</a></li>
+                            </ul>
+                        </div>
+                        <iframe id="product-1-0" class="tabs-products-copy-frame" width="100%" height="600px" frameborder="0" src=""></iframe>
+                    </div>
+                </div>
+                <div id="tabs-2">
+                    <div>Enter list of Supers Account usernames<span class="source-super-title">*</span> (Maximum 50 supers, separated by comma ',')</div>
+                    <div><textarea id="superList2" class="super-list" onblur="ReplaceChars(this)"></textarea></div>
+                    <div>
+                        <input type="button" id="selectButton2" class="btn -submit" value="Select" />
+                        <input type="button" id="resetButton2" class="btn -submit -disabled" disabled="disabled" value="Reset" />
+                    </div>
+                    <div>
+                        <div id="tabs-products-edit" class="tabs-products tabs-container hidden" style="width: 100%;">
+                            <ul class="tabs">
+                                <li id="tabs-product-1" class="tabs-product current" onclick="changeProduct_Edit(1)"><a href="#">Sportsbook</a></li>
+                                <li id="tabs-product-2" class="tabs-product" onclick="changeProduct_Edit(2)"><a href="#">RNG Games</a></li>
+                                <li id="tabs-product-3" class="tabs-product" onclick="changeProduct_Edit(3)"><a href="#">Live & RNG Casino</a></li>
+                            </ul>
+                        </div>
+                        <iframe id="product-1-1" class="tabs-products-edit-frame" width="100%" height="600px" frameborder="0" src=""></iframe>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/angular.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Scripts/Fanex.CustomerSetting.Core.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Areas/CustomerSetting/Views/BetSetting/Scripts/BetSetting.js?v=1.0")" type="text/javascript"></script>
+    <script type="text/javascript">
+        function toUrl(relativeUrl) {
+            return '@Url.Content("~/CustomerSetting/BetSetting/")' + relativeUrl;
+        }
+
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#superList").focus();
+                $("#sourceSuper").focus();
+            }, 1000);
+
+            var url = document.URL.toLowerCase();
+                var index = url.indexOf('copy') != -1 ? 0 :
+                    url.indexOf('edit') != -1 ? 1 : 0;
+
+            $('#tabs').tabs({ selected: index });
+
+            $("#selectButton").on("click", function () {
+                LoadBetSetting($("#sourceSuper").val() || "", $("#superList").val(), true);
+            });
+
+            $("#resetButton").on("click", function () {
+                $("#selectButton").removeClass("-disabled").attr("disabled", false);
+                $("#sourceSuper").removeClass("-disabled").attr("disabled", false);
+                $("#superList").removeClass("-disabled").attr("disabled", false);
+                $("#resetButton").addClass("-disabled").attr("disabled", true);
+
+                $("#sourceSuper").val("").focus();
+                $("#superList").val("");
+
+                $("#product-1-0").attr("src", "");
+                $("#errMsg").empty().removeClass("succMsg").addClass("errMsg").hide();
+                $("#tabs-products-copy").addClass('hidden');
+            });
+
+            $("#selectButton2").on("click", function () {
+                LoadBetSetting("", $("#superList2").val(), false);
+            });
+
+            $("#resetButton2").on("click", function () {
+                $("#selectButton2").removeClass("-disabled").attr("disabled", false);
+                $("#superList2").removeClass("-disabled").attr("disabled", false);
+                $("#resetButton2").addClass("-disabled").attr("disabled", true);
+
+                $("#superList2").val("").focus();
+
+                $("#product-1-1").attr("src", "");
+                $("#errMsg").empty().removeClass("succMsg").addClass("errMsg").hide();
+                $("#tabs-products-edit").addClass('hidden');
+            });
+        });
+    </script>
+    @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
+    @Fanex.ExternalAccount.Core.Helpers.TrackJSHelper.Render()
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+</body>
+</html>

@@ -1,0 +1,42 @@
+﻿@using Fanex.ExternalAccount.ViewModel.Customer
+@model IPInfo
+@{
+    var url = string.Format("http://redirect.me/?https://www.infobyip.com/ip-{0}.html", Model.IP);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+</head>
+<body>
+    <table id="tblInner" width="100%">
+        <tr style="font-weight: bold">
+            <td style="width: 100px;">
+                IP
+            </td>
+            <td>
+                @Model.IP
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td>
+                Country
+            </td>
+            <td>
+                @Model.Country&nbsp;<img alt="flag" src="@Url.Content("~/Images/Flags/" + Model.Flag)" />
+            </td>
+        </tr>
+        <tr style="font-weight: bold">
+            <td>
+                City
+            </td>
+            <td>
+                @Model.City
+            </td>
+        </tr>
+    </table>
+    <div style="line-height: 18px">
+        Additional info at DNSstuff: <a style="color: #2489CE" href="@url" target="_blank">click here</a>. Note: Country and city information is provided by IP2Location™ and DNSstuff which might only serve as a reference, with no warranty. Please consult other reliable sources for the current and accurate information, if required.
+    </div>
+</body>
+</html>

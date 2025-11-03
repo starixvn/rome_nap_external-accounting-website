@@ -1,0 +1,172 @@
+# version: '3.8'  # Version is obsolete in newer Docker Compose
+
+services:
+  # API Gateway - Điểm vào chính, route tất cả requests
+  api-gateway:
+    build:
+      context: .
+      dockerfile: Dockerfile.ApiGateway
+    container_name: external-account-gateway
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    depends_on:
+      - auth-service
+      - customer-service
+      - report-service
+      - statement-service
+      - user-control-service
+      - webapp
+    networks:
+      - external-account-network
+    restart: unless-stopped
+
+  # Authentication Service
+  auth-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.AuthService
+    container_name: external-account-auth
+    ports:
+      - "5001:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+      - Redis__ConnectionString=${REDIS_CONNECTION_STRING}
+    networks:
+      - external-account-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Customer Service
+  customer-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.CustomerService
+    container_name: external-account-customer
+    ports:
+      - "5002:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+    networks:
+      - external-account-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Report Service
+  report-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.ReportService
+    container_name: external-account-report
+    ports:
+      - "5003:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+    networks:
+      - external-account-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Statement Service
+  statement-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.StatementService
+    container_name: external-account-statement
+    ports:
+      - "5004:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+    networks:
+      - external-account-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # User Control Service
+  user-control-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.UserControlService
+    container_name: external-account-usercontrol
+    ports:
+      - "5005:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+    networks:
+      - external-account-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # WebApp (Fanex.ExternalAccount.UI) - Main MVC Web Application
+  webapp:
+    build:
+      context: ..
+      dockerfile: Dockerfile.WebApp
+    container_name: external-account-webapp
+    ports:
+      - "5006:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - ConnectionStrings__DefaultConnection=${DB_CONNECTION_STRING}
+      - Redis__ConnectionString=${REDIS_CONNECTION_STRING}
+    networks:
+      - external-account-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis Cache (nếu cần)
+  redis:
+    image: redis:7-alpine
+    container_name: external-account-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - external-account-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+networks:
+  external-account-network:
+    driver: bridge
+
+volumes:
+  redis-data:
+

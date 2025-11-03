@@ -1,0 +1,238 @@
+﻿@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+.freegrid .grid-container.container {
+    padding: 0;
+}
+
+.freegrid {
+    * {
+        @include box-sizing(content-box);
+    }
+
+    .no-data-frozen, .no-data-not-frozen {
+        color: $text-color;
+        font-weight: normal;
+    }
+
+    .free-top-left table thead th, .col_header table thead th {
+        background: $table-header-bg-color;
+        color: $table-header-color;
+        font-weight: 400 !important;
+        text-align: center;
+        font-size: 13px;
+    }
+
+    .col_footer table thead th {
+        //background: $table-footer-bg !important;
+        color: $table-footer-color;
+        font-weight: bold;
+        white-space: nowrap;
+        font-size: 13px;
+    }
+
+    tr.highlight-row:hover td {
+        background-color: $table-td-hover-color !important;
+    }
+
+    .mousehoverbeyond td {
+        background-color: $table-td-hover-color !important;
+    }
+
+    td.group-odd, td.group-odd:hover {
+        background-color: $table-odd-bg !important;
+    }
+
+    td.group-even, td.group-even:hover {
+        background-color: $table-even-bg !important;
+    }
+
+    td, .grid-fixed-table td {
+        font-size: $font-size;
+
+        &.has-cash {
+            .table-cell {
+                display: flex;
+                align-items: center;
+
+                 > span {
+                    &:nth-child(1) {
+                        display: block;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+        }
+    }
+
+    .freegrid-even td {
+        background-color: $table-even-bg;
+    }
+
+    .format-negative, .format-positive {
+        color: $table-red-color !important;
+    }
+
+    .grid-pager {
+        background: #fff;
+        height: 32px;
+        line-height: 25px;
+    }
+
+    .grid-pager-content {
+        padding-top: 0;
+    }
+
+    .row-footer-background {
+        border-top: none;
+    }
+
+    .column-truncate {
+        display: block;
+    }
+}
+
+.grid-title {
+    background: #fff;
+    margin-bottom: 0;
+    border: 1px solid #c5c5c5;
+    border-bottom: none;
+    height: 28px;
+}
+
+.freegrid .border-right-highlight {
+    border-right-width: 1px !important;
+}
+
+
+#pagination {
+    font-size: 12px;
+    line-height: 32px;
+
+    .numberlist {
+        border: none;
+
+        ul li.sep {
+            background: none;
+
+            .current {
+                background: #6f7d95;
+                color: #fff;
+                font-weight: normal;
+            }
+        }
+
+        span {
+            padding: 0;
+            width: 18px;
+            height: 19px;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 20px;
+        }
+    }
+
+    a {
+        padding: 0;
+        width: 18px;
+        height: 19px;
+        box-sizing: border-box;
+        text-align: center;
+        line-height: 20px;
+    }
+
+    a:hover {
+        color: #fff;
+        background: #ff9900;
+    }
+
+    a.prev, a.next, span.prev, span.next {
+        font-size: 0;
+        font-weight: normal;
+    }
+
+    .current.prev, .current.next {
+        background: #fff;
+        font-size: 0;
+        color: #616161;
+        font-weight: normal;
+    }
+
+    .next, .prev {
+        font-size: 0;
+
+        &:before {
+            font-size: 16px;
+            font-family: 'AlphaAdmin';
+        }
+    }
+
+    .next:before {
+        content: '\e906';
+    }
+
+    .prev:before {
+        content: '\e905';
+    }
+}
+
+.freegrid div.divSorter {
+    position: relative;
+    cursor: pointer;
+    background-image: none !important;
+
+    &:after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-bottom: 4px solid #fff;
+        position: absolute;
+        top: 5px;
+        right: 0px;
+        cursor: pointer;
+    }
+
+    &:before {
+        content: '';
+        width: 0;
+        height: 0;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 4px solid #fff;
+        position: absolute;
+        top: 10px;
+        right: 0px;
+        cursor: pointer;
+    }
+}
+
+.freegrid div.divSorter.desc:before {
+    border-top: 4px solid #82c341;
+}
+
+.freegrid div.divSorter.asc:after {
+    border-bottom: 4px solid #82c341;
+}
+
+@media (max-width: 450px) {
+    #pagination {
+
+        .numberlist {
+            ul li {
+                padding: 0 1px;
+            }
+
+            span {
+                width: 15px;
+            }
+        }
+
+        a {
+            width: 16px;
+        }
+    }
+}

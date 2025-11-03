@@ -1,0 +1,28 @@
+﻿@using Fanex.ExternalAccount.Utilities
+<div id='jqWidget'>
+    <div class="page-title">
+        <div class="pull-left">Group Management</div>
+        <div class="pull-right">
+            <button id="jqbutton" class="btn -add">
+                <span class="icon-add"></span> Add New Group
+            </button>
+        </div>
+    </div>
+    <div id="mainGrid">
+        <div id="jqgrid-group" class="removeRadius freegrid content-grid">
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+<script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.Group.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    Fanex.ExtAcc.Group.dataTexts = [
+    '@ViewLang.GroupName',
+    '@ViewLang.NumberOfUser',
+    '@ViewLang.Description',
+    '@ViewLang.Creator',
+    '@ViewLang.CreatedDate',
+    '@ViewLang.Permission',
+    '@ViewLang.Delete'
+    ];
+</script>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Báo cáo phân tích chi tiết dự án External Accounting Website</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; color: #333; }
+        .slide { background-color: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 20px; margin-bottom: 20px; }
+        h1 { color: #0056b3; }
+        h2 { color: #007bff; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-top: 20px; }
+        h3 { color: #28a745; margin-top: 15px; }
+        ul { list-style-type: disc; margin-left: 20px; }
+        li { margin-bottom: 8px; }
+        .highlight { background-color: #e9ecef; padding: 5px; border-radius: 4px; }
+        .version { font-weight: bold; color: #dc3545; }
+        .warning { background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 10px; border-radius: 4px; margin: 10px 0; }
+        .success { background-color: #d4edda; border: 1px solid #c3e6cb; padding: 10px; border-radius: 4px; margin: 10px 0; }
+        .danger { background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; border-radius: 4px; margin: 10px 0; }
+        table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .project-name { font-weight: bold; color: #007bff; }
+        .dependency-type { font-style: italic; }
+        .compatibility-status { font-weight: bold; }
+        .compatible { color: #28a745; }
+        .incompatible { color: #dc3545; }
+        .needs-update { color: #ffc107; }
+    </style>
+</head>
+<body>
+
+    <div class="slide">
+        <h1>Báo cáo phân tích chi tiết dự án External Accounting Website</h1>
+        <p><strong>Mục tiêu:</strong> Nâng cấp từ <span class="version">.NET Framework 4.7.2</span> lên <span class="version">.NET Core 9</span></p>
+        <p><strong>Ngày phân tích:</strong> <script>document.write(new Date().toLocaleDateString('vi-VN'))</script></p>
+    </div>
+
+    <div class="slide">
+        <h2>1. Tổng quan cấu trúc dự án</h2>
+        <h3>1.1. Danh sách các Project chính</h3>
+        <table>
+            <tr>
+                <th>Project Name</th>
+                <th>Type</th>
+                <th>Target Framework</th>
+                <th>Dependencies</th>
+                <th>Priority</th>
+            </tr>
+            <tr>
+                <td class="project-name">Fanex.ExternalAccount.UI</td>
+                <td>Web Application (ASP.NET MVC)</td>
+                <td>.NET Framework 4.7.2</td>
+                <td>High (Controllers, Service, DataAccess)</td>
+                <td class="danger">Critical</td>
+            </tr>
+            <tr>
+                <td class="project-name">Core</td>
+                <td>Class Library</td>
+                <td>.NET Framework 4.7.2</td>
+                <td>Core.Shared, DataAccess, Service, DTO</td>
+                <td class="danger">Critical</td>
+            </tr>
+            <tr>
+                <td class="project-name">Core.Shared</td>
+                <td>Class Library</td>
+                <td>.NET Framework 4.7.2</td>
+                <td>Minimal dependencies</td>
+                <td class="success">Low</td>
+            </tr>
+            <tr>
+                <td class="project-name">Fanex.ExternalAccount.Controllers</td>
+                <td>Class Library (MVC Controllers)</td>
+                <td>.NET Framework 4.7.2</td>
+                <td>Core, Service, DTO, ViewModel</td>
+                <td class="danger">Critical</td>
+            </tr>
+            <tr>
+                <td class="project-name">Fanex.ExternalAccount.DataAccess</td>
+                <td>Class Library (Data Layer)</td>
+                <td>.NET Framework 4.7.2</td>
+                <td>Core.Shared, DTO, Enterprise Library</td>
+                <td class="danger">Critical</td>
+            </tr>
+            <tr>
+                <td class="project-name">Fanex.ExternalAccount.Service</td>
+                <td>Class Library (Business Logic)</td>
+                <td>.NET Framework 4.7.2</td>
+                <td>DataAccess, DTO, ViewModel</td>
+                <td class="danger">Critical</td>
+            </tr>
+            <tr>
+                <td class="project-name">Fanex.ExternalAccount.DTO</td>
+                <td>Class Library (Data Transfer Objects)</td>
+                <td>.NET Framework 4.7.2</td>
+                <td>Core.Shared, Utility</td>
+                <td class="success">Low</td>
+            </tr>
+            <tr>
+                <td class="project-name">Fanex.ExternalAccount.Utility</td>
+                <td>Class Library (Utilities)</td>
+                <td>.NET Framework 4.7.2</td>
+                <td>Minimal dependencies</td>
+                <td class="success">Low</td>
+            </tr>
+            <tr>
+                <td class="project-name">Fanex.ExternalAccount.ViewModel</td>
+                <td>Class Library (View Models)</td>
+                <td>.NET Framework 4.7.2</td>
+                <td>DTO, Requests, Utility</td>
+                <td class="warning">Medium</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="slide">
+        <h2>2. Phân tích Dependencies và Packages</h2>
+        <h3>2.1. Microsoft Enterprise Library (VẤN ĐỀ NGHIÊM TRỌNG)</h3>
+        <div class="danger">
+            <strong>Cảnh báo:</strong> Dự án sử dụng Microsoft Enterprise Library 5.0.414.0 - một thư viện cũ không tương thích với .NET Core.
+        </div>
+        <ul>
+            <li><strong>Microsoft.Practices.EnterpriseLibrary.Caching</strong> - Cần thay thế bằng <span class="highlight">Microsoft.Extensions.Caching.Memory</span></li>
+            <li><strong>Microsoft.Practices.EnterpriseLibrary.Data</strong> - Cần thay thế bằng <span class="highlight">Entity Framework Core</span> hoặc <span class="highlight">Dapper</span></li>
+            <li><strong>Microsoft.Practices.EnterpriseLibrary.Logging</strong> - Cần thay thế bằng <span class="highlight">Microsoft.Extensions.Logging</span></li>
+            <li><strong>Microsoft.Practices.Unity</strong> - Cần thay thế bằng <span class="highlight">Microsoft.Extensions.DependencyInjection</span></li>
+        </ul>
+
+        <h3>2.2. ASP.NET MVC Framework</h3>
+        <div class="warning">
+            <strong>Chú ý:</strong> Dự án sử dụng ASP.NET MVC 5.2.6 - cần nâng cấp lên ASP.NET Core MVC.
+        </div>
+        <ul>
+            <li><strong>System.Web.Mvc</strong> → <span class="highlight">Microsoft.AspNetCore.Mvc</span></li>
+            <li><strong>System.Web.Razor</strong> → <span class="highlight">Microsoft.AspNetCore.Razor</span></li>
+            <li><strong>System.Web.Helpers</strong> → <span class="highlight">Microsoft.AspNetCore.Mvc.Rendering</span></li>
+        </ul>
+
+        <h3>2.3. Các thư viện tương thích</h3>
+        <div class="success">
+            <strong>Tốt:</strong> Một số thư viện đã tương thích với .NET Core.
+        </div>
+        <ul>
+            <li><strong>Newtonsoft.Json 13.0.3</strong> - Tương thích</li>
+            <li><strong>Dapper 2.1.35</strong> - Tương thích</li>
+            <li><strong>MessagePack 3.1.1</strong> - Tương thích</li>
+            <li><strong>StackExchange.Redis 2.8.24</strong> - Tương thích</li>
+            <li><strong>NPOI 2.6.1</strong> - Tương thích</li>
+        </ul>
+
+        <h3>2.4. Các thư viện cần kiểm tra</h3>
+        <div class="warning">
+            <strong>Cần kiểm tra:</strong> Một số thư viện cần xác minh tương thích.
+        </div>
+        <ul>
+            <li><strong>Fanex.*</strong> - Các thư viện nội bộ, cần kiểm tra source code</li>
+            <li><strong>ONEbook.UM 3.1.1</strong> - Cần kiểm tra phiên bản .NET Core</li>
+            <li><strong>RestSharp 105.2.3</strong> - Cần nâng cấp lên phiên bản mới</li>
+            <li><strong>FluentValidation 3.2.0.0</strong> - Cần nâng cấp lên phiên bản mới</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>3. Phân tích từng Module chi tiết</h2>
+        
+        <h3>3.1. Fanex.ExternalAccount.UI (Web Application)</h3>
+        <div class="danger">
+            <strong>Độ phức tạp: CAO</strong> - Đây là project chính cần nâng cấp nhiều nhất.
+        </div>
+        <ul>
+            <li><strong>Global.asax.cs</strong> → Cần chuyển đổi sang <span class="highlight">Program.cs</span> và <span class="highlight">Startup.cs</span></li>
+            <li><strong>Web.config</strong> → Cần chuyển đổi sang <span class="highlight">appsettings.json</span></li>
+            <li><strong>Areas/</strong> - Cần cập nhật cấu trúc Areas cho ASP.NET Core</li>
+            <li><strong>Views/</strong> - Cần cập nhật Razor syntax</li>
+            <li><strong>Scripts/</strong> - Cần cập nhật bundling và minification</li>
+        </ul>
+
+        <h3>3.2. Core Module</h3>
+        <div class="warning">
+            <strong>Độ phức tạp: TRUNG BÌNH</strong> - Cần thay thế Enterprise Library.
+        </div>
+        <ul>
+            <li><strong>Authorization/</strong> - Cần cập nhật cho ASP.NET Core Identity</li>
+            <li><strong>Context/</strong> - Cần cập nhật HttpContext usage</li>
+            <li><strong>Filters/</strong> - Cần chuyển đổi sang ASP.NET Core Filters</li>
+            <li><strong>Configurations/</strong> - Cần cập nhật configuration system</li>
+        </ul>
+
+        <h3>3.3. DataAccess Module</h3>
+        <div class="danger">
+            <strong>Độ phức tạp: CAO</strong> - Cần thay thế hoàn toàn Enterprise Library Data.
+        </div>
+        <ul>
+            <li><strong>Criteria/</strong> - 140 files cần cập nhật database access</li>
+            <li><strong>Customer/</strong> - Cần cập nhật repository pattern</li>
+            <li><strong>Report/</strong> - Cần cập nhật reporting logic</li>
+            <li><strong>UserControl/</strong> - Cần cập nhật user management</li>
+        </ul>
+
+        <h3>3.4. Service Module</h3>
+        <div class="warning">
+            <strong>Độ phức tạp: TRUNG BÌNH</strong> - Cần cập nhật dependency injection.
+        </div>
+        <ul>
+            <li><strong>Customer/</strong> - Business logic services</li>
+            <li><strong>Report/</strong> - Reporting services</li>
+            <li><strong>UserControl/</strong> - User management services</li>
+            <li><strong>TelegramBot/</strong> - External service integration</li>
+        </ul>
+
+        <h3>3.5. Controllers Module</h3>
+        <div class="warning">
+            <strong>Độ phức tạp: TRUNG BÌNH</strong> - Cần cập nhật cho ASP.NET Core MVC.
+        </div>
+        <ul>
+            <li><strong>Authentication/</strong> - Cần cập nhật authentication logic</li>
+            <li><strong>Customer/</strong> - Customer management controllers</li>
+            <li><strong>Report/</strong> - Reporting controllers</li>
+            <li><strong>UserControl/</strong> - User management controllers</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>4. Kế hoạch nâng cấp chi tiết theo từng bước</h2>
+        
+        <h3>4.1. Giai đoạn 1: Chuẩn bị và Setup (1-2 tuần)</h3>
+        <ul>
+            <li><strong>Bước 1.1:</strong> Tạo solution mới với .NET 9</li>
+            <li><strong>Bước 1.2:</strong> Tạo các project mới với SDK-style format</li>
+            <li><strong>Bước 1.3:</strong> Setup dependency injection container</li>
+            <li><strong>Bước 1.4:</strong> Setup logging system</li>
+            <li><strong>Bước 1.5:</strong> Setup configuration system</li>
+        </ul>
+
+        <h3>4.2. Giai đoạn 2: Core Libraries (2-3 tuần)</h3>
+        <ul>
+            <li><strong>Bước 2.1:</strong> Nâng cấp Core.Shared (ít dependencies nhất)</li>
+            <li><strong>Bước 2.2:</strong> Nâng cấp DTO project</li>
+            <li><strong>Bước 2.3:</strong> Nâng cấp Utility project</li>
+            <li><strong>Bước 2.4:</strong> Nâng cấp ViewModel project</li>
+        </ul>
+
+        <h3>4.3. Giai đoạn 3: Data Layer (3-4 tuần)</h3>
+        <ul>
+            <li><strong>Bước 3.1:</strong> Thay thế Enterprise Library Data bằng Dapper/EF Core</li>
+            <li><strong>Bước 3.2:</strong> Cập nhật tất cả Criteria classes</li>
+            <li><strong>Bước 3.3:</strong> Cập nhật Repository pattern</li>
+            <li><strong>Bước 3.4:</strong> Cập nhật connection string management</li>
+        </ul>
+
+        <h3>4.4. Giai đoạn 4: Business Logic (2-3 tuần)</h3>
+        <ul>
+            <li><strong>Bước 4.1:</strong> Nâng cấp Service project</li>
+            <li><strong>Bước 4.2:</strong> Cập nhật dependency injection</li>
+            <li><strong>Bước 4.3:</strong> Cập nhật caching mechanism</li>
+            <li><strong>Bước 4.4:</strong> Cập nhật logging calls</li>
+        </ul>
+
+        <h3>4.5. Giai đoạn 5: Web Layer (3-4 tuần)</h3>
+        <ul>
+            <li><strong>Bước 5.1:</strong> Nâng cấp Controllers project</li>
+            <li><strong>Bước 5.2:</strong> Cập nhật authentication/authorization</li>
+            <li><strong>Bước 5.3:</strong> Cập nhật filters và middleware</li>
+            <li><strong>Bước 5.4:</strong> Nâng cấp UI project</li>
+            <li><strong>Bước 5.5:</strong> Cập nhật Views và Razor syntax</li>
+        </ul>
+
+        <h3>4.6. Giai đoạn 6: Testing và Deployment (2-3 tuần)</h3>
+        <ul>
+            <li><strong>Bước 6.1:</strong> Unit testing</li>
+            <li><strong>Bước 6.2:</strong> Integration testing</li>
+            <li><strong>Bước 6.3:</strong> Performance testing</li>
+            <li><strong>Bước 6.4:</strong> Security testing</li>
+            <li><strong>Bước 6.5:</strong> Deployment và monitoring</li>
+        </ul>
+    </div>
+
+    <div class="slide">
+        <h2>5. Ước tính thời gian và nguồn lực</h2>
+        
+        <h3>5.1. Thời gian tổng thể</h3>
+        <ul>
+            <li><strong>Tổng thời gian:</strong> 13-19 tuần (3-4.5 tháng)</li>
+            <li><strong>Thời gian phát triển:</strong> 11-16 tuần</li>
+            <li><strong>Thời gian testing:</strong> 2-3 tuần</li>
+        </ul>
+
+        <h3>5.2. Nguồn lực cần thiết</h3>
+        <ul>
+            <li><strong>Senior .NET Developer:</strong> 1 người (full-time)</li>
+            <li><strong>Mid-level .NET Developer:</strong> 1-2 người (full-time)</li>
+            <li><strong>QA Tester:</strong> 1 người (part-time)</li>
+            <li><strong>DevOps Engineer:</strong> 1 người (part-time)</li>
+        </ul>
+
+        <h3>5.3. Rủi ro và thách thức</h3>
+        <div class="danger">
+            <strong>Rủi ro cao:</strong>
+            <ul>
+                <li>Enterprise Library migration phức tạp</li>
+                <li>Custom Fanex libraries có thể không tương thích</li>
+                <li>Database schema có thể cần thay đổi</li>
+                <li>Third-party integrations cần cập nhật</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>6. Khuyến nghị và lời khuyên</h2>
+        
+        <h3>6.1. Khuyến nghị kỹ thuật</h3>
+        <ul>
+            <li><strong>Bắt đầu với .NET 8</strong> thay vì .NET 9 để ổn định hơn</li>
+            <li><strong>Sử dụng .NET Upgrade Assistant</strong> để tự động hóa một phần quá trình</li>
+            <li><strong>Tạo migration plan chi tiết</strong> cho từng module</li>
+            <li><strong>Thiết lập CI/CD pipeline</strong> ngay từ đầu</li>
+        </ul>
+
+        <h3>6.2. Khuyến nghị quản lý</h3>
+        <ul>
+            <li><strong>Chia nhỏ thành các milestone</strong> để dễ theo dõi tiến độ</li>
+            <li><strong>Thiết lập backup strategy</strong> cho code và database</li>
+            <li><strong>Đào tạo team</strong> về .NET Core trước khi bắt đầu</li>
+            <li><strong>Lập kế hoạch rollback</strong> trong trường hợp có vấn đề</li>
+        </ul>
+
+        <h3>6.3. Các bước tiếp theo</h3>
+        <ol>
+            <li>Phê duyệt kế hoạch và ngân sách</li>
+            <li>Thiết lập môi trường phát triển</li>
+            <li>Bắt đầu với Core.Shared project</li>
+            <li>Thiết lập automated testing</li>
+            <li>Bắt đầu migration theo kế hoạch</li>
+        </ol>
+    </div>
+
+    <div class="slide">
+        <h2>7. Kết luận</h2>
+        <p>Việc nâng cấp dự án External Accounting Website từ .NET Framework 4.7.2 lên .NET Core 9 là một dự án lớn và phức tạp, đòi hỏi:</p>
+        <ul>
+            <li><strong>Thời gian:</strong> 3-4.5 tháng</li>
+            <li><strong>Nguồn lực:</strong> 2-3 developers + QA + DevOps</li>
+            <li><strong>Rủi ro:</strong> Trung bình đến cao</li>
+            <li><strong>Lợi ích:</strong> Performance, security, maintainability tốt hơn</li>
+        </ul>
+        
+        <div class="success">
+            <strong>Khuyến nghị:</strong> Nên thực hiện dự án này để đảm bảo ứng dụng có thể tiếp tục phát triển và bảo trì trong tương lai.
+        </div>
+    </div>
+
+</body>
+</html>

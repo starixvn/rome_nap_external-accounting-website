@@ -1,0 +1,137 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@{
+    ViewBag.Title = "Win Loss Detail";
+    Layout = null;
+}
+
+<style type="text/css">
+    .view-xtra-pt {
+        color: #2489ce;
+        cursor: pointer;
+    }
+
+    #filterBoxWLD .monPickrWrap, #filterBoxWLD .selectedDayWrap {
+        z-index: 1 !important;
+    }
+</style>
+<div>
+    <div class="page-title">
+        <div class="wlDetail">
+            Win Loss Detail
+        </div>
+        <div class="groupBack hide">
+            <div id="levelLine" class="level-line"></div>
+            <div id="tabSuper">
+                Super
+            </div>
+            <div id="tabMaster">
+                Master
+            </div>
+            <div id="tabAgent">
+                Agent
+            </div>
+            <div id="tabMember">
+                Member
+            </div>
+        </div>
+        <span class="icon-filter active"></span>
+    </div>
+    <div id="filterBoxWLD" class="search-form filterbox filter-winloss-detail">
+        <div class="form-group from-to-date">
+            <input type="hidden" id="MinDate" value="@DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1)" />
+            <input type="hidden" id="MaxDate" value="@DateTime.Now" />
+            <div class="label">@ViewLang.Date</div>
+            <div id="userGroup" class="user-group pull-left">
+                <select name="DateList" id="DateList">
+                    <option id="0" selected="selected">Today</option>
+                    <option id="1">Yesterday</option>
+                    <option id="2">Current Week</option>
+                    <option id="3">Last Week</option>
+                    <option id="4">Current Month</option>
+                    <option id="5">Last Month</option>
+                    <option id="6">Since Last Month</option>
+                    <option id="7">Date Range</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group from-to-date">
+            <div class="label">@ViewLang.From</div>
+            <input id="dtpFromDate" type="text" readonly="readonly" />
+        </div>
+        <div class="form-group from-to-date">
+            <div class="label to-width">@ViewLang.To</div>
+            <input id="dtpToDate" type="text" readonly="readonly" />
+        </div>
+        <div class="form-group group-month-day" style="display: none">
+            <div class="label">@ViewLang.Month</div>
+            <div class="user-group pull-left dll-month">
+                <div id="monPickr1">
+                </div>
+            </div>
+        </div>
+        <div class="form-group group-month-day" style="display: none">
+            <div class="label">@ViewLang.From</div>
+            <div class="user-group pull-left">
+                <div id="fromDay1">
+                </div>
+            </div>
+        </div>
+        <div class="form-group group-month-day" style="display: none">
+            <div class="label to-width">@ViewLang.To</div>
+            <div class="user-group pull-left">
+                <div id="toDay1">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">@ViewLang.Username</div>
+            <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
+        </div>
+        <div class="form-group">
+            <div class="label">@ViewLang.Products</div>
+            <div class="user-group pull-left ddl-product">
+                <div id="ddl-product"></div>
+            </div>
+        </div>
+        <div class="form-group hidden" id="ddl-product-detail-container">
+            <div class="label">@ViewLang.ProductDetails</div>
+            <div class="user-group pull-left ddl-product">
+                <div id="ddl-product-detail"></div>
+            </div>
+        </div>
+        <div class="form-group btn-box">
+            <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
+        </div>
+        <div class="form-group">
+            <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel hide"></span>
+        </div>
+        <div class="form-group view-history-box">
+            <div id="GroupViewHistory" class="">
+                <div>@ViewLang.NoteViewHistory <span id="ViewHistoryReport" class="history"><span class="txt-history">@ViewLang.ViewHistoryReport</span></span></div>
+                
+            </div>
+            <div id="GroupBackToCurrent" class="" style="display: none">
+                <span id="BackToCurrentReport" class="history"><span class="arrow"></span><span class="txt-history">@ViewLang.BackToCurrentReport</span></span>
+            </div>
+        </div>
+        <div class="form-group" style="display:block;">@Html.Raw(ViewBag.NoteSabaOthers)</div>
+        <div>@Html.Raw(ViewLang.NoteExtraLevelAvailableDate)</div>
+        @if (ViewBag.CanViewExtraPT)
+        {
+            <div>
+                <span id="ViewExtraPT" class="view-xtra-pt">
+                    View Extra PT %
+                </span>
+            </div>
+        }
+    </div>
+    <div id="mainGrid" class="hide tbl-winloss-detail">
+        <div id="jqgrid" class="removeRadius freegrid content-grid"></div>
+    </div>
+    <div id="msgNoinfo">
+        There is no data.
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+@StaticResources.RenderScripts("~/assets/bundles/winlossdetail/index")

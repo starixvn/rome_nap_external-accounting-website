@@ -1,0 +1,146 @@
+﻿@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+.btn {
+    @include border-radius(2px);
+    height: 28px;
+    line-height: 28px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 13px !important;
+    min-width: 64px;
+    border: none;
+    outline: none;
+    text-indent: 0;
+    -webkit-appearance: none;    
+    &.ui-corner-all {
+        border-radius: 2px !important;
+    }
+
+    &.-reset {
+        background-color: $btn-reset-bg;
+        color: $btn-reset-color;
+
+        &:hover {
+            background-color: $btn-reset-bg-hover;
+            color: $btn-reset-color-hover;
+        }
+    }
+
+    &.-logout {
+        background-color: $btn-logout-bg;
+        color: $btn-logout-color;
+
+        &:hover {
+            background-color: $btn-logout-bg-hover;
+            color: $btn-logout-color-hover;
+        }
+    }
+
+    &.-normal {
+        background-color: $btn-normal-bg;
+        color: $btn-normal-color;
+
+        &:hover {
+            background-color: $btn-normal-bg-hover !important;
+            color: $btn-normal-color-hover;
+        }
+    }
+
+     &.-submit {
+        background-color: $btn-submit-bg;
+        color: $btn-submit-color;
+
+        &:hover {
+            background-color: $btn-submit-bg-hover !important;
+            color: $btn-submit-color-hover;
+        }
+    }
+
+    &.-add, &.-green {
+        background-color: $btn-add-bg;
+        color: $btn-add-color;
+
+        &:hover {
+            background-color: $btn-add-bg-hover;
+            color: $btn-add-color-hover;
+        }
+    }
+
+    &.-special {
+        background-color: $btn-special-bg;
+        color: $btn-special-color;
+
+        &:hover {
+            background-color: $btn-special-bg-hover;
+            color: $btn-special-color-hover;
+        }
+    }
+
+    &.-list {
+        background-color: $btn-list-bg-hover;
+        color: $btn-list-color-hover;
+
+        &:hover {
+            background-color: $btn-list-bg-hover;
+            color: $btn-list-color-hover;
+        }
+    }
+}
+
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 35px;
+  height: 14px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #c8c8c8;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 13px;
+  width: 13px;
+  left: 1px;
+  bottom: 1px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.toggle-margin-on + .slider {
+  background-color: #82c341;
+}
+
+.toggle-margin-off + .slider {
+    background-color: #c8c8c8;
+    &:before {
+        right: 1px;
+        left: unset;
+    }
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+

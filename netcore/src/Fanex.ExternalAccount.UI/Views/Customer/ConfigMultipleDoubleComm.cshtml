@@ -1,0 +1,35 @@
+﻿@model int
+<div>
+    <div style="height: 25px">
+        <input style="margin: 5px" id="dblAllow" type="radio" name="dblComm" value="" /><label id="allow" for="dblAllow">Allow Double Commission</label></div>
+    <div style="height: 25px">
+        <input style="margin: 5px" id="dblDisallow" type="radio" name="dblComm" value="" /><label id="disallow" for="dblDisallow">Disallow Double Commission</label></div>
+    <div style="float: right">
+        <input id="btnSubmit" type="button" value="Submit" class="btn -submit buttonPopup" /></div>
+    @Html.AntiForgeryToken()
+</div>
+<script type="text/javascript">
+    var allow = true;
+    var roleId = '@Model';
+
+    $(document).ready(function () {
+        if (roleId === '@Role.Member') {
+            $('#allow').html('Turn ON Double Commission');
+            $('#disallow').html('Turn OFF Double Commission');
+        }
+
+        $('#dblAllow').attr('checked', 'checked');
+
+        $('#dblAllow').bind('click', function () {
+            allow = true;
+        });
+
+        $('#dblDisallow').bind('click', function () {
+            allow = false;
+        });
+
+        $('#btnSubmit').bind('click', function () {
+            Fanex.ExtAcc.Customer.UpdateMultipleDoubleComm(allow);
+        });
+    });
+</script>

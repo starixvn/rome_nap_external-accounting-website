@@ -1,0 +1,72 @@
+﻿@using Resources
+@model Fanex.ExternalAccount.ViewModel.TotalBet.TotalBetFilterViewModel
+@{
+    ViewBag.Title = "Total Bet";
+    Layout = null;
+    var countDownTimes = new int[] { 15, 30, 45, 60, 75 };
+}
+
+@StaticResources.RenderStyles("~/assets/bundles/totalbet/index")
+<div>
+    <div class="page-title">
+        <div class="wlDetail">
+            Total Bet
+        </div>
+        <span class="icon-filter active"></span>
+    </div>
+
+    <div class="search-form filterbox">
+        <div class="form-group">
+            <div class="label">@Lang.league</div>
+            <div class="pull-left ddl-leagues">
+                <div id="ddl-leagues"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">@Lang.events</div>
+            <div class="pull-left ddl-events">
+                <div id="ddl-events"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">@Lang.viewby</div>
+            <div class="select-box pull-left select-box-view-by">
+                <select id="ddl-view-by" name="view-by">
+                    <option value="1">@Lang.Headline</option>
+                    <option value="2">@Lang.super</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group btn-box">
+            <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
+        </div>
+
+        <div class="form-group btn-box">
+            <div class="dropdown-refresh">
+                <div class="div-count-down">
+                    <div class="div-refresh" title="Refresh"></div>
+                    <div class="div-down"></div>
+                </div>
+                <ul class="panel-options hide">
+                    @for (var i = 0; i < countDownTimes.Length; i++)
+                    {
+                        var time = countDownTimes[i];
+                        <li id="option_@i" class="menuitem count-down-item" time="@time">
+                            @(time.ToString() + " sec")
+                        </li>
+                    }
+                    <li id="option_@countDownTimes.Length" class="menuitem count-down-item" time="0">
+                        @Lang.NoRefresh
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="mainGrid" class="tbl-total-bet hide">
+        <div id="jqgrid" class="removeRadius freegrid content-grid"></div>
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+@StaticResources.RenderScripts("~/assets/bundles/totalbet/index")
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+@Html.Hidden("inp-leagues", Newtonsoft.Json.JsonConvert.SerializeObject(Model.Leagues))

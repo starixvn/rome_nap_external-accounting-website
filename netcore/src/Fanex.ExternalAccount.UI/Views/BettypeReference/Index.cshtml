@@ -1,0 +1,16 @@
+﻿@using Fanex.PTSetting.BettypeReference
+@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.DTO;
+
+@{
+    ViewBag.Title = "PT Bettypes Reference";
+    Layout = "~/Views/Shared/_LayoutPtInfo.cshtml";
+
+    var exclusiveRefSportIds = ViewData["ExclusiveRefSportIds"] as int[];
+    var siteDB = ViewData["SiteDB"] as SiteDB;
+}
+
+@section styles {
+    <link href="@Url.Content("~/Views/BettypeReference/Themes/style.less")" rel="Stylesheet" type="text/css" />
+}
+@Html.RenderBetTypeReference(Config.IsTest, siteDB.AGIP, siteDB.SiteDBGroupID, exclusiveRefSportIds)

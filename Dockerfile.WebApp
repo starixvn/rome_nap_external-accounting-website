@@ -1,0 +1,54 @@
+# WebApp (Fanex.ExternalAccount.UI) Dockerfile
+# ASP.NET Core MVC Web Application
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+
+# Copy solution file
+COPY ["netcore/ExternalAccount.NetCore.sln", "netcore/"]
+COPY ["netcore/src/Fanex.ExternalAccount.UI/Fanex.ExternalAccount.UI.csproj", "netcore/src/Fanex.ExternalAccount.UI/"]
+
+# Copy shared project files for dependency resolution
+COPY ["netcore/src/Shared/Core/Core.csproj", "netcore/src/Shared/Core/"]
+COPY ["netcore/src/Shared/Fanex.ExternalAccount.Core.Shared/Fanex.ExternalAccount.Core.Shared.csproj", "netcore/src/Shared/Fanex.ExternalAccount.Core.Shared/"]
+COPY ["netcore/src/Shared/Fanex.ExternalAccount.Controllers/Fanex.ExternalAccount.Controllers.csproj", "netcore/src/Shared/Fanex.ExternalAccount.Controllers/"]
+COPY ["netcore/src/Shared/Fanex.ExternalAccount.DataAccess/Fanex.ExternalAccount.DataAccess.csproj", "netcore/src/Shared/Fanex.ExternalAccount.DataAccess/"]
+COPY ["netcore/src/Shared/Fanex.ExternalAccount.DTO/Fanex.ExternalAccount.DTO.csproj", "netcore/src/Shared/Fanex.ExternalAccount.DTO/"]
+COPY ["netcore/src/Shared/Fanex.ExternalAccount.Excel/Fanex.ExternalAccount.Excel.csproj", "netcore/src/Shared/Fanex.ExternalAccount.Excel/"]
+COPY ["netcore/src/Shared/Fanex.ExternalAccount.Resources/Fanex.ExternalAccount.Resources.csproj", "netcore/src/Shared/Fanex.ExternalAccount.Resources/"]
+COPY ["netcore/src/Shared/Fanex.ExternalAccount.SearchAndCopy/Fanex.ExternalAccount.SearchAndCopy.csproj", "netcore/src/Shared/Fanex.ExternalAccount.SearchAndCopy/"]
+COPY ["netcore/src/Shared/Fanex.ExternalAccount.Service/Fanex.ExternalAccount.Service.csproj", "netcore/src/Shared/Fanex.ExternalAccount.Service/"]
+COPY ["netcore/src/Shared/Fanex.ExternalAccount.Utility/Fanex.ExternalAccount.Utilities.csproj", "netcore/src/Shared/Fanex.ExternalAccount.Utility/"]
+COPY ["netcore/src/Shared/Fanex.ExternalAccount.ViewModel/Fanex.ExternalAccount.ViewModel.csproj", "netcore/src/Shared/Fanex.ExternalAccount.ViewModel/"]
+COPY ["netcore/src/Shared/LeftPanel/LeftPanel.csproj", "netcore/src/Shared/LeftPanel/"]
+
+# Copy module project files
+COPY ["netcore/src/Shared/Modules/", "netcore/src/Shared/Modules/"]
+
+# Restore packages
+RUN dotnet restore "netcore/src/Fanex.ExternalAccount.UI/Fanex.ExternalAccount.UI.csproj"
+
+# Copy all source code
+COPY ["netcore/src/", "netcore/src/"]
+
+# Build project
+WORKDIR "/src/netcore/src/Fanex.ExternalAccount.UI"
+RUN dotnet build "Fanex.ExternalAccount.UI.csproj" -c Release -o /app/build
+
+# Publish project
+FROM build AS publish
+RUN dotnet publish "Fanex.ExternalAccount.UI.csproj" -c Release -o /app/publish
+
+# Runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
+WORKDIR /app
+
+# Copy published files
+COPY --from=publish /app/publish .
+
+# Expose port
+EXPOSE 80
+EXPOSE 443
+
+# Set entrypoint
+ENTRYPOINT ["dotnet", "Fanex.ExternalAccount.UI.dll"]
+

@@ -1,0 +1,19 @@
+@import "common";
+.icon-copy {
+    font-size: 20px;
+    border: none !important;
+    cursor: pointer;
+    color: #7f7f7f;
+    margin-right: 10px;
+}
+.columns-container {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    .columns-list{
+        margin-left: 5px;
+    }
+}
+.icon-directmember{
+    margin: 0;
+}

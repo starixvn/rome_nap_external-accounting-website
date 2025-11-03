@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>Fanex.ExternalAccount.Requests</RootNamespace>
+    <AssemblyName>Fanex.ExternalAccount.Requests</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Core.Shared\Fanex.ExternalAccount.Core.Shared.csproj" />
+    <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj" />
+  </ItemGroup>
+
+</Project>
+

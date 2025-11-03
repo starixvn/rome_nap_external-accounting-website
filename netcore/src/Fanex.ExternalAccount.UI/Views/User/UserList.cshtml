@@ -1,0 +1,171 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.DTO.UserControl
+<link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />
+<div id='jqWidget'>
+    <div class="page-title">
+        <div class="pull-left">
+            User Management
+        </div>
+        <div class="pull-right">
+            <button id="jqbuttonAddUser" class="btn -add"><span class="icon-add"></span> Add New User</button>
+            <button id="jqbuttonAddExistUser" class="btn -add"><span class="icon-add"></span> Add Existing User</button>                     
+        </div>
+        <div class="pull-right filter-user"><span class="icon-filter active"></span></div>  
+    </div>
+    <div class="search-form filterbox">
+        <div class="form-group">
+            <label class="label">
+                @ViewLang.Username
+            </label>
+            <input id="Usernames" type="text" class="usernameInput" />
+        </div>
+        <div class="form-group">
+            <label class="label">
+                @ViewLang.Group
+            </label>
+            <div id="userGroup" class="user-group pull-left">
+                <select id="GroupIDs" class="usernameInput group">
+                    @{
+                        var CurrentSession = new Fanex.ExternalAccount.Core.Context.CurrentSession();
+                    }
+                    @if (CurrentSession.IsITAdmin)
+                    {
+                        <option value="-1">@ViewLang.All</option>
+                    }
+                    @foreach (Group item in ViewBag.GroupList)
+                    {
+                        <option value="@item.GroupID">@item.GroupName</option>
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <input id="btnSearch" class="btn -submit" type="button" value="Submit" onclick="Fanex.ExtAcc.User.Search()" />
+        </div>
+    </div>
+    <div class="statistic bold">
+        <span>Active User:</span>
+        <span id="activeUsers"></span>
+        <span>|</span>
+        <span>Inactive User:</span>
+        <span id="inActiveUsers"></span>
+    </div>
+    <div id="mainGrid">
+        <div id="jqgrid-user" class="removeRadius freegrid content-grid">
+        </div>
+        <div id="msgNoinfo" class="no-info">
+            There is no data.
+        </div>
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+<script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    Fanex.ExtAcc.User.dataTexts = [
+    '@ViewLang.Username',
+    '@ViewLang.Firstname',
+    '@ViewLang.Lastname',
+    '@ViewLang.GroupName',
+    '@ViewLang.Creator',
+    '@ViewLang.CreatedDate',
+    '@ViewLang.Permission',
+    '@ViewLang.Active',
+    '@ViewLang.Password'
+    ];
+
+    Validators.validateNumber = function (value) {
+        if (value && value != "") {
+            value = value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+            var intRegex = /^\d+$/;
+
+            if (!intRegex.test(value)) {
+                return false;
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    Validators.validateInput = function (value) {
+        if (value && value != "") {
+            value = value.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+
+            if (value != "")
+                return true;
+
+            return false;
+        }
+
+        return false;
+    };
+
+    Validators.showDown = function (elementInput, message, xPos, pointerXPos, yPos, pointerYPos, height, timeout) {
+        // <span class="hint"><span>This is the message.<span><span class="hint-pointer">&nbsp;</span></span>
+        var hint = document.getElementById('fHintDown');
+        var hintPointer = null;
+        if (hint == null) {
+            var hint = document.createElement("SPAN");
+            hint.className = 'hint';
+            var hintMsg = document.createElement("SPAN");
+            hint.appendChild(hintMsg);
+            hintPointer = document.createElement("SPAN");
+            hintPointer.className = 'hint-pointer-down';
+            hint.appendChild(hintPointer);
+            hint.id = 'fHintDown';
+            hint.style.top = '10px';
+            hint.style.left = '10px';
+            hint.style.zIndex = 999999;
+            hint.onclick = function () { // Hide onclick
+                hint.style.display = 'none';
+            };
+            document.body.appendChild(hint);
+        };
+        hintPointer = hint.lastChild;
+        hint.firstChild.innerHTML = message;
+        if (this.timeOutHideTooltip) {
+            clearTimeout(this.timeOutHideTooltip);
+            this.timeOutHideTooltip = null;
+        };
+        if (typeof (timeout) == 'undefined') {
+            timeout = 1000;
+        }
+        this.timeOutHideTooltip = setTimeout(function () {
+            if (hint == null) {
+                return;
+            }
+            hint.style.display = 'none';
+        }, timeout); // Auto hide in 1s
+        if (elementInput != null) {
+            if (typeof xPos == 'undefined') {
+                xPos = 0;
+            }
+            if (typeof pointerXPos == 'undefined') {
+                pointerXPos = 10;
+            }
+            if (typeof yPos == 'undefined') {
+                yPos = -45;
+            }
+            if (typeof (pointerYPos) == 'undefined') {
+                pointerYPos = 38;
+            }
+            if (typeof (height) == 'undefined') {
+                height = 18;
+            }
+            hint.style.height = height + 'px';
+            hintPointer.style.left = (pointerXPos + 'px');
+            hintPointer.style.top = (pointerYPos + 'px');
+            var pos = Validators.utils.findPosRelativeToViewport(elementInput);
+            hint.style.left = (pos[0] + xPos) + 'px';
+            hint.style.top = (pos[1] + yPos) + 'px';
+            elementInput.onchange = function () {
+                hint.style.display = 'none';
+            };
+            elementInput.focus();
+        };
+        hint.style.display = 'block';
+    };
+
+    Fanex.ExtAcc.User.Init();
+</script>

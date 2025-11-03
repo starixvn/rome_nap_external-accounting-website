@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="enablestatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="products">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="product" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>                  
+                  <xs:sequence>
+                    <xs:element name="sps">
+                      <xs:complexType>
+                        <xs:sequence>
+                          <xs:element name="sp" minOccurs="0" maxOccurs="unbounded">
+                            <xs:complexType>
+                              <xs:sequence>
+                                <xs:element name="params" nillable="true">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="param" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:attribute name="name" type="xs:string" use="required" />
+                                          <xs:attribute name="mapproperty" type="xs:string" use="required" />
+                                          <xs:attribute name="reverse" type="xs:boolean" use="optional" />
+                                          <xs:attribute name="default" type="xs:string" use="optional" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>                                    
+                                  </xs:complexType>
+                                </xs:element>
+                                <xs:element name="results" nillable="true">
+                                  <xs:complexType>
+                                    <xs:sequence>
+                                      <xs:element name="column" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                          <xs:attribute name="name" type="xs:string" use="required" />
+                                          <xs:attribute name="mapproperty" type="xs:string" use="required" />
+                                          <xs:attribute name="reverse" type="xs:boolean" use="optional" />
+                                          <xs:attribute name="default" type="xs:string" use="optional" />
+                                        </xs:complexType>
+                                      </xs:element>
+                                    </xs:sequence>
+                                  </xs:complexType>
+                                </xs:element>
+                              </xs:sequence>
+                              <xs:attribute name="key" type="xs:string" use="required" />
+                              <xs:attribute name="type" type="xs:string" use="required" />
+                            </xs:complexType>
+                          </xs:element>
+                        </xs:sequence>                        
+                      </xs:complexType>
+                    </xs:element>                    
+                  </xs:sequence>
+                  <xs:attribute name="id" type="xs:string" use="required" />
+                  <xs:attribute name="hascheckall" type="xs:boolean" use="optional" />
+                  <xs:attribute name="reloadafterupdate" type="xs:boolean" use="optional" />
+                  <xs:attribute name="hidebettypes" type="xs:string" use="optional" />
+                  <xs:attribute name="warning" type="xs:string" use="optional" />
+                  <xs:attribute name="function" type="xs:string" use="required" />
+                  <xs:attribute name="closepopupjs" type="xs:string" use="optional" />
+                </xs:complexType>
+              </xs:element>              
+            </xs:sequence>
+            <xs:attribute name="iframeid" type="xs:string" use="required" />
+          </xs:complexType>          
+        </xs:element>        
+      </xs:sequence>      
+    </xs:complexType>    
+  </xs:element>
+</xs:schema>

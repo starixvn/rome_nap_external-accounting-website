@@ -1,0 +1,33 @@
+﻿
+#fanex-multiselect-filter-input {
+  line-height: 28px;
+}
+
+.fanex-multiselect-options {
+  overflow: unset !important;
+}
+
+.fanex-multiselect-ul-group {
+  overflow: auto !important;
+}
+
+.delete-button {
+  position: absolute;
+  width: 12px;
+  height: 14px;
+  display: inline;
+  float: right;
+  cursor: pointer;
+  background-image: url(../../images/multiselect-sprites.png);
+  right: 5px;
+  top: 9px;
+  background-position: -78px -38px;
+}
+
+.no-data-text {
+  margin-left: 10px;
+}
+
+.fanex-multiselect-treeview {
+  width: unset !important;
+}

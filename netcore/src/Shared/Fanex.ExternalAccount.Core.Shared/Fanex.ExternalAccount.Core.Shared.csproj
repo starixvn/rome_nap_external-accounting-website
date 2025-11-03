@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>Fanex.ExternalAccount.Core.Shared</RootNamespace>
+    <AssemblyName>Fanex.ExternalAccount.Core.Shared</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fanex.Caching" Version="2.2.8" />
+    <PackageReference Include="Fanex.Data.ProxyClient" Version="1.0.4.2" />
+    <PackageReference Include="Fanex.RemotingRef" Version="1.5.1" />
+    <PackageReference Include="Fanex.File" Version="1.0.0" />
+    <PackageReference Include="MessagePack" Version="3.1.1" />
+    <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
+    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
+    <PackageReference Include="VaultSharp" Version="1.17.5.1" />
+  </ItemGroup>
+
+</Project>
+

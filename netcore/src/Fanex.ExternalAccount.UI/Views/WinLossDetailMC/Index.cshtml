@@ -1,0 +1,118 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@{
+    ViewBag.Title = "Win Loss Detail";
+    Layout = null;
+    var today = DateTime.Now;
+    var historicpivotdate = DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1);
+    var todayString = today.ToString("MM/dd/yyyy");
+    var historicpivotdateString = historicpivotdate.ToString("MM/dd/yyyy");
+    var notes = "Data is up to 3 months.</br>The figures have been converted to the base currency using the exchange rate of each day by the OANDA Exchange Service.</br>The currency HKK uses the standard code MYR instead of HKD.";
+    notes += "</br>" + ViewBag.NoteSabaOthers;
+}
+
+<style type="text/css">
+    .view-xtra-pt {
+        color: #2489ce;
+        cursor: pointer;
+    }
+
+    #filterBoxWLD .monPickrWrap, #filterBoxWLD .selectedDayWrap {
+        z-index: 1 !important;
+    }
+</style>
+<div>
+    <div class="page-title">
+        <div class="wlDetail">
+            Win Loss Detail<span class="icon-alert-circle-outline" id="notes" data-info="@notes"></span>
+        </div>
+        <div class="groupBack hide">
+            <div id="levelLine" class="level-line"></div>
+            <div id="tabSuper">
+                Super
+            </div>
+            <div id="tabMaster">
+                Master
+            </div>
+            <div id="tabAgent">
+                Agent
+            </div>
+        </div>
+        <span class="icon-filter active"></span>
+    </div>
+    <div id="filterBoxWLD" class="search-form search-form-report-by-cur filterbox filter-winloss-detail">
+        <div class="form-group daterangepicker-container">
+            <label class="label-form-control">@ViewLang.DateRange</label>
+            <div class="input-group date datepicker">
+                <input type="text"
+                       class="form-control"
+                       id="daterange-picker"
+                       autocomplete="off"
+                       readonly
+                       data-mindate="1/1/2010"
+                       data-maxdate="@todayString"
+                       data-fromdate="@todayString"
+                       data-todate="@todayString"
+                       data-currentdate="@todayString"
+                       data-historicpivotdate="@historicpivotdateString"
+                       data-historymaxdaterange=30
+                       data-label-today="@ViewLang.Today"
+                       data-label-yesterday="@ViewLang.Yesterday"
+                       data-label-thisweek="@ViewLang.ThisWeek"
+                       data-label-lastweek="@ViewLang.LastWeek"
+                       data-label-thismonth="@ViewLang.ThisMonth"
+                       data-label-lastmonth="@ViewLang.LastMonth"
+                       data-label-sincelastmonth="@ViewLang.SinceLastMonth"
+                       data-label-specificdate="@ViewLang.SpecificDate"
+                       data-label-maxdataretrievehistoryerror="@string.Format(@ViewLang.MaxDataRetrieveHistoryError, historicpivotdateString)" />
+                <label class="input-group-addon" for="daterange-picker">
+                    <span class="icon-calendar"></span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">@ViewLang.Username</div>
+            <input class="usernameInput" type="text" maxlength="50" autocomplete="off" name="txtUserName" id="txtUserName" />
+        </div>
+        <div class="form-group">
+            <div class="label">@ViewLang.Products</div>
+            <div class="user-group pull-left ddl-product">
+                <div id="ddl-product"></div>
+            </div>
+        </div>
+        <div class="form-group hidden" id="ddl-product-detail-container">
+            <div class="label">@ViewLang.ProductDetails</div>
+            <div class="user-group pull-left ddl-product">
+                <div id="ddl-product-detail"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label">@ViewLang.Currency</div>
+            <div class="user-group pull-left ddl-product">
+                <div id="ddl-currency"></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label"><input type="checkbox" id="ckbBaseCurrency" checked />@ViewLang.BaseCurrency</div>
+            <div id="base-currency" class="user-group pull-left ddl-product">
+                <select name="ddl-base-currency" id="ddl-base-currency">
+                    <option id="base_cur_1" value="1" selected="selected">MYR</option>
+                    <option id="base_cur_2" value="2">CNY</option>
+                    <option id="base_cur_3" value="3">THB</option>
+                    <option id="base_cur_4" value="4">IDR</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group btn-box">
+            <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
+        </div>
+    </div>
+    <div id="mainGrid" class="hide tbl-winloss-detail">
+        <div id="jqgrid" class="removeRadius freegrid content-grid"></div>
+    </div>
+    <div id="msgNoinfo">
+        There is no data.
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+@StaticResources.RenderScripts("~/assets/bundles/mcwinlossdetail/index")

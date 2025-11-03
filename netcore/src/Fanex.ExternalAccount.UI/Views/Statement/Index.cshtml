@@ -1,0 +1,81 @@
+﻿@* @using Fanex.ExternalAccount.Utilities *@
+@* @using Fanex.ExternalAccount.Statement.Resources; *@
+@* @using Fanex.ExternalAccount.Statement.Configurations; *@
+@* @using Fanex.ExternalAccount.Service.Impl.Report; *@
+@* @{ *@
+@*     ViewBag.Title = "Statement"; *@
+@*     const int isInternalCustomer = 0; *@
+@*     var newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate); *@
+@*     var balanceUpDay = string.Format("{0:MM/dd/yyyy}", ReportService.BalanceUpDate); *@
+@*     var moveBetsDay = string.Format("{0:MM/dd/yyyy}", ReportService.MoveBetsDate); *@
+@* } *@
+@* *@
+@* <div> *@
+@*     <div class="page-title"> *@
+@*         <div class="wlDetail"> *@
+@*             Statement - <span id="StatementUsername">@Request.QueryString["username"]</span> *@
+@*         </div> *@
+@*         <span class="icon-filter active"></span> *@
+@*     </div> *@
+@*     <div class="search-form filterbox"> *@
+@*         <div class="searchBar"> *@
+@*             <input type="hidden" id="MaxDate" value="@DateTime.Now" /> *@
+@*             <div class="form-group"> *@
+@*                 <div class="label">@ViewLang.From</div> *@
+@*                 <input id="dtpFromDate" type="text" readonly="readonly" /> *@
+@*             </div> *@
+@*             <div class="form-group"> *@
+@*                 <div class="label">@ViewLang.To</div> *@
+@*                 <input id="dtpToDate" type="text" readonly="readonly" /> *@
+@*             </div> *@
+@*             <div class="form-group last-form-group"> *@
+@*                 <input type="button" value="Submit" id='Submit' class="btn -submit" /> *@
+@*                 <span id="view-guidelines-icon" class="note-info-message" title=""></span> *@
+@*             </div> *@
+@*             <span id="exporttoexcel" title="@ViewLang.ExportExcel" class="icon-excel"></span> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div id="mainGrid"> *@
+@*         @*<div id="jqgrid" class="removeRadius freegrid content-grid"> *@
+@*         </div>*@ *@
+@*         <div id="GridContainer" class="freegrid"> *@
+@*         </div> *@
+@*     </div> *@
+@*     <div id='msgNoinfo'> *@
+@*         There is no data. *@
+@*     </div> *@
+@* *@
+@*     <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe> *@
+@*     <input type="hidden" id="CustId" value="@Request.QueryString["id"]" /> *@
+@*     <input type="hidden" id="username" value="@Request.QueryString["username"]" /> *@
+@*     @Html.AntiForgeryToken() *@
+@* </div> *@
+@* <script type="text/javascript" src="@Url.Content("~/Scripts/Fanex.Grid/moment.js")"></script> *@
+@* <script type="text/javascript" src="@Url.Content("~/Scripts/Fanex.Grid/numeral.js")"></script> *@
+@* <script type="text/javascript"> *@
+@*     var domain = '@Url.Content("~/")'; *@
+@*     var isInternalCustomer = @isInternalCustomer; *@
+@*     var balanceUpDay = '@balanceUpDay'; *@
+@*     var moveBetsDay = '@moveBetsDay'; *@
+@*     var newLayoutDate = '@newLayoutDate'; *@
+@*     var _username = $('#username').val(); *@
+@*     var statementResources = { *@
+@*         Invalid_Date_Range: '@Labels.Invalid_Date_Range', *@
+@*         Date: "@Labels.Date", *@
+@*         Opening_Balance: "@Labels.Opening_Balance", *@
+@*         Turnover: "@Labels.Turnover", *@
+@*         Void_Cancelled: "@(Labels.Void + "/" + Labels.Rejected)", *@
+@*         Outstanding: "@Labels.Outstanding", *@
+@*         Win_Loss: "@Labels.Win_Loss", *@
+@*         Commission: "@Labels.Commission", *@
+@*         Transfer_Amt: "@Labels.Transfer_Amt", *@
+@*         Accumulated_Total: "@Labels.Accumulated_Total", *@
+@*         Symbol_NoData: "@Labels.Symbol_NoData", *@
+@*         Transfer_Details: "@Labels.Transfer_Details", *@
+@*         Bet_List: '@Labels.Bet_List', *@
+@*         Statement_Guidelines: '@Labels.Statement_Guidelines', *@
+@*         GrandPrize: '@Labels.GrandPrize' *@
+@*     }; *@
+@* </script> *@
+@* *@
+@* @StaticResources.RenderScripts("~/assets/bundles/statement/index") *@

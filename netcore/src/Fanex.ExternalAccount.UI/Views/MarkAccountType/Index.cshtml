@@ -1,0 +1,58 @@
+﻿@using Fanex.ExternalAccount.Utilities
+<div id="markAccountType">
+    <div class="page-title">
+        <div class="wlDetail">
+            Mark Account Type
+        </div>
+    </div>
+    <div id="searchBar" class="search-form filterbox filter-winloss-detail">
+        <div class="searchBar">
+            <div class="form-group">
+                <div class="label">@ViewLang.Username</div>
+                <input id="txtUserName" type="text" class="usernameInput width-250" autocomplete="off" />
+            </div>
+            <div class="form-group">
+                <div class="label">@ViewLang.Level</div>
+                <div class="user-group pull-left ddl-product">
+                    <div id="selLevel">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="label">@ViewLang.Type</div>
+                <div class="user-group pull-left ddl-product">
+                    <div id="selType">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input id="btnSearch" type="button" value="Submit" class="btn -submit" />
+            </div>
+        </div>
+        <div class="action-bar" style="margin-top: 10px;">
+            <input id="btnMarkAccountType" type="button" value="Mark Account" class="btn -add" />
+        </div>
+    </div>
+    <div id="selectBar" class="bgTitle titleSearch">
+        <div class="pull-left searchBar">
+            <span class="text-select">@ViewLang.Select:</span>
+            <span id="spanSelectAll" class="status-select" onclick="Fanex.ExtAcc.MarkAccountType.SelectAll('menuActive')">@ViewLang.All</span>
+            <span class="character">
+                |
+            </span>
+            <span id="spanSelectNone" class="status-select" onclick="Fanex.ExtAcc.MarkAccountType.SelectAll('menuInactive')">@ViewLang.None</span>
+        </div>
+    </div>
+    <div id="markaccountListGrid">
+        <div id="errUpdateMsg" class="successMsg hide"> </div>
+        <div id="jqgrid" class="removeRadius freegrid content-grid">
+        </div>
+    </div>
+    <div id="msgNoinfo">
+        There is no data.
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+<script>
+    Fanex.ExtAcc.MarkAccountType.Init();
+</script>

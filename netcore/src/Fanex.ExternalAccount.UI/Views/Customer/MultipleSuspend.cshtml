@@ -1,0 +1,164 @@
+﻿@using Fanex.ExternalAccount.ViewModel.Customer.Suspend
+@model MultipleUpdateViewModel
+@{
+    var customerSuspendStatusList = Model.CustomerSuspendStatusList();
+}
+<div id="tab-main">
+    <div id="successMsg" class="ui-helper-hidden successMsg"></div>
+    <div id="errMsg" class="ui-helper-hidden errMsg"></div>
+    <div class="float_r clearBoth"><span id="information-box" class="ml10 icon-alert-circle-outline"></span></div>
+    <div class="clearBoth" style="max-height: 491px; overflow-x: auto">
+        <table id="tbl-cust-suspend" class="table w100" cellpadding="2" cellspacing="0" border="1">
+            <thead>
+                <tr>
+                    <th rowspan="2">Username</th>
+                    <th>Suspend Status</th>
+                    @if (Model.RoleId != Role.Member)
+                    {
+                        <th rowspan="2">
+                            Affected Downlines <br />
+                            (
+                            @(Model.RoleId >= Role.Super ? "Master/" : string.Empty)
+                            @(Model.RoleId >= Role.Master ? "Agent/" : string.Empty)
+                            Member
+                            )
+                        </th>
+                        <th rowspan="2">
+                            Remain Unchanges Downlines <br />
+                            (
+                            @(Model.RoleId >= Role.Super ? "Master/" : string.Empty)
+                            @(Model.RoleId >= Role.Master ? "Agent/" : string.Empty)
+                            Member
+                            )
+                        </th>
+                    }
+                </tr>
+                <tr>
+                    <th>
+                        <span id="button-suspend-all" style="background-color: #da5050; padding: 3px; border-radius: 2px; cursor: pointer;">Suspended</span>
+                        <span id="button-unsuspend-all" style="background-color: #248ad8; padding: 3px; border-radius: 2px; cursor: pointer;">Unsuspended</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (customerSuspendStatusList == null || customerSuspendStatusList.Count == 0)
+                {
+                    <tr>
+                        <td colspan="@(Model.RoleId != Role.Member ? "4" : "2")" class="red align-center">@Resources.Lang.thereisnodata</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var row in customerSuspendStatusList)
+                    {
+                        <tr>
+                            <td class="text-left">@row.UserName</td>
+                            <td class="text-center">
+                                @if (row.Suspend)
+                                {
+                                    <span class="button-suspend-status suspend-switch" data-custid="@row.CustId" data-username="@row.UserName" data-suspend-status="@Json.Encode(row.Suspend)">Suspended</span>
+                                }
+                                else
+                                {
+                                    <span class="button-suspend-status unsuspend-switch" data-custid="@row.CustId" data-username="@row.UserName" data-suspend-status="@Json.Encode(row.Suspend)">Unsuspended</span>
+                                }
+                            </td>
+                            @if (Model.RoleId > Role.Member)
+                            {
+                                <td class="text-center">
+                                    <span id="row-affected-SMA-@row.CustId" class="ui-helper-hidden">
+                                        @if (row.Suspend)
+                                        {
+                                            if (row.RoleId >= Role.Super)
+                                            {
+                                                <span class="@(row.AffectedMaster > 0 ? "dlLink" : string.Empty)"
+                                                      onclick="@(row.AffectedMaster > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", '" + row.UserName +"', true, " + Role.Master + ", 50, 0);") : string.Empty)">
+                                                    @row.AffectedMaster
+                                                </span>
+                                                @Html.Raw("/")
+                                            }
+
+                                            if (row.RoleId >= Role.Master)
+                                            {
+                                                <span class="@(row.AffectedAgent > 0 ? "dlLink" : string.Empty)"
+                                                      onclick="@(row.AffectedAgent > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", '" + row.UserName +"', true, " + Role.Agent + ", 50, 0);") : string.Empty)">
+                                                    @row.AffectedAgent
+                                                </span>
+                                                @Html.Raw("/")
+                                            }
+
+                                            if (row.RoleId >= Role.Agent)
+                                            {
+                                                <span class="@(row.AffectedMember > 0 ? "dlLink" : string.Empty)"
+                                                      onclick="@(row.AffectedMember > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", '" + row.UserName +"', true, " + Role.Member + ", 50, 0);") : string.Empty)">
+                                                    @row.AffectedMember
+                                                </span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("All")
+                                        }
+                                    </span>
+                                    <span id="row-affected-empty-@row.CustId"></span>
+                                </td>
+                                <td class="text-center">
+                                    <span id="row-remain-unchanged-SMA-@row.CustId" class="ui-helper-hidden">
+                                        @if (row.Suspend)
+                                        {
+                                            if (row.RoleId >= Role.Super)
+                                            {
+                                                <span class="@(row.RemainUnchangedMaster > 0 ? "dlLink" : string.Empty)"
+                                                      onclick="@(row.RemainUnchangedMaster > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", '" + row.UserName +"', false, " + Role.Master + ", 50, 0);") : string.Empty)">
+                                                    @row.RemainUnchangedMaster
+                                                </span>
+                                                @Html.Raw("/")
+                                            }
+
+                                            if (row.RoleId >= Role.Master)
+                                            {
+                                                <span class="@(row.RemainUnchangedAgent > 0 ? "dlLink" : string.Empty)"
+                                                      onclick="@(row.RemainUnchangedAgent > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId+ ", '" + row.UserName +"', false, " + Role.Agent + ", 50, 0);") : string.Empty)">
+                                                    @row.RemainUnchangedAgent
+                                                </span>
+                                                @Html.Raw("/")
+                                            }
+
+                                            if (row.RoleId >= Role.Agent)
+                                            {
+                                                <span class="@(row.RemainUnchangedMember > 0 ? "dlLink" : string.Empty)"
+                                                      onclick="@(row.RemainUnchangedMember > 0 ? ("return Fanex.ExtAcc.Customer.Status.GetDownlinesDetailInfo(" + row.CustId + ", '" + row.UserName +"', false, " + Role.Member + ", 50, 0);") : string.Empty)">
+                                                    @row.RemainUnchangedMember
+                                                </span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw("")
+                                        }
+                                    </span>
+                                    <span id="row-remain-unchanged-empty-@row.CustId"></span>
+                                </td>
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="text-right  pt3">
+        <input id="btnReset" type="button" class="btn -list" value="Reset" />
+        <input id="btnSuspendMultiple" type="button" class="btn -list ui-state-disabled" value="Submit" disabled />
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+<div id="tab-detail" class="ui-helper-hidden" style="z-index:100">
+    <span id="detail-header-title"></span>
+    <div style="clear:both;"></div>
+    <div id="gridContainer" class="grid-container">
+        <div id="gridId" class="freegrid"></div>
+    </div>
+    <div style="margin-top: 30px; text-align: right">
+        <input id="btnBack" type="button" class="btn -list" value="Back" />
+    </div>
+</div>

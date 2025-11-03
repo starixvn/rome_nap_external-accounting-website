@@ -1,0 +1,64 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>Fanex.ExternalAccount.Service</RootNamespace>
+    <AssemblyName>Fanex.ExternalAccount.Service</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Base32" Version="1.0.0.26" />
+    <PackageReference Include="Fanex.Caching" Version="2.2.8" />
+    <PackageReference Include="Fanex.Caching.Redis" Version="2.2.8" />
+    <PackageReference Include="Fanex.Common" Version="1.1.0.1" />
+    <PackageReference Include="Fanex.Crypt" Version="1.1.0.0" />
+    <PackageReference Include="Fanex.Data.ProxyClient" Version="1.0.4.2" />
+    <PackageReference Include="Fanex.File" Version="1.0.0" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.1" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
+    <PackageReference Include="Fanex.Logging.Extensions.Database.V59" Version="1.0.3" />
+    <PackageReference Include="Fanex.Logging.Extensions.Web" Version="1.0.8" />
+    <PackageReference Include="Gma.QrCodeNet.Encoding" Version="0.4.0.0" />
+    <PackageReference Include="MessagePack" Version="3.1.1" />
+    <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Caching" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
+    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="ONEbook.OTP" Version="1.0.0" />
+    <PackageReference Include="OtpSharp" Version="1.3.0.4" />
+    <PackageReference Include="Pipelines.Sockets.Unofficial" Version="2.2.8" />
+    <PackageReference Include="QrCode.Net" Version="0.4.0.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
+    <PackageReference Include="Sunplus.Agent.Utilities" Version="3.0.2" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.5.0" />
+    <PackageReference Include="System.Threading.Channels" Version="5.0.0" />
+    <PackageReference Include="TelegramBot.Client" Version="1.0.2" />
+    <PackageReference Include="VaultSharp" Version="1.17.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.ExternalAccount.Core.Shared\Fanex.ExternalAccount.Core.Shared.csproj" />
+    <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj" />
+    <ProjectReference Include="..\Fanex.ExternalAccount.Requests\Fanex.ExternalAccount.Requests.csproj" />
+    <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj" />
+    <ProjectReference Include="..\Fanex.ExternalAccount.ViewModel\Fanex.ExternalAccount.ViewModel.csproj" />
+    <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Lang.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Lang.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

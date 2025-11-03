@@ -1,0 +1,120 @@
+@using Fanex.ExternalAccount.Utilities
+@model Fanex.ExternalAccount.MatchWinLossReports.ViewModels.MatchWinLossReportsViewModels
+@{
+    Layout = null;
+    var typeReport = "detail";
+}
+<div id="detail-report">
+    <div id="filterBoxWLD" class="search-form search-form-report-by-cur filterbox filter-winloss-detail">
+        <div class="form-group daterangepicker-container">
+            <label class="label-form-control">@ViewLang.DateRange</label>
+            <div class="input-group date datepicker">
+                <input type="text"
+                       class="form-control"
+                       id="@typeReport-date-range-picker"
+                       autocomplete="off"
+                       readonly
+                       data-mindate="@Model.MinDateString"
+                       data-maxdate="@Model.TodayString"
+                       data-fromdate="@Model.TodayString"
+                       data-todate="@Model.TodayString"
+                       data-currentdate="@Model.TodayString"
+                       data-historicpivotdate="@Model.HistoricPivotDate"
+                       data-historymaxdaterange=1
+                       data-label-today="@ViewLang.Today"
+                       data-label-yesterday="@ViewLang.Yesterday"
+                       data-label-thisweek="@ViewLang.ThisWeek"
+                       data-label-lastweek="@ViewLang.LastWeek"
+                       data-label-maxdataretrievehistoryerror="Date range exceeds 3 months. Please try again!"/>
+                <label class="input-group-addon" for="@typeReport-date-range-picker">
+                    <span class="icon-calendar"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group from-to-date">
+            <input type="hidden" id="MinDate" value="@DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1)"/>
+            <input type="hidden" id="MaxDate" value="@DateTime.Now"/>
+            <div class="label">@ViewLang.sport</div>
+            <div id="sport-select-container" class="user-group pull-left">
+                <select name="SportList" id="@typeReport-ddl-sport" style="width: 100%"></select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label" title="@ViewLang.RequiredField">@ViewLang.League</div>
+            <div class="user-group pull-left ddl-leagues">
+                <div id="@typeReport-ddl-leagues"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label" title="@ViewLang.RequiredField">@ViewLang.Event</div>
+            <div class="user-group pull-left ddl-events">
+                <div id="@typeReport-ddl-events"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="label" title="@ViewLang.RequiredField">@ViewLang.Bettype</div>
+            <div class="user-group pull-left ddl-bet-types">
+                <div id="@typeReport-ddl-bet-types"></div>
+            </div>
+        </div>
+
+        @{
+            if (Model.IsMY)
+            {
+                <div class="form-group" display="@Model.IsMY">
+                    <div class="label">@ViewLang.Currency</div>
+                    <div id="ddl-currencies-container" class="user-group pull-left" display="@Model.IsMY">
+                        <select name="ddl-currencies" style="width: 100%" id="@typeReport-ddl-currencies">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="label">@ViewLang.BaseCurrency</div>
+                    <div id="ddl-base-currency-container" class="user-group pull-left">
+                        <select name="ddl-base-currency" style="width: 100%" id="@typeReport-ddl-base-currencies">
+                        </select>
+                    </div>
+                </div>
+            }
+        }
+
+        <div class="form-group btn-box">
+            <input type="button" value="Submit" id="@typeReport-submit-btn" class="btn -submit btnSearch"/>
+        </div>
+
+        @* <div> *@
+        @*     <div>You can view report the report data from @Model.MinDateString</div> *@
+        @* </div> *@
+        @* <div class="view-column" id="@typeReport-ddl-columns-container" style="display: none"> *@
+        @*     <div class="form-group "> *@
+        @*         <div class="label">@ViewLang.ViewColumn</div> *@
+        @*         <div class="user-group pull-left ddl-columns"> *@
+        @*             <div id="@typeReport-ddl-columns"></div> *@
+        @*         </div> *@
+        @*     </div> *@
+        @* </div> *@
+    </div>
+
+    <div id="@typeReport-mainGrid" class="content-table"  style="display: none">
+        <div class="grid-title-row">
+            <div class="left" id="@typeReport-grid-title"></div>
+            <div class="right">
+                <div class="colum">
+                    <label for="@typeReport-ddl-columns">@ViewLang.ViewColumn</label>
+                    <div id="@typeReport-ddl-columns"></div>
+                </div>
+                <div id="@typeReport-excel" title="Export Excel" class="icon-excel"></div>
+            </div>
+        </div>
+        <div id="@typeReport-jqgrid" class="removeRadius freegrid content-grid"></div>
+    </div>
+    <div id="@typeReport-msgNoInfo" style="display: none"  class="msgNoInfo">
+        There is no data.
+    </div>
+    @Html.AntiForgeryToken()
+</div>

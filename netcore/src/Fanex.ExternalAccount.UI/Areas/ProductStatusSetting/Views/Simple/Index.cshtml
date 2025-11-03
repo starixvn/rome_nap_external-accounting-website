@@ -1,0 +1,97 @@
+﻿@model SimpleQueryViewModel
+@{
+    Layout = null;
+    string assetsVersion = "201810171645";
+    var roleName = Model.GetRoleName();
+    var showCopyAll = Model.IsMultipleBetTypes;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="@Url.Content("~/Areas/ProductStatusSetting/Styles/simple-product-status-setting.min.css?v=")@assetsVersion"/>
+</head>
+<body>
+    <div id="sectionMessage" class="msg-container hide"></div>
+    @if (Model.HasData)
+    {
+        <table class="tbl-product margin-top10" id="tbl-product">
+            <thead>
+                <tr>
+                    <th class="title" colspan="3">@roleName: @Model.CustName</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.ProductStatus)
+                {
+                    <tr>
+                        <td class="bettype-name">
+                            <span class="@(showCopyAll ? "first-bettype" : string.Empty)">@item.Name</span>
+                            @if (showCopyAll)
+                            {
+                                showCopyAll = false;
+                                <span class="icon-copy-all" id="icon-copy-all" title="@Resources.CopyAllTooltip"></span>
+                            }
+                        </td>
+                        <td class="text-left">
+                            <div class="checkbox-container witdh-80">
+                                <input type="checkbox"
+                                       class="checkbox-main"
+                                       id="checkbox-main-@item.SportType-@item.BetType"
+                                       data-originalvalue="@item.IsDisabled.ToString().ToLowerInvariant()"
+                                       data-sporttype="@item.SportType"
+                                       data-bettype="@item.BetType"
+                                       @(!item.IsDisabled ? "checked=checked" : string.Empty) 
+                                       @(item.IsDisabledUpline ? "disabled=disabled" : string.Empty) />
+                                <label for="checkbox-main-@item.SportType-@item.BetType">@roleName</label>
+                            </div>
+                        </td>
+                        @if (item.HasDownlines)
+                        {
+                            <td class="text-left">
+                                <div class="checkbox-container witdh-120">
+                                    <input type="checkbox"
+                                           id="checkbox-downlines-@item.SportType-@item.BetType"
+                                           data-originalvalue="@item.IsDisabledDownlines.ToString().ToLowerInvariant()"
+                                           @(!item.IsDisabledDownlines ? "checked=checked" : string.Empty)
+                                           @(!item.IsDisabled && !item.IsDisabledDownlines || item.IsDisabled && item.IsDisabledDownlines ? "disabled=disabled" : string.Empty) />
+                                    <label for="checkbox-downlines-@item.SportType-@item.BetType">@Resources.AllDownlines</label>
+                                </div>
+                            </td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="margin-top10 align-right">
+            @if (Model.AllowUpdate)
+            {
+                <button type="button" class="margin-left5 btn" id="btnSubmit">@Resources.Submit</button>
+            }
+        </div>
+    }
+    else
+    {
+        <div id="sectionMessage" class="msg-container">
+            <div class="alerterror align-center">@Resources.ThereIsNoData</div>
+        </div>
+    }
+    @if (Model.AllowUpdate)
+    {
+        <input type="hidden" value="@Model.ProductId" id="hiddenProductId" />
+        <input type="hidden" value="@Model.CustId" id="hiddenCustId" />
+        <input type="hidden" value="@Model.CustRole" id="hiddenCustRole" />
+        <input type="hidden" value="@Url.Content("~")" id="hiddenRootUrl" />
+        <input type="hidden" value="@Resources.ThereIsNoChange" id="hiddenNoChangeMsg" />
+        <input type="hidden" value="@Resources.UpdateStatusFailed" id="hiddenUpdateStatusFailedMsg" />
+        @Html.AntiForgeryToken()
+
+        var jsUrl = string.Format(
+            "~/Areas/ProductStatusSetting/Scripts/simple-product-status-setting{0}.js?v={1}",
+            HttpContext.Current.IsDebuggingEnabled ? string.Empty : ".min",
+            assetsVersion);
+        <script type="text/javascript" src="@Url.Content(jsUrl)"></script>
+    }
+</body>
+</html>

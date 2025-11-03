@@ -1,0 +1,63 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@{
+    ViewBag.Title = "Oanda Exchange Rate";
+    Layout = null;
+    var today = DateTime.Now;
+    var todayString = today.ToString("MM/dd/yyyy");
+    var mindate = DateTime.Now.AddYears(-5).AddMonths(-(DateTime.Now.Month - 1)).AddDays((-DateTime.Now.Day) + 1);
+    var mindateString = mindate.ToString("MM/dd/yyyy");
+}
+@StaticResources.RenderStyles("~/assets/bundles/oandaexchange/index")
+<div>
+    <div class="page-title">
+        <div class="wlDetail">
+            Oanda Exchange Rate
+        </div>
+    </div>
+    <div id="filterBoxWLD" class="search-form search-form-report-by-cur filterbox filter-winloss-detail">
+        <div class="form-group daterangepicker-container">
+            <label class="label-form-control">@ViewLang.DateRange</label>
+            <div class="input-group date datepicker">
+                <input type="text"
+                       class="form-control"
+                       id="daterange-picker"
+                       autocomplete="off"
+                       readonly
+                       data-mindate="@mindateString"
+                       data-maxdate="@todayString"
+                       data-fromdate="@todayString"
+                       data-todate="@todayString"
+                       data-currentdate="@todayString"
+                       data-historicpivotdate="@todayString"
+                       data-historymaxmonthrange=3
+                       data-label-today="@ViewLang.Today"
+                       data-label-yesterday="@ViewLang.Yesterday"
+                       data-label-thisweek="@ViewLang.ThisWeek"
+                       data-label-lastweek="@ViewLang.LastWeek"
+                       data-label-thismonth="@ViewLang.ThisMonth"
+                       data-label-lastmonth="@ViewLang.LastMonth"
+                       data-label-sincelastmonth="@ViewLang.SinceLastMonth"
+                       data-label-specificdate="@ViewLang.SpecificDate"
+                       data-label-maxdataretrievehistoryerror="Date range exceeds 3 months. Please try again!" />
+                <label class="input-group-addon" for="daterange-picker">
+                    <span class="icon-calendar"></span>
+                </label>
+            </div>
+        </div>
+        <div class="form-group btn-box">
+            <input type="button" value="Submit" id='Submit' class="btn -submit btnSearch" />
+            <span id="icon-copy" class="icon-note-multiple" data-toggle="tooltip" data-placement="top" title="@ViewLang.Copy"></span>
+        </div>
+    </div>
+    <div id="mainGrid" class="hide tbl-winloss-detail">
+        <div id="jqgrid" class="removeRadius freegrid content-grid"></div>
+    </div>
+    <div id="msgNoinfo">
+        There is no data.
+    </div>
+    @Html.AntiForgeryToken()
+</div>
+<input type="hidden" id="hiddenCopiedText" value="@ViewLang.Copied" />
+<input type="hidden" id="hiddenCopyText" value="@ViewLang.Copy" />
+@Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+@StaticResources.RenderScripts("~/assets/bundles/oandaexchange/index")

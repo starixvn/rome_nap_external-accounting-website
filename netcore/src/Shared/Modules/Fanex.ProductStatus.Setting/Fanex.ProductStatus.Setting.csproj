@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>Fanex.ProductStatus.Setting</RootNamespace>
+    <AssemblyName>Fanex.ProductStatus.Setting</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fanex.Common" Version="1.1.0.1" />
+    <PackageReference Include="Fanex.Data.ProxyClient" Version="1.0.4.2" />
+    <PackageReference Include="Fanex.File" Version="1.0.0" />
+    <PackageReference Include="Fanex.Logging" Version="2.0.1" />
+    <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
+    <PackageReference Include="Fanex.Logging.Extensions.Web" Version="1.0.8" />
+    <PackageReference Include="Fanex.RemotingRef" Version="1.5.1" />
+    <PackageReference Include="IBCCrypt" Version="1.1.0.0" />
+    <PackageReference Include="MessagePack" Version="3.1.1" />
+    <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
+    <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />
+    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
+    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
+    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <PackageReference Include="Microsoft.Web.Infrastructure" Version="1.0.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="VaultSharp" Version="1.17.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="AppResources\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
+

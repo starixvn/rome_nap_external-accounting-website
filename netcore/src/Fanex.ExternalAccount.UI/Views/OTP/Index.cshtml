@@ -1,0 +1,58 @@
+﻿@model CustomerOtpViewModel
+@{
+    ViewBag.Title = OTP.Title;
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @StaticResources.RenderStyles("~/assets/bundles/login/login")
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("VerifyOTP", "OTP",
+                    FormMethod.Post,
+                    new { id = "otp-form", method = "Post", @class = "hidden" }))
+        {
+            <div class="block-login">
+                <div class="row">
+                    <div class="otp-logo">@OTP.Title</div>
+                </div>
+                <div class="row">
+                    @Html.Raw(String.Format(OTP.HintOTP, Model.Username))
+                </div>
+                @if (Model.FailedCounter > 0)
+                {
+                    <div id="err-message" class="row errMsg">
+                        @OTP.WrongOTP
+                    </div>
+                }
+                <div class="row">
+                    <input type="number" class="form-control no-spin" name="_otp" id="_otp" placeholder="Input OTP" maxlength="6">
+                    <label id="otp-error" class="error"></label>
+                    <span class="icon-lock"></span>
+
+                    <input type="hidden" name="_cd" id="_cd" value="@Model.Code">
+                    <input type="hidden" name="_pt" id="_pt" value="0">
+                    <input type="hidden" id="_username" value="@Model.Username">
+                    <input type="hidden" id="_md" name="_md" value="@(Model.ModifiedDate)">
+                    <input type="hidden" id="_requiredInputOTP" value="@(Json.Encode(Model.RequiredInputOTP))">
+                </div>
+
+                <div class="row">
+                    <button id="btnLogin" class="btnLogin">@Resources.Lang.submit</button>
+                </div>
+            </div>
+            @Html.AntiForgeryToken()
+        }
+    </div>
+
+    <script type="text/javascript" src="@Url.Content("~/assets/bundles/otp/otp.min.js")"></script>
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+</body>
+</html>

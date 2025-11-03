@@ -1,0 +1,164 @@
+@using Fanex.ExternalAccount.Core.Context;
+@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.Core.Authorization
+@using Fanex.ExternalAccount.Module.LeftPanel
+@using Newtonsoft.Json;
+@using System.Configuration;
+
+@{
+    var authenService = AuthorizationServiceImpl.Instance;
+    var isLocal = Request.IsLocal ? 1 : 0;
+    var userId = CurrentSession.Instance.UserId;
+    var admins = authenService.HasOpenSuperPermission(userId) ? new int[] { userId } : new int[] { };
+    var showBetSetting = authenService.HasReadPermissionOnFunctions(AccountInfoProductConfiguration.VisibleBetSettingPermissions.Values, userId) ? 1 : 0;
+    var allowAdminEditSuperStatus = JsonConvert.SerializeObject(admins, Formatting.None, new JsonSerializerSettings
+    {
+        ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+        NullValueHandling = NullValueHandling.Ignore
+    });
+    var isUpdateCredit = authenService.HasUpdateCreditPermission(userId) ? 1 : 0;
+    var hasClose = authenService.HasCloseCustomerPermission(userId) ? 1 : 0;
+    var hasSuspend = authenService.HasSuspendCustomerPermission(userId) ? 1 : 0;
+    var allowAutoPT = authenService.HasAllowAutoMPTPermission(userId) ? 1 : 0;
+    var hasClearCredit = authenService.HasClearCreditPermission(userId) ? 1 : 0;
+    var productsExcludeSabaVS = ProductSettings.SiteProducts.Where(i => i.Key != 54).ToDictionary(p => p.Key, p => p.Value);
+
+    var products = JsonConvert.SerializeObject(productsExcludeSabaVS.Values);
+    string Env = ConfigurationManager.AppSettings["EnvTheme"].ToString();
+
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>External Accounting Site</title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+    <meta name="author" content="Nathan Smith" />
+    <meta name="copyright" content="Licensed under GPL and MIT." />
+    <meta name="description" content="Adapt.js serves CSS based on screen width." />
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    @StaticResources.RenderStyles("~/assets/bundles/common")
+
+    @RenderSection("StyleSheet", false)
+</head>
+<body style="overscroll-behavior-y: none">
+    <div id="groupName" style="display: none">@CurrentSession.Instance.CurrencyGroup</div>
+    <div id="selectedGroupIndex" style="display: none">@CurrentSession.Instance.GroupId</div>
+    <div id="selectedGroupName" style="display: none"></div>
+    <div id="container">
+        <header id="header" class="header @Env">
+            @if (!string.IsNullOrEmpty(Env))
+            {
+                @Html.Raw("<div class='env'>(" + Env + ")</div>");
+            }
+            <div id="iconUserInfo" class="icon-account-settings active"></div>
+            <div id='accMenuGroup' class="group-user">
+                <select id="ddlGroupName"></select>
+            </div>
+            @Html.Action("_Menu", "Shared")
+            <div class="info" id="accMenu">
+                <ul class="list" id="userNameMenu">
+                    <li>@Html.Partial("~/Views/Domain/SSO.cshtml")</li>
+                    <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
+                    <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')" title="Reset Password"></span></li>
+                    <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()" title="Log out"></span></li>
+                </ul>
+            </div>
+            <!-- For mobile -->
+            <div id="iconNav" class="icon-nav">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </header>
+        <div class="sidebar" id="sidebar">
+            <div class="profile">
+                <div class="picture">
+                    <span class="text">@CurrentSession.Instance.UserName.FirstOrDefault()</span>
+                </div>
+                <span class="username">@CurrentSession.Instance.UserName</span>
+                <div class="list-action">
+                    <button class="btn -reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">Reset Password</button>
+                    <button class="btn -logout" onclick="Fanex.ExtAcc.Account.Logout()">Log Out</button>
+                </div>
+            </div>
+            <div>@Html.Partial("~/Views/Domain/SSO.cshtml")</div>
+            @Html.Action("_Menu", "Shared")
+        </div>
+
+        <div id='mainContent' class="main-content">
+            <div id="mainSplitter">
+                <div class="splitter-panel" id="leftSplitter">
+                    <div id="search" class="group-search">
+                        <input placeholder="username" class="search" maxlength="50" id="txtLeftPanelUserName" type="text" autocomplete="off" />
+                        <span class="icon-magnify" id="searchPanel" title="Search"></span>
+                    </div>
+                    <iframe id="leftFrame" class="iframe" style="visibility: hidden;"></iframe>
+                </div>
+                <div class="content" id="contentSplitter" style="z-index: 0">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <div id="securityCodePageContainer"></div>
+
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+    @StaticResources.RenderScripts("~/assets/bundles/common")
+
+    <script type="text/javascript">
+        function resolveClientUrl(relativeUrl) {
+            return '@Url.Content("~/")' + relativeUrl;
+        }
+
+        function navigateToUrl(url, delayTime) {
+            if (delayTime == undefined) delayTime = 2000;
+            setInterval("window.location.replace('" + resolveClientUrl(url) + "');", delayTime);
+        }
+
+        Fanex.ExtAcc.IsInternalAdmin = '@CurrentSession.Instance.IsInternalAdmin';
+        Fanex.ExtAcc.IsITAdmin = '@CurrentSession.Instance.IsITAdmin';
+
+        var isLocal = @isLocal;
+        var showBetSetting = '@showBetSetting';
+        var allowAdminEditSuperStatus = '@allowAdminEditSuperStatus';
+        var userId = '@userId';
+        var username = '@CurrentSession.Instance.UserName';
+        var menuTitles = '{"ResetPwd" : "@ViewLang.ResetPassword", "CreateExistUser" : "@ViewLang.AddExistingUser", "CreateUser" : "@ViewLang.NewUser", "EditUser" : "@ViewLang.EditUserInfo", "Edit": "@ViewLang.EditMenu", "Activate": "@ViewLang.Activate", "Delete": "@ViewLang.Delete", "Create" : "@ViewLang.NewMenu", "Deactivate" : "@ViewLang.Deactivate", "EditGroup" : "@ViewLang.EditGroup", "EditFunction":"@ViewLang.EditFunction", "CreateFunction" : "@ViewLang.NewFunction"}';
+        var isUpdateCredit = '@isUpdateCredit';
+        var hasClose = '@hasClose';
+        var hasSuspend = '@hasSuspend';
+        var allowAutoPT = '@allowAutoPT';
+        var hasClearCredit = '@hasClearCredit';
+        var showLiveCasinoBetting = true;
+        var showVoidbridgeBetting = true;
+        var siteLevelProducts = @(Html.Raw(products));
+
+        $(document).ready(function () {
+            Fanex.ExtAcc.Customer.ReCheckin();
+            setInterval(Fanex.ExtAcc.Customer.ReCheckin, 20000);
+            disablePulldownAndReleaseRefresh();
+        });
+
+        var titles = ['@ViewLang.EditPersonalInfo', '@ViewLang.editTransferCondition', '@ViewLang.confirmTransCondition', '@ViewLang.choonseDaily', '@ViewLang.chooseOneDay'];
+
+        function switchLine(select) {
+            if (select.selectedIndex != 0) {
+                Fanex.ExtAcc.IsSwitchLine = true;
+                Fanex.ExtAcc.BlockUI();
+
+                location.href = '@Url.Content("~/Account/LoginSso?url=")' + $(select).val() + '&line=' + $(select).find('option:selected').text();
+            }
+        }
+
+        $('#leftFrame').on("load", function () {
+            $("#leftFrame").css("visibility", "visible");
+        });
+    </script>
+    @RenderSection("Scripts", false)
+
+    @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
+    @Fanex.ExternalAccount.Core.Helpers.TrackJSHelper.Render()
+</body>
+</html>

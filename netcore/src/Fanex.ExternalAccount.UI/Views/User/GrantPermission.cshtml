@@ -1,0 +1,192 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.DTO.UserControl
+@using Fanex.ExternalAccount.DTO
+@{
+    var functions = ((IEnumerable<Function>)ViewBag.UserFunc).ToList();
+    var subFuntions = ((IEnumerable<Function>)ViewBag.UserSubFunc).ToList();
+}
+
+<div class="group-name">@ViewLang.Username: <span class="name">@ViewBag.Username</span></div>
+<div id="errMsg" class="successMsg hide"></div>
+<table id="tblInner" class="table w100">
+    <thead>
+        <tr>
+            <th rowspan="2">
+                <input type="hidden" id="UserID" value="@ViewBag.UserID" />@ViewLang.Functions
+            </th>
+            <th colspan="2" style="width: 120px">
+                @ViewLang.UserPermission
+            </th>
+            <th colspan="2" style="width: 120px">
+                @ViewLang.GroupPermission
+            </th>
+        </tr>
+        <tr>
+            <th style="width: 60px">
+                @ViewLang.Read
+            </th>
+            <th style="width: 60px">
+                @ViewLang.Write
+            </th>
+            <th style="width: 60px">
+                @ViewLang.Read
+            </th>
+            <th style="width: 60px">
+                @ViewLang.Write
+            </th>
+        </tr>
+    </thead>    
+    @foreach (var function in functions)
+    
+    {
+        var className = subFuntions.Any(o => o.ParentID == function.FuncID) ? "permItemParent" : "permItemParentOnly";
+
+        string activeR;
+        string activeW;
+        var val = "0";
+
+        string activeGroupR;
+        string activeGroupW;
+
+        if (function.Policy == EPolicy.Create ||
+            function.Policy == EPolicy.Delete ||
+            function.Policy == EPolicy.Update)
+        {
+            activeR = activeW = "permActive";
+            val = "2";
+        }
+        else
+        {
+            if (function.Policy == EPolicy.Read)
+            {
+                activeR = "permActive";
+                activeW = "permInactive";
+                val = "1";
+            }
+            else
+            {
+                activeR = activeW = "permInactive";
+            }
+        }
+
+        if (function.GroupPolicy == EPolicy.Create ||
+            function.GroupPolicy == EPolicy.Delete ||
+            function.GroupPolicy == EPolicy.Update)
+        {
+            activeGroupR = activeGroupW = "permActive";
+        }
+        else
+        {
+            if (function.GroupPolicy == EPolicy.Read)
+            {
+                activeGroupR = "permActive";
+                activeGroupW = "permInactive";
+            }
+            else
+            {
+                activeGroupR = activeGroupW = "permInactive";
+            }
+        }
+
+        <tr title="@function.FuncDesc.DecodeHtml()">
+            <td>
+                <div id="parent-@function.FuncID" expand="true" style="cursor:pointer" class="@className" onclick="Fanex.ExtAcc.ToggleRows(@function.FuncID)">@function.FuncName</div>
+            </td>
+            <td>
+                <div id="r-@function.FuncID" class="@activeR" parent="r-@function.FuncID" permission="1" onclick="Fanex.ExtAcc.UserPolicy.GrantPermissionsRead(this);">
+                </div>
+            </td>
+            <td>
+                <div id="w-@function.FuncID" class="@activeW" parent="w-@function.FuncID" val="@val" permission="2" onclick="Fanex.ExtAcc.UserPolicy.GrantPermissionsWrite(this);">
+                </div>
+            </td>
+            <td style="background-color: #DFDFDF">
+                <div class="@activeGroupR" style="cursor: default">
+                </div>
+            </td>
+            <td style="background-color: #DFDFDF">
+                <div class="@activeGroupW" style="cursor: default">
+                </div>
+            </td>
+        </tr>
+        foreach (var subFunction in subFuntions)
+        {
+            if (function.FuncID == subFunction.ParentID)
+            {
+
+                string subactiveR;
+                string subactiveW;
+                var subval = "0";
+
+                string subactiveGroupR;
+                string subactiveGroupW;
+
+                if (subFunction.Policy == EPolicy.Create ||
+                    subFunction.Policy == EPolicy.Delete ||
+                    subFunction.Policy == EPolicy.Update)
+                {
+                    subactiveR = subactiveW = "permActive";
+                    subval = "2";
+                }
+                else
+                {
+                    if (subFunction.Policy == EPolicy.Read)
+                    {
+                        subactiveR = "permActive";
+                        subactiveW = "permInactive";
+                        subval = "1";
+                    }
+                    else
+                    {
+                        subactiveR = subactiveW = "permInactive";
+                    }
+                }
+                ;
+
+                if (subFunction.GroupPolicy == EPolicy.Create ||
+                    subFunction.GroupPolicy == EPolicy.Delete ||
+                    subFunction.GroupPolicy == EPolicy.Update)
+                {
+                    subactiveGroupR = subactiveGroupW = "permActive";
+                }
+                else
+                {
+                    if (subFunction.GroupPolicy == EPolicy.Read)
+                    {
+                        subactiveGroupR = "permActive";
+                        subactiveGroupW = "permInactive";
+                    }
+                    else
+                    {
+                        subactiveGroupR = subactiveGroupW = "permInactive";
+                    }
+                }
+                <tr parentid="@subFunction.ParentID" title="@subFunction.FuncDesc.DecodeHtml()">
+                    <td>
+                        <span class="permItemChild">@subFunction.FuncName</span>
+                    </td>
+                    <td>
+                        <div id="r-@subFunction.FuncID" parent="r-@subFunction.ParentID" permission="1" class="@subactiveR" onclick="Fanex.ExtAcc.UserPolicy.GrantPermissions(this);">
+                        </div>
+                    </td>
+                    <td>
+                        <div id="w-@subFunction.FuncID" parent="w-@subFunction.ParentID" val="@subval" permission="2" class="@subactiveW" onclick="Fanex.ExtAcc.UserPolicy.GrantPermissions(this);">
+                        </div>
+                    </td>
+                    <td style="background-color: #DFDFDF">
+                        <div class="@subactiveGroupR" style="cursor: default">
+                        </div>
+                    </td>
+                    <td style="background-color: #DFDFDF">
+                        <div class="@subactiveGroupW" style="cursor: default">
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    }
+</table>
+<div style="float: right; margin: 5px 0px 30px 0px">
+    <input class="buttonPopup btn -submit" type="button" value="Submit" onclick="Fanex.ExtAcc.UserPolicy.SaveUserPolicy()" />
+</div>
+<script src="@Url.Content("~/Scripts/Manage/Fanex.ExtAcc.UserPolicy.js")" type="text/javascript"></script>

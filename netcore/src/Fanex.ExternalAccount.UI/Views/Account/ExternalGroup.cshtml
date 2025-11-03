@@ -1,0 +1,111 @@
+﻿@using Fanex.ExternalAccount.Utilities;
+@using Fanex.ExternalAccount.Core.Context;
+@model ExternalGroupViewModel
+
+@{ 
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Select Group</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    @StaticResources.RenderStyles("~/assets/bundles/choosegroup/choosegroup")
+</head>
+<body class="main">
+    <header id="header" class="header">
+        @if (CurrentSession.Instance.IsLogin)
+        {
+            <div class="info" id="accMenu">
+                <ul class="list" id="userNameMenu">
+                    <li><span class="circle">@CurrentSession.Instance.UserName</span></li>
+                    <li><span class="icon-lock-reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')" title="Reset Password"></span></li>
+                    <li><span class="icon-logout" onclick="Fanex.ExtAcc.Account.Logout()" title="Log out"></span></li>
+                </ul>
+            </div>
+        }
+
+        <!-- For mobile -->
+        <div id="iconNav" class="icon-nav">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+    <div class="sidebar" id="sidebar">
+        <div class="profile">
+            <div class="picture">
+                <span class="text">@CurrentSession.Instance.UserName.FirstOrDefault()</span>
+            </div>
+            <span class="username">@CurrentSession.Instance.UserName</span>
+            <div class="list-action">
+                <button class="btn -reset" onclick="Fanex.ExtAcc.User.ShowResetPwd(@CurrentSession.Instance.UserId, true, '@CurrentSession.Instance.UserName')">Reset Password</button>
+                <button class="btn -logout" onclick="Fanex.ExtAcc.Account.Logout()">Log Out</button>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid groupext-section">
+        <div class="selectGroup">
+            @ViewLang.SelectExternalGroup
+        </div>
+        <div class="groupChosen">
+            @{
+                var index = 0;
+
+                foreach (var group in Model.GroupList)
+                {
+                    var url = Url.Content("~/Home/Index/" + @group.GroupName);
+
+                    <div class="col">
+                        <a href="@url" class="currencyGroup">
+                            @group.GroupName
+                        </a>
+                    </div>
+                    index++;
+                }
+            }
+        </div>
+    </div>
+
+    @StaticResources.RenderScripts("~/assets/bundles/choosegroup/choosegroup")
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            Fanex.ExtAcc.IsInternalAdmin = '@CurrentSession.Instance.IsInternalAdmin';
+
+            $('#dllUsername').bind('click', function (event) {
+                $('#dllUsername').hide();
+            });
+
+            if (JSON.parse("@Model.EnabledOTP.ToString().ToLower()")) {
+                localStorage.setItem("@(Model.Username + "_pt")", "@String.Format(OTP.OTPQuote, Model.Username, Model.ModifiedDate)".encrypt("@Model.Code"));
+                localStorage.setItem("@(Model.Username + "_cd")", "@(Model.Code)");
+                localStorage.setItem("@(Model.Username + "_md")", "@(Model.ModifiedDate)");
+            }
+        });
+
+        function resolveClientUrl(relativeUrl) {
+            return '@Url.Content("~/")' + relativeUrl;
+        }
+        function navigateToUrl(url, delayTime) {
+            if (delayTime == undefined) delayTime = 2000; setInterval("window.location.replace('" + resolveClientUrl(url) + "');", delayTime);
+        }
+
+        var menuTitles = '{"ResetPwd" : "@ViewLang.ResetPassword", "CreateExistUser" : "@ViewLang.AddExistingUser", "CreateUser" : "@ViewLang.NewUser", "EditUser" : "@ViewLang.EditUserInfo", "Edit": "@ViewLang.EditMenu", "Activate": "@ViewLang.Activate", "Delete": "@ViewLang.Delete", "Create" : "@ViewLang.NewMenu", "Deactivate" : "@ViewLang.Deactivate", "EditGroup" : "@ViewLang.EditGroup", "EditFunction":"@ViewLang.EditFunction", "CreateFunction" : "@ViewLang.NewFunction"}';
+
+        function switchLine(select) {
+            if (select.selectedIndex != 0) {
+                Fanex.ExtAcc.IsSwitchLine = true;
+                Fanex.ExtAcc.BlockUI();
+
+                location.href = '@Url.Content("~/Account/LoginSso?url=")' + $(select).val() + '&line=' + $(select).find('option:selected').text();
+            }
+        }
+    </script>
+    @Fanex.ExternalAccount.Core.Helpers.GoogleAnalyticHepler.Render()
+    @Html.Raw(Fanex.Logging.LogManager.RenderJavascriptLogger())
+</body>
+</html>

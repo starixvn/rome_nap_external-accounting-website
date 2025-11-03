@@ -1,0 +1,73 @@
+﻿@using Fanex.ExternalAccount.Utilities
+@using Fanex.ExternalAccount.DTO.UserControl
+@model User
+@{
+    var groupList = (IEnumerable<Group>)ViewBag.GroupList;
+}
+@*<link href="@Url.Content("~/Scripts/Combobox/Combobox.css")" rel="stylesheet" type="text/css" />*@
+
+<form class="form-add">
+    <div id="errMsg" class="successMsg hide"> </div>
+
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.HiddenFor(m => m.UserID) @Html.LabelFor(m => m.Username, ViewLang.Username, new { @class = "label" })
+        </div>
+        <div class="pull-left width-250">
+            @Html.TextBoxFor(m => m.Username, new { @class = "form-control width-250" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.Password, ViewLang.Password, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control width-250" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.FirstName, ViewLang.Firstname, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control width-250" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.LastName, ViewLang.Lastname, new { @class = "label" })
+        </div>
+        <div class="pull-left">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control width-250" })
+        </div>
+    </div>
+    <div class="group">
+        <div class="pull-left width-100 text-right">
+            @Html.LabelFor(m => m.GroupID, ViewLang.Group, new { @class = "label" })
+        </div>
+        <div class="pull-left groupCboMenu">
+            <select id="GroupID" name="GroupID" class="cboControl">
+                @foreach (var item in groupList)
+                {
+                    <option value="@item.GroupID" @(item.GroupID == Model.GroupID ? "selected=selected" : "")>@item.GroupName</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div class="group form-action">
+        <input class="btn -submit" type="button" value="Submit" onclick="Fanex.ExtAcc.User.Add()" />
+    </div>
+</form>
+
+<script src="@Url.Content("~/Scripts/Combobox/Combobox.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $('#GroupID').combobox();
+    $(document).ready(function () {
+        var select = document.getElementById('GroupID');
+        $('.groupCboMenu input').val(select.options[0].text);
+        $(".groupCboMenu input").attr("readonly", "true");
+        $(".groupCboMenu input").bind("click", function () {
+            $(this).autocomplete("search", '');
+        });
+    });
+</script>

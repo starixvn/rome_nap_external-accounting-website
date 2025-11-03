@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kiến trúc Microservice và Routing - Nâng cấp lên .NET Core 9</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 300;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        .slide {
+            padding: 40px;
+            border-bottom: 1px solid #eee;
+        }
+        .slide:last-child {
+            border-bottom: none;
+        }
+        .slide h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+            padding-left: 20px;
+        }
+        .slide h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+        .slide h4 {
+            color: #333;
+            font-size: 1.2em;
+            margin: 20px 0 10px 0;
+        }
+        .step {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+        .step h4 {
+            color: #667eea;
+            margin-top: 0;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .highlight {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 15px 0;
+        }
+        .warning {
+            background: #f8d7da;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #dc3545;
+            margin: 15px 0;
+        }
+        .info {
+            background: #d1ecf1;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #17a2b8;
+            margin: 15px 0;
+        }
+        .architecture-diagram {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .service-box {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            margin: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+        .routing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .routing-table th, .routing-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .routing-table th {
+            background: #667eea;
+            color: white;
+        }
+        .routing-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #667eea;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding-left: 30px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #667eea;
+        }
+        .timeline-item h4 {
+            color: #667eea;
+            margin: 0 0 10px 0;
+        }
+        .timeline-item p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .priority-high {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+        }
+        .priority-medium {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        .priority-low {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Kiến trúc Microservice và Routing</h1>
+            <p>Nâng cấp External Accounting Website lên .NET Core 9</p>
+        </div>
+
+        <div class="slide">
+            <h2>1. Kiến trúc Microservice Tổng quan</h2>
+            
+            <div class="architecture-diagram">
+                <h3>Kiến trúc Microservice</h3>
+                <div class="service-box">API Gateway</div>
+                <div class="service-box">Authentication Service</div>
+                <div class="service-box">Customer Service</div>
+                <div class="service-box">Report Service</div>
+                <div class="service-box">Statement Service</div>
+                <div class="service-box">User Control Service</div>
+                <div class="service-box">WebApp (UI)</div>
+                <div class="service-box">Data Access Service</div>
+                <div class="service-box">Notification Service</div>
+                <div class="service-box">File Processing Service</div>
+            </div>
+
+            <div class="step">
+                <h4>1.1. Phân tích các Service hiện tại</h4>
+                <ul>
+                    <li><strong>Fanex.ExternalAccount.UI</strong> → WebApp (UI) - ASP.NET Core MVC với Views, Areas, Controllers</li>
+                    <li><strong>Fanex.ExternalAccount.Controllers</strong> → Authentication Service + Customer Service</li>
+                    <li><strong>Fanex.ExternalAccount.Service</strong> → Business Logic Services</li>
+                    <li><strong>Fanex.ExternalAccount.DataAccess</strong> → Data Access Service</li>
+                    <li><strong>Fanex.ExternalAccount.Excel</strong> → File Processing Service</li>
+                    <li><strong>Fanex.ExternalAccount.Utility</strong> → Shared Utilities</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>1.2. Nguyên tắc thiết kế Microservice</h4>
+                <ul>
+                    <li><strong>Single Responsibility:</strong> Mỗi service có một trách nhiệm duy nhất</li>
+                    <li><strong>Database per Service:</strong> Mỗi service có database riêng</li>
+                    <li><strong>Decentralized Governance:</strong> Tự quản lý và phát triển</li>
+                    <li><strong>Fault Tolerance:</strong> Khả năng chịu lỗi cao</li>
+                    <li><strong>Observability:</strong> Monitoring và logging toàn diện</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>2. API Gateway và Routing</h2>
+            
+            <div class="step">
+                <h4>2.1. API Gateway Configuration</h4>
+                <div class="code-block">
+// Program.cs - API Gateway
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// Configure API Gateway
+builder.Services.AddReverseProxy()
+    .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
+
+var app = builder.Build();
+
+// Configure pipeline
+app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Map reverse proxy
+app.MapReverseProxy();
+
+app.Run();
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>2.2. Routing Configuration</h4>
+                <div class="code-block">
+// appsettings.json
+{
+  "ReverseProxy": {
+    "Routes": {
+      "auth-route": {
+        "ClusterId": "auth-cluster",
+        "Match": {
+          "Path": "/api/auth/{**catch-all}"
+        }
+      },
+      "customer-route": {
+        "ClusterId": "customer-cluster",
+        "Match": {
+          "Path": "/api/customer/{**catch-all}"
+        }
+      },
+      "report-route": {
+        "ClusterId": "report-cluster",
+        "Match": {
+          "Path": "/api/report/{**catch-all}"
+        }
+      }
+    },
+    "Clusters": {
+      "auth-cluster": {
+        "Destinations": {
+          "destination1": {
+            "Address": "https://auth-service:5001/"
+          }
+        }
+      },
+      "customer-cluster": {
+        "Destinations": {
+          "destination1": {
+            "Address": "https://customer-service:5002/"
+          }
+        }
+      }
+    }
+  }
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>3. Service Decomposition</h2>
+            
+            <div class="step">
+                <h4>3.1. Authentication Service</h4>
+                <div class="code-block">
+// Authentication Service
+[ApiController]
+[Route("api/[controller]")]
+public class AuthController : ControllerBase
+{
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    {
+        // Authentication logic
+    }
+    
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        // Logout logic
+    }
+    
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+    {
+        // Token refresh logic
+    }
+}
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>3.2. Customer Service</h4>
+                <div class="code-block">
+// Customer Service
+[ApiController]
+[Route("api/[controller]")]
+public class CustomerController : ControllerBase
+{
+    [HttpGet]
+    public async Task<IActionResult> GetCustomers([FromQuery] CustomerQuery query)
+    {
+        // Get customers logic
+    }
+    
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetCustomer(int id)
+    {
+        // Get customer by ID logic
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerRequest request)
+    {
+        // Create customer logic
+    }
+}
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>3.3. Report Service</h4>
+                <div class="code-block">
+// Report Service
+[ApiController]
+[Route("api/[controller]")]
+public class ReportController : ControllerBase
+{
+    [HttpGet("financial")]
+    public async Task<IActionResult> GetFinancialReport([FromQuery] ReportQuery query)
+    {
+        // Financial report logic
+    }
+    
+    [HttpGet("transaction")]
+    public async Task<IActionResult> GetTransactionReport([FromQuery] TransactionQuery query)
+    {
+        // Transaction report logic
+    }
+    
+    [HttpPost("export")]
+    public async Task<IActionResult> ExportReport([FromBody] ExportRequest request)
+    {
+        // Export report logic
+    }
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>4. Database per Service</h2>
+            
+            <div class="step">
+                <h4>4.1. Database Strategy</h4>
+                <table class="routing-table">
+                    <tr>
+                        <th>Service</th>
+                        <th>Database</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>Authentication Service</td>
+                        <td>AuthDB</td>
+                        <td>User accounts, tokens, sessions</td>
+                    </tr>
+                    <tr>
+                        <td>Customer Service</td>
+                        <td>CustomerDB</td>
+                        <td>Customer data, profiles</td>
+                    </tr>
+                    <tr>
+                        <td>Report Service</td>
+                        <td>ReportDB</td>
+                        <td>Report templates, configurations</td>
+                    </tr>
+                    <tr>
+                        <td>Statement Service</td>
+                        <td>StatementDB</td>
+                        <td>Financial statements, transactions</td>
+                    </tr>
+                    <tr>
+                        <td>Data Access Service</td>
+                        <td>DataDB</td>
+                        <td>Raw data, logs</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="step">
+                <h4>4.2. Database Migration Strategy</h4>
+                <div class="code-block">
+// Database per Service Migration
+public class DatabaseMigrationService
+{
+    public async Task MigrateToMicroservices()
+    {
+        // 1. Create separate databases
+        await CreateServiceDatabases();
+        
+        // 2. Migrate data
+        await MigrateAuthenticationData();
+        await MigrateCustomerData();
+        await MigrateReportData();
+        
+        // 3. Update connection strings
+        await UpdateConnectionStrings();
+        
+        // 4. Test data integrity
+        await ValidateDataIntegrity();
+    }
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>5. Inter-Service Communication</h2>
+            
+            <div class="step">
+                <h4>5.1. Synchronous Communication (HTTP/REST)</h4>
+                <div class="code-block">
+// HTTP Client for inter-service communication
+public class CustomerServiceClient
+{
+    private readonly HttpClient _httpClient;
+    
+    public CustomerServiceClient(HttpClient httpClient)
+    {
+        _httpClient = httpClient;
+    }
+    
+    public async Task<CustomerDto> GetCustomerAsync(int customerId)
+    {
+        var response = await _httpClient.GetAsync($"/api/customer/{customerId}");
+        response.EnsureSuccessStatusCode();
+        
+        var content = await response.Content.ReadAsStringAsync();
+        return JsonSerializer.Deserialize<CustomerDto>(content);
+    }
+}
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>5.2. Asynchronous Communication (Message Queue)</h4>
+                <div class="code-block">
+// Message Queue Configuration
+public class MessageQueueService
+{
+    private readonly IMessageBus _messageBus;
+    
+    public async Task PublishCustomerCreatedEvent(CustomerCreatedEvent @event)
+    {
+        await _messageBus.PublishAsync(@event);
+    }
+    
+    public async Task SubscribeToEvents()
+    {
+        await _messageBus.SubscribeAsync<CustomerCreatedEvent>(HandleCustomerCreated);
+        await _messageBus.SubscribeAsync<ReportRequestedEvent>(HandleReportRequested);
+    }
+}
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>5.3. Service Discovery</h4>
+                <div class="code-block">
+// Service Discovery Configuration
+public class ServiceDiscoveryService
+{
+    private readonly IConsulClient _consulClient;
+    
+    public async Task<string> GetServiceUrl(string serviceName)
+    {
+        var services = await _consulClient.Health.Service(serviceName, "", true);
+        var service = services.Response.FirstOrDefault();
+        
+        return service != null 
+            ? $"http://{service.Service.Address}:{service.Service.Port}"
+            : throw new ServiceNotFoundException(serviceName);
+    }
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>6. Security và Authentication</h2>
+            
+            <div class="step">
+                <h4>6.1. JWT Token Strategy</h4>
+                <div class="code-block">
+// JWT Configuration
+public class JwtService
+{
+    public string GenerateToken(User user)
+    {
+        var claims = new[]
+        {
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Role, user.Role),
+            new Claim("service", "auth-service")
+        };
+        
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.SecretKey));
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        
+        var token = new JwtSecurityToken(
+            issuer: _jwtSettings.Issuer,
+            audience: _jwtSettings.Audience,
+            claims: claims,
+            expires: DateTime.UtcNow.AddMinutes(_jwtSettings.ExpirationMinutes),
+            signingCredentials: credentials
+        );
+        
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+}
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>6.2. API Gateway Authentication</h4>
+                <div class="code-block">
+// API Gateway Authentication Middleware
+public class AuthenticationMiddleware
+{
+    public async Task InvokeAsync(HttpContext context, RequestDelegate next)
+    {
+        var token = context.Request.Headers["Authorization"]
+            .FirstOrDefault()?.Split(" ").Last();
+        
+        if (token != null)
+        {
+            var principal = ValidateToken(token);
+            context.User = principal;
+        }
+        
+        await next(context);
+    }
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>7. Monitoring và Observability</h2>
+            
+            <div class="step">
+                <h4>7.1. Distributed Tracing</h4>
+                <div class="code-block">
+// OpenTelemetry Configuration
+public class TelemetryConfiguration
+{
+    public static void ConfigureTelemetry(WebApplicationBuilder builder)
+    {
+        builder.Services.AddOpenTelemetry()
+            .WithTracing(tracing =>
+            {
+                tracing.AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddEntityFrameworkCoreInstrumentation()
+                    .AddJaegerExporter();
+            })
+            .WithMetrics(metrics =>
+            {
+                metrics.AddAspNetCoreInstrumentation()
+                    .AddHttpClientInstrumentation()
+                    .AddPrometheusExporter();
+            });
+    }
+}
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>7.2. Health Checks</h4>
+                <div class="code-block">
+// Health Check Configuration
+public class HealthCheckService
+{
+    public static void ConfigureHealthChecks(IServiceCollection services)
+    {
+        services.AddHealthChecks()
+            .AddCheck<DatabaseHealthCheck>("database")
+            .AddCheck<ExternalServiceHealthCheck>("external-service")
+            .AddCheck<MemoryHealthCheck>("memory");
+    }
+}
+
+// Health Check Implementation
+public class DatabaseHealthCheck : IHealthCheck
+{
+    public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            // Check database connectivity
+            var isHealthy = await CheckDatabaseConnection();
+            return isHealthy 
+                ? HealthCheckResult.Healthy("Database is accessible")
+                : HealthCheckResult.Unhealthy("Database is not accessible");
+        }
+        catch (Exception ex)
+        {
+            return HealthCheckResult.Unhealthy("Database check failed", ex);
+        }
+    }
+}
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>8. Deployment và Infrastructure</h2>
+            
+            <div class="step">
+                <h4>8.1. Docker Configuration</h4>
+                <div class="code-block">
+# Dockerfile for each service
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
+WORKDIR /app
+EXPOSE 80
+EXPOSE 443
+
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+WORKDIR /src
+COPY ["AuthService/AuthService.csproj", "AuthService/"]
+RUN dotnet restore "AuthService/AuthService.csproj"
+COPY . .
+WORKDIR "/src/AuthService"
+RUN dotnet build "AuthService.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "AuthService.csproj" -c Release -o /app/publish
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "AuthService.dll"]
+                </div>
+            </div>
+
+            <div class="step">
+                <h4>8.2. Kubernetes Configuration</h4>
+                <div class="code-block">
+# kubernetes-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+      - name: auth-service
+        image: auth-service:latest
+        ports:
+        - containerPort: 80
+        env:
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom:
+            secretKeyRef:
+              name: auth-db-secret
+              key: connection-string
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+spec:
+  selector:
+    app: auth-service
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>9. Migration Timeline</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Phase 1: Foundation (Tuần 1-2)</h4>
+                    <p>• Tạo API Gateway</p>
+                    <p>• Thiết lập Authentication Service</p>
+                    <p>• Cấu hình Database per Service</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Phase 2: Core Services (Tuần 3-4)</h4>
+                    <p>• Migration Customer Service</p>
+                    <p>• Migration Report Service</p>
+                    <p>• Thiết lập Inter-Service Communication</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Phase 3: Advanced Services (Tuần 5-6)</h4>
+                    <p>• Migration Statement Service</p>
+                    <p>• Migration Data Access Service</p>
+                    <p>• Thiết lập Message Queue</p>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>Phase 4: Testing & Deployment (Tuần 7-8)</h4>
+                    <p>• Integration Testing</p>
+                    <p>• Performance Testing</p>
+                    <p>• Production Deployment</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>10. Best Practices và Recommendations</h2>
+            
+            <div class="step">
+                <h4>10.1. Microservice Best Practices</h4>
+                <ul>
+                    <li><strong>API Versioning:</strong> Sử dụng versioning cho API compatibility</li>
+                    <li><strong>Circuit Breaker:</strong> Implement circuit breaker pattern</li>
+                    <li><strong>Retry Policy:</strong> Cấu hình retry policy cho external calls</li>
+                    <li><strong>Rate Limiting:</strong> Implement rate limiting cho API protection</li>
+                    <li><strong>Graceful Shutdown:</strong> Implement graceful shutdown cho services</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>10.2. Monitoring và Alerting</h4>
+                <ul>
+                    <li><strong>Metrics:</strong> Collect business và technical metrics</li>
+                    <li><strong>Logging:</strong> Structured logging với correlation IDs</li>
+                    <li><strong>Alerting:</strong> Set up alerts cho critical issues</li>
+                    <li><strong>Dashboard:</strong> Real-time monitoring dashboard</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h4>10.3. Security Considerations</h4>
+                <ul>
+                    <li><strong>Network Security:</strong> Service mesh với mTLS</li>
+                    <li><strong>Data Encryption:</strong> Encrypt data in transit và at rest</li>
+                    <li><strong>Access Control:</strong> Role-based access control</li>
+                    <li><strong>Audit Logging:</strong> Comprehensive audit trail</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2>11. Kết luận</h2>
+            
+            <div class="info">
+                <h4>Lợi ích của Microservice Architecture</h4>
+                <ul>
+                    <li>Scalability: Scale từng service độc lập</li>
+                    <li>Maintainability: Dễ maintain và update</li>
+                    <li>Technology Diversity: Sử dụng công nghệ phù hợp cho từng service</li>
+                    <li>Fault Isolation: Lỗi không ảnh hưởng toàn bộ system</li>
+                    <li>Team Autonomy: Teams có thể phát triển độc lập</li>
+                </ul>
+            </div>
+
+            <div class="warning">
+                <h4>Thách thức cần lưu ý</h4>
+                <ul>
+                    <li>Complexity: Tăng complexity trong quản lý</li>
+                    <li>Network Latency: Communication overhead</li>
+                    <li>Data Consistency: Distributed data management</li>
+                    <li>Testing: Integration testing phức tạp hơn</li>
+                    <li>Monitoring: Cần monitoring tools mạnh mẽ</li>
+                </ul>
+            </div>
+
+            <div class="highlight">
+                <h4>Next Steps</h4>
+                <ol>
+                    <li>Bắt đầu với Phase 1: Foundation</li>
+                    <li>Thiết lập CI/CD pipeline cho microservices</li>
+                    <li>Implement monitoring và logging từ đầu</li>
+                    <li>Training team về microservice patterns</li>
+                    <li>Gradual migration để giảm risk</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

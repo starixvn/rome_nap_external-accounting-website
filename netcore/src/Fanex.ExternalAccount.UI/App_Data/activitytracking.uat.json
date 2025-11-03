@@ -1,0 +1,7 @@
+﻿{
+  "rabbitMQConnectionString": "host=10.99.99.51:5673;virtualHost=/activity_tracking_uat;username=activity_tracking;password=oF3tWUKgUmET01W4wdWWAA==;",
+  "system": "NAP-External-UAT",
+  "environment": "UAT",
+  "enabledTrackAllRequests": true,
+  "logCategory": "Activity-Tracking-UAT"
+}

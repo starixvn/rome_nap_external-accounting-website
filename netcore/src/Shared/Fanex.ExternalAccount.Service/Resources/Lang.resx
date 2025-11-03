@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AutoTransferProcessTime" xml:space="preserve">
+    <value>The Auto Transfer process is currently in progress for this line. Please wait a few minutes for the process to complete before making any changes to the Transfer Condition.</value>
+  </data>
+  <data name="TransferCondition_ToastTitle_en" xml:space="preserve">
+    <value>Auto Transfer Config</value>
+  </data>
+  <data name="TransferCondition_ToastTitle_ch" xml:space="preserve">
+    <value>自動轉賬配置</value>
+  </data>
+  <data name="TransferCondition_ToastTitle_cs" xml:space="preserve">
+    <value>自动转账配置</value>
+  </data>
+  <data name="TransferCondition_ToastTitle_th" xml:space="preserve">
+    <value>ตั้งค่าโอนอัตโนมัติ</value>
+  </data>
+  <data name="TransferCondition_ToastBody_en" xml:space="preserve">
+    <value>Your Transfer Condition was changed by upline. The Auto Transfer status and schedule for your downlines have been adjusted accordingly. Click {0} to view details.</value>
+  </data>
+  <data name="TransferCondition_ToastBody_cs" xml:space="preserve">
+    <value>您的转账设定已被上线更改。 您的下线的自动转账状态和日程表已相应调整。 点击{0}查看详细信息。</value>
+  </data>
+  <data name="TransferCondition_ToastBody_ch" xml:space="preserve">
+    <value>您的轉賬設定已被上線更改。 您的下線的自動轉賬狀態和日程表已相應調整。 點擊{0}查看詳細信息。</value>
+  </data>
+  <data name="TransferCondition_ToastBody_th" xml:space="preserve">
+    <value>เงื่อนไขการโอนของคุณถูกเปลี่ยนแปลงโดยอัพไลน์ สถานะและกำหนดการการโอนอัตโนมัติสำหรับดาวน์ไลน์ของคุณได้รับการปรับเปลี่ยนตามนั้น คลิก {0} เพื่อดูรายละเอียด</value>
+  </data>
+  <data name="TransferCondition_PersonalMessage_en" xml:space="preserve">
+    <value>Your Transfer Condition was changed by upline. The Auto Transfer status and schedule have been adjusted for the following customers: {0}. Details can be found in Transfer function.</value>
+  </data>
+  <data name="TransferCondition_PersonalMessage_cs" xml:space="preserve">
+    <value>您的转账设定已被上线更改。 以下客户已调整自动转账状态和日程表： {0} 。 详细可以在转账功能查询。</value>
+  </data>
+  <data name="TransferCondition_PersonalMessage_ch" xml:space="preserve">
+    <value>您的轉賬設定已被上線更改。 以下客戶已調整自動轉賬狀態和日程表： {0}。 詳細信息可以在轉賬功能查詢。</value>
+  </data>
+  <data name="TransferCondition_PersonalMessage_th" xml:space="preserve">
+    <value>เงื่อนไขการโอนของคุณถูกเปลี่ยนแปลงโดยอัพไลน์ สถานะและกำหนดการการโอนอัตโนมัติได้รับการปรับเปลี่ยนสำหรับลูกค้าต่อไปนี้: {0} รายละเอียดสามารถพบได้ในฟังก์ชั่นการโอน</value>
+  </data>
+  <data name="TransferCondition_ToastBody_vn" xml:space="preserve">
+    <value>Điều Kiện Chuyển Khoản của bạn đã được cấp trên thay đổi. Trạng thái và lịch Chuyển Khoản Tự Động cho cấp dưới của bạn đã được điều chỉnh tương ứng. Nhấn vào {0} để xem chi tiết.</value>
+  </data>
+  <data name="TransferCondition_ToastTitle_vn" xml:space="preserve">
+    <value>Cấu Hình Chuyển Khoản Tự Động</value>
+  </data>
+  <data name="TransferCondition_PersonalMessage_vn" xml:space="preserve">
+    <value>Điều Kiện Chuyển Khoản của bạn đã được cấp trên thay đổi. Trạng thái và lịch Chuyển Khoản Tự Động đã được điều chỉnh cho các tài khoản sau: {0}. Chi tiết có thể được tìm thấy trong chức năng Chuyển Khoản.</value>
+  </data>
+  <data name="SabaOtherSportsLegend" xml:space="preserve">
+    <value>Data of {0} will be under {1}.</value>
+  </data>
+</root>
