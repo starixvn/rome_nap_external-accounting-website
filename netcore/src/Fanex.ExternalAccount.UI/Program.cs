@@ -51,6 +51,7 @@ namespace Fanex.ExternalAccount
                 .SetBasePath(builder.Environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+                // Keep XML loading as optional for backward compatibility during migration
                 .AddXmlFile("Web.config", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
@@ -84,12 +85,17 @@ namespace Fanex.ExternalAccount
 
             // Initialize logging
             var logEngines = new List<ILogEngine>();
-            var rabbitMQConnectionString = configuration.GetValue<string>("RabbitMQConnectionStrings");
+            // Try nested path first, then fallback to flat key for backward compatibility
+            var rabbitMQConnectionString = configuration.GetValue<string>("Fanex:Logging:RabbitMQConnectionStrings") 
+                ?? configuration.GetValue<string>("AppSettings:RabbitMQConnectionStrings")
+                ?? configuration.GetValue<string>("RabbitMQConnectionStrings");
             if (!string.IsNullOrWhiteSpace(rabbitMQConnectionString))
             {
                 logEngines.Add(new RabbitMQLogging(rabbitMQConnectionString));
             }
-            var sentryBackendUrl = configuration.GetValue<string>("SentryBackendUrl");
+            var sentryBackendUrl = configuration.GetValue<string>("Fanex:Logging:SentryBackendUrl")
+                ?? configuration.GetValue<string>("AppSettings:SentryBackendUrl")
+                ?? configuration.GetValue<string>("SentryBackendUrl");
             if (!string.IsNullOrWhiteSpace(sentryBackendUrl))
             {
                 logEngines.Add(new SentryLogging(new SentryEngineOptions
@@ -98,7 +104,10 @@ namespace Fanex.ExternalAccount
                 }));
             }
             
-            var loggingDefaultCategory = configuration.GetValue<string>("LoggingDefaultCategory") ?? "Default";
+            var loggingDefaultCategory = configuration.GetValue<string>("Fanex:Logging:DefaultCategory")
+                ?? configuration.GetValue<string>("AppSettings:LoggingDefaultCategory")
+                ?? configuration.GetValue<string>("LoggingDefaultCategory")
+                ?? "Default";
             LogManager
                 .SetDefaultLogCategory(loggingDefaultCategory)
                 .Use(logEngines);
@@ -138,7 +147,8 @@ namespace Fanex.ExternalAccount
             ProductStatusConfigurationHandler.UseConfig(productStatusConfig);
 
             // Initialize RemotingRef
-            var remotingRefService = configuration.GetValue<string>("Fanex.RemotingRef.Service");
+            var remotingRefService = configuration.GetValue<string>("Fanex:RemotingRef:Service")
+                ?? configuration.GetValue<string>("AppSettings:Fanex.RemotingRef.Service");
             if (!string.IsNullOrWhiteSpace(remotingRefService))
             {
                 Fanex.RemotingRef.RefDataTypeContainer

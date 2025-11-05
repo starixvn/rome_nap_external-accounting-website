@@ -3,7 +3,6 @@
 @using Fanex.ExternalAccount.Core.Authorization
 @using Fanex.ExternalAccount.Module.LeftPanel
 @using Newtonsoft.Json;
-@using System.Configuration;
 
 @{
     var authenService = AuthorizationServiceImpl.Instance;
@@ -24,7 +23,7 @@
     var productsExcludeSabaVS = ProductSettings.SiteProducts.Where(i => i.Key != 54).ToDictionary(p => p.Key, p => p.Value);
 
     var products = JsonConvert.SerializeObject(productsExcludeSabaVS.Values);
-    string Env = ConfigurationManager.AppSettings["EnvTheme"].ToString();
+    string Env = Configuration.GetValue<string>("AppSettings:EnvTheme") ?? Configuration.GetValue<string>("EnvTheme") ?? "dev";
 
 }
 <!DOCTYPE html>

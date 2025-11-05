@@ -1,14 +1,15 @@
 ﻿@using Fanex.ExternalAccount.Utilities
 @using CaptchaMvc.HtmlHelpers
-@using System.Web.Configuration
 @model Fanex.ExternalAccount.ViewModel.Account.LoginModel
 @{
     ViewBag.Title = ViewLang.LoginTitle;
     Layout = null;
 
-    var domains = WebConfigurationManager.AppSettings["Domains"].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-    var currentDomain = Request.Headers["Host"] +
-        (Request.ApplicationPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : Request.ApplicationPath);
+    var domainsValue = Configuration.GetValue<string>("AppSettings:Domains") ?? Configuration.GetValue<string>("Domains") ?? "";
+    var domains = domainsValue.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+    var appPath = Request.PathBase;
+    var virtualDirectory = appPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : appPath.Value;
+    var currentDomain = Request.Headers["Host"] + virtualDirectory;
 
     var currentLine = currentDomain;
     foreach (var domain in domains)

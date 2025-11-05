@@ -1,7 +1,9 @@
 ﻿@{
     Layout = null;
 
-    var interval = System.Web.Configuration.WebConfigurationManager.AppSettings["TrackConnectionSpeedIntervalMinutes"];
+    var interval = Configuration.GetValue<string>("AppSettings:TrackConnectionSpeedIntervalMinutes") 
+        ?? Configuration.GetValue<string>("TrackConnectionSpeedIntervalMinutes") 
+        ?? "5";
     var trackConnectionSpeedInterval = string.IsNullOrWhiteSpace(interval) ? 0 :
         Convert.ToInt32(interval) * 60 * 1000;
 }

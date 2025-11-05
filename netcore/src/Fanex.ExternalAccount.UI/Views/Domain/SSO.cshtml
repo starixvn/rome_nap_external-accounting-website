@@ -1,12 +1,11 @@
-﻿@using System.Web.Configuration;
-@using Fanex.ExternalAccount.Core.Context;
+﻿@using Fanex.ExternalAccount.Core.Context;
 @using Fanex.ExternalAccount.DTO.UserControl;
 @{
     Layout = null;
 
     string[] domains = null;
-    var appPath = Request.ApplicationPath;
-    var virtualDirectory = appPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : appPath;
+    var appPath = Request.PathBase;
+    var virtualDirectory = appPath.Equals("/", StringComparison.OrdinalIgnoreCase) ? string.Empty : appPath.Value;
     var currentDomain = Request.Headers["Host"] + virtualDirectory;
 
     string currentLine = currentDomain;
@@ -16,7 +15,8 @@
 
     if (supportSwitchLine)
     {
-        domains = WebConfigurationManager.AppSettings["Domains"].Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+        var domainsValue = Configuration.GetValue<string>("AppSettings:Domains") ?? Configuration.GetValue<string>("Domains") ?? "";
+        domains = domainsValue.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
 
         foreach (var domain in domains)
         {
