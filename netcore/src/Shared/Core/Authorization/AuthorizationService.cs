@@ -4,7 +4,8 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using System.Web;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.DependencyInjection;
     using Context;
     using CustomerSetting.Security.Authenticate;
     using DTO;
@@ -51,6 +52,35 @@
         private readonly ICachingService cachingService;
         private readonly IIPInformatonService ipInformationService;
         private readonly IBelongingService belongingService;
+        private static IHttpContextAccessor? _httpContextAccessor;
+
+        public static void SetHttpContextAccessor(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        private static HttpContext? HttpContext
+        {
+            get
+            {
+                if (_httpContextAccessor?.HttpContext != null)
+                {
+                    return _httpContextAccessor.HttpContext;
+                }
+                
+                // Fallback
+                try
+                {
+                    var serviceProvider = new ServiceCollection().BuildServiceProvider();
+                    var accessor = serviceProvider.GetService<IHttpContextAccessor>();
+                    return accessor?.HttpContext;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
 
         public AuthorizationServiceImpl() : this(null, null, null)
         {
@@ -75,7 +105,8 @@
                 return IsBelong(extRequest.GetGroupName(), extRequest.CustIds);
             }
 
-            var url = HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.Substring(2);
+            var request = HttpContext?.Request;
+            var url = request != null ? request.Path.Value?.TrimStart('/') ?? string.Empty : string.Empty;
 
             foreach (var item in UrlToCheckUsernameParam)
             {
@@ -116,18 +147,16 @@
             AuthenticateAction.AuthenticationType authenticateActionType,
             bool isAjaxRequest)
         {
-            var request = HttpContext.Current.Request;
+            var request = HttpContext?.Request;
             var requestUrl = string.Empty;
 
-            if (!request.RawUrl.Equals("/")
-                && !request
-                    .RawUrl
-                    .ToLower(CultureInfo.InvariantCulture)
-                    .Contains("home/index")
-                && !request.RawUrl.ToLower(CultureInfo.InvariantCulture).Contains("exporttoexcel")
+            if (request != null 
+                && !request.Path.Value.Equals("/")
+                && !request.Path.Value.ToLower(CultureInfo.InvariantCulture).Contains("home/index")
+                && !request.Path.Value.ToLower(CultureInfo.InvariantCulture).Contains("exporttoexcel")
                 && !isAjaxRequest)
             {
-                requestUrl = request.RawUrl;
+                requestUrl = request.Path.Value ?? string.Empty;
             }
 
             return IsAuthorized(userId, functionKey, authenticateActionType, requestUrl);

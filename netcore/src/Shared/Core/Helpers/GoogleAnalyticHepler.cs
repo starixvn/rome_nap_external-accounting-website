@@ -1,24 +1,23 @@
 ﻿namespace Fanex.ExternalAccount.Core.Helpers
 {
     using System.Configuration;
-    using System.Web;
 
     public static class GoogleAnalyticHepler
     {
-        private static readonly HtmlString EmptyHtml = new HtmlString(string.Empty);
+        // Stub implementation for .NET Core compatibility
         private static readonly string GoogleAnalyticId = ConfigurationManager.AppSettings["GoogleAnalyticId"];
         private static readonly string GoogleAnalyticUrl = ConfigurationManager.AppSettings["GoogleAnalyticUrl"] ?? "https://www.googletagmanager.com/gtag/js";
 
-        public static HtmlString Render() => Render(GoogleAnalyticId);
+        public static string Render() => Render(GoogleAnalyticId);
 
-        public static HtmlString Render(string googleAnalyticId)
+        public static string Render(string googleAnalyticId)
         {
             if (string.IsNullOrEmpty(googleAnalyticId))
             {
-                return EmptyHtml;
+                return string.Empty;
             }
 
-            return new HtmlString(@"<!-- Global site tag (gtag.js) - Google Analytics -->
+            return @"<!-- Global site tag (gtag.js) - Google Analytics -->
                                       <script async src='" + GoogleAnalyticUrl + "?id=" + GoogleAnalyticId + @"'></script>
                                           <script>
                                               window.dataLayer = window.dataLayer || [];
@@ -26,7 +25,7 @@
                                               gtag('js', new Date());
 
                                               gtag('config', '" + GoogleAnalyticId + @"');
-                                            </script>");
+                                            </script>";
         }
     }
 }

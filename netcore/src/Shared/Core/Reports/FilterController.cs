@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Core.Reports
 {
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Service.Impl.Report;
@@ -38,7 +38,7 @@
             this.currentSession = currentSession ?? new CurrentSession();
         }
 
-        public ActionResult ProductsList(bool isWinLossDetail)
+        public IActionResult ProductsList(bool isWinLossDetail)
         {
             var products = productService.GetProducts(ExtRequest.GetGroupName(), ExtRequest.GetGroupId(), isWinLossDetail);
             var productDetails = productDetailService.GetProductDetails(products, currentSession.ParentGroupName);
@@ -46,7 +46,7 @@
             return JsonBase(new { products, productDetails }, new JsonSerializerSettings());
         }
 
-        public ActionResult GetSuggestedUserName()
+        public IActionResult GetSuggestedUserName()
         {
             var users = reportService.GetSuggestedUserName(
                 CurrentSession.CustId,
@@ -56,7 +56,7 @@
             return JsonBase(users, new JsonSerializerSettings());
         }
 
-        public ActionResult CurrencyList()
+        public IActionResult CurrencyList()
         {
             var currencies = reportByCurrencyService.GetCurrencyList(ExtRequest.GetGroupName());
 

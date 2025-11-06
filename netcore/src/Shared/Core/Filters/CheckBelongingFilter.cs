@@ -2,13 +2,14 @@
 {
     using Fanex.ExternalAccount.Core.Authorization;
     using System;
-    using System.Web;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
     using ONEbook.UM;
     using ONEbook.UM.Services;
 
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
-    public class CheckBelongingFilter : AuthorizeAttribute
+    public class CheckBelongingFilter : AuthorizeAttribute, IAuthorizationFilter
     {
         private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
 
@@ -18,9 +19,13 @@
                       UMClientManager.UMClientConfigs,
                       UMClientManager.HttpContext);
 
-        public override void OnAuthorization(AuthorizationContext filterContext)
+        public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
-            base.OnAuthorization(filterContext);
+            // Check if user is authorized first
+            if (!filterContext.HttpContext.User.Identity?.IsAuthenticated ?? true)
+            {
+                return; // Let base authorization handle it
+            }
             
             if (!umService.IsUnderMaintenance() && !authorization.IsBelong())
             {
@@ -28,27 +33,25 @@
             }
         }
 
-        private static void UnAuthorization(AuthorizationContext filterContext)
+        private static void UnAuthorization(AuthorizationFilterContext filterContext)
         {
-            HttpResponseBase response = filterContext.HttpContext.Response;
+            var response = filterContext.HttpContext.Response;
 
-            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            // Check if it's an AJAX request
+            var isAjaxRequest = filterContext.HttpContext.Request.Headers["X-Requested-With"].ToString() == "XMLHttpRequest";
+
+            if (isAjaxRequest)
             {
-                response.Clear();
-                response.Write("{ \"code\": \"401\", \"responsetext\": \"You are not authorized on this function!\" }");
-                filterContext.Result = new HttpUnauthorizedResult();
-                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
-                response.TrySkipIisCustomErrors = true;
-                response.End();
+                // In ASP.NET Core, we don't need to clear response explicitly
+                filterContext.Result = new JsonResult(new { code = "401", responsetext = "You are not authorized on this function!" });
+                filterContext.HttpContext.Response.StatusCode = 401;
             }
             else
             {
-                filterContext.Result = new RedirectResult("~/Account/LogOff");
+                filterContext.Result = new RedirectResult("/Account/LogOff");
             }
 
-            var session = filterContext.HttpContext.Session;
-            session.Clear();
-            session.Abandon();            
+            filterContext.HttpContext.Session.Clear();
         }
     }
 }

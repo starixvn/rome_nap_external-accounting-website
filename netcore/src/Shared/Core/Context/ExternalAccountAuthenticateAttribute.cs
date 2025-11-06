@@ -1,14 +1,16 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
     using System;
-    using System.Web.Mvc;
-    using System.Web.Security;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
+    using System.Text.Json;
     using Authorization;
     using CustomerSetting.Security.Authenticate;
-    using Utilities;
+    using Fanex.ExternalAccount.Utilities;
 
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
-    public class ExternalAccountAuthenticateAttribute : AuthorizeAttribute, IAuthenticate
+    public class ExternalAccountAuthenticateAttribute : AuthorizeAttribute, IAuthorizationFilter, IAuthenticate
     {
         private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
 
@@ -27,19 +29,21 @@
         public bool IsBelong(int custId, string username, string groupName = null, bool getUplineInfo = true)
             => authorization.IsBelong(ExtRequest.Instance.GetGroupName(groupName), custId, username);
 
-        public override void OnAuthorization(AuthorizationContext filterContext)
+        public void OnAuthorization(AuthorizationFilterContext filterContext)
         {
-            base.OnAuthorization(filterContext);
-
-            if (filterContext.Result is HttpUnauthorizedResult)
+            // Check if user is authenticated first
+            if (!filterContext.HttpContext.User.Identity?.IsAuthenticated ?? true)
             {
+                filterContext.Result = new UnauthorizedResult();
                 return;
             }
 
             var currentSession = new CurrentSession();
             if (currentSession.HadNoSessionData)
             {
-                FormsAuthentication.RedirectToLoginPage();
+                // Redirect to login page
+                filterContext.Result = new RedirectResult("/Account/Login");
+                return;
             }
 
             if (string.IsNullOrWhiteSpace(Function))
@@ -65,27 +69,26 @@
             AuthenticateAction.AuthenticationType authenticateActionType) =>
             authorization.IsAuthorized(userId, functionKey, authenticateActionType, IsAjaxRequest);
 
-        private void HandleUnauthorizedFunction(AuthorizationContext filterContext)
+        private void HandleUnauthorizedFunction(AuthorizationFilterContext filterContext)
         {
-            if (IsAjaxRequest)
+            // Check if it's an AJAX request
+            var isAjax = filterContext.HttpContext.Request.Headers["X-Requested-With"].ToString() == "XMLHttpRequest"
+                || IsAjaxRequest;
+
+            if (isAjax)
             {
-                filterContext.Result = new JsonResult
+                filterContext.Result = new JsonResult(new
                 {
-                    Data = new
-                    {
-                        isSuccess = false,
-                        errorCode = "1",
-                        errorMessage = ViewLang.DontHavePermission
-                    },
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
+                    isSuccess = false,
+                    errorCode = "1",
+                    errorMessage = ViewLang.DontHavePermission
+                });
+                filterContext.HttpContext.Response.StatusCode = 403;
             }
             else
             {
-                filterContext.Result = new PartialViewResult
-                {
-                    ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
-                };
+                // For API controllers, return Forbidden instead of View
+                filterContext.Result = new ForbidResult();
             }
         }
     }

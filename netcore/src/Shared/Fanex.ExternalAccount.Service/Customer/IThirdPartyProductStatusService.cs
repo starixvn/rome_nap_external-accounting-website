@@ -1,14 +1,16 @@
 ﻿namespace Fanex.ExternalAccount.Service.Interface.Customer
 {
     using System.Collections.Generic;
-    using DTO.Customer;
-    using ThirdPartyProducts.StatusSetting.Model;
+    // using DTO.Customer;
+    // using ThirdPartyProducts.StatusSetting.Model;
 
     public interface IThirdPartyProductStatusService
     {
-        ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId);
+        // ThirdPartyProductStatusViewModel Select(int custId, string custName, int roleId, int productId);
+        object Select(int custId, string custName, int roleId, int productId);
 
-        List<ProductStatusResult> Update
+        // List<ProductStatusResult> Update
+        List<object> Update
         (int custId,
             int subAccId,
             int productId,
@@ -16,6 +18,6 @@
             int systemId,
             string ip,
             string username,
-            List<ProductStatus> productStatus);
+            List<object> productStatus);
     }
 }

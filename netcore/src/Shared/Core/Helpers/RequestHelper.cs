@@ -1,15 +1,47 @@
 ﻿namespace Fanex.ExternalAccount.Core.Helpers
 {
-    using System.Web;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.DependencyInjection;
     using Context;
     using DTO;
     using UAParser;
 
     public static class RequestHelper
     {
+        private static IHttpContextAccessor? _httpContextAccessor;
+
+        public static void SetHttpContextAccessor(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        private static HttpContext? HttpContext
+        {
+            get
+            {
+                if (_httpContextAccessor?.HttpContext != null)
+                {
+                    return _httpContextAccessor.HttpContext;
+                }
+                
+                // Fallback
+                try
+                {
+                    var serviceProvider = new ServiceCollection().BuildServiceProvider();
+                    var accessor = serviceProvider.GetService<IHttpContextAccessor>();
+                    return accessor?.HttpContext;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public static Request GetRequestInfo(string browserSize = null)
         {
-            var userAgent = HttpContext.Current.Request.UserAgent ?? string.Empty;
+            var request = HttpContext?.Request;
+            var userAgent = request?.Headers["User-Agent"].ToString() ?? string.Empty;
             var userAgentParser = Parser.GetDefault();
             var clientInfo = userAgentParser.Parse(userAgent);
             var clientUserAgent = clientInfo.UserAgent;

@@ -16,11 +16,12 @@
     <PackageReference Include="Fanex.File" Version="1.0.0" />
     <PackageReference Include="MessagePack" Version="3.1.1" />
     <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
-    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <!-- Enterprise Library packages removed - .NET Framework legacy -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" /> -->
   </ItemGroup>
 
   <ItemGroup>

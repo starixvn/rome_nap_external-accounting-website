@@ -3,7 +3,8 @@
     using System;
     using System.Globalization;
     using System.Linq;
-    using System.Web;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.DependencyInjection;
     using Utilities;
 
     public class CurrentSession : ICurrentSession
@@ -33,10 +34,42 @@
         public const string EASSCLastActiveTime = "EASSCLastActiveTime";
         public const string EASSCFailedCounter = "EASSCFailedCounter";
 
+        private static IHttpContextAccessor? _httpContextAccessor;
+
+        public static void SetHttpContextAccessor(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        private static HttpContext? HttpContext
+        {
+            get
+            {
+                if (_httpContextAccessor?.HttpContext != null)
+                {
+                    return _httpContextAccessor.HttpContext;
+                }
+                
+                // Fallback: try to get from service locator if available
+                try
+                {
+                    var serviceProvider = new ServiceCollection().BuildServiceProvider();
+                    var accessor = serviceProvider.GetService<IHttpContextAccessor>();
+                    return accessor?.HttpContext;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        private static ISession? Session => HttpContext?.Session;
+
         public static ICurrentSession Instance => new CurrentSession();
 
         public bool IsAuthenticated =>
-            HttpContext.Current.User.Identity.IsAuthenticated
+            HttpContext?.User?.Identity?.IsAuthenticated == true
             && IsLogin;
 
         public bool HadNoSessionData => !IsLogin;
@@ -46,9 +79,9 @@
         public int LoginAttempt
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
-            get { return Utils.ToInt32(HttpContext.Current.Session[EASLoginAttempt]); }
+            get { return Utils.ToInt32(GetSessionValue(EASLoginAttempt)); }
 
-            set { HttpContext.Current.Session[EASLoginAttempt] = value; }
+            set { SetSessionValue(EASLoginAttempt, value); }
         }
 
 #pragma warning disable S2325 // Methods and properties that don't access instance data should be static
@@ -56,146 +89,146 @@
         public string UserAttempt
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
-            get { return Utils.ToString(HttpContext.Current.Session[EASUserAttempt]); }
+            get { return Utils.ToString(GetSessionValue(EASUserAttempt)); }
 
-            set { HttpContext.Current.Session[EASUserAttempt] = value; }
+            set { SetSessionValue(EASUserAttempt, value); }
         }
 
         public string UserName
         {
-            get { return Utils.ToString(HttpContext.Current.Session[EASUsername]); }
+            get { return Utils.ToString(GetSessionValue(EASUsername)); }
 
-            set { HttpContext.Current.Session[EASUsername] = value; }
+            set { SetSessionValue(EASUsername, value); }
         }
 
         public int CustId
         {
-            get { return Utils.ToInt32(HttpContext.Current.Session[EASCustId]); }
+            get { return Utils.ToInt32(GetSessionValue(EASCustId)); }
 
-            set { HttpContext.Current.Session[EASCustId] = value; }
+            set { SetSessionValue(EASCustId, value); }
         }
 
         public int UserId
         {
-            get { return Utils.ToInt32(HttpContext.Current.Session[EASUserId]); }
+            get { return Utils.ToInt32(GetSessionValue(EASUserId)); }
 
-            set { HttpContext.Current.Session[EASUserId] = value; }
+            set { SetSessionValue(EASUserId, value); }
         }
 
         public int OnUserId
         {
-            get { return Utils.ToInt32(HttpContext.Current.Session[EASOnUserId]); }
+            get { return Utils.ToInt32(GetSessionValue(EASOnUserId)); }
 
-            set { HttpContext.Current.Session[EASOnUserId] = value; }
+            set { SetSessionValue(EASOnUserId, value); }
         }
 
         public bool IsLogin
         {
-            get { return Utils.ToBoolean(HttpContext.Current.Session[EASIsLogin]); }
+            get { return Utils.ToBoolean(GetSessionValue(EASIsLogin)); }
 
-            set { HttpContext.Current.Session[EASIsLogin] = value; }
+            set { SetSessionValue(EASIsLogin, value); }
         }
 
         public string NetSessionId
         {
-            get { return HttpContext.Current.Session.SessionID; }
-            set { HttpContext.Current.Session["SessionID"] = value; }
+            get { return HttpContext?.Session?.Id ?? string.Empty; }
+            set { SetSessionValue("SessionID", value); }
         }
 
         public string Captcha
         {
-            get { return HttpContext.Current.Session[EASCaptcha] as string; }
+            get { return GetSessionValue(EASCaptcha) as string ?? string.Empty; }
 
-            set { HttpContext.Current.Session[EASCaptcha] = value; }
+            set { SetSessionValue(EASCaptcha, value); }
         }
 
         public string CurrencyGroup
         {
-            get { return Utils.ToString(HttpContext.Current.Session[EASCurrencyGroup]); }
+            get { return Utils.ToString(GetSessionValue(EASCurrencyGroup)); }
 
-            set { HttpContext.Current.Session[EASCurrencyGroup] = value; }
+            set { SetSessionValue(EASCurrencyGroup, value); }
         }
 
 #pragma warning disable S2325 // Methods and properties that don't access instance data should be static
         public string ParentGroupName
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
-            get { return Utils.ToString(HttpContext.Current.Session[EASParentGroup]); }
+            get { return Utils.ToString(GetSessionValue(EASParentGroup)); }
 
-            set { HttpContext.Current.Session[EASParentGroup] = value; }
+            set { SetSessionValue(EASParentGroup, value); }
         }
 
         public bool IsBelongToSpecialGroups
-            => !IsInternalAdmin && !IsITAdmin && Config.SpecialGroups().Contains(ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
+            => !IsInternalAdmin && !IsITAdmin && Config.SpecialGroups().Any(g => g.Equals(ParentGroupName, StringComparison.CurrentCultureIgnoreCase));
 
         public bool InvalidOTP
         {
-            get { return Utils.ToBoolean(HttpContext.Current.Session[EASInvalidOTP]); }
+            get { return Utils.ToBoolean(GetSessionValue(EASInvalidOTP)); }
 
-            set { HttpContext.Current.Session[EASInvalidOTP] = value; }
+            set { SetSessionValue(EASInvalidOTP, value); }
         }
 
         public string OTPEncryptCode
         {
-            get { return Utils.ToString(HttpContext.Current.Session[EASOTPEncryptCode]); }
+            get { return Utils.ToString(GetSessionValue(EASOTPEncryptCode)); }
 
-            set { HttpContext.Current.Session[EASOTPEncryptCode] = value; }
+            set { SetSessionValue(EASOTPEncryptCode, value); }
         }
 
         public int OTPFailedCounter
         {
-            get { return Utils.ToInt32(HttpContext.Current.Session[EASOTPFailedCounter]); }
+            get { return Utils.ToInt32(GetSessionValue(EASOTPFailedCounter)); }
 
-            set { HttpContext.Current.Session[EASOTPFailedCounter] = value; }
+            set { SetSessionValue(EASOTPFailedCounter, value); }
         }
 
         public bool EnabledOTP
         {
-            get { return Utils.ToBoolean(HttpContext.Current.Session[EASEnabledOTP]); }
+            get { return Utils.ToBoolean(GetSessionValue(EASEnabledOTP)); }
 
-            set { HttpContext.Current.Session[EASEnabledOTP] = value; }
+            set { SetSessionValue(EASEnabledOTP, value); }
         }
 
         public string OTPSecretKey
         {
-            get { return Utils.ToString(HttpContext.Current.Session[EASOTPSecretKey]); }
+            get { return Utils.ToString(GetSessionValue(EASOTPSecretKey)); }
 
-            set { HttpContext.Current.Session[EASOTPSecretKey] = value; }
+            set { SetSessionValue(EASOTPSecretKey, value); }
         }
 
         public string OTPModifiedDate
         {
-            get { return Utils.ToString(HttpContext.Current.Session[EASOTPModifiedDate]); }
+            get { return Utils.ToString(GetSessionValue(EASOTPModifiedDate)); }
 
-            set { HttpContext.Current.Session[EASOTPModifiedDate] = value; }
+            set { SetSessionValue(EASOTPModifiedDate, value); }
         }
 
         public bool IsInternalAdmin
         {
-            get { return Utils.ToBoolean(HttpContext.Current.Session[EASInternalAdmin]); }
+            get { return Utils.ToBoolean(GetSessionValue(EASInternalAdmin)); }
 
-            set { HttpContext.Current.Session[EASInternalAdmin] = value; }
+            set { SetSessionValue(EASInternalAdmin, value); }
         }
 
         public bool IsITAdmin
         {
-            get { return Utils.ToBoolean(HttpContext.Current.Session[EASITAdmin]); }
+            get { return Utils.ToBoolean(GetSessionValue(EASITAdmin)); }
 
-            set { HttpContext.Current.Session[EASITAdmin] = value; }
+            set { SetSessionValue(EASITAdmin, value); }
         }
 
         public int GroupId
         {
-            get { return Utils.ToInt32(HttpContext.Current.Session[EASGroupId]); }
+            get { return Utils.ToInt32(GetSessionValue(EASGroupId)); }
 
-            set { HttpContext.Current.Session[EASGroupId] = value; }
+            set { SetSessionValue(EASGroupId, value); }
         }
 
         public int FromSystem
         {
-            get { return Utils.ToInt32(HttpContext.Current.Session[EASFromSystem]); }
+            get { return Utils.ToInt32(GetSessionValue(EASFromSystem)); }
 
-            set { HttpContext.Current.Session[EASFromSystem] = value; }
+            set { SetSessionValue(EASFromSystem, value); }
         }
 
         public string Language
@@ -207,14 +240,14 @@
 
         public string HashPassword
         {
-            get { return HttpContext.Current.Session[EASHashPwd] as string; }
-            set { HttpContext.Current.Session[EASHashPwd] = value; }
+            get { return GetSessionValue(EASHashPwd) as string ?? string.Empty; }
+            set { SetSessionValue(EASHashPwd, value); }
         }
 
         public string CurrentLine
         {
-            get { return HttpContext.Current.Session[EASLine] as string; }
-            set { HttpContext.Current.Session[EASLine] = value; }
+            get { return GetSessionValue(EASLine) as string ?? string.Empty; }
+            set { SetSessionValue(EASLine, value); }
         }
 
 #pragma warning disable S2325 // Methods and properties that don't access instance data should be static
@@ -222,11 +255,11 @@
         public double LastActiveTime
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
-            get => Utils.ToDouble(HttpContext.Current.Session[EASSCLastActiveTime]);
-            set => HttpContext.Current.Session[EASSCLastActiveTime] = value;
+            get => Utils.ToDouble(GetSessionValue(EASSCLastActiveTime));
+            set => SetSessionValue(EASSCLastActiveTime, value);
         }
 
-        public void UpdateLastActiveTime(object lastActiveTime  = null)
+        public void UpdateLastActiveTime(object lastActiveTime = null)
         {
             LastActiveTime = lastActiveTime == null
                 ? Utils.ConvertDateTimeToMilliseconds(DateTime.Now)
@@ -238,10 +271,48 @@
         public int SCFailedCounter
 #pragma warning restore S2325 // Methods and properties that don't access instance data should be static
         {
-            get => Utils.ToInt32(HttpContext.Current.Session[EASSCFailedCounter]);
-            set => HttpContext.Current.Session[EASSCFailedCounter] = value;
+            get => Utils.ToInt32(GetSessionValue(EASSCFailedCounter));
+            set => SetSessionValue(EASSCFailedCounter, value);
         }
 
         public string LangKey { get; set; } = "E";
+
+        private static object? GetSessionValue(string key)
+        {
+            if (Session == null)
+                return null;
+
+            try
+            {
+                return Session.GetString(key);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private static void SetSessionValue(string key, object? value)
+        {
+            if (Session == null)
+                return;
+
+            try
+            {
+                if (value == null)
+                {
+                    Session.Remove(key);
+                }
+                else
+                {
+                    // Convert to string for storage (ASP.NET Core Session only stores strings)
+                    Session.SetString(key, value.ToString() ?? string.Empty);
+                }
+            }
+            catch
+            {
+                // Ignore session errors
+            }
+        }
     }
 }

@@ -6,6 +6,7 @@
     <AssemblyName>Fanex.ExternalAccount.Utilities</AssemblyName>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,18 +14,20 @@
     <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
     <PackageReference Include="Fanex.RemotingRef" Version="1.5.1" />
     <PackageReference Include="Fanex.File" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="MessagePack" Version="3.1.1" />
     <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
-    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <!-- Enterprise Library packages removed - .NET Framework legacy -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" /> -->
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="RestSharp" Version="105.2.3" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
-    <PackageReference Include="System.Web.HttpUtility" Version="4.3.1" />
+    <!-- <PackageReference Include="System.Web.HttpUtility" Version="4.3.1" /> -->
   </ItemGroup>
 
   <ItemGroup>

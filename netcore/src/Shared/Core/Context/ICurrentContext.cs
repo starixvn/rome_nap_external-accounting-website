@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
-    using System.Web;
+    using Microsoft.AspNetCore.Http;
 
     public interface ICurrentContext
     {

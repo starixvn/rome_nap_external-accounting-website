@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
     using System;
-    using System.Configuration;
     using System.IO;
-    using System.Web;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using System.Text.Json;
     using Authorization;
     using Context;
     using Fanex.ExternalAccount.Core.Criteria;
@@ -16,7 +16,7 @@
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
 
-    public class BaseController : Controller
+    public class BaseController : ControllerBase
     {
         protected const string SiteName = "ExtAcc";
         protected const string UAT = "UAT";
@@ -24,21 +24,23 @@
         private readonly ICurrentContext currentContext;
         private readonly ICurrentSession currentSession;
         private readonly IExtRequest extRequest;
+        private readonly IConfiguration configuration;
 
         protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
 
-        protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest())
+        protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest(), null)
         {
         }
 
-        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest)
+        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration = null)
         {
             this.currentContext = currentContext;
             this.currentSession = currentSession;
             this.extRequest = extRequest;
+            this.configuration = configuration;
         }
 
-        protected static string Environment => Utils.ToString(ConfigurationManager.AppSettings["Environment"]);
+        protected string Environment => configuration?.GetValue<string>("Environment") ?? Utils.ToString(System.Configuration.ConfigurationManager.AppSettings["Environment"]);
 
         protected bool IncludeAllFunctions => Environment.Equals(UAT, StringComparison.OrdinalIgnoreCase);
 
@@ -48,51 +50,53 @@
 
         protected virtual IExtRequest ExtRequest => extRequest ?? new ExtRequest();
 
-        protected virtual ActionResult JsonBase(object data, JsonSerializerSettings settings = null)
-            => this.JsonExt(data, settings ?? new JsonSerializerSettings
+        protected virtual IActionResult JsonBase(object data, JsonSerializerSettings settings = null)
+        {
+            var jsonSettings = settings ?? new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 ContractResolver = new CamelCasePropertyNamesContractResolver()
-            });
+            };
 
-        protected virtual ActionResult JsonBase2(object data,
-            JsonRequestBehavior settings = JsonRequestBehavior.AllowGet) => Json(data, settings);
+            return new JsonResult(data, jsonSettings);
+        }
 
-        protected virtual ActionResult PartialViewBase(object objModel = null, string viewName = null) =>
-            string.IsNullOrWhiteSpace(viewName) ? PartialView(objModel) : PartialView(viewName, objModel);
+        protected virtual IActionResult JsonBase2(object data) => new JsonResult(data);
+
+        protected virtual IActionResult PartialViewBase(object objModel = null, string viewName = null) =>
+            // ASP.NET Core API controllers don't support views
+            BadRequest("Partial views are not supported in API controllers");
 
         protected virtual void ExportToExcel(MemoryStream excelStream, string fileName)
         {
-            if (!Response.IsRequestBeingRedirected)
+            if (!Response.HasStarted)
             {
                 Response.ContentType = "application/vnd.ms-excel";
-                Response.AddHeader("Content-Disposition", $"attachment;filename={fileName}");
+                Response.Headers.Add("Content-Disposition", $"attachment;filename={fileName}");
             }
 
-            Response.Clear();
-            Response.BinaryWrite(excelStream.GetBuffer());
-            Response.End();
-        } 
-        protected ActionResult ActionDenied(HttpRequestBase request)
+            // In ASP.NET Core, we don't need to clear response explicitly
+            excelStream.Position = 0;
+            excelStream.CopyTo(Response.Body);
+        }
+
+        protected IActionResult ActionDenied()
         {
-            if (request.IsAjaxRequest())
+            // Check if it's an AJAX request
+            var isAjaxRequest = Request.Headers["X-Requested-With"].ToString() == "XMLHttpRequest";
+
+            if (isAjaxRequest)
             {
-                return new JsonResult
+                return new JsonResult(new
                 {
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                    Data = new
-                    {
-                        errorCode = 1,
-                        errorMessage = ViewLang.DontHavePermission,
-                        isSuccess = false
-                    }
-                };
+                    errorCode = 1,
+                    errorMessage = ViewLang.DontHavePermission,
+                    isSuccess = false
+                });
             }
 
-            return new ViewResult
-            {
-                ViewName = "~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml"
-            };
+            // ASP.NET Core API controllers don't support views
+            return Forbid("Access denied");
         }
 
         protected CheckCustomerBelongToSpecialSiteResult CheckCustomerBelongToSpecialSite(string username)
@@ -101,6 +105,5 @@
             return permissionService.CheckCustomerBelongToSpecialSite(
                 new CheckCustomerIsSpecialSiteCommand { UserName = username });
         }
-
     }
 }

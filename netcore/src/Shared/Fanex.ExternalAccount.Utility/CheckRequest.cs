@@ -3,9 +3,17 @@ namespace Fanex.ExternalAccount.Utilities
     using System;
     using System.Web;
     using System.Linq;
+    using Microsoft.AspNetCore.Http;
 
     public abstract class CheckRequest
     {
+        private static IHttpContextAccessor _httpContextAccessor;
+
+        public static void SetHttpContextAccessor(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
 #pragma warning disable S109 // Magic numbers should not be used
         protected DateTime MinReportDate { get; set; } = new DateTime(DateTime.Today.AddMonths(-3).Year, DateTime.Today.AddMonths(-3).Month, 1);
 
@@ -14,30 +22,32 @@ namespace Fanex.ExternalAccount.Utilities
 
         public static int GetIntRequest(string name, int defaultValue)
         {
-            var request = HttpContext.Current.Request;
-            if (string.IsNullOrEmpty(request[name]))
+            var request = _httpContextAccessor.HttpContext.Request;
+            string value = request.Query[name].FirstOrDefault() ?? request.Form[name].FirstOrDefault();
+            if (string.IsNullOrEmpty(value))
             {
                 return defaultValue;
             }
 
-            return !int.TryParse(request[name], out int value) ? defaultValue : value;
+            return !int.TryParse(value, out int result) ? defaultValue : result;
         }
 
         public static DateTime GetDateTimeRequest(string name, DateTime defaultValue)
         {
-            var request = HttpContext.Current.Request;
-            if (string.IsNullOrEmpty(request[name]))
+            var request = _httpContextAccessor.HttpContext.Request;
+            string value = request.Query[name].FirstOrDefault() ?? request.Form[name].FirstOrDefault();
+            if (string.IsNullOrEmpty(value))
             {
                 return defaultValue;
             }
 
-            return !DateTime.TryParse(request[name], out DateTime value) ? defaultValue : value;
+            return !DateTime.TryParse(value, out DateTime result) ? defaultValue : result;
         }
 
         public static bool GetBooleanRequest(string name, bool defaultValue)
         {
-            var request = HttpContext.Current.Request;
-            var requestName = request[name];
+            var request = _httpContextAccessor.HttpContext.Request;
+            var requestName = request.Query[name].FirstOrDefault() ?? request.Form[name].FirstOrDefault();
 
             if (string.IsNullOrEmpty(requestName))
             {
@@ -51,9 +61,10 @@ namespace Fanex.ExternalAccount.Utilities
 
         public static string GetStringRequest(string name, string defaultValue)
         {
-            var request = HttpContext.Current.Request;
+            var request = _httpContextAccessor.HttpContext.Request;
+            string value = request.Query[name].FirstOrDefault() ?? request.Form[name].FirstOrDefault();
 
-            return string.IsNullOrEmpty(request[name]) ? defaultValue : request[name];
+            return string.IsNullOrEmpty(value) ? defaultValue : value;
         }
     }
 }

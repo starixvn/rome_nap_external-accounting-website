@@ -6,21 +6,24 @@
     <AssemblyName>Fanex.ExternalAccount.Core</AssemblyName>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="2.2.1" />
-    <PackageReference Include="BouncyCastle.Cryptography" Version="2.2.1" />
-    <PackageReference Include="DotNetZip" Version="1.9.1.5" />
-    <PackageReference Include="EasyNetQ" Version="2.3.3" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Caching" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
-    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <!-- Core ASP.NET Core packages -->
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.6" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0" />
+
+    <!-- Essential packages -->
     <PackageReference Include="Enums.NET" Version="4.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.0" />
+
+    <!-- Fanex packages -->
     <PackageReference Include="Fanex.Caching" Version="2.2.8" />
     <PackageReference Include="Fanex.Caching.Redis" Version="2.2.8" />
     <PackageReference Include="Fanex.Common" Version="1.1.0.1" />
@@ -35,17 +38,17 @@
     <PackageReference Include="Fanex.Logging.Extensions.Web" Version="1.0.8" />
     <PackageReference Include="Fanex.RemotingRef" Version="1.5.1" />
     <PackageReference Include="FluentValidation" Version="3.2.0.0" />
-    <PackageReference Include="MathNet.Numerics.Signed" Version="4.15.0" />
     <PackageReference Include="MessagePack" Version="3.1.1" />
     <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
-    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
-    <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />
-    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+
+    <!-- Third party libraries -->
+    <PackageReference Include="AutoMapper" Version="2.2.1" />
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.2.1" />
+    <PackageReference Include="DotNetZip" Version="1.9.1.5" />
+    <PackageReference Include="EasyNetQ" Version="2.3.3" />
+    <PackageReference Include="MathNet.Numerics.Signed" Version="4.15.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.3.2" />
-    <PackageReference Include="MvcPager" Version="1.5.0.28157" />
     <PackageReference Include="NetUtility" Version="4.5.6325.30210" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NPOI" Version="2.6.1" />
     <PackageReference Include="ONEbook.UM" Version="3.1.1" />
     <PackageReference Include="Pipelines.Sockets.Unofficial" Version="2.2.8" />
@@ -57,11 +60,13 @@
     <PackageReference Include="SPSRemoting" Version="1.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
     <PackageReference Include="Sunplus.Agent.Utilities" Version="3.0.2" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.1" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
     <PackageReference Include="UAParser" Version="2.1.0.0" />
     <PackageReference Include="VaultSharp" Version="1.17.5.1" />
+
+    <!-- Legacy packages - kept for compatibility but may need updates -->
+    <PackageReference Include="MvcPager" Version="1.5.0.28157" />
   </ItemGroup>
 
   <ItemGroup>

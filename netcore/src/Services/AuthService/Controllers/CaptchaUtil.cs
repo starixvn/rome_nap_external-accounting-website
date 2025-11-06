@@ -1,22 +1,52 @@
-﻿namespace Fanex.ExternalAccount.Controllers.Authentication
-{
-    using System;
-    using System.Drawing;
-    using System.Drawing.Imaging;
-    using System.IO;
-    using System.Text;
-    using System.Web.Mvc;
-    using Core.Context;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
+using System.Text;
+using Fanex.ExternalAccount.Core.Context;
+using Microsoft.Extensions.Hosting;
 
+namespace Fanex.ExternalAccount.Controllers.Authentication
+{
     public static class CaptchaUtil
     {
 #pragma warning disable S109 // Magic numbers should not be used
-        public static string GetValiationImage(ControllerContext context)
+        public static string GetValiationImage(HttpContext context)
+        {
+            var webHostEnvironment = context.RequestServices.GetService(typeof(IWebHostEnvironment)) as IWebHostEnvironment;
+            if (webHostEnvironment == null)
+            {
+                return string.Empty;
+            }
+
+            var imagePath = Path.Combine(webHostEnvironment.ContentRootPath, "Images", "Login", "capcha.png");
+            
+            if (!System.IO.File.Exists(imagePath))
+            {
+                // Create a simple captcha image if the file doesn't exist
+                return CreateCaptchaImage();
+            }
+
+            var bmp = new Bitmap(100, 30);
+            var g = Graphics.FromImage(bmp);
+            g.DrawImage(Image.FromFile(imagePath), new Rectangle(0, 0, 100, 30));
+            var randomString = GetCaptchaString(4);
+
+            CurrentSession.Instance.Captcha = randomString;
+            g.DrawString(randomString, new Font("Courier", 16), new SolidBrush(Color.Black), 17, 2);
+
+            var stream = new MemoryStream();
+            bmp.Save(stream, ImageFormat.Jpeg);
+            var bytes = stream.ToArray();
+            return Convert.ToBase64String(bytes);
+        }
+
+        private static string CreateCaptchaImage()
         {
             var bmp = new Bitmap(100, 30);
             var g = Graphics.FromImage(bmp);
-            g.DrawImage(Image.FromFile(context.HttpContext.Server.MapPath("~/Images/Login/capcha.png")),
-                new Rectangle(0, 0, 100, 30));
+            g.Clear(Color.White);
             var randomString = GetCaptchaString(4);
 
             CurrentSession.Instance.Captcha = randomString;
@@ -46,7 +76,7 @@
                     || (varRandomNumber >= varA
                         && varRandomNumber <= varZ))
                 {
-                    strCaptchaString.Append((char) varRandomNumber);
+                    strCaptchaString.Append((char)varRandomNumber);
                     varCount++;
                 }
             }

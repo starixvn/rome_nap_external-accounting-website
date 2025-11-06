@@ -3,10 +3,11 @@
     using System;
     using System.Diagnostics;
     using System.Text;
-    using System.Web.Mvc;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
 
-    public class JsonBase : ActionResult
+    public class JsonBase : IActionResult
     {
         public JsonBase()
         {
@@ -33,7 +34,7 @@
 
         private static Formatting Formatting => Debugger.IsAttached ? Formatting.Indented : Formatting.None;
 
-        public override void ExecuteResult(ControllerContext context)
+        public async Task ExecuteResultAsync(ActionContext context)
         {
             if (context == null)
             {
@@ -42,19 +43,21 @@
 
             var response = context.HttpContext.Response;
 
-            if (!response.IsRequestBeingRedirected)
+            if (!response.HasStarted)
             {
                 response.ContentType = !string.IsNullOrEmpty(ContentType) ? ContentType : "application/json";
             }
 
             if (ContentEncoding != null)
             {
-                response.ContentEncoding = ContentEncoding;
+                response.ContentType = $"{response.ContentType}; charset={ContentEncoding.WebName}";
             }
 
             if (ResponseBody != null)
             {
-                response.Write(JsonConvert.SerializeObject(ResponseBody, Formatting, Settings));
+                var json = JsonConvert.SerializeObject(ResponseBody, Formatting, Settings);
+                var bytes = (ContentEncoding ?? Encoding.UTF8).GetBytes(json);
+                await response.Body.WriteAsync(bytes, 0, bytes.Length);
             }
         }
     }

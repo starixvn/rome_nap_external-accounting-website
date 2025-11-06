@@ -1,22 +1,63 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
     using System.Globalization;
-    using System.Web;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.DependencyInjection;
     using Fanex.ExternalAccount.Service;
 
     public class CurrentContext : ICurrentContext
     {
         private readonly IIPInformatonService ipInformationService = new IPInformationService();
+        private static IHttpContextAccessor? _httpContextAccessor;
+
+        public static void SetHttpContextAccessor(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+        private static HttpContext? HttpContext
+        {
+            get
+            {
+                if (_httpContextAccessor?.HttpContext != null)
+                {
+                    return _httpContextAccessor.HttpContext;
+                }
+                
+                // Fallback: try to get from service locator if available
+                try
+                {
+                    var serviceProvider = new ServiceCollection().BuildServiceProvider();
+                    var accessor = serviceProvider.GetService<IHttpContextAccessor>();
+                    return accessor?.HttpContext;
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
         public static ICurrentContext Instance => new CurrentContext();
 
-        public HttpContext Context => HttpContext.Current;
+        public Microsoft.AspNetCore.Http.HttpContext Context => HttpContext!;
 
         public string Ip4Address
         {
             get
             {
-                var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                return ip.Split(',')[0];
+                if (HttpContext?.Request == null)
+                    return string.Empty;
+
+                // In ASP.NET Core, we get IP from headers, not ServerVariables
+                var forwardedFor = HttpContext.Request.Headers["X-Forwarded-For"].ToString();
+                if (!string.IsNullOrWhiteSpace(forwardedFor))
+                {
+                    return forwardedFor.Split(',')[0].Trim();
+                }
+
+                var remoteIp = HttpContext.Connection.RemoteIpAddress?.ToString();
+                return remoteIp ?? string.Empty;
             }
         }
 
@@ -24,31 +65,47 @@
         {
             get
             {
-                var ip = HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"];
+                if (HttpContext?.Request == null)
+                    return string.Empty;
 
-                if (string.IsNullOrWhiteSpace(ip))
+                var forwardedFor = HttpContext.Request.Headers["X-Forwarded-For"].ToString();
+                if (!string.IsNullOrWhiteSpace(forwardedFor))
                 {
-                    ip = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                    return forwardedFor;
                 }
 
-                return ip;
+                return HttpContext.Connection.RemoteIpAddress?.ToString() ?? string.Empty;
             }
         }
 
-        public string DomainName => HttpContext.Current.Request.ServerVariables["SERVER_NAME"];
+        public string DomainName
+        {
+            get
+            {
+                if (HttpContext?.Request == null)
+                    return string.Empty;
+
+                return HttpContext.Request.Host.Host;
+            }
+        }
 
         public string FullDomainName
         {
             get
             {
-                var variables = HttpContext.Current.Request.ServerVariables;
+                if (HttpContext?.Request == null)
+                    return string.Empty;
 
-                var protocol =
-                    variables["SERVER_PORT_SECURE"] == "1" ? "https://" : "http://"; //DevSkim: ignore DS137138
-                var domain = variables["SERVER_NAME"];
-                var port = variables["SERVER_PORT"];
+                var scheme = HttpContext.Request.Scheme;
+                var host = HttpContext.Request.Host.Host;
+                var port = HttpContext.Request.Host.Port;
 
-                return protocol + domain + ":" + port;
+                if (port.HasValue && ((scheme == "http" && port != 80) || (scheme == "https" && port != 443)))
+                {
+                    return $"{scheme}://{host}:{port.Value}";
+                }
+
+                return $"{scheme}://{host}";
             }
         }
 
@@ -58,11 +115,11 @@
             {
                 var regionInfo = ResolveCountry();
 
-                return regionInfo?.EnglishName;
+                return regionInfo?.EnglishName ?? string.Empty;
             }
         }
 
-        private RegionInfo ResolveCountry()
+        private RegionInfo? ResolveCountry()
         {
             try
             {

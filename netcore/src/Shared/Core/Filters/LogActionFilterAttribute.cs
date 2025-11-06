@@ -4,7 +4,7 @@
     using Fanex.ExternalAccount.Core.Shared;
     using System;
     using System.Diagnostics;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
 
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
     public class LogActionFilterAttribute : BaseActionFilterAttribute
@@ -16,7 +16,8 @@
                 var actionURL = GetActionLink(filterContext);
                 if (!IsContainsAction(actionURL, ignoredActions))
                 {
-                    var stopWatch = (Stopwatch)filterContext.HttpContext.Items["StopWatch"];
+                    var items = filterContext.HttpContext.Items;
+                    var stopWatch = items.ContainsKey("StopWatch") ? items["StopWatch"] as Stopwatch : null;
                     var duration = stopWatch == null ? -1 : stopWatch.ElapsedMilliseconds;
                     filterContext.HttpContext.Request.Headers["X-Request-Duration"] = duration.ToString();
                     Logging.LogService.InfoAsync(CurrentSession.Instance.UserName + ": " + actionURL);

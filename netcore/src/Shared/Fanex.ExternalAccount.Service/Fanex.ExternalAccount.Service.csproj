@@ -24,13 +24,14 @@
     <PackageReference Include="MessagePack" Version="3.1.1" />
     <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Caching" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
-    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <!-- Enterprise Library packages removed - .NET Framework legacy -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Caching" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" /> -->
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.8" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="ONEbook.OTP" Version="1.0.0" />

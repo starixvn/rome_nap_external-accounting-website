@@ -6,19 +6,31 @@
     using System.Globalization;
     using System.Linq;
     using System.Threading;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.AspNetCore.Routing;
 
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
     public class BaseActionFilterAttribute : ActionFilterAttribute
     {
-        protected virtual string GetActionLink(ControllerContext filterContext)
+        protected virtual string GetActionLink(ActionExecutingContext filterContext)
         {
             var routingValues = filterContext.RouteData.Values;
-            var currentArea = filterContext.RouteData.DataTokens["area"] ?? string.Empty;
-            var currentController = (string)routingValues["controller"] ?? string.Empty;
-            var currentAction = (string)routingValues["action"] ?? string.Empty;
+            var currentArea = routingValues.ContainsKey("area") ? routingValues["area"]?.ToString() ?? string.Empty : string.Empty;
+            var currentController = routingValues.ContainsKey("controller") ? routingValues["controller"]?.ToString() ?? string.Empty : string.Empty;
+            var currentAction = routingValues.ContainsKey("action") ? routingValues["action"]?.ToString() ?? string.Empty : string.Empty;
 
-            return string.Join("/", new[] { currentArea, currentController, currentAction });
+            return string.Join("/", new[] { currentArea, currentController, currentAction }.Where(s => !string.IsNullOrEmpty(s)));
+        }
+
+        protected virtual string GetActionLink(ActionExecutedContext filterContext)
+        {
+            var routingValues = filterContext.RouteData.Values;
+            var currentArea = routingValues.ContainsKey("area") ? routingValues["area"]?.ToString() ?? string.Empty : string.Empty;
+            var currentController = routingValues.ContainsKey("controller") ? routingValues["controller"]?.ToString() ?? string.Empty : string.Empty;
+            var currentAction = routingValues.ContainsKey("action") ? routingValues["action"]?.ToString() ?? string.Empty : string.Empty;
+
+            return string.Join("/", new[] { currentArea, currentController, currentAction }.Where(s => !string.IsNullOrEmpty(s)));
         }
 
         protected virtual bool IsContainsAction(string actionURL, string[] actions) => actions.Any(action => IsContainsCase(actionURL, action));

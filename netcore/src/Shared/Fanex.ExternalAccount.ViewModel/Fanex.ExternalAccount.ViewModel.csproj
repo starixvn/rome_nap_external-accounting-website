@@ -13,11 +13,12 @@
     <PackageReference Include="Fanex.Logging.Extensions" Version="1.0.6" />
     <PackageReference Include="Fanex.Logging.Extensions.Database.V59" Version="1.0.3" />
     <PackageReference Include="Fanex.File" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
-    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <!-- Enterprise Library packages removed - .NET Framework legacy -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" /> -->
+    <!-- <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" /> -->
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
     <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
     <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />

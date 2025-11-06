@@ -1,12 +1,11 @@
 ﻿namespace Fanex.ExternalAccount.Core.Base
 {
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
 
     public static class ControllerExtentions
     {
-        public static JsonBase
-            JsonExt(this Controller controller, object data, JsonSerializerSettings settings = null) =>
+        public static JsonBase JsonExt(this ControllerBase controller, object data, JsonSerializerSettings settings = null) =>
             new JsonBase(data, settings);
     }
 }

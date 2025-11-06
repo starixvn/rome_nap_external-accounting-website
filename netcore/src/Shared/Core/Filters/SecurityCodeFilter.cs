@@ -5,7 +5,8 @@
     using Fanex.ExternalAccount.Utilities;
     using System;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
 
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
     public class SecurityCodeFilterAttribute : BaseActionFilterAttribute
@@ -15,7 +16,7 @@
             string actionURL = GetActionLink(filterContext);
             bool isFilteredUser = SecurityCodeManager.GetFilteredUsers().Contains(currentSession.UserName);
             bool isFilteredAction = IsContainsAction(actionURL, SecurityCodeManager.GetActions(isIgnored: false))
-                && Utils.ToBoolean(filterContext.HttpContext.Request.Params.Get("isFilteredAction"), true);
+                && Utils.ToBoolean(filterContext.HttpContext.Request.Query["isFilteredAction"].ToString(), true);
             bool isIgnoredAction = IsContainsAction(actionURL, SecurityCodeManager.GetActions(isIgnored: true));
 
             if (isFilteredUser && isFilteredAction && IsSecurityCodeRequired())
@@ -37,7 +38,7 @@
             return currentTime - currentSession.LastActiveTime > scAliveTime;
         }
 
-        private static RedirectResult RedirectToSecurityCodePage(string returnUrl) => new RedirectResult($"~/SecurityCode/Index?ReturnUrl={returnUrl}");
+        private static RedirectResult RedirectToSecurityCodePage(string returnUrl) => new RedirectResult($"/SecurityCode/Index?ReturnUrl={returnUrl}");
 
         private readonly CurrentSession currentSession = new CurrentSession();
     }

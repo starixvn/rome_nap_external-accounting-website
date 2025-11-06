@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
-using System.Web;
-using System.Web.Mvc;
+using System.Linq;
 using Fanex.Customer.Client;
 using Fanex.Customer.Client.Configurations;
 using Fanex.CustomerSetting.Security.Authenticate;
@@ -12,7 +15,7 @@ using Fanex.ExternalAccount.Core.Shared;
 namespace Fanex.ExternalAccount.Controllers.Authentication
 {
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
-    public class ExternalCustomerAuthFilterAttribute : AuthorizeAttribute, IAuthenticate
+    public class ExternalCustomerAuthFilterAttribute : AuthorizeAttribute, IAuthorizationFilter, IAuthenticate
     {
         private readonly AuthorizationService authorization;
         private readonly CustomerClientConfiguration clientConfig;
@@ -51,19 +54,17 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
         public AuthenticateAction.AuthenticationType Policy { get; set; }
 
-        public override void OnAuthorization(AuthorizationContext filterContext)
+        public void OnAuthorization(AuthorizationFilterContext context)
         {
-            base.OnAuthorization(filterContext);
-
-            var isAuthorized = HasPermission(filterContext);
+            var isAuthorized = HasPermission(context);
 
             if (!isAuthorized)
             {
-                UnAuthorizedAction(filterContext);
+                UnAuthorizedAction(context);
             }
         }
 
-        private bool HasPermission(AuthorizationContext filterContext)
+        private bool HasPermission(AuthorizationFilterContext filterContext)
         {
             if (!string.IsNullOrWhiteSpace(Function))
             {
@@ -74,8 +75,8 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             }
 
             var productGroupIdParam = IsHost
-                ? GetActionParameterValue(filterContext.Controller.ValueProvider, "productGroupId")
-                : filterContext.HttpContext.Request["productGroupId"];
+                ? GetActionParameterValue(filterContext, "productGroupId")
+                : filterContext.HttpContext.Request.Query["productGroupId"].ToString();
 
             if (int.TryParse(productGroupIdParam, out int productGroupId))
             {
@@ -102,28 +103,34 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         public bool IsBelong(int custId, string username, string groupName = null, bool getUplineInfo = true)
             => authorization.IsBelong(ExtRequest.Instance.GetGroupName(groupName), custId, username);
 
-        private static string GetActionParameterValue(IValueProvider valueProvider, string parameterName)
+        private static string GetActionParameterValue(AuthorizationFilterContext filterContext, string parameterName)
         {
-            var valueProviderResult = valueProvider.GetValue(parameterName);
+            // Try to get from route values
+            if (filterContext.RouteData.Values.TryGetValue(parameterName, out var routeValue))
+            {
+                return routeValue?.ToString() ?? string.Empty;
+            }
 
-            return valueProviderResult != null
-                ? valueProviderResult.AttemptedValue
-                : string.Empty;
+            // Try to get from query string
+            if (filterContext.HttpContext.Request.Query.TryGetValue(parameterName, out var queryValue))
+            {
+                return queryValue.ToString();
+            }
+
+            return string.Empty;
         }
 
-        private void UnAuthorizedAction(AuthorizationContext filterContext)
+        private void UnAuthorizedAction(AuthorizationFilterContext filterContext)
         {
-            HttpResponseBase response = filterContext.HttpContext.Response;
+            var response = filterContext.HttpContext.Response;
 
-            if (filterContext.HttpContext.Request.IsAjaxRequest()
-                || filterContext.HttpContext.Request.HttpMethod.Equals("POST", StringComparison.CurrentCultureIgnoreCase))
+            if (filterContext.HttpContext.Request.Headers["X-Requested-With"].ToString() == "XMLHttpRequest"
+                || filterContext.HttpContext.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase))
             {
                 response.Clear();
-                response.Write("{ \"message\": \"You are not authorized on this function!\" }");
-                filterContext.Result = new HttpUnauthorizedResult();
-                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
-                response.TrySkipIisCustomErrors = true;
-                response.End();
+                response.ContentType = "application/json";
+                response.StatusCode = 401;
+                filterContext.Result = new JsonResult(new { message = "You are not authorized on this function!" });
             }
             else
             {
