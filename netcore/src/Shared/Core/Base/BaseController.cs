@@ -52,16 +52,11 @@
 
         protected virtual IActionResult JsonBase(object data, JsonSerializerSettings settings = null)
         {
-            var jsonSettings = settings ?? new JsonSerializerSettings
-            {
-                NullValueHandling = NullValueHandling.Ignore,
-                ContractResolver = new CamelCasePropertyNamesContractResolver()
-            };
-
-            return new JsonResult(data, jsonSettings);
+            // In ASP.NET Core, we use Ok() method for JSON responses
+            return Ok(data);
         }
 
-        protected virtual IActionResult JsonBase2(object data) => new JsonResult(data);
+        protected virtual IActionResult JsonBase2(object data) => Ok(data);
 
         protected virtual IActionResult PartialViewBase(object objModel = null, string viewName = null) =>
             // ASP.NET Core API controllers don't support views
@@ -87,7 +82,7 @@
 
             if (isAjaxRequest)
             {
-                return new JsonResult(new
+                return Ok(new
                 {
                     errorCode = 1,
                     errorMessage = ViewLang.DontHavePermission,

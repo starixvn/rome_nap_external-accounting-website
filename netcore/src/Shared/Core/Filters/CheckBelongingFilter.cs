@@ -43,8 +43,10 @@
             if (isAjaxRequest)
             {
                 // In ASP.NET Core, we don't need to clear response explicitly
-                filterContext.Result = new JsonResult(new { code = "401", responsetext = "You are not authorized on this function!" });
-                filterContext.HttpContext.Response.StatusCode = 401;
+                filterContext.Result = new ObjectResult(new { code = "401", responsetext = "You are not authorized on this function!" })
+                {
+                    StatusCode = 401
+                };
             }
             else
             {

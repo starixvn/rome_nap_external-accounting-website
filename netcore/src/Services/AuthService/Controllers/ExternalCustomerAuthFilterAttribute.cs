@@ -18,31 +18,31 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     public class ExternalCustomerAuthFilterAttribute : AuthorizeAttribute, IAuthorizationFilter, IAuthenticate
     {
         private readonly AuthorizationService authorization;
-        private readonly CustomerClientConfiguration clientConfig;
+        private readonly Fanex.Customer.CustomerClientConfiguration clientConfig;
 
         public bool IsHost { get; set; }
 
         private readonly IDictionary<int, string> ProductGroupPermissions = new Dictionary<int, string>
         {
-            { ProductGroupConstants.Sportsbook, eFunctions.Sportsbook},
-            { ProductGroupConstants.RNGGames, eFunctions.RNGGames},
-            { ProductGroupConstants.LiveAndRNGCasino, eFunctions.LiveAndRNGCasino}
+            { ProductGroupConstants.Sportsbook, eFunctions.Sportsbook.ToString()},
+            { ProductGroupConstants.RNGGames, eFunctions.RNGGames.ToString()},
+            { ProductGroupConstants.LiveAndRNGCasino, eFunctions.LiveAndRNGCasino.ToString()}
         };
 
         private readonly IDictionary<int, string> ProductGroupBettingPermissions = new Dictionary<int, string>
         {
-            { ProductGroupConstants.Sportsbook, eFunctions.SportsbookBetting},
-            { ProductGroupConstants.RNGGames, eFunctions.RNGGamesBetting},
-            { ProductGroupConstants.LiveAndRNGCasino, eFunctions.LiveAndRNGCasinoBetting}
+            { ProductGroupConstants.Sportsbook, eFunctions.SportsbookBetting.ToString()},
+            { ProductGroupConstants.RNGGames, eFunctions.RNGGamesBetting.ToString()},
+            { ProductGroupConstants.LiveAndRNGCasino, eFunctions.LiveAndRNGCasinoBetting.ToString()}
         };
 
         public ExternalCustomerAuthFilterAttribute() : this(null)
         {
         }
 
-        internal ExternalCustomerAuthFilterAttribute(CustomerClientConfiguration clientConfig)
+        internal ExternalCustomerAuthFilterAttribute(Fanex.Customer.CustomerClientConfiguration clientConfig)
         {
-            this.clientConfig = clientConfig ?? CustomerClientManager.ClientConfigs;
+            this.clientConfig = clientConfig ?? Fanex.Customer.CustomerClientManager.ClientConfigs;
             authorization = new AuthorizationServiceImpl();
         }
 

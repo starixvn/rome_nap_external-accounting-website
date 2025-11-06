@@ -1,3 +1,5 @@
+using AuthService;
+using Fanex.ExternalAccount.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Session;
@@ -5,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json;
-using Fanex.ExternalAccount.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 

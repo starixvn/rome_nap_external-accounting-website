@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.AspNetCore.Http;
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Fanex.ExternalAccount.Utilities;
-using Logging.Extensions.Web;
+using Fanex.Logging.Extensions.Web;
 
 namespace Fanex.ExternalAccount.Controllers.Authentication
 {

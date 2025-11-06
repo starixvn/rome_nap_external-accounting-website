@@ -77,13 +77,15 @@
 
             if (isAjax)
             {
-                filterContext.Result = new JsonResult(new
+                filterContext.Result = new ObjectResult(new
                 {
                     isSuccess = false,
                     errorCode = "1",
                     errorMessage = ViewLang.DontHavePermission
-                });
-                filterContext.HttpContext.Response.StatusCode = 403;
+                })
+                {
+                    StatusCode = 403
+                };
             }
             else
             {

@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
 using Fanex.ExternalAccount.Core.Context;
 using Fanex.ExternalAccount.Core.Helpers;
 using Fanex.ExternalAccount.DTO;
@@ -19,13 +15,11 @@ using Fanex.ExternalAccount.Service.Impl.Login;
 using Fanex.ExternalAccount.Service.Impl.UserControl;
 using Fanex.ExternalAccount.Service.Interface.Login;
 using Fanex.ExternalAccount.Utilities;
-using Fanex.ExternalAccount.ViewModel.Account;
-using Fanex.ExternalAccount.ViewModels;
-using RSACryptoPad;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
 using CurrentContext = Fanex.ExternalAccount.Core.Context.CurrentContext;
 using CurrentSession = Fanex.ExternalAccount.Core.Context.CurrentSession;
+using AuthService;
+using LoginModel = Fanex.ExternalAccount.ViewModel.Account.LoginModel;
+using Fanex.Logging.Extensions.Web;
 
 namespace Fanex.ExternalAccount.Controllers.Authentication
 {
@@ -132,7 +126,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             var failedCounter = _currentSession.SCFailedCounter;
             var parameter = $"{username}&{pwd}&{code}&{line}&{timeout}&{fromLine}&{lastActiveTime}&{failedCounter}";
 #pragma warning disable S109 // Magic numbers should not be used
-            parameter = new EncryptionThread().EncryptString(parameter, 1024, path);
+            parameter = Fanex.ExternalAccount.Controllers.Authentication.EncryptionThread.EncryptString(parameter, 1024, path);
 #pragma warning restore S109 // Magic numbers should not be used
 
             var onuserId = _currentSession.OnUserId;
@@ -153,7 +147,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         public async Task<IActionResult> SwitchLine(string param)
         {
             var path = System.IO.Path.Combine(_hostEnvironment.ContentRootPath, "IbcKeys", "ibckey.snk");
-            var parameter = new EncryptionThread().DecryptString(param.Replace(' ', '+'), 1024, path);
+            var parameter = Fanex.ExternalAccount.Controllers.Authentication.EncryptionThread.DecryptString(param.Replace(' ', '+'), 1024, path);
             var queries = parameter.Split(new[] { '&' }, StringSplitOptions.RemoveEmptyEntries);
             var username = queries[0];
             var pwd = queries[1];
@@ -409,7 +403,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             return Ok(new ExternalGroupViewModel
             {
                 Username = _currentSession.UserName,
-                GroupList = groupService.GetExternalGroup().ToList(),
+                GroupList = groupService.GetExternalGroup().Cast<object>().ToList(),
                 Code = _currentSession.OTPEncryptCode,
                 EnabledOTP = _currentSession.EnabledOTP,
                 ModifiedDate = _currentSession.OTPModifiedDate
