@@ -10,14 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="2.2.1" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="BouncyCastle.Cryptography" Version="2.2.1" />
     <PackageReference Include="CaptchaMVC" Version="2.4.1" />
     <PackageReference Include="Common.Logging" Version="3.0.0" />
     <PackageReference Include="Common.Logging.Core" Version="3.0.0" />
     <PackageReference Include="dotless" Version="1.4.1.0" />
     <PackageReference Include="DotNetZip" Version="1.9.1.5" />
-    <PackageReference Include="EasyNetQ" Version="2.3.3" />
+    <PackageReference Include="EasyNetQ" Version="6.3.1" />
     <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Caching" Version="5.0.414.0" />
     <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
     <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
@@ -59,7 +59,6 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
     <PackageReference Include="Microsoft.Web.RedisSessionStateProvider" Version="2.2.6" />
-    <PackageReference Include="MvcPager" Version="1.5.0.28157" />
     <PackageReference Include="NetUtility" Version="4.5.6325.30210" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NPOI" Version="2.6.1" />
@@ -68,8 +67,8 @@
     <PackageReference Include="ONEBook.UM.NETFramework" Version="3.1.5" />
     <PackageReference Include="ONEbook.UM.Transport" Version="3.1.1" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.9.0" />
-    <PackageReference Include="Quartz" Version="2.3.3" />
-    <PackageReference Include="RabbitMQ.Client" Version="5.0.1" />
+    <PackageReference Include="Quartz" Version="3.3.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
     <PackageReference Include="RestSharp" Version="105.2.3" />
     <PackageReference Include="SharpRaven" Version="2.4.0" />
     <PackageReference Include="SharpZipLib" Version="1.3.3" />
@@ -83,7 +82,6 @@
     <PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.1" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
     <PackageReference Include="VaultSharp" Version="1.17.5.1" />
-    <PackageReference Include="WebGrease" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,6 @@ namespace Fanex.ExternalAccount
     using Fanex.Caching;
     using Fanex.Customer.Client;
     using Fanex.Customer.Client.Configurations;
-    using Fanex.Customer.Client.NETFramework;
     using Fanex.Data;
     using Fanex.ExternalAccount.Core.Configurations;
     using Fanex.ExternalAccount.Core.Shared;
@@ -23,13 +22,11 @@ namespace Fanex.ExternalAccount
     using ONEbook.UM.AspNetMVC.Filters;
     using ONEbook.UM.Configurations;
     using ONEbook.UM.Helpers;
-    using ONEbook.UM.NETFramework;
     using ONEbook.UM.Services;
     using ONEbook.UM.Transport;
     using SharpRaven;
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -51,8 +48,6 @@ namespace Fanex.ExternalAccount
                 .SetBasePath(builder.Environment.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
-                // Keep XML loading as optional for backward compatibility during migration
-                .AddXmlFile("Web.config", optional: true, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
             ConfigureServices(builder.Services, builder.Configuration);

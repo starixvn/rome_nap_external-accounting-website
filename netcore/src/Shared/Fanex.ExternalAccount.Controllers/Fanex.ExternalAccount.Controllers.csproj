@@ -14,14 +14,6 @@
     <PackageReference Include="CaptchaMVC" Version="2.4.1" />
     <PackageReference Include="DotNetZip" Version="1.9.1.5" />
     <PackageReference Include="EasyNetQ" Version="2.3.3" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Caching" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
-    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
-    <PackageReference Include="Enums.NET" Version="4.0.1" />
     <PackageReference Include="Fanex.Caching" Version="2.2.8" />
     <PackageReference Include="Fanex.Caching.Redis" Version="2.2.8" />
     <PackageReference Include="Fanex.Common" Version="1.1.0.1" />
@@ -40,9 +32,7 @@
     <PackageReference Include="MathNet.Numerics.Signed" Version="4.15.0" />
     <PackageReference Include="MessagePack" Version="3.1.1" />
     <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
-    <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
-    <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />
-    <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.3.2" />
     <PackageReference Include="NetUtility" Version="4.5.6325.30210" />
