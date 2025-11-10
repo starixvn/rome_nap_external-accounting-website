@@ -405,8 +405,8 @@
             => customerServiceClient.GetPTSettingInformation(custId, false, site, language);
 
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public Task<string> GetCommissionHint(int? custId, string site, string language = "en-US")
-            => customerServiceClient.GetCommissionHint(custId ?? 0, site, language);
+        public Task<string> GetCommissionHint(int? custId, string site, string siteLabel, string language = "en-US")
+            => customerServiceClient.GetCommissionHint(custId ?? 0, site, siteLabel, language);
 
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public Task<string> GetProductCategories(int? custId, string site, string siteLabel, int currency, string language = "en-US")

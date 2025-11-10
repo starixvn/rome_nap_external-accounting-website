@@ -64,7 +64,7 @@ namespace Fanex.ExternalAccount.Controllers.Requests.Customer
         {
             name = "Commission",
             id = "CommissionHintTab",
-            url = ApplicationPath + "Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site,
+            url = ApplicationPath + "Customer/GetCommissionHint?custId=" + CustId + "&site=" + Site + "&siteLabel=" + SiteLabel,
             isActive = TabName == "CommissionHintTab",
         };
 
