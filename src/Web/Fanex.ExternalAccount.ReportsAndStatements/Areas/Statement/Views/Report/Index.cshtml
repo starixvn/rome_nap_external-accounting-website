@@ -1,0 +1,89 @@
+@using Fanex.ExternalAccount.ReportsAndStatements.Utilities
+@{
+    ViewData["Title"] = "Statement Report";
+    Layout = null;
+    var isInternalCustomer = 0;
+    var newLayoutDate = "01/01/2020"; // Default value, should come from configuration
+    var balanceUpDay = "1/10/2015";
+    var moveBetsDay = "1/11/2015";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="view-guidelines-icon" style="cursor: pointer;">
+        View Guidelines
+    </div>
+    <div id="GridContainer" class="freegrid">
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/jquery-ui/dist/jquery-ui.min.js"></script>
+    <script src="~/js/dialogbox.js"></script>
+    <script src="~/js/fanex-grid.js"></script>
+    <script src="~/js/fanex-pagination.js"></script>
+    <script src="~/js/moment.js"></script>
+    <script src="~/js/numeral.js"></script>
+    <script src="~/js/statement-report-manager.js"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var isInternalCustomer = @isInternalCustomer;
+        var balanceUpDay = '@balanceUpDay';
+        var moveBetsDay = '@moveBetsDay';
+        var newLayoutDate = '@newLayoutDate';
+        var statementResources = {
+            Invalid_Date_Range: 'Invalid Date Range',
+            Date: "Date",
+            Opening_Balance: "Opening Balance",
+            Turnover: "Turnover",
+            Void_Cancelled: "Void/Cancelled",
+            Outstanding: "Outstanding",
+            Win_Loss: "Win/Loss",
+            Commission: "Commission",
+            Transfer_Amt: "Transfer Amount",
+            Accumulated_Total: "Accumulated Total",
+            Symbol_NoData: "No Data",
+            Transfer_Details: "Transfer Details",
+            Bet_List: 'Bet List',
+            GrandPrize: 'Grand Prize'
+        };
+
+        function viewGuidelines() {
+            // OpenPopup function needs to be implemented or replaced with modal
+            console.log('View guidelines clicked');
+        }
+
+        jQuery(document).ready(function() {
+            domain = window.rootUrl;
+            $("#view-guidelines-icon").click(function() {
+                viewGuidelines();
+            });
+
+            // Initialize statement report manager if available
+            if (typeof statementReportManager !== 'undefined') {
+                statementReportManager.initFunction(null, function(options) {
+                    console.log('Popup:', options);
+                });
+                statementReportManager.getStatementReport({
+                    fromDate: "12/1/2014",
+                    toDate: "1/23/2015",
+                    custId: 0,
+                    roleId: @Role.Member,
+                    balanceUpDay: balanceUpDay,
+                    moveBetDay: moveBetsDay,
+                    username: "member01"
+                });
+            }
+        });
+    </script>
+</body>
+</html>

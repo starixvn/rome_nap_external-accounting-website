@@ -1,0 +1,53 @@
+@using System.Text.Json
+@using Fanex.ExternalAccount.ReportsAndStatements.Models.ViewModels
+@model StatementReportModel
+@{
+    ViewData["Title"] = "Transfer Details";
+    Layout = null;
+    var statementReport = JsonSerializer.Serialize(Model);
+    var transferDetailsCriteria = JsonSerializer.Serialize(ViewBag.TransferDetailsCriteria ?? new object());
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/fanex-pagination.css" rel="stylesheet" />
+    <link href="~/css/fanex-grid.css" rel="stylesheet" />
+    <link href="~/css/common.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <span id="exporttoexcel" title="Export Excel" class="icon-excel"></span>
+    </div>
+    <div id="transfer-details-container" class="freegrid"></div>
+    <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/fanex-grid.js"></script>
+    <script src="~/js/fanex-pagination.js"></script>
+    <script src="~/js/moment.js"></script>
+    <script src="~/js/numeral.js"></script>
+    <script src="~/js/statement-details-manager.js"></script>
+    <script type="text/javascript">
+        window.rootUrl = '@Url.Content("~")';
+        var statementReport = @Html.Raw(statementReport);
+        var transferDetailsCriteria = @Html.Raw(transferDetailsCriteria);
+        var statementResources = {
+            Date: 'Date',
+            Remark: 'Remark',
+            Amount: 'Amount',
+            Symbol_NoData: 'No Data',
+            Total: 'Total',
+            Symbol_ExchangeRate: 'Exchange Rate',
+            GrandPrize: 'Grand Prize'
+        };
+    </script>
+</body>
+</html>

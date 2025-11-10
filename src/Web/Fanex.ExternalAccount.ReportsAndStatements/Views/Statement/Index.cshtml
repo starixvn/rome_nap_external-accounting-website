@@ -1,0 +1,76 @@
+@using Fanex.ExternalAccount.ReportsAndStatements.Utilities
+@{
+    ViewData["Title"] = "Statement";
+    var username = Context.Request.Query["username"].ToString();
+    var custId = Context.Request.Query["id"].ToString();
+}
+
+<div>
+    <div class="page-title">
+        <div class="wlDetail">
+            Statement - <span id="StatementUsername">@username</span>
+        </div>
+        <span class="icon-filter active"></span>
+    </div>
+    <div class="search-form filterbox">
+        <div class="searchBar">
+            <input type="hidden" id="MaxDate" value="@DateTime.Now.ToString("MM/dd/yyyy")" />
+            <div class="form-group">
+                <div class="label">From</div>
+                <input id="dtpFromDate" type="text" readonly="readonly" />
+            </div>
+            <div class="form-group">
+                <div class="label">To</div>
+                <input id="dtpToDate" type="text" readonly="readonly" />
+            </div>
+            <div class="form-group last-form-group">
+                <input type="button" value="Submit" id='Submit' class="btn -submit" />
+                <span id="view-guidelines-icon" class="note-info-message" title=""></span>
+            </div>
+            <span id="exporttoexcel" title="Export Excel" class="icon-excel"></span>
+        </div>
+    </div>
+    <div id="mainGrid">
+        <div id="GridContainer" class="freegrid">
+        </div>
+    </div>
+    <div id='msgNoinfo'>
+        There is no data.
+    </div>
+
+    <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
+    <input type="hidden" id="CustId" value="@custId" />
+    <input type="hidden" id="username" value="@username" />
+    <form id="antiForgeryForm" asp-anti-forgery="true"></form>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/Fanex.Grid/moment.js"></script>
+    <script src="~/Scripts/Fanex.Grid/numeral.js"></script>
+    <script type="text/javascript">
+        var domain = '@Url.Content("~/")';
+        var isInternalCustomer = 0;
+        var balanceUpDay = '@Fanex.ExternalAccount.ReportsAndStatements.Services.Reports.ReportService.BalanceUpDate.ToString("MM/dd/yyyy")';
+        var moveBetsDay = '@Fanex.ExternalAccount.ReportsAndStatements.Services.Reports.ReportService.MoveBetsDate.ToString("MM/dd/yyyy")';
+        var newLayoutDate = '01/01/2020';
+        var _username = $('#username').val();
+        var statementResources = {
+            Invalid_Date_Range: 'Invalid Date Range',
+            Date: "Date",
+            Opening_Balance: "Opening Balance",
+            Turnover: "Turnover",
+            Void_Cancelled: "Void/Cancelled",
+            Outstanding: "Outstanding",
+            Win_Loss: "Win/Loss",
+            Commission: "Commission",
+            Transfer_Amt: "Transfer Amount",
+            Accumulated_Total: "Accumulated Total",
+            Symbol_NoData: "No Data",
+            Transfer_Details: "Transfer Details",
+            Bet_List: 'Bet List',
+            Statement_Guidelines: 'Statement Guidelines',
+            GrandPrize: 'Grand Prize'
+        };
+    </script>
+    <script src="~/js/statement.js" asp-append-version="true"></script>
+}
