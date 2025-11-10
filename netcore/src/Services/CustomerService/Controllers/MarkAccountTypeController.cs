@@ -1,142 +1,284 @@
-﻿namespace Fanex.ExternalAccount.Controllers.Customer
-{
-    using Core.Base;
-    using Core.Context;
-    using Core.Shared;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Controllers.Requests.MarkAccountType;
-    using Fanex.ExternalAccount.Core.Authorization;
-    using Fanex.ExternalAccount.Service.Customer.MarkAccountType;
-    using Fanex.ExternalAccount.Service.Customer.MarkAccountType.Params;
-    using System.Linq;
-    using System.Web.Mvc;
-    using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using Fanex.ExternalAccount.Core.Context;
 
-    [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Read)]
-    public class MarkAccountTypeController : BaseController
+namespace Fanex.ExternalAccount.Controllers.Customer
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize] // TODO: Update with proper authorization policy (MarkAccountType)
+    public class MarkAccountTypeController : ControllerBase
     {
-        private readonly IMarkAccountTypeService markAccountTypeService;
+        private readonly IMarkAccountTypeService _markAccountTypeService;
+        private readonly ICurrentSession _currentSession;
+        private readonly ICurrentContext _currentContext;
         private const int DefaultPageSize = 50;
 
-        public MarkAccountTypeController() : this(null, null)
+        public MarkAccountTypeController(IMarkAccountTypeService markAccountTypeService, ICurrentSession currentSession, ICurrentContext currentContext)
         {
+            _markAccountTypeService = markAccountTypeService;
+            _currentSession = currentSession;
+            _currentContext = currentContext;
         }
 
-        public MarkAccountTypeController(IMarkAccountTypeService markAccountTypeService, AuthorizationService authorizationService)
+        [HttpGet]
+        [Route("Index")]
+        public IActionResult Index()
         {
-            this.markAccountTypeService = markAccountTypeService ?? new MarkAccountTypeService();
+            // TODO: Implement proper view rendering
+            return Ok(new { message = "Mark Account Type Index" });
         }
-
-        public ActionResult Index()
-            => PartialViewBase();
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public JsonResult Seach(SearchMarkAccountRequest request)
+        [Route("Search")]
+        public IActionResult Search([FromBody] SearchMarkAccountRequest request)
         {
-            return Json(markAccountTypeService.Search(new SearchMarkAccountTypeParams {
+            var result = _markAccountTypeService.Search(new SearchMarkAccountTypeParams
+            {
                 GroupId = request.GroupId,
                 GroupName = request.GroupName,
                 Level = request.Level,
                 Type = request.Type,
-                UserId = CurrentSession.UserId,
+                UserId = _currentSession.UserId,
                 UserName = request.UserName,
                 PageIndex = request.PageIndex ?? 1,
                 PageSize = request.PageSize ?? DefaultPageSize
-            }));
+            });
+
+            return Ok(result);
         }
 
-
-        [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult MarkAccount()
+        [HttpGet]
+        [Route("MarkAccount")]
+        public IActionResult MarkAccount()
         {
-            return PartialViewBase();
+            // TODO: Implement proper view rendering
+            return Ok(new { message = "Mark Account View" });
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public JsonResult Add(NewMarkAccountRequest request)
+        [Route("Add")]
+        public IActionResult Add([FromBody] NewMarkAccountRequest request)
         {
-            return Json(markAccountTypeService.Add(new NewMarkAccountTypeParams
+            var result = _markAccountTypeService.Add(new NewMarkAccountTypeParams
             {
                 GroupName = request.GroupName,
                 TypeId = request.TypeId,
                 Usernames = request.Usernames,
                 Remark = request.Remark,
-                UserId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address
-            }));
+                UserId = _currentSession.UserId,
+                IP = _currentContext.Ip4Address
+            });
+
+            return Ok(result);
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public JsonResult Update(UpdateMarkAccountRequest request)
+        [Route("Update")]
+        public IActionResult Update([FromBody] UpdateMarkAccountRequest request)
         {
-            return Json(markAccountTypeService.SingleUpdate(new UpdateMarkAccountTypeParams
+            var result = _markAccountTypeService.SingleUpdate(new UpdateMarkAccountTypeParams
             {
                 CustId = request.CustId,
                 TypeId = request.TypeId,
                 Remark = request.Remark,
-                UserId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address
-            }));
+                UserId = _currentSession.UserId,
+                IP = _currentContext.Ip4Address
+            });
+
+            return Ok(result);
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public JsonResult UpdateMultiple(UpdateMultipelMarkAccountRequest request)
+        [Route("UpdateMultiple")]
+        public IActionResult UpdateMultiple([FromBody] UpdateMultipelMarkAccountRequest request)
         {
-            var updateAccountTypes = request.UpdateAccounts.Select(account => new UpdateMarkAccountTypeParams {
+            var updateAccountTypes = request.UpdateAccounts.Select(account => new UpdateMarkAccountTypeParams
+            {
                 CustId = account.CustId,
                 Username = account.Username,
                 TypeId = account.TypeId,
                 Remark = account.Remark,
-                UserId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address
+                UserId = _currentSession.UserId,
+                IP = _currentContext.Ip4Address
             });
 
-            return Json(markAccountTypeService.MultipleUpdate(updateAccountTypes));
+            var result = _markAccountTypeService.MultipleUpdate(updateAccountTypes);
+            return Ok(result);
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public JsonResult Unmark(UnmarkAccountRequest request)
+        [Route("Unmark")]
+        public IActionResult Unmark([FromBody] UnmarkAccountRequest request)
         {
-            return Json(markAccountTypeService.Unmark(new UnmarkAccountTypeParams
+            var result = _markAccountTypeService.Unmark(new UnmarkAccountTypeParams
             {
                 CustId = request.CustId,
-                UserId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address
-            }));
+                UserId = _currentSession.UserId,
+                IP = _currentContext.Ip4Address
+            });
+
+            return Ok(result);
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UnmarkAll(UnmarkAccountRequest request)
+        [Route("UnmarkAll")]
+        public IActionResult UnmarkAll([FromBody] UnmarkAccountRequest request)
         {
-            return Json(markAccountTypeService.UnmarkAll(new UnmarkAccountTypeParams
+            var result = _markAccountTypeService.UnmarkAll(new UnmarkAccountTypeParams
             {
                 Accounts = request.Accounts,
-                UserId = CurrentSession.UserId,
-                IP = CurrentContext.Ip4Address
-            }));
+                UserId = _currentSession.UserId,
+                IP = _currentContext.Ip4Address
+            });
+
+            return Ok(result);
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult MultipleEditAccountType(UnmarkAccountRequest request)
+        [Route("MultipleEditAccountType")]
+        public IActionResult MultipleEditAccountType([FromBody] UnmarkAccountRequest request)
         {
-            return PartialViewBase();
+            // TODO: Implement proper view rendering
+            return Ok(new { message = "Multiple Edit Account Type View" });
+        }
+    }
+
+    // TODO: Define proper interfaces and models
+    public interface IMarkAccountTypeService
+    {
+        object Search(SearchMarkAccountTypeParams parameters);
+        object Add(NewMarkAccountTypeParams parameters);
+        object SingleUpdate(UpdateMarkAccountTypeParams parameters);
+        object MultipleUpdate(IEnumerable<UpdateMarkAccountTypeParams> parameters);
+        object Unmark(UnmarkAccountTypeParams parameters);
+        object UnmarkAll(UnmarkAccountTypeParams parameters);
+    }
+
+    public class MarkAccountTypeService : IMarkAccountTypeService
+    {
+        public object Search(SearchMarkAccountTypeParams parameters)
+        {
+            // TODO: Implement actual service logic
+            return new { results = new[] { new { id = 1, name = "Account 1" } } };
         }
 
+        public object Add(NewMarkAccountTypeParams parameters)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true, id = 1 };
+        }
+
+        public object SingleUpdate(UpdateMarkAccountTypeParams parameters)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true };
+        }
+
+        public object MultipleUpdate(IEnumerable<UpdateMarkAccountTypeParams> parameters)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true, count = parameters.Count() };
+        }
+
+        public object Unmark(UnmarkAccountTypeParams parameters)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true };
+        }
+
+        public object UnmarkAll(UnmarkAccountTypeParams parameters)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true };
+        }
+    }
+
+    // TODO: Define proper request/response models
+    public class SearchMarkAccountRequest
+    {
+        public int? GroupId { get; set; }
+        public string GroupName { get; set; } = string.Empty;
+        public int? Level { get; set; }
+        public int? Type { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public int? PageIndex { get; set; }
+        public int? PageSize { get; set; }
+    }
+
+    public class NewMarkAccountRequest
+    {
+        public string GroupName { get; set; } = string.Empty;
+        public int TypeId { get; set; }
+        public string[] Usernames { get; set; } = Array.Empty<string>();
+        public string Remark { get; set; } = string.Empty;
+    }
+
+    public class UpdateMarkAccountRequest
+    {
+        public int CustId { get; set; }
+        public int TypeId { get; set; }
+        public string Remark { get; set; } = string.Empty;
+    }
+
+    public class UpdateMultipelMarkAccountRequest
+    {
+        public IEnumerable<UpdateMarkAccountItem> UpdateAccounts { get; set; } = Array.Empty<UpdateMarkAccountItem>();
+    }
+
+    public class UpdateMarkAccountItem
+    {
+        public int CustId { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public int TypeId { get; set; }
+        public string Remark { get; set; } = string.Empty;
+    }
+
+    public class UnmarkAccountRequest
+    {
+        public int CustId { get; set; }
+        public IEnumerable<int> Accounts { get; set; } = Array.Empty<int>();
+    }
+
+    // TODO: Define proper parameter models
+    public class SearchMarkAccountTypeParams
+    {
+        public int? GroupId { get; set; }
+        public string GroupName { get; set; } = string.Empty;
+        public int? Level { get; set; }
+        public int? Type { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; } = string.Empty;
+        public int PageIndex { get; set; }
+        public int PageSize { get; set; }
+    }
+
+    public class NewMarkAccountTypeParams
+    {
+        public string GroupName { get; set; } = string.Empty;
+        public int TypeId { get; set; }
+        public string[] Usernames { get; set; } = Array.Empty<string>();
+        public string Remark { get; set; } = string.Empty;
+        public int UserId { get; set; }
+        public string IP { get; set; } = string.Empty;
+    }
+
+    public class UpdateMarkAccountTypeParams
+    {
+        public int CustId { get; set; }
+        public string Username { get; set; } = string.Empty;
+        public int TypeId { get; set; }
+        public string Remark { get; set; } = string.Empty;
+        public int UserId { get; set; }
+        public string IP { get; set; } = string.Empty;
+    }
+
+    public class UnmarkAccountTypeParams
+    {
+        public int CustId { get; set; }
+        public IEnumerable<int> Accounts { get; set; } = Array.Empty<int>();
+        public int UserId { get; set; }
+        public string IP { get; set; } = string.Empty;
     }
 }

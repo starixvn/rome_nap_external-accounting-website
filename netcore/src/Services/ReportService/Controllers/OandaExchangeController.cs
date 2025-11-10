@@ -1,39 +1,57 @@
-﻿namespace Fanex.ExternalAccount.Controllers.Report
-{
-    using Core.Base;
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Controllers.Requests;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.Core.Shared;
-    using Fanex.ExternalAccount.Service.Report;
-    using System.Web.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-    [ExternalAccountAuthenticate(Function = eFunctions.OandaExchangeRate,
-        Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-    public class OandaExchangeController : BaseController
+namespace Fanex.ExternalAccount.Controllers.Report
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize] // TODO: Update with proper authorization policy (OandaExchangeRate Read)
+    public class OandaExchangeController : ControllerBase
     {
         private readonly IExchangeService exchangeService;
 
-        public OandaExchangeController() : this(null) { }
-
         public OandaExchangeController(IExchangeService exchangeService)
         {
-            this.exchangeService = exchangeService ?? new ExchangeService();
+            this.exchangeService = exchangeService;
         }
 
-        public ActionResult Index()
+        [HttpGet]
+        [Route("Index")]
+        public IActionResult Index()
         {
-            return View();
+            // TODO: Implement proper view rendering or API response
+            return Ok(new { message = "Oanda Exchange Index" });
         }
 
-        [AntiXSRFFilter]
-        public ActionResult GetExchangeRate(GetExchangeRateRequest request)
+        [HttpPost]
+        [Route("GetExchangeRate")]
+        public IActionResult GetExchangeRate([FromBody] GetExchangeRateRequest request)
         {
             var exchangeRates = exchangeService.GetOandaExchangeRate(request.FromDate, request.ToDate, request.GroupName);
-
-            return Json(exchangeRates);
+            return Ok(exchangeRates);
         }
     }
 
+    // TODO: Define proper interface and service
+    public interface IExchangeService
+    {
+        object GetOandaExchangeRate(DateTime fromDate, DateTime toDate, string groupName);
+    }
 
+    public class ExchangeService : IExchangeService
+    {
+        public object GetOandaExchangeRate(DateTime fromDate, DateTime toDate, string groupName)
+        {
+            // TODO: Implement actual service logic
+            return new[] { new { currency = "USD", rate = 1.0m, date = DateTime.Now } };
+        }
+    }
+
+    // TODO: Define proper request model
+    public class GetExchangeRateRequest
+    {
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public string GroupName { get; set; } = string.Empty;
+    }
 }

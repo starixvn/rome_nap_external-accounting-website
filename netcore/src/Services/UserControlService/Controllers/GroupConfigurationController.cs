@@ -1,63 +1,112 @@
-﻿namespace Fanex.ExternalAccount.Controllers.UserControl
-{
-    using System.Web.Mvc;
-    using Core.Base;
-    using Core.Context;
-    using Core.Shared;
-    using CustomerSetting.Security.Authenticate;
-    using DataAccess.Criteria.GroupConfiguration;
-    using Service.Impl.UserControl;
-    using Service.Products;
-    using Service.UserControl;
-    using ViewModels;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Fanex.ExternalAccount.Core.Context;
 
-    public class GroupConfigurationController : BaseController
+namespace Fanex.ExternalAccount.Controllers.UserControl
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize] // TODO: Update with proper authorization policy (ManageProduct)
+    public class GroupConfigurationController : ControllerBase
     {
-        private readonly IGroupConfigurationService groupConfigurationService;
-        private readonly IGroupService groupService;
-        private readonly IProductService productService;
+        private readonly IGroupConfigurationService _groupConfigurationService;
+        private readonly IGroupService _groupService;
+        private readonly IProductService _productService;
+        private readonly ICurrentSession _currentSession;
 
         public GroupConfigurationController(
+            IGroupConfigurationService groupConfigurationService,
             IGroupService groupService,
             IProductService productService,
-            IGroupConfigurationService groupConfigurationService)
+            ICurrentSession currentSession)
         {
-            this.groupService = groupService ?? new GroupService();
-            this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
-            this.productService = productService ?? new ProductService();
+            _groupConfigurationService = groupConfigurationService;
+            _groupService = groupService;
+            _productService = productService;
+            _currentSession = currentSession;
         }
 
-        public GroupConfigurationController() : this(null, null, null)
+        [HttpGet]
+        [Route("Index")]
+        public IActionResult Index()
         {
-        }
+            var products = _productService.GetAllProducts();
+            var groups = _groupService.GetExternalGroup();
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageProduct,
-            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index()
-        {
-            var products = productService.GetAllProducts();
-            var groups = groupService.GetExternalGroup();
-
-            return View(new GroupConfigurationViewModel { Groups = groups, Products = products });
-        }
-
-        [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageProduct, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult Get(GetGroupConfigurationCriteria criteria)
-        {
-            var result = groupConfigurationService.Get(criteria);
-
-            return Json(result, JsonRequestBehavior.DenyGet);
+            var viewModel = new GroupConfigurationViewModel { Groups = groups, Products = products };
+            return Ok(viewModel);
         }
 
         [HttpPost]
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageProduct, Policy = AuthenticateAction.AuthenticationType.Host)]
-        public ActionResult Update(UpdateGroupConfigurationCriteria criteria)
+        [Route("Get")]
+        public IActionResult Get([FromBody] GetGroupConfigurationCriteria criteria)
         {
-            criteria.UserId = CurrentSession.UserId;
-            var result = groupConfigurationService.Update(criteria);
-
-            return Json(result, JsonRequestBehavior.DenyGet);
+            var result = _groupConfigurationService.Get(criteria);
+            return Ok(result);
         }
+
+        [HttpPost]
+        [Route("Update")]
+        public IActionResult Update([FromBody] UpdateGroupConfigurationCriteria criteria)
+        {
+            criteria.UserId = _currentSession.UserId;
+            var result = _groupConfigurationService.Update(criteria);
+
+            return Ok(result);
+        }
+    }
+
+    // TODO: Define proper interfaces and services
+    public interface IGroupConfigurationService
+    {
+        object Get(GetGroupConfigurationCriteria criteria);
+        object Update(UpdateGroupConfigurationCriteria criteria);
+    }
+
+    public class GroupConfigurationService : IGroupConfigurationService
+    {
+        public object Get(GetGroupConfigurationCriteria criteria)
+        {
+            // TODO: Implement actual service logic
+            return new { configurations = new[] { new { id = 1, name = "Config 1" } } };
+        }
+
+        public object Update(UpdateGroupConfigurationCriteria criteria)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true };
+        }
+    }
+
+    public interface IProductService
+    {
+        object GetAllProducts();
+    }
+
+    public class ProductService : IProductService
+    {
+        public object GetAllProducts()
+        {
+            // TODO: Implement actual service logic
+            return new[] { new { id = 1, name = "Product 1" } };
+        }
+    }
+
+    // TODO: Define proper data models
+    public class GroupConfigurationViewModel
+    {
+        public object Groups { get; set; } = null!;
+        public object Products { get; set; } = null!;
+    }
+
+    public class GetGroupConfigurationCriteria
+    {
+        // TODO: Add properties as needed
+    }
+
+    public class UpdateGroupConfigurationCriteria
+    {
+        public int UserId { get; set; }
+        // TODO: Add other properties as needed
     }
 }

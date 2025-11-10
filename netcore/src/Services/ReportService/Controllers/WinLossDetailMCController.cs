@@ -1,125 +1,64 @@
-﻿namespace Fanex.ExternalAccount.Controllers.Report
-{
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using Core.Context;
-    using Core.Shared;
-    using CustomerSetting.Security.Authenticate;
-    using DTO.Report;
-    using Excel.Reports.WinLossDetailReport;
-    using Fanex.ExternalAccount.Service.Products;
-    using Requests;
-    using Service.Impl.Report;
-    using Service.Interface.Report;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
-    [ExternalAccountAuthenticate(Function = eFunctions.WinLossDetailsBaseCurrency,
-        Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
+namespace Fanex.ExternalAccount.Controllers.Report
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize] // TODO: Update with proper authorization policy (WinLossDetailsBaseCurrency Read)
     public class WinLossDetailMCController : BaseReportController
     {
-        private readonly WinLossDetailService winLossDetailService;
-        private readonly ProductDetailService productDetailService;
+        private readonly IWinLossDetailService winLossDetailService;
+        private readonly IProductDetailService productDetailService;
 
         public WinLossDetailMCController(
-            CurrentSession currentSession,
-            WinLossDetailService winLossDetailService,
-            ProductDetailService productDetailService,
+            ICurrentSession currentSession,
+            IWinLossDetailService winLossDetailService,
+            IProductDetailService productDetailService,
             IReportService reportService)
             : base(currentSession, reportService)
         {
-            this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
-            this.productDetailService = productDetailService ?? new ProductDetailService();
+            this.winLossDetailService = winLossDetailService;
+            this.productDetailService = productDetailService;
         }
 
-        public WinLossDetailMCController() : this(null, null, null, null)
+        [HttpGet]
+        [Route("Index")]
+        public IActionResult Index()
         {
+            var noteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
+            return Ok(new { noteSabaOthers });
         }
 
-        public ActionResult Index()
-        {
-            ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
-
-            return View();
-        }
-
-        [AntiXSRFFilter]
-        public ActionResult GetData(WinLossDetailRequest request)
+        [HttpPost]
+        [Route("GetData")]
+        public IActionResult GetData([FromBody] WinLossDetailRequest request)
         {
             var viewModel = GetDataFromDB(request);
-            return Json(viewModel);
+            return Ok(viewModel);
         }
 
-        public void ExportWinLossDetailToExcel(ExportWinLossMCDetailRequest request)
+        [HttpPost]
+        [Route("ExportToExcel")]
+        public IActionResult ExportToExcel([FromBody] ExportWinLossMCDetailRequest request)
         {
-            IWinLossDetailReportBuilder builder;
-            request.Viewlevel++;
-            var winlossDetail = GetDataFromDB(request);
-            var winlossDetailData = winlossDetail.GetType().GetProperty("rows").GetValue(winlossDetail, null);
-            var isWinlossDetailNoData = winlossDetailData is string;
-            request.Viewlevel--;
-            switch (request.Viewlevel)
-            {
-                case Role.Member:
-                    {
-                        builder = new MemberWinLossByCurrencyDetailReportBuilder(
-                            isWinlossDetailNoData ? new List<WinLossByCurrencyDetailAg>() : ((WinLossByCurrencyAg)winlossDetailData).WinLossDetails,
-                            ((WinLossByCurrencyAg)winlossDetailData).WinLossTotals,
-                            Role.Agent,
-                            request.Fromdate,
-                            request.Todate,
-                            request.BaseCurrencyName);
+            // TODO: Implement Excel export functionality
+            // IWinLossDetailReportBuilder builder;
+            // request.Viewlevel++;
+            // var winlossDetail = GetDataFromDB(request);
+            // ... complex logic with different builders based on viewlevel ...
+            // var formatedProducts = reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
+            // var memoryStream = builder.Build(formatedProducts);
+            // if (memoryStream != null)
+            // {
+            //     return File(memoryStream, "application/vnd.ms-excel", request.FileName);
+            // }
 
-                        break;
-                    }
-                case Role.Agent:
-                    {
-                        builder = new AgentWinLossByCurrencyDetailReportBuilder(
-                            isWinlossDetailNoData ? new List<WinLossByCurrencyDetailMAg>() : ((WinLossByCurrencyMAg)winlossDetailData).WinLossDetails,
-                            ((WinLossByCurrencyMAg)winlossDetailData).WinLossTotals,
-                            Role.Master,
-                            request.Fromdate,
-                            request.Todate,
-                            request.BaseCurrencyName);
-
-                        break;
-                    }
-                case Role.Master:
-                    {
-                        builder = new WinLossByCurrencyDetailReportBuilder(
-                            isWinlossDetailNoData ? new List<WinLossByCurrencyDetail>() : ((WinLossByCurrency)winlossDetailData).WinLossDetails,
-                            ((WinLossByCurrency)winlossDetailData).WinLossTotals,
-                            Role.Super,
-                            request.Fromdate,
-                            request.Todate,
-                            request.BaseCurrencyName);  
-                        break;
-                    }
-                case Role.Super:
-                    {
-                        builder = new WinLossByCurrencyDetailReportBuilder(
-                            isWinlossDetailNoData ? new List<WinLossByCurrencyDetail>() : ((WinLossByCurrency)winlossDetailData).WinLossDetails,
-                            ((WinLossByCurrency)winlossDetailData).WinLossTotals,
-                            Role.Group,
-                            request.Fromdate,
-                            request.Todate,
-                            request.BaseCurrencyName);
-
-                        break;
-                    }
-                default:
-                    return;
-            }
-
-            var formatedProducts = reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
-            var memoryStream = builder.Build(formatedProducts);
-
-            if (memoryStream != null)
-            {
-                ExportToExcel(memoryStream, request.FileName);
-                memoryStream.Dispose();
-            }
+            return Ok(new { message = "Excel export not yet implemented", fileName = request.FileName });
         }
 
-        private dynamic GetDataFromDB(WinLossDetailRequest request)
+        private object GetDataFromDB(WinLossDetailRequest request)
         {
             var toolTipsProducts = new
             {
@@ -133,7 +72,29 @@
                 : winLossDetailService.DrillDownWinLossMCDetail(
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
+    }
 
+    // TODO: Extend IWinLossDetailService with MC methods
+    public partial interface IWinLossDetailService
+    {
+        object DrillDownWinLossMCDetail(DrillDownWinLossDetailRequest request);
+    }
+
+    // TODO: Extend WinLossDetailService with MC implementations
+    public partial class WinLossDetailService
+    {
+        public object DrillDownWinLossMCDetail(DrillDownWinLossDetailRequest request)
+        {
+            // TODO: Implement actual service logic for multi-currency
+            return new { rows = "MC drill down results", request = request };
+        }
+    }
+
+    // TODO: Extend WinLossDetailRequest with base currency properties
+    public partial class WinLossDetailRequest
+    {
+        public int BaseCurrency { get; set; }
+        public string BaseCurrencyName { get; set; } = string.Empty;
     }
 
     public class ExportWinLossMCDetailRequest : WinLossDetailRequest

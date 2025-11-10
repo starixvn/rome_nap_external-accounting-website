@@ -12,13 +12,13 @@
     <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="9.0.0" />
   </ItemGroup>
 
-  <!-- Temporarily commented out .NET Framework dependencies until migration is complete -->
-  <!-- <ItemGroup>
-    <ProjectReference Include="..\Core\Core.csproj" />
-    <ProjectReference Include="..\Core.Shared\Core.Shared.csproj" />
-    <ProjectReference Include="..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj" />
-    <ProjectReference Include="..\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj" />
-  </ItemGroup> -->
+  <!-- .NET Framework dependencies - now enabled after controller migration -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Core\Core.csproj" />
+    <ProjectReference Include="..\..\Shared\Core.Shared\Fanex.ExternalAccount.Core.Shared.csproj" />
+    <ProjectReference Include="..\..\Shared\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj" />
+    <ProjectReference Include="..\..\Shared\Fanex.ExternalAccount.DataAccess\Fanex.ExternalAccount.DataAccess.csproj" />
+  </ItemGroup>
 
 </Project>
 

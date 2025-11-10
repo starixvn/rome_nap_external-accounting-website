@@ -1,15 +1,20 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Statement.StatementPage
 {
     using System.IO;
-    using System.Web;
 
     internal class TemplateSettings
     {
+        private static string _basePath = "";
         private readonly string _dir;
+
+        public static void SetBasePath(string basePath)
+        {
+            _basePath = basePath;
+        }
 
         public TemplateSettings()
         {
-            _dir = HttpContext.Current.Server.MapPath("~/ExcelTemplates/Statement");
+            _dir = Path.Combine(_basePath, "ExcelTemplates", "Statement");
         }
 
         public string StatementPath() => Path.Combine(_dir, "Statement.xls");

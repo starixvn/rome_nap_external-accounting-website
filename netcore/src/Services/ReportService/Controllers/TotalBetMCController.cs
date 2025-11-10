@@ -1,40 +1,32 @@
-﻿namespace Fanex.ExternalAccount.Controllers.TotalBet
-{
-    using System;
-    using System.Linq;
-    using System.Web.Mvc;
-    using Core.Context;
-    using Core.Shared;
-    using CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.DTO;
-    using Fanex.ExternalAccount.Service.Params;
-    using Fanex.ExternalAccount.Service.TotalBet;
-    using Fanex.ExternalAccount.Utilities;
-    using Fanex.ExternalAccount.ViewModel.TotalBet;
-    using Requests;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 
-    [ExternalAccountAuthenticate(Function = eFunctions.TotalBetSoccerBaseCurrency, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-    public class TotalBetMCController : BaseController
+namespace Fanex.ExternalAccount.Controllers.Report
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize] // TODO: Update with proper authorization policy (TotalBetSoccerBaseCurrency Read)
+    public class TotalBetMCController : ControllerBase
     {
-        protected readonly CurrentSession currentSession;
+        protected readonly ICurrentSession currentSession;
         private readonly ITotalBetService totalBetService;
 
         public TotalBetMCController(
-            CurrentSession currentSession,
+            ICurrentSession currentSession,
             ITotalBetService totalBetService)
         {
-            this.currentSession = currentSession ?? new CurrentSession();
-            this.totalBetService = totalBetService ?? new TotalBetService();
+            this.currentSession = currentSession;
+            this.totalBetService = totalBetService;
         }
 
-        public TotalBetMCController() : this(null, null)
+        [HttpGet]
+        [Route("Index")]
+        public IActionResult Index()
         {
-        }
-
-        public ActionResult Index()
-        {
-            var testGroups = Config.TestGroups();
+            // TODO: var testGroups = Config.TestGroups();
+            var testGroups = new[] { "testgroup1", "testgroup2" }; // Placeholder
             var isTest =
                 testGroups.Contains(currentSession.CurrencyGroup, StringComparer.CurrentCultureIgnoreCase) ||
                 testGroups.Contains(currentSession.ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
@@ -43,19 +35,23 @@
 
             var filters = new TotalBetFilterViewModel { Leagues = leagues };
 
-            return View(filters);
+            return Ok(filters);
         }
 
-        public ActionResult GetEvents(string leagueIds)
+        [HttpGet]
+        [Route("GetEvents")]
+        public IActionResult GetEvents([FromQuery] string leagueIds)
         {
             var events = string.IsNullOrWhiteSpace(leagueIds)
-                ? Enumerable.Empty<EventModel>()
+                ? Array.Empty<EventModel>()
                 : totalBetService.GetEvents(leagueIds);
 
-            return Json(events);
+            return Ok(events);
         }
 
-        public ActionResult GetData(TotalBetMCRequest request)
+        [HttpPost]
+        [Route("GetData")]
+        public IActionResult GetData([FromBody] TotalBetMCRequest request)
         {
             var param = new GetTotalBetParam
             {
@@ -67,7 +63,18 @@
                 BaseCurrencyName = request.BaseCurrencyName
             };
 
-            return Json(totalBetService.GetData(param));
+            return Ok(totalBetService.GetData(param));
         }
+    }
+
+    // TODO: Define proper request model
+    public class TotalBetMCRequest
+    {
+        public string GroupName { get; set; } = string.Empty;
+        public string ViewMode { get; set; } = string.Empty;
+        public string Leagues { get; set; } = string.Empty;
+        public string Events { get; set; } = string.Empty;
+        public string BaseCurrency { get; set; } = string.Empty;
+        public string BaseCurrencyName { get; set; } = string.Empty;
     }
 }

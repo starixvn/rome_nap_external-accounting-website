@@ -1,53 +1,96 @@
-﻿namespace Fanex.ExternalAccount.Controllers.Customer
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using Fanex.ExternalAccount.Core.Context;
+
+namespace Fanex.ExternalAccount.Controllers.Customer
 {
-    using Fanex.CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Core.Base;
-    using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.Requests.Customer.SuperList;
-    using Fanex.ExternalAccount.Service.Customer;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
-    using System.Web.Mvc;
-
-    public class SuperInfoController : BaseController
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize] // TODO: Update with proper authorization policy (EditSuperInfo Host)
+    public class SuperInfoController : ControllerBase
     {
-        private readonly IEditSuperListService superListSevice;
+        private readonly IEditSuperListService _superListService;
+        private readonly ICurrentSession _currentSession;
+        private readonly ICurrentContext _currentContext;
 
-        public SuperInfoController(): this(null)
+        public SuperInfoController(IEditSuperListService superListService, ICurrentSession currentSession, ICurrentContext currentContext)
         {
-
+            _superListService = superListService;
+            _currentSession = currentSession;
+            _currentContext = currentContext;
         }
 
-        public SuperInfoController(IEditSuperListService superListSevice)
+        [HttpGet]
+        [Route("Index")]
+        public IActionResult Index()
         {
-            this.superListSevice = superListSevice ?? new EditSuperListService();
-        }
+            // TODO: Generate proper captcha code
+            var sCode = "placeholder_captcha";
 
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditSuperInfo")]
-        public ActionResult Index()
-        {
-
-            ViewBag.SCode = Encryptor.RandomCaptcha;
-
-            return PartialViewBase();
-        }
-        
-        [HttpPost]
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditSuperInfo")]
-        public ActionResult CheckMultipleSupers(string destUsers, string groupName)
-        {
-            var result = superListSevice.CheckMultipleSupers(destUsers, groupName, CurrentSession.UserId);
-            return JsonBase(new { result.ErrorCode, result.ErrorMessage, SuperIds = result.ResultData },
-                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            return Ok(new { SCode = sCode });
         }
 
         [HttpPost]
-        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditSuperInfo")]
-        public ActionResult UpdateMultipleSupers(UpdateMultipleSuperRequest request)
+        [Route("CheckMultipleSupers")]
+        public IActionResult CheckMultipleSupers([FromQuery] string destUsers, [FromQuery] string groupName)
         {
-            request.Password = Encryptor.Decrypt(request.Password, Encryptor.RandomCaptcha);
-            var result = superListSevice.UpdateMultipleSuperRequest(request, CurrentSession.UserId, CurrentContext.Ip4Address);
-            return JsonBase(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
+            var result = _superListService.CheckMultipleSupers(destUsers, groupName, _currentSession.UserId);
+            return Ok(new
+            {
+                result.ErrorCode,
+                result.ErrorMessage,
+                SuperIds = result.ResultData
+            });
         }
+
+        [HttpPost]
+        [Route("UpdateMultipleSupers")]
+        public IActionResult UpdateMultipleSupers([FromBody] UpdateMultipleSuperRequest request)
+        {
+            // TODO: Implement password decryption
+            // request.Password = Encryptor.Decrypt(request.Password, captchaCode);
+            var result = _superListService.UpdateMultipleSuperRequest(request, _currentSession.UserId, _currentContext.Ip4Address);
+            return Ok(result);
+        }
+    }
+
+    // TODO: Define proper interfaces and models
+    public interface IEditSuperListService
+    {
+        (int ErrorCode, string ErrorMessage, object ResultData) CheckMultipleSupers(string destUsers, string groupName, int userId);
+        object UpdateMultipleSuperRequest(UpdateMultipleSuperRequest request, int userId, string ipAddress);
+    }
+
+    public class EditSuperListService : IEditSuperListService
+    {
+        public (int ErrorCode, string ErrorMessage, object ResultData) CheckMultipleSupers(string destUsers, string groupName, int userId)
+        {
+            // TODO: Implement actual service logic
+            return (0, "Success", new[] { 1, 2, 3 });
+        }
+
+        public object UpdateMultipleSuperRequest(UpdateMultipleSuperRequest request, int userId, string ipAddress)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true };
+        }
+    }
+
+    public interface ICurrentContext
+    {
+        string Ip4Address { get; }
+    }
+
+    public class CurrentContext : ICurrentContext
+    {
+        public string Ip4Address => "127.0.0.1"; // TODO: Implement proper IP detection
+    }
+
+    // TODO: Define proper request model
+    public class UpdateMultipleSuperRequest
+    {
+        public string Password { get; set; } = string.Empty;
+        // TODO: Add other properties as needed
     }
 }

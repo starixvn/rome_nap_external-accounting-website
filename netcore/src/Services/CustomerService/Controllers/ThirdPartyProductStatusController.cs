@@ -1,14 +1,26 @@
-﻿namespace Fanex.ExternalAccount.Controllers.Customer
-{
-    using System.Web.Mvc;
-    using Core.Base;
-    using ViewModel.Customer;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
-    public class ThirdPartyProductStatusController : BaseController
+namespace Fanex.ExternalAccount.Controllers.Customer
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class ThirdPartyProductStatusController : ControllerBase
     {
-        public ActionResult Index(ThirdPartyProductStatusViewModel viewModel)
+        [HttpGet]
+        [Route("Index")]
+        [Authorize] // TODO: Update with proper authorization policy
+        public IActionResult Index([FromQuery] ThirdPartyProductStatusViewModel viewModel)
         {
-            return View("~/Areas/CustomerSetting/Views/ThirdPartyProductStatus/Index.cshtml", viewModel);
+            // TODO: Implement proper view rendering or API response
+            return Ok(viewModel);
         }
+    }
+
+    // TODO: Define proper view model
+    public class ThirdPartyProductStatusViewModel
+    {
+        // TODO: Add properties as needed
+        public string Placeholder { get; set; } = "ThirdPartyProductStatus";
     }
 }

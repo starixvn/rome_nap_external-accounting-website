@@ -5,6 +5,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHealthChecks();
+builder.Services.AddMemoryCache();
+
+// Register services
+builder.Services.AddScoped<IStatementService, StatementService>();
 
 var app = builder.Build();
 

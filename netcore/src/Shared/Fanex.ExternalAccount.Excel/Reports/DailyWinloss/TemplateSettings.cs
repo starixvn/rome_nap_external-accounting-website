@@ -1,15 +1,20 @@
 ﻿namespace Fanex.ExternalAccount.Excel.Reports.DailyWinLossReport
 {
     using System.IO;
-    using System.Web;
     using Fanex.ExternalAccount.Core.Shared;
     internal class TemplateSettings
     {
+        private static string _basePath = "";
         private readonly string _dir;
+
+        public static void SetBasePath(string basePath)
+        {
+            _basePath = basePath;
+        }
 
         public TemplateSettings()
         {
-            _dir = HttpContext.Current.Server.MapPath("~/ExcelTemplates/Reports");
+            _dir = Path.Combine(_basePath, "ExcelTemplates", "Reports");
         }
 
         public string DailyWinLossPath() => Path.Combine(_dir, "DailyWinLoss.xls");

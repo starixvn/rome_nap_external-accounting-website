@@ -1,72 +1,85 @@
-﻿namespace Fanex.ExternalAccount.Controllers.Home
-{
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Linq;
-    using System.Web.Mvc;
-    using Common;
-    using Core.Base;
-    using Core.Helpers;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.Extensions.Logging;
 
-    public class NetworkSpeedController : BaseController
+namespace Fanex.ExternalAccount.Controllers.Home
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    public class NetworkSpeedController : ControllerBase
     {
         private readonly IEnumerable<int> CalculatingNWSpeedGroupIds;
         private readonly IEnumerable<string> CalculatingNWSpeedAdminNames;
+        private readonly ICurrentSession _currentSession;
+        private readonly ILogger<NetworkSpeedController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public NetworkSpeedController()
+        public NetworkSpeedController(ICurrentSession currentSession, ILogger<NetworkSpeedController> logger, IConfiguration configuration)
         {
-            CalculatingNWSpeedGroupIds = (string.IsNullOrEmpty(ConfigurationManager.AppSettings["TrackConnectionSpeedGroupIds"])
+            _currentSession = currentSession;
+            _logger = logger;
+            _configuration = configuration;
+
+            CalculatingNWSpeedGroupIds = (string.IsNullOrEmpty(_configuration["TrackConnectionSpeedGroupIds"])
                 ? Enumerable.Empty<int>()
-                : ConfigurationManager.AppSettings["TrackConnectionSpeedGroupIds"]
+                : _configuration["TrackConnectionSpeedGroupIds"]
                     .Split(',')
                     .Select(groupIdString => ConvertStringToInt(groupIdString)))
                 .Where(groupId => groupId != 0);
 
-            CalculatingNWSpeedAdminNames = string.IsNullOrEmpty(ConfigurationManager.AppSettings["CalculatingNWSpeedAdminNames"])
+            CalculatingNWSpeedAdminNames = string.IsNullOrEmpty(_configuration["CalculatingNWSpeedAdminNames"])
                 ? Enumerable.Empty<string>()
-                : ConfigurationManager.AppSettings["CalculatingNWSpeedAdminNames"]
+                : _configuration["CalculatingNWSpeedAdminNames"]
                     .Split(',')
                     .Select(adminNames => adminNames.Trim());
         }
 
-        public ActionResult Index()
+        [HttpGet]
+        [Route("Index")]
+        [Authorize] // TODO: Update with proper authorization policy
+        public IActionResult Index()
         {
-            if (CurrentSession.IsLogin
-                && User.Identity.IsAuthenticated)
+            if (_currentSession.IsLogin && User.Identity?.IsAuthenticated == true)
             {
                 if (!IsNeedToCalculateUserConnectionSpeed())
                 {
-                    return new EmptyResult();
+                    return NoContent();
                 }
 
-                return View();
+                return Ok(new { message = "Network speed tracking enabled" });
             }
 
-            return RedirectToAction("Login", "Account");
+            return Unauthorized();
         }
 
-        public ActionResult SaveResult(float speedKbps)
+        [HttpPost]
+        [Route("SaveResult")]
+        [Authorize] // TODO: Update with proper authorization policy
+        public IActionResult SaveResult([FromQuery] float speedKbps)
         {
-            if (CurrentSession.IsLogin
-                && User.Identity.IsAuthenticated
+            if (_currentSession.IsLogin
+                && User.Identity?.IsAuthenticated == true
                 && speedKbps > 0
                 && IsNeedToCalculateUserConnectionSpeed())
             {
                 LogUserInformation(speedKbps);
             }
 
-            return new EmptyResult();
+            return NoContent();
         }
 
         private bool IsNeedToCalculateUserConnectionSpeed()
         {
-            if (CalculatingNWSpeedGroupIds.Any(groupId => groupId == -1 || CurrentSession.GroupId == groupId))
+            if (CalculatingNWSpeedGroupIds.Any(groupId => groupId == -1 || _currentSession.GroupId == groupId))
             {
                 return true;
             }
 
-            if (CalculatingNWSpeedAdminNames.Any(adminUsername => adminUsername.Trim().Equals("*") || CurrentSession.UserName.Equals(adminUsername.Trim(), StringComparison.CurrentCultureIgnoreCase)))
+            if (CalculatingNWSpeedAdminNames.Any(adminUsername => adminUsername.Trim().Equals("*") || _currentSession.UserName.Equals(adminUsername.Trim(), StringComparison.CurrentCultureIgnoreCase)))
             {
                 return true;
             }
@@ -76,25 +89,24 @@
 
         private void LogUserInformation(float speedKbps)
         {
-            var request = RequestHelper.GetRequestInfo();
+            // TODO: Implement proper request info extraction
+            var request = HttpContext.Request;
             var message = string.Join(
                 "\r\n",
                 "\r\nUser connection information:",
-                $"Line: {new Core.Context.CurrentSession().CurrentLine}",
+                $"Line: {_currentSession.CurrentLine}",
                 $"Connection Speed: {speedKbps} kbps",
-                $"Browser: {request.Browser}",
-                $"Platform: {request.Platform}",
-                $"Domain: {request.DomainName}",
-                $"NetSessionId: {request.NetSessionId}",
-                $"User Id: {CurrentSession.UserId}",
-                $"Username: {CurrentSession.UserName}",
-                $"Group Id: {CurrentSession.GroupId}",
-                $"Group Name: {CurrentSession.CurrencyGroup}");
+                $"Browser: {Request.Headers["User-Agent"].ToString()}",
+                $"Domain: {request.Host}",
+                $"User Id: {_currentSession.UserId}",
+                $"Username: {_currentSession.UserName}",
+                $"Group Id: {_currentSession.GroupId}",
+                $"Group Name: {_currentSession.CurrencyGroup}");
 
-            Logging.LogService.Info(message);
+            _logger.LogInformation(message);
         }
 
         private int ConvertStringToInt(string strInput)
-            => strInput.Trim().Equals("*") ? -1 : Converter.ToInt(strInput);
+            => strInput.Trim().Equals("*") ? -1 : int.TryParse(strInput, out var result) ? result : 0;
     }
 }

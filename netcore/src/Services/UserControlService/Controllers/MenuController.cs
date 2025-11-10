@@ -1,125 +1,123 @@
-﻿namespace Fanex.ExternalAccount.Controllers.UserControl
-{
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web;
-    using System.Web.Mvc;
-    using Core.Base;
-    using Core.Context;
-    using Core.Shared;
-    using CustomerSetting.Security.Authenticate;
-    using DTO.UserControl;
-    using Newtonsoft.Json;
-    using Service.Impl.UserControl;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using Fanex.ExternalAccount.Core.Context;
 
-    public class MenuController : BaseController
+namespace Fanex.ExternalAccount.Controllers.UserControl
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Authorize] // TODO: Update with proper authorization policy (ManageMenu)
+    public class MenuController : ControllerBase
     {
         private readonly IMenuService _menuService;
         private readonly ICachingService _cachingService;
+        private readonly ICurrentSession _currentSession;
+        private readonly ICurrentContext _currentContext;
 
-        public MenuController()
+        public MenuController(
+            IMenuService menuService,
+            ICachingService cachingService,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext)
         {
-            _cachingService = new CachingService();
-            _menuService = _menuService ?? new MenuService();
+            _menuService = menuService;
+            _cachingService = cachingService;
+            _currentSession = currentSession;
+            _currentContext = currentContext;
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult MenuList() => PartialViewBase();
+        [HttpGet]
+        [Route("MenuList")]
+        public IActionResult MenuList()
+        {
+            return Ok(new { message = "Menu list view" });
+        }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult MenuListPost()
+        [HttpPost]
+        [Route("MenuListPost")]
+        public IActionResult MenuListPost()
         {
             var result = GetAllMenus();
 
-            return JsonBase(new { total = 1, page = 1, records = result.Count, rows = result },
-                new JsonSerializerSettings());
+            return Ok(new { total = 1, page = 1, records = result.Count, rows = result });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult AddMenu()
+        [HttpGet]
+        [Route("AddMenu")]
+        public IActionResult AddMenu()
         {
-            ViewBag.FunctionList = GetFunctions();
-            ViewBag.MenuList = GetMenus();
+            var functionList = GetFunctions();
+            var menuList = GetMenus();
 
-            return PartialViewBase(new Menu());
+            return Ok(new { functionList, menuList, model = new Menu() });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult EditMenu(int id)
+        [HttpGet]
+        [Route("EditMenu/{id}")]
+        public IActionResult EditMenu(int id)
         {
             var model = _menuService.GetAllMenus().FirstOrDefault(o => o.MenuId == id);
 
             if (model != null)
             {
-                model.MenuName = HttpUtility.HtmlDecode(model.MenuName);
-                model.MenuDesc = HttpUtility.HtmlDecode(model.MenuDesc);
-                model.Url = HttpUtility.HtmlDecode(model.Url);
-
-                ViewBag.FunctionList = GetFunctions();
-                ViewBag.MenuList = GetMenus();
+                model.MenuName = System.Net.WebUtility.HtmlDecode(model.MenuName);
+                model.MenuDesc = System.Net.WebUtility.HtmlDecode(model.MenuDesc);
+                model.Url = System.Net.WebUtility.HtmlDecode(model.Url);
             }
 
-            return PartialViewBase(model);
+            var functionList = GetFunctions();
+            var menuList = GetMenus();
+
+            return Ok(new { model, functionList, menuList });
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult Add(Menu menu)
+        [HttpPost]
+        [Route("Add")]
+        public IActionResult Add([FromBody] Menu menu)
         {
             if (menu != null)
             {
                 menu.IsActive = true;
             }
-            var result = _menuService.CreateMenu(menu, CurrentSession.CustId, CurrentContext.Ip4Address);
+            var result = _menuService.CreateMenu(menu, _currentSession.UserId, _currentContext.Ip4Address);
 
-            return JsonBase(result);
+            return Ok(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult Edit(Menu menu)
+        [HttpPost]
+        [Route("Edit")]
+        public IActionResult Edit([FromBody] Menu menu)
         {
-            var result = _menuService.UpdateMenu(menu, CurrentSession.CustId, CurrentContext.Ip4Address);
+            var result = _menuService.UpdateMenu(menu, _currentSession.UserId, _currentContext.Ip4Address);
 
-            return JsonBase(result);
+            return Ok(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateStatus(int menuId, bool isActive)
+        [HttpPost]
+        [Route("UpdateStatus")]
+        public IActionResult UpdateStatus([FromBody] UpdateMenuStatusRequest request)
         {
             var result = _menuService.UpdateMenuStatus(
-                menuId,
-                isActive,
-                CurrentSession.CustId);
+                request.MenuId,
+                request.IsActive,
+                _currentSession.UserId);
 
-            return JsonBase(result);
+            return Ok(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult Delete(int menuId)
+        [HttpPost]
+        [Route("Delete")]
+        public IActionResult Delete([FromBody] DeleteMenuRequest request)
         {
             var result = _menuService.DeleteMenu(
-                menuId,
-                CurrentSession.CustId);
+                request.MenuId,
+                _currentSession.UserId);
 
-            return JsonBase(result);
+            return Ok(result);
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Menu> GetAllMenus()
         {
             var menuList = _menuService.GetAllMenus();
@@ -138,11 +136,10 @@
             return list;
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Menu> GetMenus()
         {
-            var menuList = _cachingService.GetUserCache(CurrentSession.UserId, ExtRequest.GetGroupName()).MenuList;
+            // TODO: var menuList = _cachingService.GetUserCache(_currentSession.UserId, ExtRequest.GetGroupName()).MenuList;
+            var menuList = new List<Menu>(); // Placeholder
             var parents = menuList.Where(x => x.ParentId == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
@@ -153,11 +150,10 @@
             return list;
         }
 
-        [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
-            Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Function> GetFunctions()
         {
-            var menuList = _cachingService.GetUserCache(CurrentSession.UserId, ExtRequest.GetGroupName()).PolicyList;
+            // TODO: var menuList = _cachingService.GetUserCache(_currentSession.UserId, ExtRequest.GetGroupName()).PolicyList;
+            var menuList = new List<Function>(); // Placeholder
             var parents = menuList.Where(x => x.ParentID == 0);
             var list = new List<Function>();
             foreach (var parent in parents)
@@ -172,5 +168,71 @@
 
             return list;
         }
+    }
+
+    // TODO: Define proper interfaces and services
+    public interface IMenuService
+    {
+        List<Menu> GetAllMenus();
+        object CreateMenu(Menu menu, int userId, string ipAddress);
+        object UpdateMenu(Menu menu, int userId, string ipAddress);
+        object UpdateMenuStatus(int menuId, bool isActive, int userId);
+        object DeleteMenu(int menuId, int userId);
+    }
+
+    public class MenuService : IMenuService
+    {
+        public List<Menu> GetAllMenus()
+        {
+            // TODO: Implement actual service logic
+            return new List<Menu>();
+        }
+
+        public object CreateMenu(Menu menu, int userId, string ipAddress)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true };
+        }
+
+        public object UpdateMenu(Menu menu, int userId, string ipAddress)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true };
+        }
+
+        public object UpdateMenuStatus(int menuId, bool isActive, int userId)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true };
+        }
+
+        public object DeleteMenu(int menuId, int userId)
+        {
+            // TODO: Implement actual service logic
+            return new { success = true };
+        }
+    }
+
+    // TODO: Define proper request models
+    public class UpdateMenuStatusRequest
+    {
+        public int MenuId { get; set; }
+        public bool IsActive { get; set; }
+    }
+
+    public class DeleteMenuRequest
+    {
+        public int MenuId { get; set; }
+    }
+
+    // TODO: Define proper data models
+    public class Menu
+    {
+        public int MenuId { get; set; }
+        public int ParentId { get; set; }
+        public string MenuName { get; set; } = string.Empty;
+        public string MenuDesc { get; set; } = string.Empty;
+        public string Url { get; set; } = string.Empty;
+        public bool IsActive { get; set; }
     }
 }
