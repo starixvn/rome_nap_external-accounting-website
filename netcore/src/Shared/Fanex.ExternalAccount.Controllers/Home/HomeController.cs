@@ -1,7 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Home
 {
     using System;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Base;
     using Core.Context;
     using Fanex.Caching;
@@ -24,11 +25,11 @@
         }
 
         [ExternalAccountAuthenticate]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             if (_currentSession.IsInternalAdmin)
             {
-                var groupName = (string)RouteData.Values["id"];
+                var groupName = RouteData.Values["id"]?.ToString();
 
                 if (!string.IsNullOrWhiteSpace(groupName)
                     && !groupName.Equals(_currentSession.CurrencyGroup)
@@ -56,7 +57,7 @@
         private static bool IsIgnoreGroupName(string groupName)
             => groupName.IndexOf(".js.map", StringComparison.OrdinalIgnoreCase) >= 0;
 
-        public ActionResult TestLog()
+        public IActionResult TestLog()
         {
             ExceptionHandler.Handle(new Exception("Testing log"));
 
@@ -64,23 +65,24 @@
         }
 
         [AllowAnonymous]
-        public ActionResult TestExceptionLog()
+        public IActionResult TestExceptionLog()
         {
             throw new NotImplementedException("Test Exception.");
         }
 
-        public ActionResult TestSentryLog()
+        public IActionResult TestSentryLog()
             => View();
 
-        public ActionResult RedisGet(string key)
+        public IActionResult RedisGet(string key)
         {
-            return Json(_cacheService.Get<string>(key), JsonRequestBehavior.AllowGet);
+            var result = _cacheService.Get<string>(key);
+            return Ok(result);
         }
 
-        public ActionResult RedisSet(string key, string value)
+        public IActionResult RedisSet(string key, string value)
         {
             _cacheService.Set<string>(key, value);
-            return Json("OK", JsonRequestBehavior.AllowGet);
+            return Ok("OK");
         }
     }
 }

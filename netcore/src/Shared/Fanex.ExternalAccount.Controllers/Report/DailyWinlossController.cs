@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
@@ -33,13 +33,13 @@
         {
         }
 
-        public DailyWinlossController() : this(null, null)
+        public DailyWinlossController() : this(null!, null!)
         {
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             ViewBag.WillShowMessage = CanView(Config.GroupsCanViewWinLossDetailForIBCBetLiveCasino());
 
@@ -48,8 +48,8 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
-        public ActionResult GetDailyWinLoss()
+        [ValidateAntiForgeryToken]
+        public IActionResult GetDailyWinLoss()
         {
             GetRequestPage();
             _srecommend = CheckRequest.GetIntRequest("srecommend", 0);
@@ -58,7 +58,7 @@
             return _custId != 0 ? GetDailyWinLossDownline() : GetDailyWinLossSearch();
         }
 
-        public void GetExportToExcel()
+        public IActionResult GetExportToExcel()
         {
             GetRequestPage();
             GetDailyWinLoss();
@@ -71,10 +71,12 @@
             var excelStream = builder.Build();
             if (excelStream != null)
             {
-                ExportToExcel(excelStream,
-                    (_viewlevel - 1).DisplayRoleName() + "DailyWinLoss_" + _winlostDate.ToString("yyyyMMdd") + ".xls");
-                excelStream.Dispose();
+                var fileName = (_viewlevel - 1).DisplayRoleName() + "DailyWinLoss_" + _winlostDate.ToString("yyyyMMdd") + ".xls";
+                excelStream.Position = 0;
+                return File(excelStream, "application/vnd.ms-excel", fileName);
             }
+            
+            return BadRequest("Failed to generate Excel file");
         }
 
         public void GetRequestPage()
@@ -106,7 +108,7 @@
             return true;
         }
 
-        private ActionResult GetDailyWinLossSearch()
+        private IActionResult GetDailyWinLossSearch()
         {
             if (!CheckSearchCustomer())
             {
@@ -218,7 +220,7 @@
                 new JsonSerializerSettings());
         }
 
-        private ActionResult GetDailyWinLossDownline()
+        private IActionResult GetDailyWinLossDownline()
         {
             if (_viewlevel.IsSuper())
             {

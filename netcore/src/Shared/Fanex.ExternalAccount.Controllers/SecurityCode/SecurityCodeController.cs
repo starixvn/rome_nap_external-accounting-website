@@ -4,7 +4,7 @@
     using Fanex.ExternalAccount.Core.Configurations.SecurityCode;
     using Fanex.ExternalAccount.Core.Context;
     using System;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     [ExternalAccountAuthenticate(Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class SecurityCodeController : Controller
@@ -17,7 +17,7 @@
         }
 
         [HttpGet]
-        public ActionResult Index(string ReturnUrl)
+        public IActionResult Index(string ReturnUrl)
         {
             ViewBag.UserName = currentSession.UserName;
             ViewBag.IsExternalSite = ReturnUrl.Contains("/updateCustomerSetting/updateSetting") 
@@ -27,7 +27,8 @@
         }
 
         [HttpPost]
-        public ActionResult Verify(string txtSecurityCode, string txtSecretKey)
+        [ValidateAntiForgeryToken]
+        public IActionResult Verify(string txtSecurityCode, string txtSecretKey)
         {
             string userSecurityCode = SecurityCodeManager.GetSecurityCode(currentSession.UserName);
             string rawSecurityCode = Encryptor.Decrypt(txtSecurityCode, txtSecretKey);
@@ -36,13 +37,13 @@
                 currentSession.UpdateLastActiveTime();
                 currentSession.SCFailedCounter = 0;
 
-                return Json(new
+                return Ok(new
                 {
                     StatusCode = 1
                 });
             }
 
-            return Json(new
+            return Ok(new
             {
                 StatusCode = 0,
                 FailedCounter = ++currentSession.SCFailedCounter

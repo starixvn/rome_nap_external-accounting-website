@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
@@ -28,11 +28,11 @@
             this.totalBetService = totalBetService ?? new TotalBetService();
         }
 
-        public TotalBetMCController() : this(null, null)
+        public TotalBetMCController() : this(null!, null!)
         {
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var testGroups = Config.TestGroups();
             var isTest =
@@ -46,16 +46,16 @@
             return View(filters);
         }
 
-        public ActionResult GetEvents(string leagueIds)
+        public IActionResult GetEvents(string leagueIds)
         {
             var events = string.IsNullOrWhiteSpace(leagueIds)
                 ? Enumerable.Empty<EventModel>()
                 : totalBetService.GetEvents(leagueIds);
 
-            return Json(events);
+            return Ok(events);
         }
 
-        public ActionResult GetData(TotalBetMCRequest request)
+        public IActionResult GetData(TotalBetMCRequest request)
         {
             var param = new GetTotalBetParam
             {
@@ -67,7 +67,7 @@
                 BaseCurrencyName = request.BaseCurrencyName
             };
 
-            return Json(totalBetService.GetData(param));
+            return Ok(totalBetService.GetData(param));
         }
     }
 }

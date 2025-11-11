@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -23,7 +23,7 @@
             Function = eFunctions.GrantPermission,
             Policy = AuthenticateAction.AuthenticationType.Read,
             IsAjaxRequest = false)]
-        public ActionResult Index(int? funcId)
+        public IActionResult Index(int? funcId)
         {
             ViewBag.FuncId = funcId;
 
@@ -33,7 +33,7 @@
         [ExternalAccountAuthenticate(
             Function = eFunctions.GrantPermission,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult GetGroupPolicies(int funcId)
+        public IActionResult GetGroupPolicies(int funcId)
         {
             var groupPolicies = policyService.GetGroupPolicies(funcId);
 
@@ -50,7 +50,7 @@
         [ExternalAccountAuthenticate(
             Function = eFunctions.GrantPermission,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult GetUserPolicies(int funcId)
+        public IActionResult GetUserPolicies(int funcId)
         {
             var userPolicies = policyService.GetUserPolicies(funcId);
 
@@ -64,20 +64,20 @@
             return JsonBase(userPolicies, GetJsonSerializerSettings());
         }
 
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         [ExternalAccountAuthenticate(
             Function = eFunctions.GrantPermission,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        public ActionResult UpdateGroupPolicy(int funcId, string policies)
+        public IActionResult UpdateGroupPolicy(int funcId, string policies)
             => JsonBase(
                 policyService.UpdateMultipleGroupPolicies(funcId, policies, CurrentSession.UserId, CurrentContext.Ip4Address),
                 GetJsonSerializerSettings());
 
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         [ExternalAccountAuthenticate(
             Function = eFunctions.GrantPermission,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        public ActionResult UpdateUserPolicy(int funcId, string policies)
+        public IActionResult UpdateUserPolicy(int funcId, string policies)
             => JsonBase(
                 policyService.UpdateMultipleUserPolicies(funcId, policies, CurrentSession.UserId, CurrentContext.Ip4Address),
                 GetJsonSerializerSettings());

@@ -4,19 +4,17 @@
     using System.IO;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
-    using System.Text.Json;
     using Authorization;
     using Context;
     using Fanex.ExternalAccount.Core.Criteria;
     using Fanex.ExternalAccount.Core.Model;
     using Fanex.ExternalAccount.Core.Service;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
     using Utilities;
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
 
-    public class BaseController : ControllerBase
+    public class BaseController : Controller
     {
         protected const string SiteName = "ExtAcc";
         protected const string UAT = "UAT";
@@ -24,15 +22,15 @@
         private readonly ICurrentContext currentContext;
         private readonly ICurrentSession currentSession;
         private readonly IExtRequest extRequest;
-        private readonly IConfiguration configuration;
+        private readonly IConfiguration? configuration;
 
         protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
 
-        protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest(), null)
+        protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest())
         {
         }
 
-        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration = null)
+        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration? configuration = null)
         {
             this.currentContext = currentContext;
             this.currentSession = currentSession;
@@ -40,7 +38,7 @@
             this.configuration = configuration;
         }
 
-        protected string Environment => configuration?.GetValue<string>("Environment") ?? Utils.ToString(System.Configuration.ConfigurationManager.AppSettings["Environment"]);
+        protected string Environment => configuration?.GetValue<string>("Environment") ?? string.Empty;
 
         protected bool IncludeAllFunctions => Environment.Equals(UAT, StringComparison.OrdinalIgnoreCase);
 

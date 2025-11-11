@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
@@ -31,25 +31,25 @@
             this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
-        public WinLossDetailController() : this(null, null, null, null)
+        public WinLossDetailController() : this(null!, null!, null!, null!)
         {
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             ViewBag.CanViewExtraPT = CanView(Config.GroupsCanViewExtraPT());
             ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
             return View();
         }
 
-        [AntiXSRFFilter]
-        public ActionResult GetData(WinLossDetailRequest request)
+        [ValidateAntiForgeryToken]
+        public IActionResult GetData(WinLossDetailRequest request)
         {
             var viewModel = GetDataFromDB(request);
-            return Json(viewModel);
+            return Ok(viewModel);
         }
 
-        public void ExportWinLossDetailToExcel(ExportWinLossDetailRequest request)
+        public IActionResult ExportWinLossDetailToExcel(ExportWinLossDetailRequest request)
         {
             IWinLossDetailReportBuilder builder;
             request.Viewlevel++;
@@ -106,19 +106,21 @@
 
             if (memoryStream != null)
             {
-                ExportToExcel(memoryStream, request.FileName);
-                memoryStream.Dispose();
+                memoryStream.Position = 0;
+                return File(memoryStream, "application/vnd.ms-excel", request.FileName);
             }
+            
+            return BadRequest("Failed to generate Excel file");
         }
 
-        [AntiXSRFFilter]
-        public ActionResult GetExtraPT(ViewExtraPTRequest request)
+        [ValidateAntiForgeryToken]
+        public IActionResult GetExtraPT(ViewExtraPTRequest request)
         {
             request.UserId = currentSession.CustId;
             request.ParentGroupName = currentSession.ParentGroupName;
             var extraPTs = winLossDetailService.GetExtraPT(request);
 
-            return Json(extraPTs);
+            return Ok(extraPTs);
         }
 
         private dynamic GetDataFromDB(WinLossDetailRequest request)
@@ -136,15 +138,15 @@
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
 
-        [AntiXSRFFilter]
-        public ActionResult GetCashFee(DrillDownCashFeeRequest request)
+        [ValidateAntiForgeryToken]
+        public IActionResult GetCashFee(DrillDownCashFeeRequest request)
         {
             var cashFee = winLossDetailService.DrillDownCashFee(request);
 
-            return Json(cashFee);
+            return Ok(cashFee);
         }
 
-        public void ExportCashFeeToExcel(ExportCashFeeRequest request)
+        public IActionResult ExportCashFeeToExcel(ExportCashFeeRequest request)
         {
             ICashFeeBuilder builder;
           
@@ -161,9 +163,11 @@
 
             if (memoryStream != null)
             {
-                ExportToExcel(memoryStream, request.FileName);
-                memoryStream.Dispose();
+                memoryStream.Position = 0;
+                return File(memoryStream, "application/vnd.ms-excel", request.FileName);
             }
+            
+            return BadRequest("Failed to generate Excel file");
         }
 
     }

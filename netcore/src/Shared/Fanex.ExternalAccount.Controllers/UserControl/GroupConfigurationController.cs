@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.UserControl
 {
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -27,13 +27,13 @@
             this.productService = productService ?? new ProductService();
         }
 
-        public GroupConfigurationController() : this(null, null, null)
+        public GroupConfigurationController() : this(null!, null!, null!)
         {
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageProduct,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var products = productService.GetAllProducts();
             var groups = groupService.GetExternalGroup();
@@ -41,23 +41,21 @@
             return View(new GroupConfigurationViewModel { Groups = groups, Products = products });
         }
 
-        [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.ManageProduct, Policy = AuthenticateAction.AuthenticationType.Read)]
-        public ActionResult Get(GetGroupConfigurationCriteria criteria)
+        public IActionResult Get(GetGroupConfigurationCriteria criteria)
         {
             var result = groupConfigurationService.Get(criteria);
 
-            return Json(result, JsonRequestBehavior.DenyGet);
+            return Ok(result);
         }
 
-        [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.ManageProduct, Policy = AuthenticateAction.AuthenticationType.Host)]
-        public ActionResult Update(UpdateGroupConfigurationCriteria criteria)
+        public IActionResult Update(UpdateGroupConfigurationCriteria criteria)
         {
             criteria.UserId = CurrentSession.UserId;
             var result = groupConfigurationService.Update(criteria);
 
-            return Json(result, JsonRequestBehavior.DenyGet);
+            return Ok(result);
         }
     }
 }

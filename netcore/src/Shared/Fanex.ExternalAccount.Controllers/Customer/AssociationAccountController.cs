@@ -1,10 +1,10 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
-    using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Criteria.Customer;
+    using Microsoft.AspNetCore.Mvc;
     using Service.Impl.Customer;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
 
@@ -23,17 +23,17 @@
             this.associationService = associationService ?? new AssociationAccountService();
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
             => PartialViewBase();
 
 
-        public ActionResult Get(GetAssociationAccountCriteria criteria)
+        public IActionResult Get(GetAssociationAccountCriteria criteria)
         {
             criteria.GroupName = ExtRequest.GetGroupName();
             criteria.UserId = CurrentSession.UserId;
             var accounts = associationService.Get(criteria);
 
-            return Json(accounts);
+            return Ok(accounts);
         }
 
     }

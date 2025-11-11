@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
@@ -31,19 +31,19 @@
             this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
-        public SuperWinLossDetailMCByPTController() : this(null, null, null, null)
+        public SuperWinLossDetailMCByPTController() : this(null!, null!, null!, null!)
         {
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
 
             return View();
         }   
 
-        [AntiXSRFFilter]
-        public ActionResult GetData(SuperWinLossDetailByPTRequest request)
+        [ValidateAntiForgeryToken]
+        public IActionResult GetData(SuperWinLossDetailByPTRequest request)
         {
             var param = new SuperWinLossDetailByPTParam(
                 request.GroupId,
@@ -64,10 +64,10 @@
             };
 
             var viewModel = services.GetSuperWinLossMCDetailByPT(param);
-            return Json(viewModel);
+            return Ok(viewModel);
         }
 
-        public void ExportWinLossDetailToExcel(ExportSuperWinLossDetailByPTRequest request)
+        public IActionResult ExportWinLossDetailToExcel(ExportSuperWinLossDetailByPTRequest request)
         {
             var winlossDetail = services.GetSuperWinLossMCDetailByPT(new SuperWinLossDetailByPTParam(
                 request.GroupId,
@@ -99,9 +99,11 @@
 
             if (memoryStream != null)
             {
-                ExportToExcel(memoryStream, request.FileName);
-                memoryStream.Dispose();
+                memoryStream.Position = 0;
+                return File(memoryStream, "application/vnd.ms-excel", request.FileName);
             }
+            
+            return BadRequest("Failed to generate Excel file");
         }
     }
 }

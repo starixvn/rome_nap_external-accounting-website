@@ -7,13 +7,13 @@
     using Fanex.ExternalAccount.Service.Customer;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     public class SuperInfoController : BaseController
     {
         private readonly IEditSuperListService superListSevice;
 
-        public SuperInfoController(): this(null)
+        public SuperInfoController(): this(null!)
         {
 
         }
@@ -24,7 +24,7 @@
         }
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditSuperInfo")]
-        public ActionResult Index()
+        public IActionResult Index()
         {
 
             ViewBag.SCode = Encryptor.RandomCaptcha;
@@ -34,7 +34,7 @@
         
         [HttpPost]
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditSuperInfo")]
-        public ActionResult CheckMultipleSupers(string destUsers, string groupName)
+        public IActionResult CheckMultipleSupers([FromBody] string destUsers, [FromBody] string groupName)
         {
             var result = superListSevice.CheckMultipleSupers(destUsers, groupName, CurrentSession.UserId);
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, SuperIds = result.ResultData },
@@ -43,7 +43,7 @@
 
         [HttpPost]
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditSuperInfo")]
-        public ActionResult UpdateMultipleSupers(UpdateMultipleSuperRequest request)
+        public IActionResult UpdateMultipleSupers([FromBody] UpdateMultipleSuperRequest request)
         {
             request.Password = Encryptor.Decrypt(request.Password, Encryptor.RandomCaptcha);
             var result = superListSevice.UpdateMultipleSuperRequest(request, CurrentSession.UserId, CurrentContext.Ip4Address);

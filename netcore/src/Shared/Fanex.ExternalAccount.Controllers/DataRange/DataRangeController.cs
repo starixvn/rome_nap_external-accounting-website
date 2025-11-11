@@ -5,7 +5,7 @@
     using DataAccess.Criteria.DataRange;
     using DTO.DataRange;
     using Service.DataRange;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using ViewModels;
 
     public class DataRangeController : BaseController
@@ -22,7 +22,7 @@
             this.service = service ?? new DataRangeService();
         }
 
-        public ActionResult Index(string custIds)
+        public IActionResult Index(string custIds)
         {
             var dataRange = string.IsNullOrWhiteSpace(custIds) || custIds.IndexOf(",") != -1
                 ? new CustomerDataRange { Type = CustomerDataRangeType.None }
@@ -37,13 +37,11 @@
         }
 
         [HttpPost]
-        public JsonResult Update(UpdateDataRangeCriteria criteria)
+        public IActionResult Update(UpdateDataRangeCriteria criteria)
         {
             criteria.UserId = CurrentSession.UserId;
-
             var result = service.Update(criteria);
-
-            return Json(result);
+            return Ok(result);
         }
     }
 }

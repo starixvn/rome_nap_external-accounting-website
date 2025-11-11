@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using System.Net;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Authorization;
     using Fanex.ExternalAccount.Core.Base;
@@ -30,13 +30,13 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.ProtectCustomer, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult OpenMultiple(string groupName, string custIds, byte roleId)
+        public IActionResult OpenMultiple([FromQuery] string groupName, [FromQuery] string custIds, [FromQuery] byte roleId)
             => PartialViewBase(customerService.GetMultipleProtectedStatus(groupName, custIds, roleId, CurrentSession.UserId));
 
         [HttpPost]
         [AntiXSRFFilter]
         [ExternalAccountAuthenticate(Function = eFunctions.ProtectCustomer, Policy = AuthenticationType.Host, IsAjaxRequest = true)]
-        public ActionResult EditMultiple(string groupName, CustomerProtectedStatus[] protectedStatus)
+        public IActionResult EditMultiple([FromQuery] string groupName, [FromBody] CustomerProtectedStatus[] protectedStatus)
         {
             if (string.IsNullOrWhiteSpace(groupName))
             {
@@ -55,7 +55,7 @@
                 CurrentSession.UserId,
                 CurrentContext.Ip4Address);
 
-            return JsonBase2(results, JsonRequestBehavior.DenyGet);
+            return JsonBase2(results);
         }
     }
 }

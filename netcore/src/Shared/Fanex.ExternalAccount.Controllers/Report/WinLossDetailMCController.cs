@@ -1,7 +1,8 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
+    using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
@@ -30,25 +31,25 @@
             this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
-        public WinLossDetailMCController() : this(null, null, null, null)
+        public WinLossDetailMCController() : this(null!, null!, null!, null!)
         {
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
 
             return View();
         }
 
-        [AntiXSRFFilter]
-        public ActionResult GetData(WinLossDetailRequest request)
+        [ValidateAntiForgeryToken]
+        public IActionResult GetData(WinLossDetailRequest request)
         {
             var viewModel = GetDataFromDB(request);
-            return Json(viewModel);
+            return Ok(viewModel);
         }
 
-        public void ExportWinLossDetailToExcel(ExportWinLossMCDetailRequest request)
+        public IActionResult ExportWinLossDetailToExcel(ExportWinLossMCDetailRequest request)
         {
             IWinLossDetailReportBuilder builder;
             request.Viewlevel++;
@@ -106,7 +107,7 @@
                         break;
                     }
                 default:
-                    return;
+                    throw new ArgumentException($"Invalid RoleId = {request.Viewlevel}");
             }
 
             var formatedProducts = reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
@@ -114,9 +115,11 @@
 
             if (memoryStream != null)
             {
-                ExportToExcel(memoryStream, request.FileName);
-                memoryStream.Dispose();
+                memoryStream.Position = 0;
+                return File(memoryStream, "application/vnd.ms-excel", request.FileName);
             }
+            
+            return BadRequest("Failed to generate Excel file");
         }
 
         private dynamic GetDataFromDB(WinLossDetailRequest request)

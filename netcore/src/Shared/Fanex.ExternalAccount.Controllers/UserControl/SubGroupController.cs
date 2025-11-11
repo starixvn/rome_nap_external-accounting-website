@@ -2,7 +2,8 @@
 {
     using System.Linq;
     using System.Net;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Controllers.Requests.SubGroup;
     using Fanex.ExternalAccount.Core.Base;
@@ -18,7 +19,7 @@
         private readonly ISubGroupService _subGroupService;
         private readonly IGroupService _groupService;
 
-        public SubGroupController() : this(null, null)
+        public SubGroupController() : this(null!, null!)
         {
         }
 
@@ -30,13 +31,13 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
            Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult SubGroupList() {
+        public IActionResult SubGroupList() {
             return PartialViewBase();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult SubGroupPost(int groupId)
+        public IActionResult SubGroupPost(int groupId)
         {
             if (!_groupService.CheckIsMainGroup(groupId))
             {
@@ -55,17 +56,16 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult SearchSubGroupCustomer(string groupName, string subGroupName, string username, int pageSize, int pageIndex)
+        public IActionResult SearchSubGroupCustomer(string groupName, string subGroupName, string username, int pageSize, int pageIndex)
         {
             var model = _subGroupService.GetListCustomerSubGroup(groupName, subGroupName, username, pageSize, pageIndex);
 
             return JsonBase(model);
         }
 
-        [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
             Policy = AuthenticateAction.AuthenticationType.Host, IsAjaxRequest = true)]
-        public ActionResult SubGroupUpdate(SubGroupUpdateRequest updateRequest)
+        public IActionResult SubGroupUpdate(SubGroupUpdateRequest updateRequest)
         {
             var result = _subGroupService.UpdateCustomerSubGroup(updateRequest.SubGroupName, updateRequest.CustIds, updateRequest.IsAssigned, CurrentSession.UserId, CurrentContext.Ip4Address);
 
@@ -74,8 +74,8 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
             Policy = AuthenticateAction.AuthenticationType.Host, IsAjaxRequest = false)]
-        [AntiXSRFFilter]
-        public ActionResult ChangeSubGroupAdminPassword(string groupName)
+        [ValidateAntiForgeryToken]
+        public IActionResult ChangeSubGroupAdminPassword(string groupName)
         {
             var admins = _subGroupService.GetListAdminSubGroup(groupName).Select(admin => new SelectListItem { Text = admin.Username, Value = admin.CustId.ToString() }).ToList();
             ViewBag.Admins = admins;
@@ -85,10 +85,10 @@
             return PartialViewBase();
         }
 
+        [ValidateAntiForgeryToken]
         [ExternalAccountAuthenticate(Function = eFunctions.SubGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
-        public ActionResult UpdateAdminPassword(int adminId, string password)
+        public IActionResult UpdateAdminPassword(int adminId, string password)
         {
             var rawPassword = Encryptor.Decrypt(password, Encryptor.RandomCaptcha);
             var result = _subGroupService.UpdateSubGroupAdminPassword(adminId, Encryption.CfsEnCode(rawPassword), CurrentSession.UserId, CurrentContext.Ip4Address);

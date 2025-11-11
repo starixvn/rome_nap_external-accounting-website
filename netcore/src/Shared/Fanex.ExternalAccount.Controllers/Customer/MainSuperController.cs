@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
-    using System.Web;
-    using System.Web.Mvc;
+    using System.Net;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -16,32 +16,33 @@
         private readonly SuperService _superService = new SuperService();
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]        
-        public ActionResult EditInfo(int custId)
+        public IActionResult EditInfo(int custId)
         {
             var model = _superService.GetSuperInfo(custId);
 
-            model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
-            model.LastName = HttpUtility.HtmlDecode(model.LastName);
-            model.Phone = HttpUtility.HtmlDecode(model.Phone);
-            model.MobilePhone = HttpUtility.HtmlDecode(model.MobilePhone);
-            model.Email = HttpUtility.HtmlDecode(model.Email);
-            model.Fax = HttpUtility.HtmlDecode(model.Fax);
-            model.Remark = HttpUtility.HtmlDecode(model.Remark);
+            model.FirstName = WebUtility.HtmlDecode(model.FirstName);
+            model.LastName = WebUtility.HtmlDecode(model.LastName);
+            model.Phone = WebUtility.HtmlDecode(model.Phone);
+            model.MobilePhone = WebUtility.HtmlDecode(model.MobilePhone);
+            model.Email = WebUtility.HtmlDecode(model.Email);
+            model.Fax = WebUtility.HtmlDecode(model.Fax);
+            model.Remark = WebUtility.HtmlDecode(model.Remark);
 
             return PartialViewBase(model);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
-        public ActionResult GetInfo(int superId)
+        public IActionResult GetInfo(int superId)
         {
             var model = _superService.GetSuperInfo(superId);
 
             return JsonBase(model);
         }
 
+        [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]        
-        public ActionResult EditInfoPost(CustomerInfo customer)
+        public IActionResult EditInfoPost([FromBody] CustomerInfo customer)
         {
             var criteria = new UpdateSuperInfoCommand(
                 customer.CustId,

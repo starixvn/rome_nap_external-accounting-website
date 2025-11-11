@@ -3,9 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Mvc;
-    using System.Web.Security;
-    using System.Web.SessionState;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Core.Context;
     using DTO;
     using Fanex.ExternalAccount.Core.Base;
@@ -18,7 +19,6 @@
     using Service.Interface.Login;
     using Utilities;
 
-    [SessionState(SessionStateBehavior.Default)]
     public class SharedController : BaseController
     {
         private static readonly string[] ignoreRecheckinCustomers = Config.IgnoreRecheckinCustomers.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -41,30 +41,30 @@
             groupService = new GroupService();
         }
 
-        public ActionResult _Layout()
+        public IActionResult _Layout()
         {
             return this.View();
         }
 
         [AllowAnonymous]
-        public ActionResult Error()
+        public IActionResult Error()
         {
             return this.PartialView();
         }
 
         [AllowAnonymous]
-        public ActionResult NoPermission()
+        public IActionResult NoPermission()
         {
             return this.PartialView();
         }
 
         [AllowAnonymous]
-        public ActionResult Unauthorized()
+        public IActionResult UnauthorizedView()
         {
-            return this.PartialView();
+            return this.PartialView("Unauthorized");
         }
 
-        public ActionResult _Menu()
+        public IActionResult _Menu()
         {
             var groupId = CurrentSession.GroupId;
             var isMainGroupHasSubGroups = groupId > 0
@@ -123,15 +123,15 @@
             }
 
             int onuserId = _currentSession.OnUserId;
-            if (onuserId > 0 && User.Identity.IsAuthenticated)
+            if (onuserId > 0 && User.Identity?.IsAuthenticated == true)
             {
                 try
                 {
                     var isKickOut = _loginService.IsKickedOut(onuserId);
                     if (isKickOut)
                     {
-                        Session.Abandon();
-                        FormsAuthentication.SignOut();
+                        HttpContext.Session.Clear();
+                        HttpContext.SignOutAsync().Wait();
                     }
                     else
                     {
@@ -149,11 +149,11 @@
         }
 
         [AllowAnonymous]
-        public ActionResult Offline()
+        public IActionResult Offline()
         {
-            if (Request.QueryString[Config.InternalAgentUMToken] != null)
+            if (Request.Query.ContainsKey(Config.InternalAgentUMToken))
             {
-                Session[Config.InternalAgentUMToken] = Request.QueryString[Config.InternalAgentUMToken];
+                HttpContext.Session.SetString(Config.InternalAgentUMToken, Request.Query[Config.InternalAgentUMToken].ToString());
             }
 
             if (_maintenanceService.IsUnderMaintenance())

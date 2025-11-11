@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Common;
     using Core.Base;
     using Core.Helpers;
@@ -13,27 +13,32 @@
     {
         private readonly IEnumerable<int> CalculatingNWSpeedGroupIds;
         private readonly IEnumerable<string> CalculatingNWSpeedAdminNames;
+        private readonly IConfiguration _configuration;
 
-        public NetworkSpeedController()
+        public NetworkSpeedController(IConfiguration configuration)
         {
-            CalculatingNWSpeedGroupIds = (string.IsNullOrEmpty(ConfigurationManager.AppSettings["TrackConnectionSpeedGroupIds"])
+            _configuration = configuration;
+            
+            var trackConnectionSpeedGroupIds = _configuration["TrackConnectionSpeedGroupIds"];
+            CalculatingNWSpeedGroupIds = (string.IsNullOrEmpty(trackConnectionSpeedGroupIds)
                 ? Enumerable.Empty<int>()
-                : ConfigurationManager.AppSettings["TrackConnectionSpeedGroupIds"]
+                : trackConnectionSpeedGroupIds
                     .Split(',')
                     .Select(groupIdString => ConvertStringToInt(groupIdString)))
                 .Where(groupId => groupId != 0);
 
-            CalculatingNWSpeedAdminNames = string.IsNullOrEmpty(ConfigurationManager.AppSettings["CalculatingNWSpeedAdminNames"])
+            var calculatingNWSpeedAdminNames = _configuration["CalculatingNWSpeedAdminNames"];
+            CalculatingNWSpeedAdminNames = string.IsNullOrEmpty(calculatingNWSpeedAdminNames)
                 ? Enumerable.Empty<string>()
-                : ConfigurationManager.AppSettings["CalculatingNWSpeedAdminNames"]
+                : calculatingNWSpeedAdminNames
                     .Split(',')
                     .Select(adminNames => adminNames.Trim());
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             if (CurrentSession.IsLogin
-                && User.Identity.IsAuthenticated)
+                && User.Identity?.IsAuthenticated == true)
             {
                 if (!IsNeedToCalculateUserConnectionSpeed())
                 {
@@ -46,10 +51,10 @@
             return RedirectToAction("Login", "Account");
         }
 
-        public ActionResult SaveResult(float speedKbps)
+        public IActionResult SaveResult(float speedKbps)
         {
             if (CurrentSession.IsLogin
-                && User.Identity.IsAuthenticated
+                && User.Identity?.IsAuthenticated == true
                 && speedKbps > 0
                 && IsNeedToCalculateUserConnectionSpeed())
             {

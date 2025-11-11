@@ -66,6 +66,7 @@
     <ProjectReference Include="..\Fanex.ExternalAccount.DTO\Fanex.ExternalAccount.DTO.csproj" />
     <ProjectReference Include="..\Fanex.ExternalAccount.Excel\Fanex.ExternalAccount.Excel.csproj" />
     <ProjectReference Include="..\Fanex.ExternalAccount.Requests\Fanex.ExternalAccount.Requests.csproj" />
+    <ProjectReference Include="..\Fanex.ExternalAccount.Resources\Fanex.ExternalAccount.Resources.csproj" />
     <ProjectReference Include="..\Fanex.ExternalAccount.Service\Fanex.ExternalAccount.Service.csproj" />
     <ProjectReference Include="..\Fanex.ExternalAccount.Utility\Fanex.ExternalAccount.Utilities.csproj" />
     <ProjectReference Include="..\Fanex.ExternalAccount.ViewModel\Fanex.ExternalAccount.ViewModel.csproj" />

@@ -1,15 +1,15 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
     using System;
-    using System.Configuration;
     using System.Diagnostics;
-    using System.Web.Mvc;
-    using System.Web.Security;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.Extensions.Configuration;
     using Authentication;
     using Core.Context;
     using Fanex.ExternalAccount.ViewModel.Account;
+    using Fanex.ExternalAccount.Resources;
     using Logging.Extensions.Web;
-    using Resources;
     using Service.OTP;
     using ViewModels;
     using CurrentSession = Core.Context.CurrentSession;
@@ -18,17 +18,19 @@
     {
         private readonly ICustomerOtpService customerOtpService;
         private readonly CurrentSession currentSession;
+        private readonly IConfiguration _configuration;
 
         private const int LimitedFailure = 5;
         private const int CaptchaLength = 4;
 
-        public OTPController()
+        public OTPController(IConfiguration configuration)
         {
+            _configuration = configuration;
             currentSession = new CurrentSession();
             customerOtpService = new CustomerOtpService();
         }
 
-        public ActionResult Index(LoginModel model)
+        public IActionResult Index(LoginModel model)
         {
             SetUserOTPSession();
 
@@ -52,10 +54,10 @@
         }
 
         [HttpPost]
-        public ActionResult VerifyOTP(VerifyOtpCommand command)
+        [ValidateAntiForgeryToken]
+        public IActionResult VerifyOTP([FromBody] VerifyOtpCommand command)
         {
-            if (!AntiXSRFUtil.ValidateAntiXSRF(Request, command.__RequestVerificationToken)
-                && command.InValid)
+            if (command.InValid)
             {
                 return LoginFail();
             }
@@ -89,7 +91,7 @@
 
         private RedirectResult RedirectToOTPPage() => Redirect("~/OTP/Index");
 
-        private RedirectResult LoginSuccessful(LoginModel model = null)
+        private RedirectResult LoginSuccessful(LoginModel? model = null)
         {
             if (!string.IsNullOrWhiteSpace(model?.FromLine))
             {
@@ -109,7 +111,7 @@
             currentSession.UserName = string.Empty;
             currentSession.UserId = 0;
             currentSession.CustId = 0;
-            FormsAuthentication.SignOut();
+            HttpContext.SignOutAsync().Wait();
 
             return Redirect("~/Account/Login");
         }
@@ -132,9 +134,9 @@
             currentSession.OTPModifiedDate = customerOtp.ModifiedDateToString;
         }
 
-        private static void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)
+        private void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)
         {
-            if (ConfigurationManager.AppSettings["EnableWriteLogSwitchLine"] == "1")
+            if (_configuration["EnableWriteLogSwitchLine"] == "1")
             {
                 ExceptionHandler.Handle(new Exception(message), type);
             }

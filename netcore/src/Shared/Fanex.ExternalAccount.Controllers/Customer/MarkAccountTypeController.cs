@@ -9,7 +9,7 @@
     using Fanex.ExternalAccount.Service.Customer.MarkAccountType;
     using Fanex.ExternalAccount.Service.Customer.MarkAccountType.Params;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
 
     [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Read)]
@@ -18,7 +18,7 @@
         private readonly IMarkAccountTypeService markAccountTypeService;
         private const int DefaultPageSize = 50;
 
-        public MarkAccountTypeController() : this(null, null)
+        public MarkAccountTypeController() : this(null!, null!)
         {
         }
 
@@ -27,15 +27,15 @@
             this.markAccountTypeService = markAccountTypeService ?? new MarkAccountTypeService();
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
             => PartialViewBase();
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public JsonResult Seach(SearchMarkAccountRequest request)
+        public IActionResult Seach([FromBody] SearchMarkAccountRequest request)
         {
-            return Json(markAccountTypeService.Search(new SearchMarkAccountTypeParams {
+            var result = markAccountTypeService.Search(new SearchMarkAccountTypeParams {
                 GroupId = request.GroupId,
                 GroupName = request.GroupName,
                 Level = request.Level,
@@ -44,14 +44,16 @@
                 UserName = request.UserName,
                 PageIndex = request.PageIndex ?? 1,
                 PageSize = request.PageSize ?? DefaultPageSize
-            }));
+            });
+            
+            return Ok(result);
         }
 
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult MarkAccount()
+        public IActionResult MarkAccount()
         {
             return PartialViewBase();
         }
@@ -59,9 +61,9 @@
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public JsonResult Add(NewMarkAccountRequest request)
+        public IActionResult Add([FromBody] NewMarkAccountRequest request)
         {
-            return Json(markAccountTypeService.Add(new NewMarkAccountTypeParams
+            var result = markAccountTypeService.Add(new NewMarkAccountTypeParams
             {
                 GroupName = request.GroupName,
                 TypeId = request.TypeId,
@@ -69,28 +71,32 @@
                 Remark = request.Remark,
                 UserId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address
-            }));
+            });
+            
+            return Ok(result);
         }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public JsonResult Update(UpdateMarkAccountRequest request)
+        public IActionResult Update([FromBody] UpdateMarkAccountRequest request)
         {
-            return Json(markAccountTypeService.SingleUpdate(new UpdateMarkAccountTypeParams
+            var result = markAccountTypeService.SingleUpdate(new UpdateMarkAccountTypeParams
             {
                 CustId = request.CustId,
                 TypeId = request.TypeId,
                 Remark = request.Remark,
                 UserId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address
-            }));
+            });
+            
+            return Ok(result);
         }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public JsonResult UpdateMultiple(UpdateMultipelMarkAccountRequest request)
+        public IActionResult UpdateMultiple([FromBody] UpdateMultipelMarkAccountRequest request)
         {
             var updateAccountTypes = request.UpdateAccounts.Select(account => new UpdateMarkAccountTypeParams {
                 CustId = account.CustId,
@@ -101,39 +107,45 @@
                 IP = CurrentContext.Ip4Address
             });
 
-            return Json(markAccountTypeService.MultipleUpdate(updateAccountTypes));
+            var result = markAccountTypeService.MultipleUpdate(updateAccountTypes);
+            
+            return Ok(result);
         }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public JsonResult Unmark(UnmarkAccountRequest request)
+        public IActionResult Unmark([FromBody] UnmarkAccountRequest request)
         {
-            return Json(markAccountTypeService.Unmark(new UnmarkAccountTypeParams
+            var result = markAccountTypeService.Unmark(new UnmarkAccountTypeParams
             {
                 CustId = request.CustId,
                 UserId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address
-            }));
+            });
+            
+            return Ok(result);
         }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UnmarkAll(UnmarkAccountRequest request)
+        public IActionResult UnmarkAll([FromBody] UnmarkAccountRequest request)
         {
-            return Json(markAccountTypeService.UnmarkAll(new UnmarkAccountTypeParams
+            var result = markAccountTypeService.UnmarkAll(new UnmarkAccountTypeParams
             {
                 Accounts = request.Accounts,
                 UserId = CurrentSession.UserId,
                 IP = CurrentContext.Ip4Address
-            }));
+            });
+            
+            return Ok(result);
         }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult MultipleEditAccountType(UnmarkAccountRequest request)
+        public IActionResult MultipleEditAccountType([FromBody] UnmarkAccountRequest request)
         {
             return PartialViewBase();
         }

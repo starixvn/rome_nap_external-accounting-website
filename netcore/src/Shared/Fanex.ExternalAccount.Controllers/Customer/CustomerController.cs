@@ -2,12 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
-    using System.Runtime.Caching;
     using System.Threading.Tasks;
-    using System.Web;
-    using System.Web.Mvc;
+    using System.Net;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Caching.Memory;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -37,7 +38,8 @@
     {
         private const string AssetsVersionCacheKey = "Customer:AssetsVersion";
         private const string HashKeySessionKey = "Fanex.ExternalAccount.Controllers.Customer.CustomerController.HashKey";
-        private readonly string cdnUri = ConfigurationManager.AppSettings["Fanex.Customer:CdnUri"];
+        private readonly IConfiguration _configuration;
+        private readonly IMemoryCache _memoryCache;
 
         private const byte SystemCode_ExternalNapBetSetting = 5;
         private const byte SystemCode_ExternalNapBetSettingSpecialSite = 9;
@@ -55,10 +57,18 @@
         private readonly AuthorizationService authorizationService = new AuthorizationServiceImpl();
         private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
 
+        public CustomerController(IConfiguration configuration, IMemoryCache memoryCache)
+        {
+            _configuration = configuration;
+            _memoryCache = memoryCache;
+        }
+
+        private string GetCdnUri() => _configuration?["Fanex.Customer:CdnUri"] ?? string.Empty;
+
         [ExternalCustomerAuthFilter(Function = eFunctions.CreateNew)]
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         [ExternalCustomerAuthFilter(Function = eFunctions.Transfer)]
-        public async Task<ActionResult> CreateCustomer(CreateCustomerRequest request)
+        public async Task<IActionResult> CreateCustomer(CreateCustomerRequest request)
         {
             var limitedRulesResult = await customerServiceClient.CheckAllLimitedRules(request.UplineId, request.UplineRoleId, request.UplineUsername);
             if (limitedRulesResult.IsFailed)
@@ -73,14 +83,14 @@
 
             var viewModel = new CreateCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), CustomerClientManager.ClientConfigs.SystemId),
-                cdnUri,
+                GetCdnUri(),
                 GetAssetsVersion(),
                 request.ToJson(),
                 GetHashKey(),
                 BuildPageTitle(request.UplineRoleId)
               );
 
-            return PartialViewBase(viewModel, HttpContext.IsDebuggingEnabled ? "CreateCustomer-Debug" : "CreateCustomer");
+            return PartialViewBase(viewModel);
         }
 
         private static string BuildPageTitle(byte uplineRoleId)
@@ -102,7 +112,7 @@
         }
 
         [ExternalCustomerAuthFilter]
-        public async Task<ActionResult> EditCustomer(EditCustomerRequest request)
+        public async Task<IActionResult> EditCustomer(EditCustomerRequest request)
         {
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
@@ -111,32 +121,32 @@
             request.ServiceType = await customerServiceClient.GetCashServiceStatus(request.CustId);
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), systemCode),
-                cdnUri,
+                GetCdnUri(),
                 GetAssetsVersion(),
                 request.ToJson());
 
-            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
+            return PartialViewBase(editCustomerViewModel);
         }
 
         [ExternalCustomerAuthFilter(IsBettingLimit = true)]
-        public ActionResult EditSuperBetSetting(EditCustomerRequest request)
+        public IActionResult EditSuperBetSetting(EditCustomerRequest request)
         {
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, true);
 
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), systemCode),
-                cdnUri,
+                GetCdnUri(),
                 GetAssetsVersion(),
                 request.ToJson());
 
-            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditCustomer-Debug" : "EditCustomer");
+            return PartialViewBase(editCustomerViewModel);
         }
 
         [HttpPost]
         [AntiXSRFFilter]
         [ExternalCustomerAuthFilter(IsBettingLimit = true, IsHost = true)]
-        public async Task<ActionResult> EditSuperBetSetting(UpdateCustomerRequest request)
+        public async Task<IActionResult> EditSuperBetSetting(UpdateCustomerRequest request)
         {
             var response = await customerServiceClient.UpdateCustomer(
                 new CustomerClient.Params.UpdateCustomerParam(
@@ -159,34 +169,34 @@
         }
 
         [ExternalCustomerAuthFilter(IsBettingLimit = true)]
-        public ActionResult EditMultipleSuperBetSetting(EditMultipleSuperBetSettingRequest request)
+        public IActionResult EditMultipleSuperBetSetting(EditMultipleSuperBetSettingRequest request)
         {
             if (Role.IsNotSuper(request.RoleId)
                 || !authorizationService.IsBelong(CurrentSession.CurrencyGroup, request.CustIds.Split(',').Select(Int32.Parse).ToList()))
             {
-                return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return JsonBase(new DTO.Result(1, "Access denied"));
             }
 
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, true);
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), systemCode),
-                cdnUri,
+                GetCdnUri(),
                 GetAssetsVersion(),
                 request.ToJson());
 
-            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditMultiple-Debug" : "EditMultiple");
+            return PartialViewBase(editCustomerViewModel);
         }
 
         [HttpPost]
         [AntiXSRFFilter]
         [ExternalCustomerAuthFilter(IsHost = true, IsBettingLimit = true)]
-        public async Task<ActionResult> EditMultipleSuperBetSetting(UpdateMultipleCustomerCommand request)
+        public async Task<IActionResult> EditMultipleSuperBetSetting(UpdateMultipleCustomerCommand request)
         {
             if (Role.IsNotSuper(request.RoleId)
                 || !authorizationService.IsBelong(CurrentSession.CurrencyGroup, request.CustomerIds.Split(',').Select(Int32.Parse).ToList()))
             {
-                return PartialView("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                return JsonBase(new DTO.Result(1, "Access denied"));
             }
 
             var response = await customerServiceClient.UpdateMultipleCustomers(
@@ -225,10 +235,11 @@
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
         [ExternalCustomerAuthFilter(Function = eFunctions.Transfer, IsHost = true)]
         [AntiXSRFFilter]
-        public async Task<ActionResult> Create(CreateCustomerCommand request)
+        public async Task<IActionResult> Create(CreateCustomerCommand request)
         {
             var generalInfo = request.GeneralInfo;
-            var rawPassword = Encryptor.Decrypt(generalInfo.Password, HttpContext.Session[HashKeySessionKey].ToString());
+            var sessionValue = HttpContext.Session.GetString(HashKeySessionKey);
+            var rawPassword = Encryptor.Decrypt(generalInfo.Password, sessionValue);
             generalInfo.Password = rawPassword;
 
             var response = await customerServiceClient.CreateCustomer(new CustomerClient.Params.CreateCustomerParam(
@@ -249,7 +260,7 @@
         [HttpPost]
         [ExternalCustomerAuthFilter(IsHost = true)]
         [AntiXSRFFilter]
-        public async Task<ActionResult> Update(UpdateCustomerRequest request)
+        public async Task<IActionResult> Update(UpdateCustomerRequest request)
         {
             var response = await customerServiceClient.UpdateCustomer(
                 new CustomerClient.Params.UpdateCustomerParam(
@@ -274,7 +285,7 @@
         [HttpPost]
         [AntiXSRFFilter]
         [ExternalCustomerAuthFilter(IsHost = true)]
-        public async Task<ActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerCommand request)
+        public async Task<IActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerCommand request)
         {
             var response = await customerServiceClient.UpdateMultipleCustomers(
                 new CustomerClient.Params.UpdateMultipleCustomerParam(
@@ -298,7 +309,7 @@
         }
 
         [ExternalCustomerAuthFilter]
-        public async Task<ActionResult> EditMultiple(EditMultipleCustomerRequest request)
+        public async Task<IActionResult> EditMultiple(EditMultipleCustomerRequest request)
         {
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
@@ -311,15 +322,15 @@
             request.ServiceType = await customerServiceClient.GetCashServiceStatus(firstCustId);
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), systemCode),
-                cdnUri,
+                GetCdnUri(),
                 GetAssetsVersion(),
                 request.ToJson());
 
-            return PartialViewBase(editCustomerViewModel, HttpContext.IsDebuggingEnabled ? "EditMultiple-Debug" : "EditMultiple");
+            return PartialViewBase(editCustomerViewModel);
         }
 
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
-        public ActionResult SportBookInformation(SportBookInformationRequest request)
+        public IActionResult SportBookInformation(SportBookInformationRequest request)
         {
             var currentSession = new CurrentSession();
             var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
@@ -327,14 +338,14 @@
             request.ApplicationPath = appPath;
             var viewModel = new SportBookInformationViewModel(
                 new AppConfiguration(appPath, systemCode),
-                cdnUri,
+                GetCdnUri(),
                 GetAssetsVersion(),
                 request.ToJson());
 
-            return PartialViewBase(viewModel, HttpContext.IsDebuggingEnabled ? "SportBookInformation-Debug" : "SportBookInformation");
+            return PartialViewBase(viewModel);
         }
 
-        public async Task<ActionResult> GetCustomerSetting(GetCustomerSettingRequest request)
+        public async Task<IActionResult> GetCustomerSetting(GetCustomerSettingRequest request)
         {
             if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting, eFunctions.LiveAndRNGCasino, eFunctions.LiveAndRNGCasinoBetting }, CurrentSession.UserId))
             {
@@ -356,7 +367,7 @@
                 request.AgentId));
         }
 
-        public async Task<ActionResult> GetCashCustomerSetting(GetCustomerSettingRequest request)
+        public async Task<IActionResult> GetCashCustomerSetting(GetCustomerSettingRequest request)
         {
             if (!authorizationService.HasReadPermissionOnFunctions(new List<string> { eFunctions.Sportsbook, eFunctions.SportsbookBetting, eFunctions.LiveAndRNGCasino, eFunctions.LiveAndRNGCasinoBetting }, CurrentSession.UserId))
             {
@@ -379,18 +390,18 @@
                 request.SiteLabel));
         }
 
-        public async Task<ActionResult> GetCashServiceStatus(GetCustomerSettingRequest request)
-            => Json(await customerServiceClient.GetCashServiceStatus(request.CustId));
+        public async Task<IActionResult> GetCashServiceStatus(GetCustomerSettingRequest request)
+            => JsonBase(await customerServiceClient.GetCashServiceStatus(request.CustId));
 
-        public async Task<ActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")
+        public async Task<IActionResult> GetCurrentWinLossAmount(int custId, int sportType, int betType, string language = "en-US")
             => Content(await customerServiceClient.GetCustomerCurrentWinLossAmounts(custId, sportType, betType, language));
 
-        public async Task<ActionResult> GetCurrentWinAmount(int custId, int sportType, int betType, string language = "en-US")
+        public async Task<IActionResult> GetCurrentWinAmount(int custId, int sportType, int betType, string language = "en-US")
             => Content(await customerServiceClient.GetCurrentWinAmounts(custId, sportType, betType, language));
 
         [ExternalCustomerAuthFilter(Function = eFunctions.CustomerList)]
-        public async Task<ActionResult> CheckExistedCustomer(string username)
-            => Json(await customerServiceClient.CheckExistedCustomer(username), JsonRequestBehavior.AllowGet);
+        public async Task<IActionResult> CheckExistedCustomer(string username)
+            => JsonBase(await customerServiceClient.CheckExistedCustomer(username));
 
         [ExternalCustomerAuthFilter(Function = eFunctions.CreateNew)]
         private Task<string> GetSuggestUsername(string actorName, byte roleId)
@@ -422,48 +433,45 @@
 
         private string GetApplicationPath()
         {
-            var applicationPath = Response.ApplyAppPathModifier(Request.ApplicationPath);
-            if (!applicationPath.EndsWith("/"))
+            var pathBase = HttpContext.Request.PathBase.ToString();
+            if (!pathBase.EndsWith("/"))
             {
-                applicationPath += "/";
+                pathBase += "/";
             }
-
-            return applicationPath;
+            return pathBase;
         }
 
         private string GetHashKey()
         {
             var hashKey = CaptchaUtil.GetCaptchaString(4);
-            HttpContext.Session.Add(HashKeySessionKey, hashKey);
-
+            HttpContext.Session.SetString(HashKeySessionKey, hashKey);
             return hashKey;
         }
 
-        private static string GetAssetsVersion()
+        private string GetAssetsVersion()
         {
-            ObjectCache cache = MemoryCache.Default;
-            var version = cache.Get(AssetsVersionCacheKey) as string;
-            if (string.IsNullOrWhiteSpace(version))
+            if (_memoryCache.TryGetValue(AssetsVersionCacheKey, out string version))
             {
-                version = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
-                cache.Set(AssetsVersionCacheKey, version, DateTime.Now.AddHours(4));
+                return version;
             }
+
+            version = DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString();
+            var cacheOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromHours(4));
+            _memoryCache.Set(AssetsVersionCacheKey, version, cacheOptions);
             return version;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult CustomerList() => PartialViewBase();
+        public IActionResult CustomerList() => PartialViewBase();
 
-        public ActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
+        public IActionResult Settings(int id, int custId, int uplineId, string userName, string groupName)
         {
-            ViewBag.CurrentLevel = id;
-            ViewBag.UserId = custId;
-            ViewBag.UplineId = uplineId;
             var productStatusList = productStatusService.GetProductStatusList(custId, id, Config.SettingStatus);
             var visibledProductGroups = GetVisibleProductGroups(productStatusList).Where(p => p.Id != ProductGroupConstants.Sportsbook);
             var visibledProducts = GetVisibledProducts(productStatusList);
 
-            return PartialViewBase(new CustomerSettingsViewModel(visibledProductGroups, visibledProducts));
+            var viewModel = new CustomerSettingsViewModel(visibledProductGroups, visibledProducts);
+            return PartialViewBase(viewModel);
         }
 
         private static IEnumerable<Product> GetVisibleProductGroups(IList<ProductStatusDto> productStatusList)
@@ -497,14 +505,14 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        public ActionResult ViewIP(string ip)
+        public IActionResult ViewIP(string ip)
         {
             var ipInfo = new IPInfo { Flag = "-.gif", IP = ip };
             if (Utils.IsValidIpAddress(ip))
             {
                 if (!AuthorizationService.CanViewVNIP(ip))
                 {
-                    return PartialViewBase("~/Areas/CustomerSetting/Views/Security/AccessDenied.cshtml");
+                    return ActionDenied();
                 }
 
                 var info = ipInformationService.GetFromIP(ip);
@@ -523,7 +531,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult ConfigDoubleComm(int custid, bool allow)
+        public IActionResult ConfigDoubleComm(int custid, bool allow)
         {
             var result = _superService.ConfigDoubleComm(
                 new UpdateDoubleCommCommand(
@@ -536,51 +544,51 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
-        public ActionResult EditInfo(int custId)
+        public IActionResult EditInfo(int custId)
         {
             var model = _customerService.UserInfo(custId, Config.SettingStatus);
-            model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
-            model.LastName = HttpUtility.HtmlDecode(model.LastName);
-            model.Phone = HttpUtility.HtmlDecode(model.Phone);
-            model.MobilePhone = HttpUtility.HtmlDecode(model.MobilePhone);
-            model.Email = HttpUtility.HtmlDecode(model.Email);
-            model.Fax = HttpUtility.HtmlDecode(model.Fax);
-            model.Remark = HttpUtility.HtmlDecode(model.Remark);
+            model.FirstName = WebUtility.HtmlDecode(model.FirstName);
+            model.LastName = WebUtility.HtmlDecode(model.LastName);
+            model.Phone = WebUtility.HtmlDecode(model.Phone);
+            model.MobilePhone = WebUtility.HtmlDecode(model.MobilePhone);
+            model.Email = WebUtility.HtmlDecode(model.Email);
+            model.Fax = WebUtility.HtmlDecode(model.Fax);
+            model.Remark = WebUtility.HtmlDecode(model.Remark);
 
             return PartialViewBase(model);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult EditInfoPost(DTO.Customer.Customer customer)
+        public IActionResult EditInfoPost(DTO.Customer.Customer customer)
         {
-            customer.FirstName = HttpUtility.HtmlEncode(customer.FirstName);
-            customer.LastName = HttpUtility.HtmlEncode(customer.LastName);
-            customer.Phone = HttpUtility.HtmlEncode(customer.Phone);
-            customer.MobilePhone = HttpUtility.HtmlEncode(customer.MobilePhone);
-            customer.Email = HttpUtility.HtmlEncode(customer.Email);
-            customer.Fax = HttpUtility.HtmlEncode(customer.Fax);
-            customer.Remark = HttpUtility.HtmlEncode(customer.Remark);
+            customer.FirstName = WebUtility.HtmlEncode(customer.FirstName);
+            customer.LastName = WebUtility.HtmlEncode(customer.LastName);
+            customer.Phone = WebUtility.HtmlEncode(customer.Phone);
+            customer.MobilePhone = WebUtility.HtmlEncode(customer.MobilePhone);
+            customer.Email = WebUtility.HtmlEncode(customer.Email);
+            customer.Fax = WebUtility.HtmlEncode(customer.Fax);
+            customer.Remark = WebUtility.HtmlEncode(customer.Remark);
             var result = _customerService.EditUserInfo(customer, CurrentContext.Ip4Address, CurrentSession.CustId, 0, "E");
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
-        public ActionResult GetCustomerInfo(int custId)
+        public IActionResult GetCustomerInfo(int custId)
         {
             var model = _customerService.UserInfo(custId, Config.SettingStatus);
-            model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
-            model.LastName = HttpUtility.HtmlDecode(model.LastName);
-            model.Phone = HttpUtility.HtmlDecode(model.Phone);
-            model.MobilePhone = HttpUtility.HtmlDecode(model.MobilePhone);
-            model.Email = HttpUtility.HtmlDecode(model.Email);
-            model.Fax = HttpUtility.HtmlDecode(model.Fax);
-            model.Remark = HttpUtility.HtmlDecode(model.Remark);
+            model.FirstName = WebUtility.HtmlDecode(model.FirstName);
+            model.LastName = WebUtility.HtmlDecode(model.LastName);
+            model.Phone = WebUtility.HtmlDecode(model.Phone);
+            model.MobilePhone = WebUtility.HtmlDecode(model.MobilePhone);
+            model.Email = WebUtility.HtmlDecode(model.Email);
+            model.Fax = WebUtility.HtmlDecode(model.Fax);
+            model.Remark = WebUtility.HtmlDecode(model.Remark);
             return JsonBase(model);
         }
         
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
-        public ActionResult EditInfoCashMember(int custId)
+        public IActionResult EditInfoCashMember(int custId)
         {
             var model = new EditInfoCashMemberViewModel(
                 GetAssetsVersion(),
@@ -588,10 +596,10 @@
                 "",
                 true,
                 GetApplicationPath(),
-                cdnUri,
+                GetCdnUri(),
                 CustomerClientManager.ClientConfigs.SystemId);
 
-            return PartialViewBase(model, HttpContext.IsDebuggingEnabled ? "EditInfoCashMember-Debug" : "EditInfoCashMember");
+            return PartialViewBase(model);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
@@ -599,21 +607,23 @@
             => await customerServiceClient.GetCustomerBankInfo(custId, roleId);
         
         [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticationType.Read)]
-        public ActionResult ConfigMultipleDoubleComm(int id) => PartialViewBase(id);
+        public IActionResult ConfigMultipleDoubleComm(int id) => PartialViewBase(id);
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult TransferCondition()
+        public IActionResult TransferCondition()
         {
-            var custId = int.Parse(Request["CustId"]);
-            var isSuperInAutomateTransfer = _masterService.GetSuperInAutomateTransfer(custId).Any();
-
-            return PartialViewBase(isSuperInAutomateTransfer);
+            var custIdStr = HttpContext.Request.Query["CustId"].ToString();
+            if (int.TryParse(custIdStr, out int custId))
+            {
+                var isSuperInAutomateTransfer = _masterService.GetSuperInAutomateTransfer(custId).Any();
+                return PartialViewBase(isSuperInAutomateTransfer);
+            }
+            return BadRequest();
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Read)]
-        public ActionResult EditTransferCondition(int custId, int roleId)
+        public IActionResult EditTransferCondition(int custId, int roleId)
         {
-            ViewBag.CustId = custId;
             var model = _masterService.GetTransferOption(custId);
             var isSuperInAutomateTransfer = _masterService.GetSuperInAutomateTransfer(custId).Any();
 
@@ -622,7 +632,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult EditTransferConditionPost(string transferOption, int autoTransferCondition, int custId)
+        public IActionResult EditTransferConditionPost(string transferOption, int autoTransferCondition, int custId)
         {
             var result = _masterService.EditTransferOption(transferOption, autoTransferCondition, custId, CurrentSession.CustId,
                 CurrentContext.Ip4Address, 0, "E");
@@ -631,16 +641,15 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
-        public ActionResult ResetPassword(int custId)
+        public IActionResult ResetPassword(int custId)
         {
             var user = _customerService.UserInfo(custId, Config.SettingStatus);
-            ViewBag.SCode = Encryptor.RandomCaptcha;
             return PartialViewBase(user);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Host)]
         [AntiXSRFFilter]
-        public ActionResult UpdatePassword(int custId, string password, byte roleId)
+        public IActionResult UpdatePassword(int custId, string password, byte roleId)
         {
             var rawPassword = Encryptor.Decrypt(password, Encryptor.RandomCaptcha);
             var result = _customerService.ResetPassword(
@@ -664,17 +673,17 @@
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
         }
 
-        public ActionResult AccessDenied() => ActionDenied(Request);
+        public IActionResult AccessDenied() => ActionDenied();
 
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Read)]
-        public ActionResult UnsuspendSingle(int custId, string userName)
+        public IActionResult UnsuspendSingle(int custId, string userName)
         {
             return PartialViewBase(_customerService.GetSingleUpdateSuspendViewModel(custId, userName));
         }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Read)]
-        public ActionResult MultipleSuspend(string custIdList, int roleId)
+        public IActionResult MultipleSuspend(string custIdList, int roleId)
         {
             return PartialViewBase(new MultipleUpdateViewModel(roleId, _customerService.GetMultipleSuspendCustomerViewModel(new GetMultipleSuspendCustomerInfoCriteria(custIdList, roleId))));
         }
@@ -682,21 +691,21 @@
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public JsonResult GetSuspendDownlinesDetail(int custId, bool isAffected, int downlineRoleId, int pageSize = 50, int pageIndex = 0)
+        public IActionResult GetSuspendDownlinesDetail(int custId, bool isAffected, int downlineRoleId, int pageSize = 50, int pageIndex = 0)
         {
-            return Json(_customerService.GetSuspendDownlinesDetail(new GetSuspendCustomerDetailInfoCriteria(custId, isAffected, downlineRoleId, pageSize, pageIndex)));
+            return JsonBase(_customerService.GetSuspendDownlinesDetail(new GetSuspendCustomerDetailInfoCriteria(custId, isAffected, downlineRoleId, pageSize, pageIndex)));
         }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Host)]
-        public JsonResult UpdateSuspendSingle(int custId, bool suspended)
+        public IActionResult UpdateSuspendSingle(int custId, bool suspended)
         {
-            return Json(_customerService.SuspendCustomer(new UpdateSuspendCustomerCommand(CurrentSession.UserId, custId, suspended, "E", CurrentContext.Ip4Address)));
+            return JsonBase(_customerService.SuspendCustomer(new UpdateSuspendCustomerCommand(CurrentSession.UserId, custId, suspended, "E", CurrentContext.Ip4Address)));
         }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Host)]
-        public JsonResult UpdateSuspendMultiple(
+        public IActionResult UpdateSuspendMultiple(
             List<MultipleUpdateSuspendRequest> request,
             string groupName,
             int roleId)
@@ -704,15 +713,13 @@
             var custIds = request.Select(item => item.CustId);
             if (!AuthorizationService.IsBelong(groupName, custIds))
             {
-                return Json(new DTO.Result(1, "You are not authorized on this function!"));
+                return JsonBase(new DTO.Result(1, "You are not authorized on this function!"));
             }
 
-            return Json(_customerService.SuspendMultipleCustomer(request, CurrentSession.UserId, CurrentContext.Ip4Address, roleId));
+            return JsonBase(_customerService.SuspendMultipleCustomer(request, CurrentSession.UserId, CurrentContext.Ip4Address, roleId));
         }
 
-        private ActionResult LimitationPage(string message)
-            => PartialView("~/Views/Customer/LimitMemberCreation.cshtml", message);
-
-        
+        private IActionResult LimitationPage(string message)
+            => PartialViewBase(message);
     }
 }

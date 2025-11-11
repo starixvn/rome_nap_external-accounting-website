@@ -5,7 +5,7 @@
     using Core.Shared;
     using Service.Impl.Customer;
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
 
     [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
@@ -16,7 +16,7 @@
    
         private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
 
-        public ActionResult ViewPtInfo(int custId)
+        public IActionResult ViewPtInfo(int custId)
         {
             var exclusiveRefSportIds = new List<int>(8);
 

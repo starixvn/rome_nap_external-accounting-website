@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
@@ -16,41 +16,45 @@
         private const string multipleOpenCustomerViewName = "MultipleOpenCustomer";
 
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Read)]
-        public ActionResult SingleOpenCustomerView(GetSingleOpenCustomerInfoQuery query)
+        public IActionResult SingleOpenCustomerView(GetSingleOpenCustomerInfoQuery query)
             => PartialViewBase(_customerService.GetSingleOpenCustomerInfo(query), singleOpenCustomerViewName);
 
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Read)]
-        public ActionResult MultipleOpenCustomerView(GetMultipleOpenCustomerInfoQuery query)
+        public IActionResult MultipleOpenCustomerView(GetMultipleOpenCustomerInfoQuery query)
             => PartialViewBase(_customerService.GetMultipleOpenCustomerInfo(query), multipleOpenCustomerViewName);
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public JsonResult GetSingleOpenDownlinesInfo(GetSingleOpenDownlinesInfoQuery query)
-            => Json(_customerService.GetSingleOpenDownlinesInfo(query));
+        public IActionResult GetSingleOpenDownlinesInfo([FromBody] GetSingleOpenDownlinesInfoQuery query)
+        {
+            var result = _customerService.GetSingleOpenDownlinesInfo(query);
+            return Ok(result);
+        }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Host)]
-        public JsonResult SingleOpenCustomer(UpdateSingleClosedStatusQuery query)
+        public IActionResult SingleOpenCustomer([FromBody] UpdateSingleClosedStatusQuery query)
         {
             query.UserId = Core.Context.CurrentSession.Instance.UserId;
             query.Language = Core.Context.CurrentSession.Instance.LangKey;
             query.Ip = Core.Context.CurrentContext.Instance.Ip4Address;
 
-            return Json(_customerService.UpdateSingleCustomerClosedStatus(query));
+            var result = _customerService.UpdateSingleCustomerClosedStatus(query);
+            return Ok(result);
         }
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Host)]
-        public JsonResult MultipleOpenCustomer(
-            IEnumerable<UpdateMultipleClosedStatusQuery> request,
-            string groupName,
-            int roleId)
+        public IActionResult MultipleOpenCustomer(
+            [FromBody] IEnumerable<UpdateMultipleClosedStatusQuery> request,
+            [FromQuery] string groupName,
+            [FromQuery] int roleId)
         {
             var custIds = request.Select(item => item.CustId);
             if (!AuthorizationService.IsBelong(groupName, custIds))
             {
-                return Json(new Result(1, "You are not authorized on this function!"));
+                return Ok(new Result(1, "You are not authorized on this function!"));
             }
 
             foreach (var item in request)
@@ -59,7 +63,8 @@
                 item.Language = Core.Context.CurrentSession.Instance.LangKey;
             }
 
-            return Json(_customerService.UpdateMultipleCustomerClosedStatus(request, roleId));
+            var result = _customerService.UpdateMultipleCustomerClosedStatus(request, roleId);
+            return Ok(result);
         }
     }
 }

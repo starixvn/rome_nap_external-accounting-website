@@ -17,7 +17,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer.CustomerList;
     using System;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
 
     public class CustomerListController : BaseController
@@ -28,7 +28,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         private const int DefaultPageSize = 50;
 
         public CustomerListController()
-            : this(null, null, null)
+            : this(null!, null!, null!)
         {
         }
 
@@ -43,9 +43,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        public ActionResult Index(int? custId, int? roleId)
+        public IActionResult Index(int? custId, int? roleId)
         {
-            var groupName = HttpContext.Request["groupName"];
+            var groupName = Request.Query["groupName"].ToString();
             groupName = string.IsNullOrEmpty(groupName) ? CurrentSession.CurrencyGroup : groupName;
 
             return PartialViewBase(new CustomerListViewModel
@@ -60,9 +60,9 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public JsonResult Seach(SeachCustomerListRequest request)
+        public IActionResult Seach([FromBody] SeachCustomerListRequest request)
         {
-            return Json(_customerListService.Search(new SearchCustomerListParams
+            var result = _customerListService.Search(new SearchCustomerListParams
             {
                 GroupName = request.GroupName,
                 GroupId = request.GroupId,
@@ -78,19 +78,21 @@ namespace Fanex.ExternalAccount.Controllers.Customer
                 PageSize = request.PageSize ?? DefaultPageSize,
                 IsDirectMember = request.IsDirectMember,
                 ServiceType = request.ServiceType
-            }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP)));
+            }, _authorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ViewVNIP));
+            
+            return Ok(result);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         [AntiXSRFFilter]
-        public JsonResult GetCustomerStatus(int custId)
+        public IActionResult GetCustomerStatus(int custId)
         {
             var products = _customerService.GetCustomerAllStatus(custId, Config.SettingStatus);
-            return Json(products);
+            return Ok(products);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        public void GetExportToExcel(SeachCustomerListRequest request)
+        public IActionResult GetExportToExcel([FromQuery] SeachCustomerListRequest request)
         {
             var status = request.GetStatusString();
             var roleId = request.UplineRoleId.HasValue ? request.UplineRoleId.Value - 1 : 4;
@@ -127,7 +129,8 @@ namespace Fanex.ExternalAccount.Controllers.Customer
             var excelStream = builder.Build();
             var fileName = request.IsDirectMember ? $"{status}{uplineRoleId.DisplayRoleName()}DirectMemberList{DateTime.Now:yyyyMMdd}.xls" : $"{status}{roleId.DisplayRoleName()}List{DateTime.Now:yyyyMMdd}.xls";
 
-            ExportToExcel(excelStream, fileName);
+            excelStream.Position = 0;
+            return File(excelStream, "application/vnd.ms-excel", fileName);
         }
     }
 }
