@@ -1,0 +1,170 @@
+﻿
+@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+.table {
+	border: 1px solid $table-border-color;
+	border-collapse: collapse;
+    background: #fff;
+    .title {
+        background: unset;
+    }
+    > thead > tr > th,  > tbody > tr > td, > tfoot > tr > td  {
+        min-height: 28px;
+        border: 1px solid $table-border-color;
+        padding: 4px;
+    }
+
+    > thead > tr > th {	    
+        background-color: $table-header-bg-color;
+        color: $table-header-color;
+        text-align: center;
+        font-weight: normal;
+    }
+    .col-no {
+        width: 40px;
+        text-align: right;
+    }
+
+    > tbody > tr > td {
+        background-color: $table-bg;
+    }
+
+    > tbody > tr:hover  > td {
+	    background-color: $table-td-hover-color;
+    }
+
+    >tfoot > tr > td[colspan] {
+        padding: 0 4px;
+    }
+
+    .width-60 {
+        width: 60px;
+    }
+
+    &.width-700 {
+        width: 700px;
+    }
+    .col-130 {
+        width: 130px;
+    }
+    .col-100 {
+        width: 100px;
+    }
+    .col-200 {
+        width: 200px;
+    }
+    .col-40 {
+        width: 40px;
+    }
+    .col-level {
+        min-width: 60px;
+        @media all and (min-device-width: 1280px) {
+            min-width: 80px;
+        }
+    }
+    .col-pt {
+        min-width: 40px;
+        @media all and (min-device-width: 768px) {
+            min-width: 50px;
+        }
+        @media all and (min-device-width: 1280px) {
+            min-width: 80px;
+        }
+    }
+    .col-turnover {
+        min-width: 100px;
+    }
+    .col-username {
+        min-width: 75px
+    }
+    .row-special th, .row-special td {
+        background-color: #e1e1e1;
+    }
+}
+
+.pagination {
+    table {
+        float: left;
+    }
+    .pagination-page-list {
+        height: 20px;
+        width: 50px;
+        margin-right: 24px;
+    }
+    .pagination-num {
+        height: 20px;
+        width: 35px;
+        margin: 0 4px;
+        padding: 0 4px;
+    }
+    .pagination-info {
+        float: right;
+        margin-top: 4px;
+    }
+
+    .l-btn-icon[class*="pagination-"] {
+        font-family: 'AlphaAdmin';
+        font-size: 15px;
+        color: #888;
+        &:before {
+            position: relative;
+            left: 2px;
+            color: #fff;
+        }
+    }
+    .l-btn-text:focus, td:focus, .l-btn-text:active, td:active {
+        outline: none;
+    }
+    .l-btn-icon {
+        width: 18px;
+        height: 18px;
+        display: inline-block;
+        border: 1px solid $border-color;
+        margin-top: 4px;
+        background: #c5c5c5;
+    }
+    .pagination-last:before {
+        content:'\e92c';
+    }
+    .pagination-first:before {
+        content: '\e92d';
+    }
+    .pagination-next:before {
+        content: '\e906';
+    }
+    .pagination-prev:before {
+        content: '\e905';
+    }
+} 
+
+#tbl-report {
+    tbody .align-right, tfoot .align-right {
+        text-align: right;
+    }
+    tfoot .row-grand-total td {
+        font-weight: bold;
+        background: #f1f1a6;
+    }
+}
+
+#pagination {
+    font-family: 'Tahoma Custom', Tahoma, Arial, Helvetica, sans-serif;
+
+    #itemperpage {
+        margin-top: 6px;
+    }
+
+    .numberlist {
+        margin-top: 5px;
+    }
+}
+
+@media all and (max-width-device: 768px) {
+    .table-info td, .table-info th  {
+        min-width: unset;
+    }
+}
+
+
+

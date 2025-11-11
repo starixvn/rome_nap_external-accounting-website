@@ -1,0 +1,126 @@
+﻿[
+  {
+    "outputFile": "assets/styles/pages/account/login.css",
+    "inputFile": "assets/styles/pages/account/login.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/account/external-group.css",
+    "inputFile": "assets/styles/pages/account/external-group.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/default/common.css",
+    "inputFile": "assets/styles/pages/default/common.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/winloss-detail.css",
+    "inputFile": "assets/styles/pages/reports/winloss-detail.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/daily-winloss.css",
+    "inputFile": "assets/styles/pages/reports/daily-winloss.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/default/left-panel.css",
+    "inputFile": "assets/styles/pages/default/left-panel.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/customer-setting.css",
+    "inputFile": "assets/styles/pages/customer/customer-setting.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/bet-limit.css",
+    "inputFile": "assets/styles/pages/customer/bet-limit.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/pt-engine.css",
+    "inputFile": "assets/styles/pages/customer/pt-engine.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/virtual-sport.css",
+    "inputFile": "assets/styles/pages/customer/virtual-sport.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/statement/statement.css",
+    "inputFile": "assets/styles/pages/statement/statement.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/statement/guideline.css",
+    "inputFile": "assets/styles/pages/statement/guideline.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/account/security-code.css",
+    "inputFile": "assets/styles/pages/account/security-code.scss"
+  },
+  {
+    "outputFile": "assets/styles/vendors/bootstrap.css",
+    "inputFile": "assets/styles/vendors/bootstrap.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/admin/product.css",
+    "inputFile": "assets/styles/pages/admin/product.scss"
+  },
+  {
+    "outputFile": "assets/styles/base/_alpha-admin-fonts.css",
+    "inputFile": "assets/styles/base/_alpha-admin-fonts.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/searchandcopy/index.css",
+    "inputFile": "assets/styles/pages/searchandcopy/index.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/subgroup.css",
+    "inputFile": "assets/styles/pages/customer/subgroup.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/protected-status-multiple.css",
+    "inputFile": "assets/styles/pages/customer/protected-status-multiple.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/totalbet/total-bet.css",
+    "inputFile": "assets/styles/pages/totalbet/total-bet.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/totalbet/multiselect-custom.css",
+    "inputFile": "assets/styles/pages/totalbet/multiselect-custom.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/mark-account.css",
+    "inputFile": "assets/styles/pages/customer/mark-account.scss"
+  },
+  {
+    "outputFile": "assets/styles/vendors/daterangepicker/jquery.daterangepicker.css",
+    "inputFile": "assets/styles/vendors/daterangepicker/jquery.daterangepicker.scss"
+  },
+  {
+    "outputFile": "assets/styles/components/daterangepicker-customize.css",
+    "inputFile": "assets/styles/components/daterangepicker-customize.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/report-by-cur.css",
+    "inputFile": "assets/styles/pages/reports/report-by-cur.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/totalbet/total-bet-mc.css",
+    "inputFile": "assets/styles/pages/totalbet/total-bet-mc.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/exchangerate.css",
+    "inputFile": "assets/styles/pages/reports/exchangerate.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/customer/superinfo.css",
+    "inputFile": "assets/styles/pages/customer/superinfo.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/match-win-loss-reports.css",
+    "inputFile": "assets/styles/pages/reports/match-win-loss-reports.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/reward-detail.css",
+    "inputFile": "assets/styles/pages/reports/reward-detail.scss"
+  },
+  {
+    "outputFile": "assets/styles/pages/reports/white-label-report.css",
+    "inputFile": "assets/styles/pages/reports/white-label-report.scss"
+  },
+]

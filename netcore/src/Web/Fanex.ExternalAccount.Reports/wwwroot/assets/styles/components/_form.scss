@@ -1,0 +1,133 @@
+﻿.search-form {
+    .form-line {
+        margin-bottom: 12px;
+    }
+    .form-group {
+        display: inline-block;   
+        line-height: 28px; 
+        margin-right: 24px; 
+        vertical-align: middle;
+        @media all and (max-width: 480px)   {
+            margin-bottom: 8px;            
+        }
+        &.last-form-group{
+            @media all and (max-width: 480px) {
+                margin-right: 0;
+            }
+        }
+    }
+
+    .label {
+        float: left;
+        margin-right: 6px;
+        text-align: left;
+    }
+    
+    .user-group button {
+        background-image: none !important;
+        width: 20px !important;
+        height: 28px;
+        margin-left: -20px !important;
+    }
+
+    .user-group button:hover {
+        background-image: none !important;
+    }
+}
+
+
+.form-add {
+    padding-top: 16px;
+
+    .group {
+        display: table;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .label {
+        text-align: right;
+        line-height: 28px;
+    }
+
+    .form-control {
+        margin-left: 10px;
+        height: 28px;
+    }
+
+    .text-info {
+        margin-left: 10px;
+    }
+
+    .textarea {
+        height: 150px;
+    }
+
+    .width-100 {
+        width: 100px;
+    }
+
+    .width-120 {
+        width: 120px;
+    }
+
+    .width-150 {
+        width: 150px;
+    }
+
+    .width-250 {
+        width: 180px;
+
+        @media all and (min-device-width: 768px) {
+            width: 225px;
+        }
+    }
+
+    .width-320 {
+        width: 320px;
+    }
+
+    .width-info {
+        width: 200px;
+
+        @media all and (min-device-width: 768px) {
+            width: 320px;
+        }
+    }
+
+    .form-action {
+        padding-left: 110px;
+
+        .btn:first-child {
+            margin-right: 16px;
+        }
+
+        &.with-label-120 {
+            padding-left: 130px;
+        }
+    }
+
+    .groupCboMenu {
+        input {
+            width: 180px;
+            margin-left: 10px;
+            vertical-align: top;
+            text-indent: 5px;
+
+            @media all and (min-device-width: 768px) {
+                width: 225px;
+            }
+        }
+
+        button {
+            width: 20px !important;
+            margin-left: -21px !important;
+            height: 26px;
+
+            &:hover {
+                background-image: none !important;
+            }
+        }
+    }
+}
+

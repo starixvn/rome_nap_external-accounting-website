@@ -1,0 +1,48 @@
+﻿@import "../../abstracts/variables";
+@import "../../abstracts/mixins";
+@import "../../base/scaffolding";
+@import "../../components/form";
+@import "../../components/messages";
+@import "../../components/button";
+@import "../../components/textbox";
+
+body {
+    font-family: 'Tahoma Custom',Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #232428;
+    overflow: auto;
+}
+
+.width-140 {
+    width: 140px;
+}
+#reportNote {
+    font-size: 12px !important;
+}
+
+#reportNote ul {
+    margin: 0;
+    padding: 10px;
+    -webkit-text-size-adjust: 100%;
+}
+
+.checkbox {
+    position: relative;
+    top: 7px;
+    margin-left: 10px;
+}
+
+input[type='text']::-ms-clear, input[type='password']::-ms-clear, input[type='email']::-ms-clear {
+    display: none;
+}
+
+input[type='text'][disabled], input[type='text'] .disabled, input[type='password'][disabled], input[type='password'] .disabled, input[type='email'][disabled], input[type='email'] .disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+/* Hint tooltip */
+.hint {
+    height: 35px;
+}

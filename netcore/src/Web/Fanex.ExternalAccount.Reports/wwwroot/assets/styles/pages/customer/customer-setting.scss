@@ -1,0 +1,15 @@
+﻿@import "customer";
+
+#customerList {
+    .bgTitle  {
+        overflow: hidden;
+        width: 100%;
+    }
+    .text-select {
+        display: inline-block;
+    }
+}
+
+.word-break-all {
+    word-break: break-all;
+}

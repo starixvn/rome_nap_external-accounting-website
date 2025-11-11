@@ -1,0 +1,62 @@
+﻿
+@import "../abstracts/variables";
+@import "../abstracts/mixins";
+
+.nav-tabs {
+    border-bottom: 1px solid #7b7c7e;
+    list-style: none;
+}
+
+.nav-tabs > li  {
+    margin-right: 12px;
+    float: left;
+}
+
+.nav-tabs > li > a:hover {
+    background: none;
+    border-color: transparent;
+    cursor: pointer;
+}
+
+.nav-tabs > li > a {
+    display: block;
+    color: $tab-color;
+    font-size: $font-size;
+    padding: 10px 12px 8px;
+    border: none;
+    outline: none;
+    text-transform: uppercase;
+}
+
+.nav-tabs > li:after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 0;
+    background: transparent;
+    @include transition('width .5s ease, background-color .5s ease');
+}
+
+.nav-tabs > li.ui-tabs-active > a,
+.nav-tabs > li.ui-tabs-active > a:focus,
+.nav-tabs > li.ui-tabs-active > a:hover {
+    border: none;
+    color: $tab-active-color;
+    background: transparent;
+}
+
+.nav-tabs > li.ui-tabs-active:after, 
+.nav-tabs > li:hover:after {
+    width: 100%;
+    background: $tab-line;
+}
+
+@media only screen and (max-width: 1024px) {
+    .nav-tabs > li:hover:after {
+        width: 0;
+    }
+
+    .nav-tabs > li.ui-tabs-active:after {
+        width: 100%;
+    }
+}

@@ -1,0 +1,257 @@
+﻿@import "report";
+.fanex-multiselect-options .hide-item {
+    display: none;
+}
+
+#GroupProducts, #ProductDetails {
+    height: unset;
+    border: none;
+    border-radius: 0 !important;
+    position: relative;
+
+    input {
+        height: 28px;
+        border: 1px solid #a6a6a6 !important;
+        border-radius: 0 !important;
+        text-align: left;
+        padding: 3px 8px 3px 6px;
+        width: 100% !important;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    .ui-icon {
+        margin-top: unset !important;
+        position: absolute;
+        right: 2px;
+        top: 7px;
+    }
+}
+
+.ddl-product {
+    line-height: 0;
+} 
+
+#GroupMonthDay .form-group .user-group {
+    width: 60px;
+
+    &.dll-month {
+        width: 148px;
+    }
+}
+
+/*.filterbox.filter-winloss-detail .label {
+    width: 60px; 
+    &.to-width {
+        width: 20px;
+    }  
+}*/
+@media all and (max-device-width: 1366px) {
+    .filter-winloss-detail .form-group {
+        margin-bottom: 8px;
+    }
+}
+
+
+.filter-winloss-detail .user-group  {
+    position: relative;
+    .ui-multiselect-options {
+        position: absolute;
+        top: 0 !important;
+    }
+}
+
+
+.last-item {
+    padding-left: 66px;
+}
+
+#userGroup input {
+    width: 147px !important;
+    outline: none;
+}
+
+.frozen-div {
+    border-right: 1px solid #999 !important;
+    width: 336px;
+}
+
+.fixedColumnFooter {
+    width: 335px !important;
+}
+
+.filter-winloss-detail .ui-multiselect {
+    height: 23px;
+    border: 1px solid #bbb;
+    border-bottom-left-radius: 3px !important;
+    border-bottom-right-radius: 3px !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+    .ui-state-default {
+        color: #444;
+        border-radius: 3px !important;
+    }
+    .ui-state-hover {
+        border: 1px solid #999;
+        border-radius: 3px !important;
+    }
+}
+
+
+
+
+.filter-winloss-detail .ui-multiselect-options {
+    margin-top: 33px !important;
+}
+
+#DateList {
+    width: 153px;
+}
+
+
+.history {
+    margin-left: 1px;
+    color: #2489ce;
+    cursor: pointer;
+    font-style: italic;
+    .txt-history:hover {
+        text-decoration: underline;
+    }
+}
+
+.arrow {
+    &:before {
+        content: '\e92f';
+        font-family: 'AlphaAdmin';
+        color: #2489ce;
+        font-size: 18px;
+        position: relative;
+        top: 2px;
+        left: -2px;
+    }
+}
+
+.iconscontainer {
+    background-repeat: no-repeat;
+    background-position: 80% 50%;
+    background-image: url(/Images/sort.png);
+}
+
+span.selectedMonth {
+    margin-right: 15px;
+    font-size: 13px;
+}
+
+.monPickrWrapParent .monPickrWrap {
+    font-family: 'Tahoma Custom', Tahoma, Arial, Helvetica, sans-serif;
+    position: relative !important;
+    border-radius: 0 !important;
+    border: none;
+    background: initial;
+
+    &:hover {
+        box-shadow: none;
+    }
+
+    .monPickr {
+        height: unset;
+        padding: 5px 2px;
+        border-radius: 0 !important;
+        background: #fff;
+        border: 1px solid #a6a6a6;
+
+        .prev:before, .next:before {
+            font-family: 'AlphaAdmin';
+            font-size: 20px;
+            color: #000;
+        }
+
+        .prev {
+            background: none;
+
+            &:before {
+                content: '\e932';
+            }
+        }
+
+        .next {
+            background: none;
+            top: 4px;
+            right: 6px;
+            left: unset;
+
+            &:before {
+                content: '\e931';
+            }
+        }
+    }
+}
+
+.selectedDayWrapParent .selectedDayWrap {
+    width: 60px;
+    border-radius: 0 !important;
+    border: none;
+    &:hover {
+        box-shadow: none;
+    }
+    .dayPickr {
+        border: 1px solid #a6a6a6;
+        border-radius: 0 !important;
+        height: 28px;
+        background: #fff;
+        font-size: 13px;
+        line-height: 25px;
+        .darr {
+            background: none;
+        }
+        .darr:before {
+            content: '\e925';
+            font-family: 'AlphaAdmin';
+            font-size: 19px;
+            position: relative;
+            top: 3px;
+            right: 2px;
+            color: #000;
+        }
+    }
+}
+
+#netTurnover.icon-alert-circle-outline {
+    position: relative;
+    top: 3px;
+}
+
+.tbl-winloss-detail {
+    max-height: 625px !important;
+}
+
+.report-username {
+    text-decoration: none;
+    margin: 0;
+}
+.subTotal {
+    font-weight:bold;
+}
+.dataSubTotal td:first-child .table-cell {
+    padding-left: 15px;
+    box-sizing: border-box;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+    .monPickrDropDown, .dayPickrDropDown {
+        overflow: auto !important;
+    }
+}
+
+.search-form.filter-winloss-detail .form-group {
+    margin-right: 16px;
+    &.view-history-box {
+        display: block;
+    }
+}
+
+@media (max-device-width: 480px) {
+    .filterbox .label {
+        width: 90px !important;
+    }
+}
