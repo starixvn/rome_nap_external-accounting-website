@@ -17,6 +17,8 @@ namespace Fanex.ExternalAccount.Service.Customer
         Result CheckMultipleSupers(string superNames, string groupName, int userId);
 
         IEnumerable<Result> UpdateMultipleSuperRequest(UpdateMultipleSuperRequest request, int userId, string ip);
+
+        Result UpdateHideBetIP(int custId, bool isHideBetIP, int userId, string ip);
     }
 
     public class EditSuperListService: IEditSuperListService
@@ -101,6 +103,24 @@ namespace Fanex.ExternalAccount.Service.Customer
                     errorList.AddRange(ParseErrMsg(ErrorUpdateCode, resultCode, superIdNameList));
                 }
             }
+
+            if (request.IsUpdateHideBetIP)
+            {
+                var command = new UpdateMultipleSuperHideBetIPCommand
+                {
+                    CustIDList = custIds,
+                    IsHideBetIP = request.IsHideBetIP,
+                    UserId = userId,
+                    IP = ip
+                };
+
+                var resultHideBetIP = dataAccess.ExecuteUpdate(command);
+                if (!string.IsNullOrEmpty(resultHideBetIP))
+                {
+                    errorList.AddRange(ParseErrMsg(ErrorUpdateCode, resultHideBetIP, superIdNameList));
+                }
+            }
+
             return errorList;
         }
 
@@ -116,6 +136,26 @@ namespace Fanex.ExternalAccount.Service.Customer
             }
 
             return string.Format("<Root>{0}</Root>", codeUpdateXmlList);
+        }
+
+        public Result UpdateHideBetIP(int custId, bool isHideBetIP, int userId, string ip)
+        {
+            var command = new UpdateSuperHideBetIPCommand
+            {
+                CustId = custId,
+                IsHideBetIP = isHideBetIP,
+                UserId = userId,
+                IP = ip
+            };
+
+            var result = dataAccess.ExecuteUpdate(command);
+            
+            if (!string.IsNullOrEmpty(result))
+            {
+                return new Result(1, result);
+            }
+            
+            return new Result(0, "Success");
         }
 
         private static IEnumerable<Result> ParseErrMsg(int errorType, string errMsg, List<string> superIdNameList)

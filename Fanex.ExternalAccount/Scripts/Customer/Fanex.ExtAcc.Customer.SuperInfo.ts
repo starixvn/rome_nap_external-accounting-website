@@ -59,6 +59,7 @@ class SuperInfo {
         this.$("#ckbPersonalInfo").change(() => this.ShowHideTab("#updateInfoTab", this.$("#ckbPersonalInfo").prop('checked') == true));
         this.$("#ckbResetPwd").change(() => this.ShowHideTab("#updatePwdTab", this.$("#ckbResetPwd").prop('checked') == true));
         this.$("#ckbResetSecCode").change(() => this.ShowHideTab("#updateSecCodeTab", this.$("#ckbResetSecCode").prop('checked') == true));
+        this.$("#ckbHideBetIP").change(() => this.ShowHideTab("#updateHideBetIPTab", this.$("#ckbHideBetIP").prop('checked') == true));
         this.$("#ckbSuperFirstName").change(() => this.EnableDisableEditField("#SuperFirstName", this.$("#ckbSuperFirstName").prop('checked') == true));
         this.$("#ckbSuperLastName").change(() => this.EnableDisableEditField("#SuperLastName", this.$("#ckbSuperLastName").prop('checked') == true));
         this.$("#ckbSuperPhone").change(() => this.EnableDisableEditField("#SuperPhone", this.$("#ckbSuperPhone").prop('checked') == true));
@@ -192,6 +193,8 @@ class SuperInfo {
         this.$("#ckbSuperPhone").prop("checked", true).trigger("change");
         this.$("#ckbSuperMobilePhone").prop("checked", false).trigger("change");
         this.$("#SuperForceChange").prop("checked", true).trigger("change");
+        this.$("#ckbHideBetIP").prop("checked", true).trigger("change");
+        this.$("#ckbSuperHideBetIP").prop("checked", false).val('false');
         this.$(".ic-pwd-eye").each(function () {
             var targetId = $(this).data("id");
             $(`#${targetId}`).prop("type", "password");
@@ -202,7 +205,8 @@ class SuperInfo {
     EnableDisableBtnSubmit() {
         if ((this.$("#ckbPersonalInfo").prop('checked') && (this.$("#ckbSuperFirstName").prop('checked') || this.$("#ckbSuperLastName").prop('checked') || this.$("#ckbSuperPhone").prop('checked') || this.$("#ckbSuperMobilePhone").prop('checked'))) ||
             this.$("#ckbResetPwd").prop('checked') ||
-            this.$("#ckbResetSecCode").prop('checked')) {
+            this.$("#ckbResetSecCode").prop('checked') ||
+            this.$("#ckbHideBetIP").prop('checked')) {
             this.btnSubmitUpdate.removeClass("-disabled").attr("disabled", false);
         } else {
             this.btnSubmitUpdate.addClass("-disabled").attr("disabled", true);
@@ -323,6 +327,8 @@ class SuperInfo {
             IsUpdateInfo: this.$("#ckbPersonalInfo").prop('checked'),
             IsUpdatePassword: this.$("#ckbResetPwd").prop('checked'),
             IsUpdateSecurityCode: this.$("#ckbResetSecCode").prop('checked'),
+            IsUpdateHideBetIP: this.$("#ckbHideBetIP").prop('checked'),
+            IsHideBetIP: this.$("#ckbSuperHideBetIP").prop('checked'),
             SuperIdNameList: this.selectedSuperIdWithUsername
         };
 

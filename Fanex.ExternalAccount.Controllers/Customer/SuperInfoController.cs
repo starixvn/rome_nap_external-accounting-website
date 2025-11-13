@@ -49,5 +49,13 @@
             var result = superListSevice.UpdateMultipleSuperRequest(request, CurrentSession.UserId, CurrentContext.Ip4Address);
             return JsonBase(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
+
+        [HttpPost]
+        [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditSuperInfo")]
+        public ActionResult UpdateHideBetIP(int superCustId, bool isHideBetIP)
+        {
+            var result = superListSevice.UpdateHideBetIP(superCustId, isHideBetIP, CurrentSession.UserId, CurrentContext.Ip4Address);
+            return JsonBase(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
+        }
     }
 }

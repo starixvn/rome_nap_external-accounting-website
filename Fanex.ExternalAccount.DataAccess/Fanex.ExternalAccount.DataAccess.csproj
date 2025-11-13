@@ -199,6 +199,8 @@
     <Compile Include="Criteria\Customer\EditSuperList\UpdateMultipleSuperPasswordCommand.cs" />
     <Compile Include="Criteria\Customer\EditSuperList\UpdateMultipleSuperInfoCommand.cs" />
     <Compile Include="Criteria\Customer\EditSuperList\UpdateMultipleSuperSecurityCodeCommand.cs" />
+    <Compile Include="Criteria\Customer\EditSuperList\UpdateMultipleSuperHideBetIPCommand.cs" />
+    <Compile Include="Criteria\Customer\EditSuperList\UpdateSuperHideBetIPCommand.cs" />
     <Compile Include="Criteria\Customer\GetCustomerAllStatusCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchMemberListCriteria.cs" />
     <Compile Include="Criteria\Customer\CustomerList\SearchCustomerListBaseCriteria.cs" />

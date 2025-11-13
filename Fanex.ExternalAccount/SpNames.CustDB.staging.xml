@@ -525,6 +525,8 @@
 		<Setting Key="EAS_CustomerUpdSuperInfo_Multiple" SpName="EAS_CustomerUpdSuperInfo_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
 		<Setting Key="Age_CustomerUpdPwd_Multiple" SpName="Age_CustomerUpdPwd_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
 		<Setting Key="Acc_CustomerUpdSecurityCode_Multiple" SpName="Acc_CustomerUpdSecurityCode_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerUpdIsHideIP" SpName="EAS_CustomerUpdIsHideIP" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
+		<Setting Key="EAS_CustomerUpdIsHideIP_Multiple" SpName="EAS_CustomerUpdIsHideIP_Multiple" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" />
 	</Function>
 	<Function Name="Headline List">
 		<Setting Key="EAS_CustomerSelByGroupHeadline" SpName="EAS_CustomerSelByGroupHeadline" DbName="DBCUST.CustDB.wsv_xnap" Plain="0" >

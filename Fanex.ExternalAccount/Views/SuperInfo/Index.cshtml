@@ -45,6 +45,10 @@
                     <input type="checkbox" id="ckbResetSecCode" checked />
                     <label for="ckbResetSecCode">Reset Security Code</label>
                 </div>
+                <div class="select-item">
+                    <input type="checkbox" id="ckbHideBetIP" />
+                    <label for="ckbHideBetIP">Hide Bet IP</label>
+                </div>
             </div>
         </div>
         <div class="update-content">
@@ -143,6 +147,22 @@
                         </div>
                         <div class="pull-left" style="line-height: 23px;">
                             <input id="SuperForceChange" type="checkbox" checked="checked" class="checkbox">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div id="updateHideBetIPTab" class="hidden">
+                <div class="form-title">
+                    Hide Bet IP
+                </div>
+                <form class="form-super-update form-add">
+                    <div class="group">
+                        <div class="pull-left" style="line-height: 23px; display: flex; align-items: center; gap: 10px;">
+                            <span>IP addresses are visible <br /> Hide IP addresses for Supers and their Downlines by enabling this setting</span>
+                            <label class="switch">
+                                <input id="ckbSuperHideBetIP" type="checkbox">
+                                <span class="slider round"></span>
+                            </label>
                         </div>
                     </div>
                 </form>

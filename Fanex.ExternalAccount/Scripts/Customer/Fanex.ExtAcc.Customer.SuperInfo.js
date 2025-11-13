@@ -37,6 +37,7 @@ var SuperInfo = /** @class */ (function () {
         this.$("#ckbPersonalInfo").change(function () { return _this.ShowHideTab("#updateInfoTab", _this.$("#ckbPersonalInfo").prop('checked') == true); });
         this.$("#ckbResetPwd").change(function () { return _this.ShowHideTab("#updatePwdTab", _this.$("#ckbResetPwd").prop('checked') == true); });
         this.$("#ckbResetSecCode").change(function () { return _this.ShowHideTab("#updateSecCodeTab", _this.$("#ckbResetSecCode").prop('checked') == true); });
+        this.$("#ckbHideBetIP").change(function () { return _this.ShowHideTab("#updateHideBetIPTab", _this.$("#ckbHideBetIP").prop('checked') == true); });
         this.$("#ckbSuperFirstName").change(function () { return _this.EnableDisableEditField("#SuperFirstName", _this.$("#ckbSuperFirstName").prop('checked') == true); });
         this.$("#ckbSuperLastName").change(function () { return _this.EnableDisableEditField("#SuperLastName", _this.$("#ckbSuperLastName").prop('checked') == true); });
         this.$("#ckbSuperPhone").change(function () { return _this.EnableDisableEditField("#SuperPhone", _this.$("#ckbSuperPhone").prop('checked') == true); });
@@ -158,6 +159,8 @@ var SuperInfo = /** @class */ (function () {
         this.$("#ckbSuperPhone").prop("checked", true).trigger("change");
         this.$("#ckbSuperMobilePhone").prop("checked", false).trigger("change");
         this.$("#SuperForceChange").prop("checked", true).trigger("change");
+        this.$("#ckbHideBetIP").prop("checked", true).trigger("change");
+        this.$("#ckbSuperHideBetIP").prop("checked", false).val('false');
         this.$(".ic-pwd-eye").each(function () {
             var targetId = $(this).data("id");
             $("#" + targetId).prop("type", "password");
@@ -167,7 +170,8 @@ var SuperInfo = /** @class */ (function () {
     SuperInfo.prototype.EnableDisableBtnSubmit = function () {
         if ((this.$("#ckbPersonalInfo").prop('checked') && (this.$("#ckbSuperFirstName").prop('checked') || this.$("#ckbSuperLastName").prop('checked') || this.$("#ckbSuperPhone").prop('checked') || this.$("#ckbSuperMobilePhone").prop('checked'))) ||
             this.$("#ckbResetPwd").prop('checked') ||
-            this.$("#ckbResetSecCode").prop('checked')) {
+            this.$("#ckbResetSecCode").prop('checked') ||
+            this.$("#ckbHideBetIP").prop('checked')) {
             this.btnSubmitUpdate.removeClass("-disabled").attr("disabled", false);
         }
         else {
@@ -287,6 +291,8 @@ var SuperInfo = /** @class */ (function () {
             IsUpdateInfo: this.$("#ckbPersonalInfo").prop('checked'),
             IsUpdatePassword: this.$("#ckbResetPwd").prop('checked'),
             IsUpdateSecurityCode: this.$("#ckbResetSecCode").prop('checked'),
+            IsUpdateHideBetIP: this.$("#ckbHideBetIP").prop('checked'),
+            IsHideBetIP: this.$("#ckbSuperHideBetIP").prop('checked'),
             SuperIdNameList: this.selectedSuperIdWithUsername
         };
         Fanex.ExtAcc.BlockUI();

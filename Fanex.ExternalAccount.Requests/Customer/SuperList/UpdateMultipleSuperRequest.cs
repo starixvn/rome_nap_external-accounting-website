@@ -18,6 +18,8 @@ namespace Fanex.ExternalAccount.Requests.Customer.SuperList
         public bool IsUpdateInfo { get; set; }
         public bool IsUpdatePassword { get; set; }
         public bool IsUpdateSecurityCode { get; set; }
+        public bool IsUpdateHideBetIP { get; set; }
+        public bool IsHideBetIP { get; set; }
         public string SuperIdNameList { get; set; }
     }
 }
