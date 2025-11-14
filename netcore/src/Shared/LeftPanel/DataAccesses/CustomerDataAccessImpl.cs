@@ -2,21 +2,21 @@
 {
     using System.Collections.Generic;
     using System.Data;
-    using System.Web;
     using Core.Context;
     using Core.Shared;
     using Criteria;
     using DTO;
     using Fanex.Data.Repository;
     using Fanex.ExternalAccount.Module.LeftPanel.Models;
+    using Microsoft.AspNetCore.Http;
     using Utilities;
     using ViewModels;
 
     public class CustomerDataAccessImpl : CustomerDataAccess
     {
         private readonly IDynamicRepository _dynamicRepository;
-
-        public CustomerDataAccessImpl() : this(null)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public CustomerDataAccessImpl() : this(null, null)
         {
         }
 
