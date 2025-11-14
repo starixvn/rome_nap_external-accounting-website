@@ -52,7 +52,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult UserListPost(string userName = null, int? groupId = null)
         {
             var result = _userService.GetListUsers(userName, groupId);
@@ -75,7 +75,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult EditUser(int id)
         {
             var model = _userService.GetUserById(id);
@@ -102,7 +102,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(int custId, string firstName, string lastName, int groupId)
         {
             var result = _userService.EditUser(CurrentSession.UserId, custId, firstName, lastName,
@@ -113,7 +113,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult AddUser()
         {
             return PartialViewBase(GetUserModel());
@@ -121,7 +121,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult AddExistUser()
         {
             return PartialViewBase(GetUserModel());
@@ -129,7 +129,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult Add(string username, string pwd, string firstName, string lastName, int groupId)
         {
             var result = _userService.CreateUser(CurrentSession.UserId, username, pwd, firstName, lastName, groupId,
@@ -140,7 +140,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult AddExist(string username, int groupId)
         {
             var result =
@@ -151,7 +151,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult UpdateStatus(int userId, bool isActive)
         {
             var result = _userService.UpdateStatus(CurrentSession.UserId, userId, isActive, CurrentContext.Ip4Address);
@@ -161,7 +161,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult ResetPwd(int userId, string pwd)
         {
             var result = _userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
@@ -171,7 +171,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult ResetPassword(int id)
         {
             var model = _userService.GetUserById(id);
@@ -183,7 +183,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GrantPermission(int userId, string username, string groupName)
         {
             var funcs = functionService.GetAllFunctions().ToList();
@@ -255,7 +255,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GrantPermissionPost(int userId, string oldPolicy, string policy)
         {
             var result = _userService.UpdateUserPolicy(CurrentSession.CustId, userId, oldPolicy, policy,

@@ -130,12 +130,12 @@
         }
 
         [HttpPost]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GetOnlineList(int custId)
             => JsonBase(customerQueryService.GetOnlineList(custId));
 
         [HttpPost]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GetDownlineList(bool isDirectDownline, int custId, int pageIndex)
             => JsonBase(customerQueryService.GetDownlineList(isDirectDownline, custId, DefaultPageSize, pageIndex));
 

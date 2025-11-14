@@ -41,7 +41,7 @@
             return View();
         }
 
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GetData(WinLossDetailRequest request)
         {
             var viewModel = GetDataFromDB(request);

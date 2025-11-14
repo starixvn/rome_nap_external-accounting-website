@@ -34,7 +34,7 @@
             => PartialViewBase(customerService.GetMultipleProtectedStatus(groupName, custIds, roleId, CurrentSession.UserId));
 
         [HttpPost]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         [ExternalAccountAuthenticate(Function = eFunctions.ProtectCustomer, Policy = AuthenticationType.Host, IsAjaxRequest = true)]
         public IActionResult EditMultiple([FromQuery] string groupName, [FromBody] CustomerProtectedStatus[] protectedStatus)
         {

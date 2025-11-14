@@ -48,7 +48,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GetDailyWinLoss()
         {
             GetRequestPage();

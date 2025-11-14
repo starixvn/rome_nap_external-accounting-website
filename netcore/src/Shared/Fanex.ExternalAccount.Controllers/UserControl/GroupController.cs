@@ -39,7 +39,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult AddGroup()
         {
             var groups = new List<SelectListItem> { new SelectListItem { Text = "None", Value = "0" } };
@@ -51,7 +51,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GroupListPost()
         {
             var result = _groupService.GetListGroup().ToList();
@@ -74,7 +74,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult EditGroup(int id)
         {
             var model = _groupService.GetGroupById(id);
@@ -88,7 +88,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GetGroupPolicy(int groupId)
         {
             var model = _groupService.GetAllGroupPolicy(groupId);
@@ -98,7 +98,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult Add(string name, string description, int parentId)
         {
             var result = _groupService.CreateGroup(name, description, parentId,  CurrentSession.CustId, CurrentContext.Ip4Address);
@@ -108,7 +108,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult EditPolicy(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = _groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId,
@@ -119,7 +119,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int groupId)
         {
             var result = _groupService.DeleteGroup(groupId, CurrentSession.CustId);
@@ -129,7 +129,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(int groupId, string groupName, string description)
         {
             var result = _groupService.EditGroup(ExtRequest.GetGroupName(groupName), description, CurrentSession.CustId,
@@ -140,7 +140,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GrantPermission(int groupId, string groupName)
         {
             var funcs = functionService.GetAllFunctions().ToList();
@@ -210,7 +210,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GrantPermissionPost(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = _groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId,

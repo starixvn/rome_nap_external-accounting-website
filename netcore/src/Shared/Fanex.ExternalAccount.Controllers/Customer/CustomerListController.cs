@@ -59,7 +59,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult Seach([FromBody] SeachCustomerListRequest request)
         {
             var result = _customerListService.Search(new SearchCustomerListParams
@@ -84,7 +84,7 @@ namespace Fanex.ExternalAccount.Controllers.Customer
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult GetCustomerStatus(int custId)
         {
             var products = _customerService.GetCustomerAllStatus(custId, Config.SettingStatus);

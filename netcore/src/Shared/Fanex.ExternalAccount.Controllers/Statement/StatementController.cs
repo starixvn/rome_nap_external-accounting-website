@@ -36,7 +36,7 @@
 //
 //         [ExternalAccountAuthenticate(Function = eFunctions.Statement,
 //             Policy = AuthenticateAction.AuthenticationType.Read)]
-//         [AntiXSRFFilter]
+//         [ValidateAntiForgeryToken]
 //         public ActionResult GetStatement()
 //         {
 //             GetRequestPage();
@@ -51,7 +51,7 @@
 //
 //         [ExternalAccountAuthenticate(Function = eFunctions.Statement,
 //             Policy = AuthenticateAction.AuthenticationType.Read)]
-//         [AntiXSRFFilter]
+//         [ValidateAntiForgeryToken]
 //         public void GetExportToExcel()
 //         {
 //             GetRequestPage();

@@ -25,7 +25,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.CloseCustomer, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult GetSingleOpenDownlinesInfo([FromBody] GetSingleOpenDownlinesInfoQuery query)
         {
             var result = _customerService.GetSingleOpenDownlinesInfo(query);

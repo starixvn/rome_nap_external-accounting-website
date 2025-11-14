@@ -29,7 +29,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult MenuListPost()
         {
             var result = GetAllMenus();
@@ -40,7 +40,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult AddMenu()
         {
             ViewBag.FunctionList = GetFunctions();
@@ -51,7 +51,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult EditMenu(int id)
         {
             var model = _menuService.GetAllMenus().FirstOrDefault(o => o.MenuId == id);
@@ -71,7 +71,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult Add(Menu menu)
         {
             if (menu != null)
@@ -85,7 +85,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Menu menu)
         {
             var result = _menuService.UpdateMenu(menu, CurrentSession.CustId, CurrentContext.Ip4Address);
@@ -95,7 +95,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult UpdateStatus(int menuId, bool isActive)
         {
             var result = _menuService.UpdateMenuStatus(
@@ -108,7 +108,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int menuId)
         {
             var result = _menuService.DeleteMenu(

@@ -41,7 +41,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]        
+        [ValidateAntiForgeryToken]        
         public IActionResult EditInfoPost([FromBody] CustomerInfo customer)
         {
             var criteria = new UpdateSuperInfoCommand(

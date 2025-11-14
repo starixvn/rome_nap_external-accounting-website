@@ -37,7 +37,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public JsonResult SearchCustomer(SearchCustomerRequest request)
         {
             var searchCustomerContext = new SearchCustomerContext(request, Role.Super, CurrentSession);
@@ -54,7 +54,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public JsonResult SuperPost(CloneSettingRequest request)
         {
             var searchCustomerContext = new SearchCustomerContext(new SearchCustomerRequest { Username = request.ExistingUsername }, Role.Super, CurrentSession);
@@ -83,7 +83,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult GetSuperPrefixes(SuperPrefixRequest query)
             => Json(searchAndCopyService.GetSuperPrefixes(new SuperPrefixCriteria

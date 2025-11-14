@@ -66,7 +66,7 @@
             }
         }
 
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         [ExternalAccountAuthenticate(Function = eFunctions.ProblemAccountList, Policy = AuthenticationType.Host)]
         public ActionResult SetToReviewed(SetToReviewedViewModel viewModel)
         {

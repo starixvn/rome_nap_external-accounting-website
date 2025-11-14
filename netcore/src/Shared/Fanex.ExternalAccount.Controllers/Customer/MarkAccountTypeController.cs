@@ -32,7 +32,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult Seach([FromBody] SearchMarkAccountRequest request)
         {
             var result = markAccountTypeService.Search(new SearchMarkAccountTypeParams {
@@ -52,7 +52,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult MarkAccount()
         {
             return PartialViewBase();
@@ -60,7 +60,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult Add([FromBody] NewMarkAccountRequest request)
         {
             var result = markAccountTypeService.Add(new NewMarkAccountTypeParams
@@ -78,7 +78,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult Update([FromBody] UpdateMarkAccountRequest request)
         {
             var result = markAccountTypeService.SingleUpdate(new UpdateMarkAccountTypeParams
@@ -95,7 +95,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateMultiple([FromBody] UpdateMultipelMarkAccountRequest request)
         {
             var updateAccountTypes = request.UpdateAccounts.Select(account => new UpdateMarkAccountTypeParams {
@@ -114,7 +114,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult Unmark([FromBody] UnmarkAccountRequest request)
         {
             var result = markAccountTypeService.Unmark(new UnmarkAccountTypeParams
@@ -129,7 +129,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult UnmarkAll([FromBody] UnmarkAccountRequest request)
         {
             var result = markAccountTypeService.UnmarkAll(new UnmarkAccountTypeParams
@@ -144,7 +144,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult MultipleEditAccountType([FromBody] UnmarkAccountRequest request)
         {
             return PartialViewBase();

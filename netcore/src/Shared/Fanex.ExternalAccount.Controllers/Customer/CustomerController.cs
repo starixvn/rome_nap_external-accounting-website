@@ -144,7 +144,7 @@
         }
 
         [HttpPost]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         [ExternalCustomerAuthFilter(IsBettingLimit = true, IsHost = true)]
         public async Task<IActionResult> EditSuperBetSetting(UpdateCustomerRequest request)
         {
@@ -189,7 +189,7 @@
         }
 
         [HttpPost]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         [ExternalCustomerAuthFilter(IsHost = true, IsBettingLimit = true)]
         public async Task<IActionResult> EditMultipleSuperBetSetting(UpdateMultipleCustomerCommand request)
         {
@@ -234,7 +234,7 @@
         [ExternalCustomerAuthFilter(Function = eFunctions.CreateNew, IsHost = true)]
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook, IsHost = true)]
         [ExternalCustomerAuthFilter(Function = eFunctions.Transfer, IsHost = true)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateCustomerCommand request)
         {
             var generalInfo = request.GeneralInfo;
@@ -259,7 +259,7 @@
 
         [HttpPost]
         [ExternalCustomerAuthFilter(IsHost = true)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Update(UpdateCustomerRequest request)
         {
             var response = await customerServiceClient.UpdateCustomer(
@@ -283,7 +283,7 @@
         }
 
         [HttpPost]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         [ExternalCustomerAuthFilter(IsHost = true)]
         public async Task<IActionResult> UpdateMultipleCustomers(UpdateMultipleCustomerCommand request)
         {
@@ -530,7 +530,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EnableDoubleComm, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult ConfigDoubleComm(int custid, bool allow)
         {
             var result = _superService.ConfigDoubleComm(
@@ -559,7 +559,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult EditInfoPost(DTO.Customer.Customer customer)
         {
             customer.FirstName = WebUtility.HtmlEncode(customer.FirstName);
@@ -631,7 +631,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.Transfer, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult EditTransferConditionPost(string transferOption, int autoTransferCondition, int custId)
         {
             var result = _masterService.EditTransferOption(transferOption, autoTransferCondition, custId, CurrentSession.CustId,
@@ -648,7 +648,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdatePassword(int custId, string password, byte roleId)
         {
             var rawPassword = Encryptor.Decrypt(password, Encryptor.RandomCaptcha);
@@ -690,7 +690,7 @@
 
         [HttpPost]
         [ExternalAccountAuthenticate(Function = eFunctions.SuspendCustomer, Policy = AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public IActionResult GetSuspendDownlinesDetail(int custId, bool isAffected, int downlineRoleId, int pageSize = 50, int pageIndex = 0)
         {
             return JsonBase(_customerService.GetSuspendDownlinesDetail(new GetSuspendCustomerDetailInfoCriteria(custId, isAffected, downlineRoleId, pageSize, pageIndex)));

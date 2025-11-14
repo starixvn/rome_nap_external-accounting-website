@@ -42,7 +42,7 @@
             return View();
         }
 
-        //[AntiXSRFFilter]
+        //[ValidateAntiForgeryToken]
         public ActionResult GetData(WinLossDetailRequest request)
         {
             var viewModel = GetDataFromDB(request);
@@ -111,7 +111,7 @@
             }
         }
 
-        //[AntiXSRFFilter]
+        //[ValidateAntiForgeryToken]
         public ActionResult GetExtraPT(ViewExtraPTRequest request)
         {
             request.UserId = currentSession.CustId;
@@ -136,7 +136,7 @@
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
 
-        //[AntiXSRFFilter]
+        //[ValidateAntiForgeryToken]
         public ActionResult GetCashFee(DrillDownCashFeeRequest request)
         {
             var cashFee = winLossDetailService.DrillDownCashFee(request);

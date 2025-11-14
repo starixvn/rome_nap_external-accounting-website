@@ -43,7 +43,7 @@
         }
             
 
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GetData(SuperWinLossDetailByPTRequest request)
         {
             var param = new SuperWinLossDetailByPTParam(

@@ -29,7 +29,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult FunctionListPost()
         {
             var funcs = _funcService.GetAllFunctions();
@@ -77,7 +77,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult EditFunction(int id)
         {
             var funcs = _funcService.GetAllFunctions();
@@ -135,7 +135,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult AddFunction()
         {
             var funcs = _funcService.GetAllFunctions();
@@ -167,7 +167,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Function funtion, string oldGroups, string groups)
         {
             var result = _funcService.UpdateFunction(funtion, CurrentSession.CustId,
@@ -178,7 +178,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult Add(Function function, string groups)
         {
             var result = _funcService.CreateFunction(function, CurrentSession.CustId,
@@ -189,7 +189,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Host)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult UpdateStatus(int funcId, bool isTest)
         {
             var result = _funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
@@ -199,7 +199,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read)]
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult PolicyList(int funcId, bool addNew = false)
         {
             var groups = _funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();

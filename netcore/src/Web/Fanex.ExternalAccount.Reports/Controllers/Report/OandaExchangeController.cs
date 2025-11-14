@@ -26,7 +26,7 @@
             return View();
         }
 
-        [AntiXSRFFilter]
+        [ValidateAntiForgeryToken]
         public ActionResult GetExchangeRate(GetExchangeRateRequest request)
         {
             var exchangeRates = exchangeService.GetOandaExchangeRate(request.FromDate, request.ToDate, request.GroupName);
