@@ -2,10 +2,10 @@
 {
     using System;
     using System.Linq;
-    using Core.Base;
+    using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
-    using Service.Impl.Report;
-    using Service.Interface.Report;
+    using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Interface.Report;
 
     public class BaseReportController : BaseController
     {

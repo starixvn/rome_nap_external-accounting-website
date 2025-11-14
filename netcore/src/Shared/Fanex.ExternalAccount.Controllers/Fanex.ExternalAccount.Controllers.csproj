@@ -53,7 +53,7 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.4" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.1" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
     <PackageReference Include="TelegramBot.Client" Version="1.0.2" />
     <PackageReference Include="UAParser" Version="2.1.0.0" />

@@ -43,7 +43,7 @@
     <PackageReference Include="SixLabors.ImageSharp" Version="2.1.4" />
     <PackageReference Include="Sunplus.Agent.Utilities" Version="3.0.2" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
-    <PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.1" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.0" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
     <PackageReference Include="VaultSharp" Version="1.17.5.1" />
   </ItemGroup>

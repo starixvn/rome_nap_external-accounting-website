@@ -1,1 +1,0 @@
-excluded some componenets (such as carousel, tooltip, affix, popover, scrollspy, tooltip) in bootstrap file 

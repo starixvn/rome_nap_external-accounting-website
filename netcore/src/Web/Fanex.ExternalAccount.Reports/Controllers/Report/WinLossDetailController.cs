@@ -1,17 +1,17 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Report
 {
     using System.Collections.Generic;
-    using System.Web.Mvc;
-    using Core.Context;
-    using Core.Shared;
-    using CustomerSetting.Security.Authenticate;
-    using DTO.Report;
-    using Excel.Reports.WinLossDetailReport;
-    using Fanex.ExternalAccount.Service.Products;
+    using Microsoft.AspNetCore.Mvc;
+    using Fanex.ExternalAccount.Core.Context;
+    using Fanex.ExternalAccount.Core.Shared;
+    using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.DTO.Report;
+    using Fanex.ExternalAccount.Excel.Reports.WinLossDetailReport;
+    using Fanex.ExternalAccount.Service.Interface;
     using Fanex.ExternalAccount.Utilities;
-    using Requests;
-    using Service.Impl.Report;
-    using Service.Interface.Report;
+    using Fanex.ExternalAccount.Controllers.Requests;
+    using Fanex.ExternalAccount.Service.Impl.Report;
+    using Fanex.ExternalAccount.Service.Interface.Report;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -42,7 +42,7 @@
             return View();
         }
 
-        [AntiXSRFFilter]
+        //[AntiXSRFFilter]
         public ActionResult GetData(WinLossDetailRequest request)
         {
             var viewModel = GetDataFromDB(request);
@@ -111,7 +111,7 @@
             }
         }
 
-        [AntiXSRFFilter]
+        //[AntiXSRFFilter]
         public ActionResult GetExtraPT(ViewExtraPTRequest request)
         {
             request.UserId = currentSession.CustId;
@@ -136,7 +136,7 @@
                     new DrillDownWinLossDetailRequest(request, toolTipsProducts));
         }
 
-        [AntiXSRFFilter]
+        //[AntiXSRFFilter]
         public ActionResult GetCashFee(DrillDownCashFeeRequest request)
         {
             var cashFee = winLossDetailService.DrillDownCashFee(request);
