@@ -1,6 +1,6 @@
 namespace Fanex.ExternalAccount.WhiteLabelWinLossReports.Controllers
 {
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using System.Web;
     using System.Collections.Generic;
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.Models;
@@ -23,14 +23,14 @@ namespace Fanex.ExternalAccount.WhiteLabelWinLossReports.Controllers
             service = new WhiteLabelReportService();
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var viewModel = new WhiteLabelReportViewModel(service.GetWhiteLabels(CurrentSession.CurrencyGroup));
 
             return PartialViewBase(viewModel);
         }
 
-        public ActionResult GetSettlement(WhiteLabelReportQuery message)
+        public IActionResult GetSettlement(WhiteLabelReportQuery message)
         {
             message.GroupName = CurrentSession.CurrencyGroup;
             message.Username = HttpUtility.HtmlEncode(message.Username);
@@ -62,7 +62,7 @@ namespace Fanex.ExternalAccount.WhiteLabelWinLossReports.Controllers
             }
         }
 
-        public ActionResult GetDailyWinLoss(WhiteLabelReportQuery message)
+        public IActionResult GetDailyWinLoss(WhiteLabelReportQuery message)
         {
             message.GroupName = CurrentSession.CurrencyGroup;
             message.Username = HttpUtility.HtmlEncode(message.Username);

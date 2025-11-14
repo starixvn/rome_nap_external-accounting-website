@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Fanex.ExternalAccount.ProblemAccount.Constants;
     using Fanex.ExternalAccount.ProblemAccount.Extensions;
     using Fanex.ExternalAccount.ProblemAccount.Resources;

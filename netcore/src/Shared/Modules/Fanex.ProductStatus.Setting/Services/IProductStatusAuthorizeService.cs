@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ProductStatus.Setting.Services
 {
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     public interface IProductStatusAuthorizeService
     {

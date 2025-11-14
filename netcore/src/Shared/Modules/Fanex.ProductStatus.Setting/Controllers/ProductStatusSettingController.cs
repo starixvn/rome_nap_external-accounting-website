@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using System.Net;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using AppResources;
     using Configuration;
     using Models;
@@ -29,7 +29,7 @@
         }
 
         [ProductStatusAuthorize(IsHost = false)]
-        public ActionResult Index(QueryViewModel viewModel)
+        public IActionResult Index(QueryViewModel viewModel)
         {
             PopulateQueryViewModel(viewModel);
 
@@ -37,7 +37,7 @@
         }
 
         [HttpPost, ProductStatusAuthorize(IsHost = true), ProductStatusValidateAntiForgeryToken]
-        public ActionResult Update(UpdateViewModel viewModel)
+        public IActionResult Update(UpdateViewModel viewModel)
         {
             if (!viewModel.IsValid())
             {
@@ -62,7 +62,7 @@
         #region Multiple Update
 
         [HttpPost]
-        public ActionResult MultipleView(MultipleQueryViewModel viewModel)
+        public IActionResult MultipleView(MultipleQueryViewModel viewModel)
         {
             if (viewModel.ProductId != 0 && CanView())
             {
@@ -73,7 +73,7 @@
         }
 
         [HttpPost, ProductStatusAuthorize(IsHost = true), ProductStatusValidateAntiForgeryToken]
-        public ActionResult MultipleUpdate(MultipleUpdateViewModel viewModel)
+        public IActionResult MultipleUpdate(MultipleUpdateViewModel viewModel)
         {
             if (!viewModel.IsValid())
             {
@@ -101,7 +101,7 @@
         #region Old Behavior
 
         [ProductStatusAuthorize(IsHost = false)]
-        public ActionResult Simple(SimpleQueryViewModel viewModel)
+        public IActionResult Simple(SimpleQueryViewModel viewModel)
         {
             if (viewModel.IsValid())
             {
@@ -113,7 +113,7 @@
         }
 
         [HttpPost, ProductStatusAuthorize(IsHost = true), ProductStatusValidateAntiForgeryToken]
-        public ActionResult SimpleUpdate(SimpleUpdateViewModel viewModel)
+        public IActionResult SimpleUpdate(SimpleUpdateViewModel viewModel)
         {
             if (!viewModel.IsValid())
             {

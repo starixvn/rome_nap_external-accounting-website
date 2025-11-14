@@ -4,7 +4,7 @@
     using System.Configuration;
     using System.Diagnostics;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using System.Web.Security;
     using CaptchaMvc.Controllers;
     using CaptchaMvc.HtmlHelpers;
@@ -46,7 +46,7 @@
         }
 
         [HttpGet]
-        public ActionResult Login()
+        public IActionResult Login()
         {
             if (_currentSession.IsAuthenticated)
             {
@@ -66,7 +66,7 @@
         }
 
         [HttpPost]
-        public ActionResult Login(LoginModel model)
+        public IActionResult Login(LoginModel model)
         {
             if (!AntiXSRFUtil.ValidateAntiXSRF(Request, model.__RequestVerificationToken))
             {
@@ -89,7 +89,7 @@
             return VerifyLoginCredential(model, rawPassword);
         }
 
-        public ActionResult LoginSso(string url, string line)
+        public IActionResult LoginSso(string url, string line)
         {
             var pwd = _currentSession.HashPassword;
             var code = _currentSession.Captcha;
@@ -127,7 +127,7 @@
             return Redirect($"{url}/Account/SwitchLine?param={parameter}");
         }
 
-        public ActionResult SwitchLine(string param)
+        public IActionResult SwitchLine(string param)
         {
             var path = Server.MapPath("~/IbcKeys/ibckey.snk");
             var parameter = new EncryptionThread().DecryptString(param.Replace(' ', '+'), 1024, path);
@@ -298,9 +298,9 @@
             }
         }
 
-        public ActionResult CaptchaImage() => Content(CaptchaUtil.GetValiationImage(ControllerContext));
+        public IActionResult CaptchaImage() => Content(CaptchaUtil.GetValiationImage(ControllerContext));
 
-        public ActionResult LogOff()
+        public IActionResult LogOff()
         {
             var onuserId = _currentSession.OnUserId;
             if (onuserId > 0)
@@ -318,7 +318,7 @@
 
         [HttpGet]
         [ExternalAccountAuthenticate]
-        public ActionResult ExternalGroup()
+        public IActionResult ExternalGroup()
         {
             if (!_currentSession.IsInternalAdmin)
             {
@@ -336,7 +336,7 @@
         }
 
         [ExternalAccountAuthenticate]
-        public ActionResult ExternalGroupList()
+        public IActionResult ExternalGroupList()
         {
             var result = _currentSession.IsITAdmin || _currentSession.IsInternalAdmin
                 ? groupService.GetExternalGroup()

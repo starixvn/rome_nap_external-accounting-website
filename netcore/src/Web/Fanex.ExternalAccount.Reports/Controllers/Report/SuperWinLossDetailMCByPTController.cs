@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
@@ -35,7 +35,7 @@
         {
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
 
@@ -43,7 +43,7 @@
         }   
 
         [ValidateAntiForgeryToken]
-        public ActionResult GetData(SuperWinLossDetailByPTRequest request)
+        public IActionResult GetData(SuperWinLossDetailByPTRequest request)
         {
             var param = new SuperWinLossDetailByPTParam(
                 request.GroupId,

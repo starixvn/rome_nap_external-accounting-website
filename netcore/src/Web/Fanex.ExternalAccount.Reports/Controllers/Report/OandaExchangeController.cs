@@ -6,7 +6,7 @@
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Service.Report;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.OandaExchangeRate,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -21,13 +21,13 @@
             this.exchangeService = exchangeService ?? new ExchangeService();
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
 
         [ValidateAntiForgeryToken]
-        public ActionResult GetExchangeRate(GetExchangeRateRequest request)
+        public IActionResult GetExchangeRate(GetExchangeRateRequest request)
         {
             var exchangeRates = exchangeService.GetOandaExchangeRate(request.FromDate, request.ToDate, request.GroupName);
 

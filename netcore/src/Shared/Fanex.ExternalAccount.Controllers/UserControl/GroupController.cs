@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -35,12 +35,12 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult GroupList() => PartialViewBase();
+        public IActionResult GroupList() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult AddGroup()
+        public IActionResult AddGroup()
         {
             var groups = new List<SelectListItem> { new SelectListItem { Text = "None", Value = "0" } };
             groups.AddRange(_groupService.GetAllGroup(1).Select(group => new SelectListItem { Text = group.GroupName, Value = group.GroupID.ToString() }).ToList());
@@ -52,7 +52,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult GroupListPost()
+        public IActionResult GroupListPost()
         {
             var result = _groupService.GetListGroup().ToList();
 
@@ -75,7 +75,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult EditGroup(int id)
+        public IActionResult EditGroup(int id)
         {
             var model = _groupService.GetGroupById(id);
 
@@ -89,7 +89,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult GetGroupPolicy(int groupId)
+        public IActionResult GetGroupPolicy(int groupId)
         {
             var model = _groupService.GetAllGroupPolicy(groupId);
 
@@ -99,7 +99,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(string name, string description, int parentId)
+        public IActionResult Add(string name, string description, int parentId)
         {
             var result = _groupService.CreateGroup(name, description, parentId,  CurrentSession.CustId, CurrentContext.Ip4Address);
 
@@ -109,7 +109,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPolicy(int groupId, string oldGroupPolicy, string groupPolicy)
+        public IActionResult EditPolicy(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = _groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId,
                 CurrentContext.Ip4Address, groupId);
@@ -120,7 +120,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int groupId)
+        public IActionResult Delete(int groupId)
         {
             var result = _groupService.DeleteGroup(groupId, CurrentSession.CustId);
 
@@ -130,7 +130,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int groupId, string groupName, string description)
+        public IActionResult Edit(int groupId, string groupName, string description)
         {
             var result = _groupService.EditGroup(ExtRequest.GetGroupName(groupName), description, CurrentSession.CustId,
                 CurrentContext.Ip4Address, groupId);
@@ -141,7 +141,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult GrantPermission(int groupId, string groupName)
+        public IActionResult GrantPermission(int groupId, string groupName)
         {
             var funcs = functionService.GetAllFunctions().ToList();
             funcs = funcs.Where(f => f.IsTest).ToList();
@@ -211,7 +211,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageGroup,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult GrantPermissionPost(int groupId, string oldGroupPolicy, string groupPolicy)
+        public IActionResult GrantPermissionPost(int groupId, string oldGroupPolicy, string groupPolicy)
         {
             var result = _groupService.EditGroupPolicy(oldGroupPolicy, groupPolicy, CurrentSession.CustId,
                 CurrentContext.Ip4Address, groupId);

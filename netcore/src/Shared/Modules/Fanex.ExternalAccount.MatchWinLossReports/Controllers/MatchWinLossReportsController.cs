@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.MatchWinLossReports.Controllers
 {
     using System;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using System.Linq;
     using Services;
     using Core.Base;
@@ -13,6 +13,7 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Caching;
     using Fanex.Caching.Memory;
+    using Microsoft.AspNetCore.Mvc;
 
     [ExternalAccountAuthenticate(Function = eFunctions.MatchWinLoss,
         Policy = AuthenticateAction.AuthenticationType.Read)]
@@ -36,7 +37,7 @@
             this.service = service ?? new MatchWinLossReportsService();
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var today = DateTime.Now;
             var minDate = DateTime.Now.AddMonths(-3).AddDays((-DateTime.Now.Day) + 1);
@@ -62,44 +63,44 @@
             return PartialViewBase(filterInfo);
         }
 
-        public ActionResult Details() => PartialViewBase();
+        public IActionResult Details() => PartialViewBase();
 
-        public ActionResult Summary() => PartialViewBase();
+        public IActionResult Summary() => PartialViewBase();
 
-        public ActionResult GetLeagues(int sportId, DateTime fromDate, DateTime toDate)
+        public IActionResult GetLeagues(int sportId, DateTime fromDate, DateTime toDate)
         {
             var leagues = service.GetLeagues(sportId, _currentSession.CurrencyGroup, fromDate, toDate);
-            return Json(leagues, JsonRequestBehavior.AllowGet);
+            return Json(leagues);
         }
 
-        public ActionResult GetLeaguesAndEvents(int sportId, DateTime fromDate, DateTime toDate)
+        public IActionResult GetLeaguesAndEvents(int sportId, DateTime fromDate, DateTime toDate)
         {
             var leagues = service.GetLeagues(sportId, _currentSession.CurrencyGroup, fromDate, toDate);
             var leagueIds = string.Join(",", leagues.Select(obj => obj.LeagueId).ToList());
             var events = service.GetEvents(sportId, _currentSession.CurrencyGroup, leagueIds, fromDate);
-            return Json(new { leagues, events }, JsonRequestBehavior.AllowGet);
+            return Json(new { leagues, events });
         }
 
-        public ActionResult GetEvents(int sportId, string leagueIds, DateTime fromDate)
+        public IActionResult GetEvents(int sportId, string leagueIds, DateTime fromDate)
         {
             var events = service.GetEvents(sportId, _currentSession.CurrencyGroup, leagueIds, fromDate);
-            return Json(events, JsonRequestBehavior.AllowGet);
+            return Json(events);
         }
 
-        public ActionResult GetSummaryReport(SummaryReportQuery query)
+        public IActionResult GetSummaryReport(SummaryReportQuery query)
         {
             query.GroupName = _currentSession.CurrencyGroup;
             var data = service.GetSummaryReportData(query);
             _cache.Set(SummaryReportCacheKey, query, new CacheItemOptions());
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
-        public ActionResult GetDetailReport(DetailReportQuery query)
+        public IActionResult GetDetailReport(DetailReportQuery query)
         {
             query.GroupName = _currentSession.CurrencyGroup;
             var data = service.GetDetailReportResult(query);
             _cache.Set(DetailReportCacheKey, query, new CacheItemOptions());
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return Json(data);
         }
 
         public void ExportSummaryReport()

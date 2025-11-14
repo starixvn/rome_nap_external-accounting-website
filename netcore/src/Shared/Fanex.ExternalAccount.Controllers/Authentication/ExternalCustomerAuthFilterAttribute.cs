@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using System.Web.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Fanex.Customer.Client;
 using Fanex.Customer.Client.Configurations;
 using Fanex.CustomerSetting.Security.Authenticate;

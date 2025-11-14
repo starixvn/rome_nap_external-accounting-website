@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -25,12 +25,12 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult MenuList() => PartialViewBase();
+        public IActionResult MenuList() => PartialViewBase();
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult MenuListPost()
+        public IActionResult MenuListPost()
         {
             var result = GetAllMenus();
 
@@ -41,7 +41,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult AddMenu()
+        public IActionResult AddMenu()
         {
             ViewBag.FunctionList = GetFunctions();
             ViewBag.MenuList = GetMenus();
@@ -52,7 +52,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult EditMenu(int id)
+        public IActionResult EditMenu(int id)
         {
             var model = _menuService.GetAllMenus().FirstOrDefault(o => o.MenuId == id);
 
@@ -72,7 +72,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(Menu menu)
+        public IActionResult Add(Menu menu)
         {
             if (menu != null)
             {
@@ -86,7 +86,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Menu menu)
+        public IActionResult Edit(Menu menu)
         {
             var result = _menuService.UpdateMenu(menu, CurrentSession.CustId, CurrentContext.Ip4Address);
 
@@ -96,7 +96,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateStatus(int menuId, bool isActive)
+        public IActionResult UpdateStatus(int menuId, bool isActive)
         {
             var result = _menuService.UpdateMenuStatus(
                 menuId,
@@ -109,7 +109,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int menuId)
+        public IActionResult Delete(int menuId)
         {
             var result = _menuService.DeleteMenu(
                 menuId,

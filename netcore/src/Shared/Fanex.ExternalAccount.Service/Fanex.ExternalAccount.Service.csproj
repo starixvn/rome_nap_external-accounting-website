@@ -23,7 +23,7 @@
     <PackageReference Include="Gma.QrCodeNet.Encoding" Version="0.4.0.0" />
     <PackageReference Include="MessagePack" Version="3.1.1" />
     <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
     <!-- Enterprise Library packages removed - .NET Framework legacy -->
     <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Caching" Version="5.0.414.0" /> -->
     <!-- <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" /> -->

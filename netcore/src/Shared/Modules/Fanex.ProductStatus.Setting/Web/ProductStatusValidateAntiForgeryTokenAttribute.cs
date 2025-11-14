@@ -3,7 +3,7 @@
     using System;
     using System.Web;
     using System.Web.Helpers;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
     internal class ProductStatusValidateAntiForgeryTokenAttribute : ActionFilterAttribute

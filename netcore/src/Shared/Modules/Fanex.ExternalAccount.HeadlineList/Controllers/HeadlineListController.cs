@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineList.Controllers
 {
     using System;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -23,18 +23,18 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
-        public ActionResult Index() => PartialViewBase();
+        public IActionResult Index() => PartialViewBase();
 
 
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
-        public ActionResult Search(SearchHeadlineQuery query)
+        public IActionResult Search(SearchHeadlineQuery query)
         {
             var headlineResult = service.GetHeadlines(query, CurrentSession.UserId, ExtRequest.GetGroupName());
-            return Json(headlineResult, JsonRequestBehavior.AllowGet);
+            return Json(headlineResult);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]
-        public ActionResult ExportHeadlines(SearchHeadlineQuery query)
+        public IActionResult ExportHeadlines(SearchHeadlineQuery query)
         {
             query.PageSize = int.MaxValue;
             query.Page = 1;

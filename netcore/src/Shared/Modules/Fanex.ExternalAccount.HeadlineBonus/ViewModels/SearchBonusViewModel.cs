@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineBonus.ViewModels
 {
     using System;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Fanex.ExternalAccount.Core.Context;
 
     public class SearchBonusViewModel

@@ -1,7 +1,7 @@
 namespace Fanex.ExternalAccount.WhiteLabelWinLossReports.Requests
 {
     using System;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     public class WhiteLabelReportQuery
     {
         public DateTime FromDate { get; set; } = DateTime.Today;

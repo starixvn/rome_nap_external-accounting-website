@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Statement.Controllers
 {
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Statement.Constants;
@@ -32,12 +32,12 @@
         }
 
         // [HttpGet]
-        // public ActionResult Index()
+        // public IActionResult Index()
         // {
         //     return this.View("~/Areas/Statement/Views/Report/Index.cshtml");
         // }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return PartialView(new StatementViewModel
             {
@@ -47,7 +47,7 @@
         }
 
         [HttpGet]
-        public ActionResult Guideline(int roleId = RoleIdConstants.Member, bool canViewBetListStatement = false)
+        public IActionResult Guideline(int roleId = RoleIdConstants.Member, bool canViewBetListStatement = false)
         {
             if (roleId == RoleIdConstants.Member)
             {
@@ -74,7 +74,7 @@
         }
 
         [HttpGet, AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "Statement")]
-        public ActionResult TransferDetails(TransferDetailsCriteria criteria)
+        public IActionResult TransferDetails(TransferDetailsCriteria criteria)
         {
             var statementList = _statementReportService.TransferDetails(criteria);
             Session[SessionKeyTransferDetails] = statementList;
@@ -83,21 +83,21 @@
         }
 
         [HttpGet, AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "Statement")]
-        public ActionResult ExportMemberStatement(MemberStatementCriteria criteria)
+        public IActionResult ExportMemberStatement(MemberStatementCriteria criteria)
         {
             var fileDownloadName = string.Format(Labels.StatementReportName, criteria.FromDate.ToString("MM_dd_yyyy"), criteria.ToDate.ToString("MM_dd_yyyy"));
             return File(_statementReportService.ExportMemberStatement(criteria, (StatementReportModel)Session[SessionKeyStatement]).ToArray(), "application/vnd.ms-excel", fileDownloadName);
         }
 
         [HttpGet, AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "Statement")]
-        public ActionResult ExportSMAStatement(SMAStatementCriteria criteria)
+        public IActionResult ExportSMAStatement(SMAStatementCriteria criteria)
         {
             var fileDownloadName = string.Format(Labels.StatementReportName, criteria.FromDate.ToString("MM_dd_yyyy"), criteria.ToDate.ToString("MM_dd_yyyy"));
             return File(_statementReportService.ExportSMAStatement(criteria, (StatementReportModel)Session[SessionKeyStatement]).ToArray(), "application/vnd.ms-excel", fileDownloadName);
         }
 
         [HttpGet, AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "Statement")]
-        public ActionResult ExportTransferDetails(TransferDetailsCriteria criteria)
+        public IActionResult ExportTransferDetails(TransferDetailsCriteria criteria)
         {
             var fileDownloadName = string.Format(Labels.TransferDetails_ReportName, criteria.TransferDate);
             return File(_statementReportService.ExportTransferDetails(criteria, (StatementReportModel)Session[SessionKeyTransferDetails]).ToArray(), "application/vnd.ms-excel", fileDownloadName);

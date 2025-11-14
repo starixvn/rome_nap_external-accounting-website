@@ -4,7 +4,7 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Service.ViewMaxPayoutSettingInformation;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     public class ViewMaxPayoutSettingInformationController : Controller
     {
@@ -17,7 +17,7 @@
             this.service = service ?? new ViewMaxPayoutSettingInformationService();
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var betTypeIds = new[] { 1, 3, 5, 7, 8, 15, 20, 21, 153, 501, 609, 610, 612, 701, 704, 705, 9400, 9404, 9405, 9406, 9407, 9408, 9409 };
             var sportTypeIds = new[] { 43, 44 };

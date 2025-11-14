@@ -1,7 +1,7 @@
 namespace Fanex.ExternalAccount.RewardManagement.Requests
 {
     using System;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     public class RewardReportRequest
     {

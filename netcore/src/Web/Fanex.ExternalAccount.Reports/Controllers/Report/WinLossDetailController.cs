@@ -35,7 +35,7 @@
         {
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             ViewBag.CanViewExtraPT = CanView(Config.GroupsCanViewExtraPT());
             ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
@@ -43,7 +43,7 @@
         }
 
         //[ValidateAntiForgeryToken]
-        public ActionResult GetData(WinLossDetailRequest request)
+        public IActionResult GetData(WinLossDetailRequest request)
         {
             var viewModel = GetDataFromDB(request);
             return Json(viewModel);
@@ -112,7 +112,7 @@
         }
 
         //[ValidateAntiForgeryToken]
-        public ActionResult GetExtraPT(ViewExtraPTRequest request)
+        public IActionResult GetExtraPT(ViewExtraPTRequest request)
         {
             request.UserId = currentSession.CustId;
             request.ParentGroupName = currentSession.ParentGroupName;
@@ -137,7 +137,7 @@
         }
 
         //[ValidateAntiForgeryToken]
-        public ActionResult GetCashFee(DrillDownCashFeeRequest request)
+        public IActionResult GetCashFee(DrillDownCashFeeRequest request)
         {
             var cashFee = winLossDetailService.DrillDownCashFee(request);
 

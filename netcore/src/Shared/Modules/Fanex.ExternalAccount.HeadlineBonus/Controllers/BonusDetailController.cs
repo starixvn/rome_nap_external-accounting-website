@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineBonus.Controllers
 {
     using System.Net;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
@@ -25,7 +25,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.BonusDetail, Policy = AuthenticationType.Read)]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var hasHostPermission = AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.BonusDetail, AuthenticationType.Host);
 
@@ -33,7 +33,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.BonusDetail, Policy = AuthenticationType.Read)]
-        public ActionResult Search(SearchBonusViewModel viewModel)
+        public IActionResult Search(SearchBonusViewModel viewModel)
             => Json(service.GetBonusDetailReport(
                 viewModel.GroupName,
                 viewModel.Member,
@@ -42,11 +42,11 @@
                 viewModel.StatusId,
                 viewModel.IsComplained,
                 viewModel.PageIndex + 1,
-                viewModel.PageSize), JsonRequestBehavior.AllowGet);
+                viewModel.PageSize));
 
         [HttpPost, AntiXSRFFilter]
         [ExternalAccountAuthenticate(Function = eFunctions.BonusDetail, Policy = AuthenticationType.Host)]
-        public ActionResult CancelPending(CancelPendingViewModel viewModel)
+        public IActionResult CancelPending(CancelPendingViewModel viewModel)
         {
             var result = viewModel.IsValid()
                 ? service.CancelPending(viewModel.GroupName, viewModel.CustId, viewModel.TransId, CurrentSession.UserId, CurrentContext.Ip4Address)
@@ -57,7 +57,7 @@
 
         [HttpPost, AntiXSRFFilter]
         [ExternalAccountAuthenticate(Function = eFunctions.BonusDetail, Policy = AuthenticationType.Host)]
-        public ActionResult AddNew(AddNewBonusViewModel viewModel)
+        public IActionResult AddNew(AddNewBonusViewModel viewModel)
         {
             var result = viewModel.IsValid()
                 ? service.AddNew(viewModel.GroupName, viewModel.Usernames, viewModel.AmountValue, CurrentSession.UserId, CurrentContext.Ip4Address)

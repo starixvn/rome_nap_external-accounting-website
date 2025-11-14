@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
@@ -39,7 +39,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index()
+        public IActionResult Index()
         {
             ViewBag.WillShowMessage = CanView(Config.GroupsCanViewWinLossDetailForIBCBetLiveCasino());
 
@@ -49,7 +49,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.DailyWinloss,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult GetDailyWinLoss()
+        public IActionResult GetDailyWinLoss()
         {
             GetRequestPage();
             _srecommend = CheckRequest.GetIntRequest("srecommend", 0);

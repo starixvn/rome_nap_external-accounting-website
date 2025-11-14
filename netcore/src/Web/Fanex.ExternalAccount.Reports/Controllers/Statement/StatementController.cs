@@ -28,7 +28,7 @@
 //
 //         [ExternalAccountAuthenticate(Function = eFunctions.Statement,
 //             Policy = AuthenticateAction.AuthenticationType.Read)]
-//         public ActionResult Index()
+//         public IActionResult Index()
 //         {
 //             ViewBag.IsInternal = Utils.ToBoolean(Request.QueryString["isinternal"]);
 //             return PartialViewBase();
@@ -37,7 +37,7 @@
 //         [ExternalAccountAuthenticate(Function = eFunctions.Statement,
 //             Policy = AuthenticateAction.AuthenticationType.Read)]
 //         [ValidateAntiForgeryToken]
-//         public ActionResult GetStatement()
+//         public IActionResult GetStatement()
 //         {
 //             GetRequestPage();
 //

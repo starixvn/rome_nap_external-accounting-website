@@ -46,7 +46,7 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Read)]
-        public ActionResult Super()
+        public IActionResult Super()
         {
             ViewBag.Code = Encryptor.RandomCaptcha;
 
@@ -85,7 +85,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult GetSuperPrefixes(SuperPrefixRequest query)
+        public IActionResult GetSuperPrefixes(SuperPrefixRequest query)
             => Json(searchAndCopyService.GetSuperPrefixes(new SuperPrefixCriteria
             {
                 GroupName = _currentSession.ParentGroupName,

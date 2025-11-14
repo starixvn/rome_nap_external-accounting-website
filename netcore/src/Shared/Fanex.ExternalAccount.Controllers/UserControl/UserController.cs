@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -31,7 +31,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult UserList()
+        public IActionResult UserList()
         {
             var groups = groupService.GetListGroup();
             if (CurrentSession.IsITAdmin)
@@ -53,7 +53,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult UserListPost(string userName = null, int? groupId = null)
+        public IActionResult UserListPost(string userName = null, int? groupId = null)
         {
             var result = _userService.GetListUsers(userName, groupId);
 
@@ -76,7 +76,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult EditUser(int id)
+        public IActionResult EditUser(int id)
         {
             var model = _userService.GetUserById(id);
 
@@ -103,7 +103,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int custId, string firstName, string lastName, int groupId)
+        public IActionResult Edit(int custId, string firstName, string lastName, int groupId)
         {
             var result = _userService.EditUser(CurrentSession.UserId, custId, firstName, lastName,
                 CurrentContext.Ip4Address, groupId);
@@ -114,7 +114,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult AddUser()
+        public IActionResult AddUser()
         {
             return PartialViewBase(GetUserModel());
         }
@@ -122,7 +122,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult AddExistUser()
+        public IActionResult AddExistUser()
         {
             return PartialViewBase(GetUserModel());
         }
@@ -130,7 +130,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(string username, string pwd, string firstName, string lastName, int groupId)
+        public IActionResult Add(string username, string pwd, string firstName, string lastName, int groupId)
         {
             var result = _userService.CreateUser(CurrentSession.UserId, username, pwd, firstName, lastName, groupId,
                 CurrentContext.Ip4Address);
@@ -141,7 +141,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult AddExist(string username, int groupId)
+        public IActionResult AddExist(string username, int groupId)
         {
             var result =
                 _userService.CreateExistUser(CurrentSession.UserId, username, groupId, CurrentContext.Ip4Address);
@@ -152,7 +152,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateStatus(int userId, bool isActive)
+        public IActionResult UpdateStatus(int userId, bool isActive)
         {
             var result = _userService.UpdateStatus(CurrentSession.UserId, userId, isActive, CurrentContext.Ip4Address);
 
@@ -162,7 +162,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult ResetPwd(int userId, string pwd)
+        public IActionResult ResetPwd(int userId, string pwd)
         {
             var result = _userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
 
@@ -172,7 +172,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult ResetPassword(int id)
+        public IActionResult ResetPassword(int id)
         {
             var model = _userService.GetUserById(id);
 
@@ -184,7 +184,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult GrantPermission(int userId, string username, string groupName)
+        public IActionResult GrantPermission(int userId, string username, string groupName)
         {
             var funcs = functionService.GetAllFunctions().ToList();
             funcs = funcs.Where(f => f.IsTest).ToList();
@@ -256,7 +256,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult GrantPermissionPost(int userId, string oldPolicy, string policy)
+        public IActionResult GrantPermissionPost(int userId, string oldPolicy, string policy)
         {
             var result = _userService.UpdateUserPolicy(CurrentSession.CustId, userId, oldPolicy, policy,
                 CurrentContext.Ip4Address);
@@ -270,7 +270,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.InternalLogin,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult InternalLogin(string username, string groupName)
+        public IActionResult InternalLogin(string username, string groupName)
         {
             var url = Url.Content("~") + "Shared/NoPermission";
             var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(username);
@@ -321,7 +321,7 @@
             return Redirect(url);
         }
      
-        public ActionResult ResetPwdOwner(int userId, string pwd)
+        public IActionResult ResetPwdOwner(int userId, string pwd)
         {
             if (userId != CurrentSession.UserId)
             {
@@ -333,7 +333,7 @@
             return JsonBase(result);
         }
     
-        public ActionResult ResetPasswordOwner(int id)
+        public IActionResult ResetPasswordOwner(int id)
         {
             if (id != CurrentSession.UserId)
             {

@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using System.Web.Mvc.Filters;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
@@ -39,7 +39,7 @@
             this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
-        public ActionResult Index()
+        public IActionResult Index()
         {
             int groupId;
             string groupName;
@@ -67,7 +67,7 @@
             return PartialViewBase(new SuperWinLossDetailBySubGroupViewModel(groupId, groupName, subGroupNames));
         }
 
-        public ActionResult GetData(GetSuperWinLossDetailBySubGroupRequest request)
+        public IActionResult GetData(GetSuperWinLossDetailBySubGroupRequest request)
         {
             return JsonBase(service.GetSuperWinLossDetailBySubGroupReport(request));
         }

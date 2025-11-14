@@ -1,12 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Module.LeftPanel.Controllers
 {
-    using System.Web.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.Utilities;
+    using Microsoft.AspNetCore.Mvc;
     using Services;
     using ViewModels;
 
@@ -43,7 +43,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult Index(string groupName, string custName)
+        public IActionResult Index(string groupName, string custName)
         {
             var userId = CurrentSession.UserId;
             ViewBag.UserId = userId;
@@ -72,7 +72,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ClearCredit,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult UsedCreditPage(int custId, int roleId)
+        public IActionResult UsedCreditPage(int custId, int roleId)
         {
             ViewBag.CustId = custId;
 
@@ -111,7 +111,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult SelectClearBalance(int custId)
+        public IActionResult SelectClearBalance(int custId)
         {
             ViewBag.CustId = custId;
             var result = customerQueryService.CustomerSelectClearBalance(custId);
@@ -120,7 +120,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateSecurityCode,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult GetSecurityCode(int custId, int roleId, string username)
+        public IActionResult GetSecurityCode(int custId, int roleId, string username)
         {
             ViewBag.custId = custId;
             ViewBag.roleId = roleId;
@@ -131,18 +131,18 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetOnlineList(int custId)
+        public IActionResult GetOnlineList(int custId)
             => JsonBase(customerQueryService.GetOnlineList(custId));
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult GetDownlineList(bool isDirectDownline, int custId, int pageIndex)
+        public IActionResult GetDownlineList(bool isDirectDownline, int custId, int pageIndex)
             => JsonBase(customerQueryService.GetDownlineList(isDirectDownline, custId, DefaultPageSize, pageIndex));
 
         [HttpGet]
         [ExternalAccountAuthenticate(Function = eFunctions.RemoveOTP,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult RemoveOTP(int custId, string username) =>
+        public IActionResult RemoveOTP(int custId, string username) =>
             View(LeftPanelOtpIndexView, new { CustId = custId, Username = username });
     }
 }

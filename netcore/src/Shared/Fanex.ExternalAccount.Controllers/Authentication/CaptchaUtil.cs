@@ -5,7 +5,7 @@
     using System.Drawing.Imaging;
     using System.IO;
     using System.Text;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Context;
 
     public static class CaptchaUtil

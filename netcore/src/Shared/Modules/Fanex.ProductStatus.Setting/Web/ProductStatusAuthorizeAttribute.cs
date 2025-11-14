@@ -2,7 +2,7 @@
 {
     using System;
     using System.Net;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using AppResources;
     using Configuration;
     using Models;

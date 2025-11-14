@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.ProblemAccount.Controllers
 {
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
@@ -30,13 +30,13 @@
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ProblemAccountList, Policy = AuthenticationType.Read)]
-        public ActionResult Index()
+        public IActionResult Index()
             => PartialViewBase(
                 new IndexViewModel(AuthorizationService.IsAuthorized(CurrentSession.UserId, eFunctions.ProblemAccountList, AuthenticationType.Host)));
 
         [ExternalAccountAuthenticate(Function = eFunctions.ProblemAccountList, Policy = AuthenticationType.Read)]
-        public ActionResult GetList(GetListViewModel viewModel)
-            => Json(service.GetProblemAccounts(viewModel), JsonRequestBehavior.AllowGet);
+        public IActionResult GetList(GetListViewModel viewModel)
+            => Json(service.GetProblemAccounts(viewModel));
 
         [ExternalAccountAuthenticate(Function = eFunctions.ProblemAccountList, Policy = AuthenticationType.Read)]
         public void ExportExcel(GetListViewModel viewModel)
@@ -68,7 +68,7 @@
 
         [ValidateAntiForgeryToken]
         [ExternalAccountAuthenticate(Function = eFunctions.ProblemAccountList, Policy = AuthenticationType.Host)]
-        public ActionResult SetToReviewed(SetToReviewedViewModel viewModel)
+        public IActionResult SetToReviewed(SetToReviewedViewModel viewModel)
         {
             viewModel.UserId = CurrentSession.UserId;
             viewModel.IP = CurrentContext.Ip4Address;

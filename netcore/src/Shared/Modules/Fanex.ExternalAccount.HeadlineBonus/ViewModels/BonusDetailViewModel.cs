@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineBonus.ViewModels
 {
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Fanex.ExternalAccount.HeadlineBonus.Constants;
     using Fanex.ExternalAccount.HeadlineBonus.Models;
     using Fanex.ExternalAccount.HeadlineBonus.Resources;

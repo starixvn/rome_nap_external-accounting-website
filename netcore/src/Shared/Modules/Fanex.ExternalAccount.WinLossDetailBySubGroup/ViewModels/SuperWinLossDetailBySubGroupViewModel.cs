@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Fanex.ExternalAccount.Utilities;
 
     public class SuperWinLossDetailBySubGroupViewModel

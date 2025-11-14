@@ -1,7 +1,7 @@
 ﻿namespace Fanex.ExternalAccount.Core.Helpers
 {
     using System.IO;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
     public static class MvcHelpers
     {

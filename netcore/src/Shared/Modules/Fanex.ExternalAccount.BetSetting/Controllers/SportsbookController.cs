@@ -4,7 +4,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.Logging.Extensions.Web;
@@ -17,16 +17,16 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     {
         private readonly Fanex.ExternalAccount.Service.Interface.Customer.ICustomerService externalCustomerService = new Fanex.ExternalAccount.Service.Impl.Customer.CustomerService();
 
-        public ActionResult Index(int custId, int uplineId, int userId, string groupName)
+        public IActionResult Index(int custId, int uplineId, int userId, string groupName)
             => PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Index.cshtml", externalCustomerService.IsArchivedCustId(custId));
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBetting")]
-        public ActionResult EditMultipleBetSetting()
+        public IActionResult EditMultipleBetSetting()
             => PartialView("~/Areas/CustomerSetting/Views/BetSetting/MultipleSportsbook/Index.cshtml", false);
 
         [HttpPost]
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Read, "SportsbookBetting")]
-        public ActionResult CheckMultipleSupersBetSetting(string sourceUser, string destUsers, string groupName, bool isCopy = true)
+        public IActionResult CheckMultipleSupersBetSetting(string sourceUser, string destUsers, string groupName, bool isCopy = true)
         {
             var result = externalCustomerService.CheckMultipleSupersBetSetting(sourceUser, destUsers, groupName, Fanex.ExternalAccount.Core.Context.CurrentSession.Instance.CustId, isCopy);
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, SuperIds = result.ResultData },

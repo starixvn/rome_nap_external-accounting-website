@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -20,7 +20,7 @@
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
-        public ActionResult FunctionList()
+        public IActionResult FunctionList()
         {
             ViewBag.InternalGroupIDs = Group.ITGroupId;
 
@@ -30,7 +30,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult FunctionListPost()
+        public IActionResult FunctionListPost()
         {
             var funcs = _funcService.GetAllFunctions();
             var parents = funcs.Where(o => o.ParentID == 0);
@@ -78,7 +78,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult EditFunction(int id)
+        public IActionResult EditFunction(int id)
         {
             var funcs = _funcService.GetAllFunctions();
             var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
@@ -136,7 +136,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult AddFunction()
+        public IActionResult AddFunction()
         {
             var funcs = _funcService.GetAllFunctions();
             var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
@@ -168,7 +168,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Function funtion, string oldGroups, string groups)
+        public IActionResult Edit(Function funtion, string oldGroups, string groups)
         {
             var result = _funcService.UpdateFunction(funtion, CurrentSession.CustId,
                 CurrentContext.Ip4Address, oldGroups, groups);
@@ -179,7 +179,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult Add(Function function, string groups)
+        public IActionResult Add(Function function, string groups)
         {
             var result = _funcService.CreateFunction(function, CurrentSession.CustId,
                 CurrentContext.Ip4Address, groups);
@@ -190,7 +190,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
-        public ActionResult UpdateStatus(int funcId, bool isTest)
+        public IActionResult UpdateStatus(int funcId, bool isTest)
         {
             var result = _funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
 
@@ -200,7 +200,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read)]
         [ValidateAntiForgeryToken]
-        public ActionResult PolicyList(int funcId, bool addNew = false)
+        public IActionResult PolicyList(int funcId, bool addNew = false)
         {
             var groups = _funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();
 

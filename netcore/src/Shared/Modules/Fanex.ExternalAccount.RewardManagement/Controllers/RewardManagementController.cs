@@ -1,6 +1,6 @@
 namespace Fanex.ExternalAccount.RewardManagement.Controllers
 {
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using System.Web;
     using System.Collections.Generic;
     using Fanex.ExternalAccount.Core.Base;
@@ -26,20 +26,20 @@ namespace Fanex.ExternalAccount.RewardManagement.Controllers
             _service = service ?? new RewardManagementService();
         }
         
-        public ActionResult Index()
+        public IActionResult Index()
         {
             var programs = _service.GetPrograms();
             var viewModel = new RewardManagementViewModel(programs);
             return PartialViewBase(viewModel);
         }
 
-        public ActionResult GetPrograms()
+        public IActionResult GetPrograms()
         {
             var programs = _service.GetPrograms();
-            return Json(programs, JsonRequestBehavior.AllowGet);
+            return Json(programs);
         }
 
-        public ActionResult GetReport(RewardReportRequest request)
+        public IActionResult GetReport(RewardReportRequest request)
         {
             request.GroupName = CurrentSession.CurrencyGroup;
             request.Username = HttpUtility.HtmlEncode(request.Username);

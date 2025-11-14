@@ -1,6 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineBonus.ViewModels
 {
-    using System.Web.Mvc;
+    using Microsoft.AspNetCore.Mvc;
     using Fanex.ExternalAccount.Core.Context;
 
     public class AddNewBonusViewModel
