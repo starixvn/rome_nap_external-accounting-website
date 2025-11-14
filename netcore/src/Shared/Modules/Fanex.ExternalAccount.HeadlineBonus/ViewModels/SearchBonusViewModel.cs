@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineBonus.ViewModels
 {
     using System;
-    using Microsoft.AspNetCore.Mvc;
     using Fanex.ExternalAccount.Core.Context;
 
     public class SearchBonusViewModel
@@ -9,7 +8,6 @@
         public string GroupName
             => ExtRequest.Instance.GetGroupName();
 
-        [AllowHtml]
         public string Member { get; set; }
 
         public DateTime FromDate { get; set; }

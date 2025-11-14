@@ -1,6 +1,5 @@
 ﻿namespace Fanex.ExternalAccount.HeadlineBonus.ViewModels
 {
-    using Microsoft.AspNetCore.Mvc;
     using Fanex.ExternalAccount.Core.Context;
 
     public class AddNewBonusViewModel
@@ -8,7 +7,6 @@
         public string GroupName
             => ExtRequest.Instance.GetGroupName();
 
-        [AllowHtml]
         public string Usernames { get; set; }
 
         public string Amount { get; set; }
