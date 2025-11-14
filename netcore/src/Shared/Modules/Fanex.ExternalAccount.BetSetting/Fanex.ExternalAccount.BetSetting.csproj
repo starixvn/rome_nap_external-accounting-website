@@ -12,13 +12,13 @@
     <PackageReference Include="AutoMapper" Version="2.2.1" />
     <PackageReference Include="BouncyCastle.Cryptography" Version="2.2.1" />
     <PackageReference Include="DotNetZip" Version="1.9.1.5" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Caching" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />
-    <PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />
-    <PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />
+    <!--<PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Caching" Version="5.0.414.0" />-->
+    <!--<PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />-->
+    <!--<PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />-->
+    <!--<PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" />-->
+    <!--<PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />-->
+    <!--<PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />-->
+    <!--<PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />-->
     <PackageReference Include="Enums.NET" Version="4.0.1" />
     <PackageReference Include="Fanex.Common" Version="1.1.0.1" />
     <PackageReference Include="Fanex.Crypt" Version="1.1.0.0" />
