@@ -91,7 +91,7 @@
                 GroupName = _currentSession.ParentGroupName,
                 Prefix = query.Prefix,
                 AllowNewSuper = query.AllowNewSuper
-            }), JsonRequestBehavior.DenyGet);
+            }));
 
         private void SendEmail(CloneSettingContext context)
         {
