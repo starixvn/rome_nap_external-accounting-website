@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
-    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
@@ -12,6 +11,7 @@
     using Fanex.ExternalAccount.ProblemAccount.Services;
     using Fanex.ExternalAccount.ProblemAccount.ViewModels;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
+    using System.IO;
 
     public class ProblemAccountController : BaseController
     {
@@ -58,7 +58,7 @@
                 searchFilter.FromDate.ToDateWithHyphen(),
                 searchFilter.ToDate.ToDateWithHyphen(),
                 roleName);
-            var excelTemplatePath = Server.MapPath($"~/ExcelTemplates/ProblemAccountList/{roleName}.xls");
+            var excelTemplatePath = Path.Combine(Directory.GetCurrentDirectory(), "ExcelTemplates", "ProblemAccountList", $"{roleName}.xls");
 
             using (var excelStream = excel.ExportExcel(excelTemplatePath, searchFilter, problemAccounts))
             {
@@ -73,7 +73,7 @@
             viewModel.UserId = CurrentSession.UserId;
             viewModel.IP = CurrentContext.Ip4Address;
 
-            return Json(service.SetToReviewed(viewModel), JsonRequestBehavior.DenyGet);
+            return Json(service.SetToReviewed(viewModel));
         }
     }
 }

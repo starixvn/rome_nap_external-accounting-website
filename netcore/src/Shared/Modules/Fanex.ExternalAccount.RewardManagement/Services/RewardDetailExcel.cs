@@ -3,7 +3,6 @@ namespace Fanex.ExternalAccount.RewardManagement.Services
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Web;
     using Fanex.ExternalAccount.Core.Shared.Extensions;
     using Fanex.ExternalAccount.Excel;
     using Fanex.ExternalAccount.Excel.Utility;
@@ -17,7 +16,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Services
         private const int PaymentNotReceivedRowIndex = 1;
         private const int PaymentReceivedRowIndex = 3;
 
-        public RewardDetailExcel() : base(HttpContext.Current.Server.MapPath("~/ExcelTemplates/Reports/RewardDetail.xls"))
+        public RewardDetailExcel() : base(Path.Combine(Directory.GetCurrentDirectory(), "ExcelTemplates", "Reports", "RewardDetail.xls"))
         {
         }
 

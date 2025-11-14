@@ -1,7 +1,6 @@
 namespace Fanex.ExternalAccount.RewardManagement.Requests
 {
     using System;
-    using Microsoft.AspNetCore.Mvc;
 
     public class RewardReportRequest
     {
@@ -11,7 +10,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Requests
 
         public string ProgramIds { get; set; }
 
-        [AllowHtml] public string Username { get; set; }
+        public string Username { get; set; }
 
         public string GroupName { get; set; }
         
