@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Web;
     using Fanex.ExternalAccount.Excel;
     using Fanex.ExternalAccount.Excel.Utility;
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.Models;
@@ -15,7 +14,7 @@
         private const int LastColumnIndex = 19;
 
         public WhiteLabelSettlementExcel()
-            : base(HttpContext.Current.Server.MapPath("~/ExcelTemplates/Reports/WhiteLabelSettlement.xls"))
+            : base(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExcelTemplates", "Reports", "WhiteLabelSettlement.xls"))
         {
         }
 

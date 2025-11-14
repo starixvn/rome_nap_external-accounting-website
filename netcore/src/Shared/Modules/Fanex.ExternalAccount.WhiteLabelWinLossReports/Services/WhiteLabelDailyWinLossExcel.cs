@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Web;
     using Fanex.ExternalAccount.Core.Shared.Extensions;
     using Fanex.ExternalAccount.Excel;
     using Fanex.ExternalAccount.Excel.Utility;
@@ -16,7 +15,7 @@
         private const int LastColumnIndex = 6;
 
         public WhiteLabelDailyWinLossExcel()
-            : base(HttpContext.Current.Server.MapPath("~/ExcelTemplates/Reports/WhiteLabelDailyWinLoss.xls"))
+            : base(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExcelTemplates", "Reports", "WhiteLabelDailyWinLoss.xls"))
         {
         }
 

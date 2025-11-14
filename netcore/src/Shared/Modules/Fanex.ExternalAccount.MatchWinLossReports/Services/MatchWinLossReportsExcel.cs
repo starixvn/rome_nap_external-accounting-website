@@ -8,8 +8,6 @@
     using Models;
     using NPOI.SS.Util;
     using System.Linq;
-    using System.IO;
-    using System.Web;
     using System.Globalization;
 
     public class MatchWinLossReportsExcel
@@ -44,10 +42,10 @@
         }
 
         private static string SummaryReportTemplatePhysicalPath =>
-            HttpContext.Current.Server.MapPath(SummaryTemplatePath);
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExcelTemplates", "Reports", "MatchWinLossSummary.xls");
 
         private static string DetailReportTemplatePhysicalPath =>
-            HttpContext.Current.Server.MapPath(DetailTemplatePath);
+            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExcelTemplates", "Reports", "MatchWinLossDetail.xls");
 
         public static string FormatDateWithoutSeconds(string dateString)
         {

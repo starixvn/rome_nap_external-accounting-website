@@ -2,7 +2,6 @@
 {
     using System;
     using System.IO;
-    using System.Web;
     using Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Models;
     using Fanex.ExternalAccount.Utilities;
 
@@ -57,7 +56,7 @@
             }
         }
 
-        private static string PhysicalTemplatePath => HttpContext.Current.Server.MapPath(TemplatePath);
+        private static string PhysicalTemplatePath => Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ExcelTemplates", "Reports", "SuperWinLossDetailBySubGroup.xls");
 
         public string GetExcelFileName()
             => string.Format(

@@ -3,7 +3,6 @@
     using System;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
-    using System.Web.Mvc.Filters;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
@@ -91,22 +90,5 @@
             }
         }
 
-        protected override void OnAuthentication(AuthenticationContext filterContext)
-        {
-            base.OnAuthentication(filterContext);
-
-            if (!currentSession.IsITAdmin
-                && !currentSession.IsInternalAdmin
-                && !groupService.GetGroupWithSubGroups(currentSession.GroupId).Any())
-            {
-                filterContext.Result = new ViewResult { ViewName = "~/Views/Shared/NoPermission.cshtml" };
-            }
-
-            // Logged in user is selecting sub-group
-            if (!currentSession.CurrencyGroup.Equals(currentSession.ParentGroupName, StringComparison.OrdinalIgnoreCase))
-            {
-                filterContext.Result = new ViewResult { ViewName = "~/Views/SuperWinLossDetailBySubGroup/_NoPermission.cshtml" };
-            }
-        }
     }
 }

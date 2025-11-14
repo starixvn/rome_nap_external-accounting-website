@@ -10,7 +10,6 @@ namespace Fanex.ExternalAccount.WhiteLabelWinLossReports.Requests
         
         public string WhiteLabels { get; set; }
 
-        [AllowHtml]
         public string Username { get; set; }
 
         public string GroupName { get; set; } 

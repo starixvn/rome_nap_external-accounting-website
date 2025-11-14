@@ -20,9 +20,10 @@
         {
         }
 
-        public CustomerDataAccessImpl(IDynamicRepository dynamicRepository)
+        public CustomerDataAccessImpl(IDynamicRepository dynamicRepository, IHttpContextAccessor httpContextAccessor)
         {
             _dynamicRepository = dynamicRepository ?? new DynamicRepository();
+            _httpContextAccessor = httpContextAccessor ?? new HttpContextAccessor();
         }
 
         public DataSet GetPersonalInfo(GetPersonalInfoCriteria criteria)
@@ -84,7 +85,7 @@
 
         public Result ResetMemberCredit(int userId, int uplineId, bool closedOnly)
         {
-            var command = new ResetMemberCreditCommand(userId, uplineId, closedOnly, HttpContext.Current.Request.UserHostAddress);
+            var command = new ResetMemberCreditCommand(userId, uplineId, closedOnly, _httpContextAccessor.HttpContext?.Connection.RemoteIpAddress?.ToString() ?? string.Empty);
             _dynamicRepository.Execute(command);
             return new Result(command.ErrCode, command.ErrMsg);
         }
