@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
     using Microsoft.AspNetCore.Mvc;
     using Core.Authorization;
     using Core.Base;
@@ -19,6 +18,8 @@
     using Service.Interface.Login;
     using Tarus.Infrastructure.Configurations.InternalLogin;
     using Utilities;
+    using System.Net;
+    using Microsoft.AspNetCore.Http;
 
     public class UserController : BaseController
     {
@@ -80,8 +81,8 @@
         {
             var model = _userService.GetUserById(id);
 
-            model.FirstName = HttpUtility.HtmlDecode(model.FirstName);
-            model.LastName = HttpUtility.HtmlDecode(model.LastName);
+            model.FirstName = WebUtility.HtmlDecode(model.FirstName);
+            model.LastName = WebUtility.HtmlDecode(model.LastName);
 
             var groups = groupService.GetListGroup();
             if (CurrentSession.IsITAdmin)
@@ -290,10 +291,14 @@
                 string randomDomain = null;
                 string internalLoginSessionKey = $"InternalLoginDomains_{CustomerSite}";
 
-                if (Session[internalLoginSessionKey] != null)
+                if (HttpContext.Session.GetString(internalLoginSessionKey) != null)
                 {
-                    configDomains = (List<InternLoginDomain>)Session[internalLoginSessionKey];
+                    configDomains = JsonConvert.DeserializeObject<List<InternLoginDomain>>(HttpContext.Session.GetString(internalLoginSessionKey));
                     randomDomain = configDomains.FirstOrDefault(domain => !domain.IsInUsed)?.Domain;
+                    if (randomDomain == null)
+                    {
+                        randomDomain = internalDomains[new Random().Next(internalDomains.Length)];
+                    }
                 }
                 else
                 {
@@ -303,19 +308,18 @@
                     }
                 }
 
-                randomDomain = randomDomain ?? internalDomains[new Random().Next(internalDomains.Length)];                
                 var foundDomain = configDomains.Find(item => item.Domain == randomDomain);
                 if (foundDomain != null)
                 {
                     foundDomain.IsInUsed = true;
                 }
 
-                Session[internalLoginSessionKey] = configDomains;
+                HttpContext.Session.SetString(internalLoginSessionKey, JsonConvert.SerializeObject(configDomains));
 
                 randomDomain = FormatInternalLoginDomain(randomDomain);
                 var internalDomain = randomDomain.StartsWith("http") ? $"{randomDomain}{internalLoginAction}" : $"https://{randomDomain}{internalLoginAction}";
 
-                url = $"{internalDomain}?{(Session[Config.InternalAgentUMToken] == null ? string.Empty : $"UMToken={Session[Config.InternalAgentUMToken]}&")}parameter={param}";
+                url = $"{internalDomain}?{(HttpContext.Session.GetString(Config.InternalAgentUMToken) == null ? string.Empty : $"UMToken={HttpContext.Session.GetString(Config.InternalAgentUMToken)}&")}parameter={param}";
             }
 
             return Redirect(url);
@@ -325,7 +329,7 @@
         {
             if (userId != CurrentSession.UserId)
             {
-                return ActionDenied(Request);
+                return ActionDenied();
             }
 
             var result = _userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
@@ -337,7 +341,7 @@
         {
             if (id != CurrentSession.UserId)
             {
-                return ActionDenied(Request);
+                return ActionDenied();
             }
 
             var model = _userService.GetUserById(id);
@@ -369,12 +373,13 @@
         {
             return Request.Headers["Host"].Contains("oneops.net") ?
                 string.Format(configDomain, "gatonic.com") :
-                string.Format(configDomain, Request.Headers["Host"]
-                                                    .Replace("www.", string.Empty)
-                                                    .Replace("staging.", string.Empty)
-                                                    .Replace("h1.", string.Empty)
-                                                    .Replace("h2.", string.Empty)
-                                                    .Replace("h3.", string.Empty));
+                string.Format(configDomain, HttpContext.Request.Headers["Host"]
+                                                    .ToString()
+                                                    .Replace("www.", string.Empty).ToString()
+                                                    .Replace("staging.", string.Empty).ToString()
+                                                    .Replace("h1.", string.Empty).ToString()
+                                                    .Replace("h2.", string.Empty).ToString()
+                                                    .Replace("h3.", string.Empty).ToString());
         }
     }
 }
