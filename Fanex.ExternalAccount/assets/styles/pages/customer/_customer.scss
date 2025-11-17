@@ -9,7 +9,7 @@
 }
 
 
-[class$="DblComm"] {
+[class$="DblComm"], [class$="HideBetIP"] {
     text-align: center;
 
     &:before {
@@ -45,16 +45,16 @@
     box-sizing: content-box;
 }
 
-.allowDblComm, .disallowDblComm, .onDblComm, .offDblComm {
+.allowDblComm, .disallowDblComm, .onDblComm, .offDblComm, .allowHideBetIP, .disallowHideBetIP {
     cursor: pointer;
 }
 
-.allowDblComm:before, .onDblComm:before {
+.allowDblComm:before, .onDblComm:before, .allowHideBetIP:before {
     content: '\e928';
     color: #82c341;
 }
 
-.disallowDblComm:before, .offDblComm:before {
+.disallowDblComm:before, .offDblComm:before, .disallowHideBetIP:before {
     content: '\e927';
     color: #666;
 }

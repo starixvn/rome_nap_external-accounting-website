@@ -510,6 +510,54 @@
         }
     },
 
+    ConfigHideBetIP: function (custid ) {
+        var allow = $('#dbl-' + custid).css('cursor') == 'pointer';
+        if (allow) {
+            var msg = '';
+            var title = '';
+
+            if ($('#hideBetIP-' + custid).attr('class') == 'disallowHideBetIP') {
+                msg = 'Once Hide Bet IP is enabled for this Super, this Super and all downlines will no longer be able to view IP information in Betlist and the related functions.';
+                title = 'Enable Hide Bet IP';
+            } else if ($('#hideBetIP-' + custid).attr('class') == 'allowHideBetIP') {
+                msg = 'Disabling Hide Bet IP will restore IP information visibility for this Super and all downlines in Betlist and the related functions.';
+                title = 'Disable Hide Bet IP';
+            }
+
+            Fanex.ExtAcc.Form.ConfirmBox(title, msg, 450, 170, false, function () {
+                Fanex.ExtAcc.Form.Close(false);
+                Fanex.ExtAcc.BlockUI();
+                
+                var isHideBetIP = $('#hideBetIP-' + custid).attr('class') === 'disallowHideBetIP';
+                
+                $.ajax({
+                    url: resolveClientUrl('SuperInfo/UpdateHideBetIP'),
+                    type: 'post',
+                    data: {
+                        superCustId: custid,
+                        isHideBetIP: isHideBetIP
+                    }
+                })
+                    .success(function (result) {
+                        if (Fanex.ExtAcc.ShowSecurityCodePage(result, Fanex.ExtAcc.UnBlockUI)) {
+                            return;
+                        }
+
+                        if (result.isSuccess) {
+                            var timeout = setTimeout(function () {
+                                clearTimeout(timeout);
+                                Fanex.ExtAcc.Customer.CallBackCustomerList();
+                                Fanex.ExtAcc.UnBlockUI();
+                            }, 2000);
+                        } else {
+                            Fanex.ExtAcc.UnBlockUI();
+                            Fanex.ExtAcc.Form.Alert('Error', result.errorCode == "600" ? "This account was disabled".formatErrorMessage() : result.errorMessage.formatErrorMessage(), 300, 150, 'alert');
+                        }
+                    });
+            });
+        }
+    },
+
     Select: function (div) {
         $('#editMult').attr('style', 'cursor: default !important');
 

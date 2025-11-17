@@ -68,5 +68,7 @@
         public string Currency { get; set; }
 
         public int ServiceType { get; set; }
+        
+        public bool IsHideIP { get; set; }
     }
 }

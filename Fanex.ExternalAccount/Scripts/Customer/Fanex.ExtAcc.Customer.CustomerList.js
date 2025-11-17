@@ -158,7 +158,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
             var hasSubGroups = result.HasSubGroups;
             _this.cachedParams.uplineId = params.uplineId;
             _this.cachedParams.uplineRoleId = params.uplineRoleId;
-            var numberOfFrozenColumn = 6;
+            var numberOfFrozenColumn = 7;
             var widthDevice = top.$(top.window).width();
             if (Fanex.ExtAcc.Customer.CurrentLevel == Fanex.ExtAcc.Customer.Member
                 && !Fanex.ExtAcc.Customer.isEditDirectMember
@@ -356,6 +356,13 @@ Fanex.ExtAcc.Customer.CustomerList = {
                 return '<div onclick="Fanex.ExtAcc.Customer.ConfigDoubleComm(' + cell.Value.CustId + ', ' + (cell.Value.RoleId === Fanex.ExtAcc.Customer.Super) + ')" id="dbl-' + cell.Value.CustId + '" class="' + (cell.Value.DoubleCommLosing ? 'allowDblComm' : 'disallowDblComm') + '"></div>';
             }
         });
+        columns.push({
+            HeaderText: 'Hide Bet IP', Name: 'HideBetIP', Width: 80,
+            CustomCellRender: function (cell) {
+                console.log("cell",cell)
+                return '<div onclick="Fanex.ExtAcc.Customer.ConfigHideBetIP(' + cell.Value.CustId + ')" id="hideBetIP-' + cell.Value.CustId + '" class="' + (cell.Value.IsHideIP ? 'allowHideBetIP' : 'disallowHideBetIP') + '"></div>';
+            }
+        });
         columns.push(isMemberList ? { HeaderText: 'Nickname', Name: 'NickName', Width: 120 } : undefined);
         columns.push({ HeaderText: 'First Name', Name: 'firstname', Width: 120 });
         columns.push({ HeaderText: 'Last Name', Name: 'lastname', Width: 120 });
@@ -410,6 +417,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ HeaderText: 'Edit', Name: 'Edit', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Status', Name: 'Status', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Double Comm', Name: 'DoubleCommLosing', MergeRowNumber: 2 });
+        columns.push({ HeaderText: 'Hide Bet IP', Name: 'HideBetIP', MergeRowNumber: 2 });
         columns.push(isMemberList ? { HeaderText: 'Nickname', Name: 'NickName', MergeRowNumber: 2 } : undefined);
         columns.push({ HeaderText: 'First Name', Name: 'firstname', MergeRowNumber: 2 });
         columns.push({ HeaderText: 'Last Name', Name: 'lastname', MergeRowNumber: 2 });
@@ -442,6 +450,7 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({ Name: 'Edit', Value: currentRow });
         columns.push({ Name: 'Status', Value: currentRow });
         columns.push({ Name: 'DoubleCommLosing', Value: currentRow });
+        columns.push({ Name: 'HideBetIP', Value: currentRow });
         columns.push(isMemberList ? { Name: 'NickName', Value: currentRow.NickName } : undefined);
         columns.push({ Name: 'firstname', Value: currentRow.FirstName });
         columns.push({ Name: 'lastname', Value: currentRow.LastName });
