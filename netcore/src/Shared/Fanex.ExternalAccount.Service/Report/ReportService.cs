@@ -43,6 +43,8 @@
 
         public static DateTime BalanceUpDate => new ReportUtils().BalanceUpDate;
 
+        public static DateTime MoveBetsDate => new ReportUtils().MoveBetsDate;
+
         public LineInfo SearchCustomerInfo(string groupname, int custId, string userName, bool isGetUplineInfo)
             => _reportDao.GetCustomerInfo(new GetCustomerInfoCriteria(groupname, custId, userName, isGetUplineInfo));
 

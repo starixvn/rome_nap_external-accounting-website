@@ -1,6 +1,7 @@
 ﻿@using Newtonsoft.Json;
 @using Fanex.ExternalAccount.Statement.Models.StatementReport;
 @using Fanex.ExternalAccount.Statement.Resources;
+@using Fanex.ExternalAccount.Reports.Helpers;
 @model StatementReportModel
 @{
     ViewBag.Title = Labels.Transfer_Details;
@@ -21,7 +22,7 @@
     <div id="transfer-details-container" class="freegrid"></div>
     <iframe id="frm" width="0" height="0" frameborder="0" style="display: none"></iframe>
     <script type="text/javascript" src="@Url.Content("~/Scripts/_Libs/jQuery/jquery-1.8.2.min.js")"></script>
-    @Scripts.Render("~/Scripts/_Libs/FanexGrid/FanexGridScripts")
+    @StaticResources.RenderScripts("~/Scripts/_Libs/FanexGrid/FanexGridScripts")
     <script type="text/javascript" src="@Url.Content("~/Scripts/Fanex.Grid/Fanex.Grid.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/Fanex.Grid/Fanex.Pagination.js")"></script>
     <script type="text/javascript" src="@Url.Content("~/Scripts/Fanex.Grid/moment.js")"></script>
