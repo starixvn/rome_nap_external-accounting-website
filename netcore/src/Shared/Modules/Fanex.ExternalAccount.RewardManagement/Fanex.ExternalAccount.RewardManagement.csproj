@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Fanex.ExternalAccount.RewardManagement</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.RewardManagement</AssemblyName>
     <LangVersion>latest</LangVersion>

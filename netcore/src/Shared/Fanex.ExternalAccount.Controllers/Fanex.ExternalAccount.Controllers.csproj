@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Fanex.ExternalAccount.Controllers</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.Controllers</AssemblyName>
     <LangVersion>latest</LangVersion>
