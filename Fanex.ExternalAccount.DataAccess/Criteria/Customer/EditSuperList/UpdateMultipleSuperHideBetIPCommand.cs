@@ -1,12 +1,13 @@
 namespace Fanex.ExternalAccount.DataAccess.Criteria.Customer.EditSuperList
 {
-    using Fanex.Data.Repository;
+    using Fanex.Data;
     using Fanex.ExternalAccount.Core.Shared;
 
     public class UpdateMultipleSuperHideBetIPCommand : INonQueryBaseCommand
     {
         public string CustIDList { get; set; }
 
+        [SpParam(SqlParamName = "IsHideIP")]
         public bool IsHideBetIP { get; set; }
 
         public string IP { get; set; }
