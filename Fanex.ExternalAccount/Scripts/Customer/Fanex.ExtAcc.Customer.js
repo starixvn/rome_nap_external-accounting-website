@@ -510,16 +510,16 @@
         }
     },
 
-    ConfigHideBetIP: function (custid ) {
+    ConfigHideBetIP: function (custid, isSuper) {
         var allow = $('#dbl-' + custid).css('cursor') == 'pointer';
-        if (allow) {
+        if (allow && isSuper) {
             var msg = '';
             var title = '';
 
-            if ($('#hideBetIP-' + custid).attr('class') == 'disallowHideBetIP') {
+            if ($('#hideBetIP-' + custid).attr('class').includes('disallowHideBetIP')) {
                 msg = 'Once Hide Bet IP is enabled for this Super, this Super and all downlines will no longer be able to view IP information in Betlist and the related functions.';
                 title = 'Enable Hide Bet IP';
-            } else if ($('#hideBetIP-' + custid).attr('class') == 'allowHideBetIP') {
+            } else if ($('#hideBetIP-' + custid).attr('class').includes('allowHideBetIP')) {
                 msg = 'Disabling Hide Bet IP will restore IP information visibility for this Super and all downlines in Betlist and the related functions.';
                 title = 'Disable Hide Bet IP';
             }
@@ -528,7 +528,7 @@
                 Fanex.ExtAcc.Form.Close(false);
                 Fanex.ExtAcc.BlockUI();
                 
-                var isHideBetIP = $('#hideBetIP-' + custid).attr('class') === 'disallowHideBetIP';
+                var isHideBetIP = $('#hideBetIP-' + custid).attr('class').includes('disallowHideBetIP');
                 
                 $.ajax({
                     url: resolveClientUrl('SuperInfo/UpdateHideBetIP'),

@@ -9,7 +9,7 @@
 }
 
 
-[class$="DblComm"], [class$="HideBetIP"] {
+[class$="DblComm"], [class~="icon"] {
     text-align: center;
 
     &:before {
@@ -47,6 +47,10 @@
 
 .allowDblComm, .disallowDblComm, .onDblComm, .offDblComm, .allowHideBetIP, .disallowHideBetIP {
     cursor: pointer;
+}
+
+.notAllowed {
+    cursor: not-allowed !important;
 }
 
 .allowDblComm:before, .onDblComm:before, .allowHideBetIP:before {

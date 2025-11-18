@@ -359,8 +359,18 @@ Fanex.ExtAcc.Customer.CustomerList = {
         columns.push({
             HeaderText: 'Hide Bet IP', Name: 'HideBetIP', Width: 80,
             CustomCellRender: function (cell) {
-                console.log("cell",cell)
-                return '<div onclick="Fanex.ExtAcc.Customer.ConfigHideBetIP(' + cell.Value.CustId + ')" id="hideBetIP-' + cell.Value.CustId + '" class="' + (cell.Value.IsHideIP ? 'allowHideBetIP' : 'disallowHideBetIP') + '"></div>';
+                var isSuper = cell.Value.RoleId === Fanex.ExtAcc.Customer.Super;
+                var classProperty = cell.Value.IsHideIP ? 'allowHideBetIP icon' : 'disallowHideBetIP icon';
+                var tooltip = '';
+
+                if (isSuper) {
+                    tooltip = 'Hide IP Info for this Super and Downline';
+                }
+                else {
+                    classProperty += ' notAllowed';
+                }
+
+                return '<div onclick="Fanex.ExtAcc.Customer.ConfigHideBetIP(' + cell.Value.CustId + ', ' + isSuper + ')" id="hideBetIP-' + cell.Value.CustId + '" class="' + classProperty + '" title="' + tooltip + '"></div>';
             }
         });
         columns.push(isMemberList ? { HeaderText: 'Nickname', Name: 'NickName', Width: 120 } : undefined);
