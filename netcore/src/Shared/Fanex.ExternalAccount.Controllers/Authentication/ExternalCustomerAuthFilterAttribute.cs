@@ -19,7 +19,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     public class ExternalCustomerAuthFilterAttribute : Attribute, IAsyncAuthorizationFilter, IAuthenticate
     {
         private readonly AuthorizationService authorization;
-        private readonly CustomerClientConfiguration clientConfig;
+        private CustomerClientConfiguration? clientConfig;
 
         public bool IsHost { get; set; }
 
@@ -39,10 +39,30 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         {
         }
 
-        internal ExternalCustomerAuthFilterAttribute(CustomerClientConfiguration clientConfig)
+        internal ExternalCustomerAuthFilterAttribute(CustomerClientConfiguration? clientConfig)
         {
-            this.clientConfig = clientConfig ?? CustomerClientManager.ClientConfigs;
+            this.clientConfig = clientConfig;
             authorization = new AuthorizationServiceImpl();
+        }
+
+        private CustomerClientConfiguration ClientConfig
+        {
+            get
+            {
+                if (clientConfig == null)
+                {
+                    try
+                    {
+                        clientConfig = CustomerClientManager.ClientConfigs ?? new CustomerClientConfiguration();
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        // If CustomerClientManager is not configured yet, use default
+                        clientConfig = new CustomerClientConfiguration();
+                    }
+                }
+                return clientConfig;
+            }
         }
 
         public string Function { get; set; } = string.Empty;
@@ -137,7 +157,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             }
             else
             {
-                context.Result = new RedirectResult(clientConfig.AccessDeniedUrl);
+                context.Result = new RedirectResult(ClientConfig.AccessDeniedUrl);
             }
         }
 

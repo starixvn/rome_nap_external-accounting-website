@@ -5,9 +5,16 @@ namespace Fanex.ExternalAccount.Utilities
     using System.Configuration;
     using System.Linq;
     using System.Web;
+    using Microsoft.Extensions.Configuration;
 
     public static class Config
     {
+        private static IConfiguration _configuration;
+
+        public static void Initialize(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public static DateTime WinlostDate
 #pragma warning disable S109 // Magic numbers should not be used
             => DateTime.Now.AddDays(-1).Date;
@@ -55,6 +62,8 @@ namespace Fanex.ExternalAccount.Utilities
         public static string CssCustomer => GetValue("CssCustomer");
 
         public static string InternalAgentUMToken => GetValue("int_agent_UMToken");
+
+        public static bool EnableWriteLogSwitchLine => GetValue("EnableWriteLogSwitchLine") == "1";
 
         public static string InternalLoginUrl => GetValue("int_agent_url");
 
@@ -159,7 +168,7 @@ namespace Fanex.ExternalAccount.Utilities
                     .Contains(currentGroup, StringComparer.CurrentCultureIgnoreCase);
         }
         
-        private static string GetValue(string key) => ConfigurationManager.AppSettings[key];
+        private static string GetValue(string key) => _configuration?[key] ?? string.Empty;
         
         public static bool IsMalaysiaGroup(string currentGroup)
         {

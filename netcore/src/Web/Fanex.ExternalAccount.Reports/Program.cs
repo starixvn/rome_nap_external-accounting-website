@@ -1,32 +1,55 @@
 using Fanex.ExternalAccount.Reports.Helpers;
+using Fanex.Customer.Client;
+using Fanex.Customer.Client.Configurations;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Fanex.ExternalAccount.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
+    // Configure CustomerClientManager before building the app
+    var customerConfig = new CustomerClientConfiguration();
+    // Note: CustomerClientConfiguration properties are read-only in the real NuGet package
+    // The configuration values are set via appsettings, but we need to call UseConfig with a valid instance
+    CustomerClientManager.UseConfig(customerConfig);
 
-var app = builder.Build();
+    // Add services to the container.
+    builder.Services.AddControllersWithViews();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+    // Configure authentication
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+        .AddCookie(options =>
+        {
+            options.LoginPath = "/Account/Login";
+            options.AccessDeniedPath = "/Account/Login";
+            options.ExpireTimeSpan = TimeSpan.FromHours(24);
+        });
 
-app.UseHttpsRedirection();
-app.UseRouting();
+    // Initialize the Config class with the configuration
+    Config.Initialize(builder.Configuration);
 
-app.UseAuthorization();
+    var app = builder.Build();
 
-app.MapStaticAssets();
+    // Configure the HTTP request pipeline.
+    if (!app.Environment.IsDevelopment())
+    {
+        app.UseExceptionHandler("/Home/Error");
+        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+        app.UseHsts();
+    }
 
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    app.UseHttpsRedirection();
+    app.UseRouting();
 
-StaticResources.Init(app.Environment);
+    app.UseAuthentication();
+    app.UseAuthorization();
 
-app.Run();
+    app.MapStaticAssets();
+
+    app.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}")
+        .WithStaticAssets();
+
+    StaticResources.Init(app.Environment);
+
+    app.Run();

@@ -47,17 +47,57 @@ namespace Logging
     }
 }
 
-namespace Fanex.Customer
+namespace Fanex.Customer.Client
 {
     public class CustomerClientConfiguration
     {
-        public static CustomerClientConfiguration Instance => new CustomerClientConfiguration();
-        public string AccessDeniedUrl => "/Account/Login";
+        public CustomerClientConfiguration()
+        {
+            // Default values
+            ServiceUri = "https://customer.nexdev.net/local4/api/";
+            CdnUri = "https://cdn-customer.nexdev.net/v4/";
+            SystemId = "4";
+            AccessDeniedUrl = "/Account/Login";
+        }
+
+        public string ServiceUri { get; set; }
+        public string CdnUri { get; set; }
+        public string SystemId { get; set; }
+        public string AccessDeniedUrl { get; set; }
     }
 
     public static class CustomerClientManager
     {
-        public static CustomerClientConfiguration ClientConfigs => new CustomerClientConfiguration();
+        private static CustomerClientConfiguration _clientConfigs;
+
+        public static CustomerClientConfiguration ClientConfigs
+        {
+            get
+            {
+                if (_clientConfigs == null)
+                {
+                    // Initialize with default configuration if not configured
+                    _clientConfigs = new CustomerClientConfiguration();
+                }
+                return _clientConfigs;
+            }
+        }
+
+        public static void Configure(Microsoft.Extensions.Configuration.IConfiguration configuration)
+        {
+            _clientConfigs = new CustomerClientConfiguration
+            {
+                ServiceUri = configuration["Fanex.Customer:ServiceUri"] ?? "https://customer.nexdev.net/local4/api/",
+                CdnUri = configuration["Fanex.Customer:CdnUri"] ?? "https://cdn-customer.nexdev.net/v4/",
+                SystemId = configuration["Fanex.Customer:SystemId"] ?? "4",
+                AccessDeniedUrl = "/Account/Login"
+            };
+        }
+
+        public static void UseConfig(CustomerClientConfiguration configuration)
+        {
+            _clientConfigs = configuration ?? new CustomerClientConfiguration();
+        }
     }
 
     namespace Client

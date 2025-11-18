@@ -15,6 +15,7 @@
     <PackageReference Include="Fanex.RemotingRef" Version="1.5.1" />
     <PackageReference Include="Fanex.File" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
     <PackageReference Include="MessagePack" Version="3.1.1" />
     <PackageReference Include="MessagePack.Annotations" Version="3.1.1" />
     <!-- Enterprise Library packages removed - .NET Framework legacy -->

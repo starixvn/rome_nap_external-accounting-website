@@ -420,7 +420,7 @@
 
         private static void WriteLogSwitchLine(string message, System.Diagnostics.TraceEventType type)
         {
-            if (ConfigurationManager.AppSettings["EnableWriteLogSwitchLine"] == "1")
+            if (Fanex.ExternalAccount.Utilities.Config.EnableWriteLogSwitchLine)
                 ExceptionHandler.Handle(new Exception(message), type);
         }
     }
