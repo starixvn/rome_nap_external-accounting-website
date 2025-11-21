@@ -193,8 +193,8 @@ class SuperInfo {
         this.$("#ckbSuperPhone").prop("checked", true).trigger("change");
         this.$("#ckbSuperMobilePhone").prop("checked", false).trigger("change");
         this.$("#SuperForceChange").prop("checked", true).trigger("change");
-        this.$("#ckbHideBetIP").prop("checked", true).trigger("change");
-        this.$("#ckbSuperHideBetIP").prop("checked", false).val('false');
+        this.$("#ckbHideBetIP").prop("checked", false).trigger("change");
+        this.$("#ckbSuperHideBetIP").prop("checked", false).trigger("change");
         this.$(".ic-pwd-eye").each(function () {
             var targetId = $(this).data("id");
             $(`#${targetId}`).prop("type", "password");
@@ -406,6 +406,7 @@ class SuperInfo {
         var updateInfoError = "";
         var updatePwdError = "";
         var updateCodeError = "";
+        var updateHideIPError = "";
 
         for (var i = 0; i < errorList.length; i++) {
             var updateError = errorList[i];
@@ -418,6 +419,9 @@ class SuperInfo {
             if (updateError.errCode === 3) {
                 updateCodeError += `${updateError.resultData}: ${updateError.errMsg} </br>`;
             }
+            if (updateError.errCode === 4) {
+                updateHideIPError += `${updateError.resultData}: ${updateError.errMsg} </br>`;
+            }
         }
 
         var errorMessage = "";
@@ -427,8 +431,11 @@ class SuperInfo {
         if (updatePwdError !== "") {
             errorMessage += `Reset Password:</br>${updatePwdError}`;
         }
-        if (updatePwdError !== "") {
-            errorMessage += `Reset Security Code:</br>${updatePwdError}`;
+        if (updateCodeError !== "") {
+            errorMessage += `Reset Security Code:</br>${updateCodeError}`;
+        }
+        if (updateHideIPError !== "") {
+            errorMessage += `Update Hide IP:</br>${updateHideIPError}`;
         }
 
         return errorMessage;

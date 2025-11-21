@@ -30,6 +30,7 @@ namespace Fanex.ExternalAccount.Service.Customer
         private const int ErrorUpdateInfo = 1;
         private const int ErrorUpdatePassword = 2;
         private const int ErrorUpdateCode = 3;
+        private const int ErrorUpdateHideIP = 4;
 
         public EditSuperListService() : this(null)
         {
@@ -117,7 +118,7 @@ namespace Fanex.ExternalAccount.Service.Customer
                 var resultHideBetIP = dataAccess.ExecuteUpdate(command);
                 if (!string.IsNullOrEmpty(resultHideBetIP))
                 {
-                    errorList.AddRange(ParseErrMsg(ErrorUpdateCode, resultHideBetIP, superIdNameList));
+                    errorList.AddRange(ParseErrMsg(ErrorUpdateHideIP, resultHideBetIP, superIdNameList));
                 }
             }
 
