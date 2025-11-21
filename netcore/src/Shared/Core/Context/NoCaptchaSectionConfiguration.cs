@@ -1,28 +1,18 @@
 ﻿namespace Fanex.ExternalAccount.Core.Context
 {
-    using System.Configuration;
+    using Microsoft.Extensions.Configuration;
 
-    public class NoCaptchaSectionConfiguration : ConfigurationSection
+    public class NoCaptchaSectionConfiguration
     {
-        private static NoCaptchaSectionConfiguration _instance;
+        private readonly IConfiguration _configuration;
 
-        public static NoCaptchaSectionConfiguration Instance
+        public NoCaptchaSectionConfiguration(IConfiguration configuration)
         {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = (NoCaptchaSectionConfiguration) ConfigurationManager.GetSection("NoCaptchaSection");
-                }
-
-                return _instance;
-            }
+            _configuration = configuration;
         }
 
-        [ConfigurationProperty("allowIPs", IsRequired = false)]
-        public string AllowIPs => (string) base["allowIPs"];
+        public string AllowIPs => _configuration["NoCaptchaSection:allowIPs"];
 
-        [ConfigurationProperty("allowAdmins", IsRequired = false)]
-        public string AllowAdmins => (string) base["allowAdmins"];
+        public string AllowAdmins => _configuration["NoCaptchaSection:allowAdmins"];
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Authentication
 {
     using System;
-    using System.Configuration;
     using System.Diagnostics;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
@@ -26,6 +25,7 @@
     using Microsoft.AspNetCore.Http;
     using System.IO;
     using System.Security.Claims;
+    using Microsoft.Extensions.Configuration;
 
     // Đã fix một số vấn đề chính trong class AccountController như:
     //  - Thêm các kiểm tra null, validate input ràng buộc hơn cho phần security.
@@ -50,12 +50,12 @@
         private string _scFailedCounter;
 
         // Nếu sử dụng DI thì nên inject các service này.
-        public AccountController()
+        public AccountController(IConfiguration configuration)
         {
             _currentContext = new CurrentContext();
             _currentSession = new CurrentSession();
             _userService = new LoginService();
-            _nocaptcha = NoCaptchaSectionConfiguration.Instance;
+            _nocaptcha = new NoCaptchaSectionConfiguration(configuration);
             _groupService = new GroupService();
         }
 

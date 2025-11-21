@@ -1,12 +1,19 @@
 ﻿namespace Fanex.ExternalAccount.Core.Helpers
 {
-    using System.Configuration;
+    using Microsoft.Extensions.Configuration;
 
     public static class GoogleAnalyticHepler
     {
+        private static IConfiguration _configuration;
+
+        public static void Initialize(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         // Stub implementation for .NET Core compatibility
-        private static readonly string GoogleAnalyticId = ConfigurationManager.AppSettings["GoogleAnalyticId"];
-        private static readonly string GoogleAnalyticUrl = ConfigurationManager.AppSettings["GoogleAnalyticUrl"] ?? "https://www.googletagmanager.com/gtag/js";
+        private static string GoogleAnalyticId => _configuration?["GoogleAnalyticId"];
+        private static string GoogleAnalyticUrl => _configuration?["GoogleAnalyticUrl"] ?? "https://www.googletagmanager.com/gtag/js";
 
         public static string Render() => Render(GoogleAnalyticId);
 

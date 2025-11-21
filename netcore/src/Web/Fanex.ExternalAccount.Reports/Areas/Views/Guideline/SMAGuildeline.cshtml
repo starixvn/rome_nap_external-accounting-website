@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = Labels.Statement_Guidelines;
     Layout = "";
-    var newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
+    var newLayoutDate = string.Format("{0:MM/dd/yyyy}", new StatementSection(null).NewLayoutDate);
 }
 <!DOCTYPE html>
 <html lang="en" class="linen">

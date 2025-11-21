@@ -1,84 +1,35 @@
 ﻿namespace Fanex.ExternalAccount.Core.Configurations.InternalLogin
 {
-    using System.Configuration;
+    using Microsoft.Extensions.Configuration;
+    using System.Collections.Generic;
+    using System.Linq;
 
-    public sealed class InternalUrlSection : ConfigurationSection
+    public class InternalUrlSection
     {
-        [ConfigurationProperty("InternalUrlCollection", IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(InternalUrlCollection), AddItemName = "add", ClearItemsName = "clear", RemoveItemName = "remove")]
-        public InternalUrlCollection InternalUrlCollection
-            => (InternalUrlCollection)base["InternalUrlCollection"];
+        private readonly IConfiguration _configuration;
+
+        public InternalUrlSection(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
+        public IEnumerable<InternalUrlElement> InternalUrlCollection =>
+            _configuration.GetSection("InternalUrlSection:InternalUrlCollection").GetChildren()
+                .Select(section => new InternalUrlElement(section));
     }
 
-    public sealed class InternalUrlCollection : ConfigurationElementCollection
+    public class InternalUrlElement
     {
-        protected override ConfigurationElement CreateNewElement()
-            => new InternalUrlElement();
+        private readonly IConfiguration _configuration;
 
-        protected override object GetElementKey(ConfigurationElement element)
-            => ((InternalUrlElement)element).Name;
-
-        new public InternalUrlElement this[string name]
+        public InternalUrlElement(IConfiguration configuration)
         {
-            get
-            {
-                return (InternalUrlElement)base.BaseGet(name);
-            }
-        }
-    }
-
-    public sealed class InternalUrlElement : ConfigurationElement
-    {
-        [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
-        public string Name
-        {
-            get
-            {
-                return this["name"].ToString();
-            }
-            set
-            {
-                this["name"] = value;
-            }
+            _configuration = configuration;
         }
 
-        [ConfigurationProperty("isdefault", DefaultValue = false)]
-        public bool IsDefault
-        {
-            get
-            {
-                return (bool)this["isdefault"];
-            }
-            set
-            {
-                this["isdefault"] = value;
-            }
-        }
-
-        [ConfigurationProperty("sites", IsRequired = true)]
-        public string Sites
-        {
-            get
-            {
-                return this["sites"].ToString();
-            }
-            set
-            {
-                this["sites"] = value;
-            }
-        }
-
-        [ConfigurationProperty("url", IsRequired = true)]
-        public string Url
-        {
-            get
-            {
-                return this["url"].ToString();
-            }
-            set
-            {
-                this["url"] = value;
-            }
-        }
+        public string Name => _configuration["name"];
+        public bool IsDefault => bool.Parse(_configuration["isdefault"] ?? "false");
+        public string Sites => _configuration["sites"];
+        public string Url => _configuration["url"];
     }
 }

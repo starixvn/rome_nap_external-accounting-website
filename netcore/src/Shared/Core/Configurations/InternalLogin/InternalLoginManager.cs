@@ -1,17 +1,23 @@
 ﻿namespace Fanex.Tarus.Infrastructure.Configurations.InternalLogin
 {
     using ExternalAccount.Core.Configurations.InternalLogin;
-    using System.Configuration;
+    using Microsoft.Extensions.Configuration;
     using System.Globalization;
     using System.Linq;
 
-    public static class InternalLoginManager
+    public class InternalLoginManager
     {
-        public static string GetInternalLoginUrl(string site)
+        private readonly InternalUrlSection _internalUrlSection;
+
+        public InternalLoginManager(IConfiguration configuration)
         {
-            var internalUrlSection = ConfigurationManager.GetSection("InternalUrlSection") as InternalUrlSection;
+            _internalUrlSection = new InternalUrlSection(configuration);
+        }
+
+        public string GetInternalLoginUrl(string site)
+        {
             site = site.Trim();
-            foreach (InternalUrlElement element in internalUrlSection.InternalUrlCollection)
+            foreach (InternalUrlElement element in _internalUrlSection.InternalUrlCollection)
             {
                 string[] configSites = element.Sites.Split(',');
                 foreach (var configSite in configSites)
@@ -23,7 +29,7 @@
                 }
             }
 
-            return (from InternalUrlElement e in internalUrlSection.InternalUrlCollection
+            return (from InternalUrlElement e in _internalUrlSection.InternalUrlCollection
                     where e.IsDefault
                     select e).FirstOrDefault()?.Url;
         }

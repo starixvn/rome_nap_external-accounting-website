@@ -5,7 +5,7 @@
     ViewBag.Title = Labels.Statement_Report;
     Layout = "";
     var isInternalCustomer = 0;
-    var newLayoutDate = string.Format("{0:MM/dd/yyyy}", StatementSection.Instance.NewLayoutDate);
+    var newLayoutDate = string.Format("{0:MM/dd/yyyy}", new StatementSection(null).NewLayoutDate);
     var balanceUpDay = "1/10/2015";
     var moveBetsDay = "1/11/2015";
 }

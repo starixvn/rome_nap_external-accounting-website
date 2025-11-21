@@ -2,7 +2,6 @@ namespace Fanex.ExternalAccount.Utilities
 {
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
     using System.Web;
     using Microsoft.Extensions.Configuration;

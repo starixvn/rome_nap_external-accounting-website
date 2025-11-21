@@ -1,13 +1,20 @@
 ﻿namespace Fanex.ExternalAccount.Core.Helpers
 {
-    using System.Configuration;
+    using Microsoft.Extensions.Configuration;
     using Context;
 
     public static class TrackJSHelper
     {
+        private static IConfiguration _configuration;
+
+        public static void Initialize(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         // Stub implementation for .NET Core compatibility
-        private static readonly string TrackJSToken = ConfigurationManager.AppSettings["TrackJSToken"];
-        private static readonly string TrackJSUrl = ConfigurationManager.AppSettings["TrackJSUrl"] ?? "https://cdn.trackjs.com/releases/current/tracker.js";
+        private static string TrackJSToken => _configuration?["TrackJSToken"];
+        private static string TrackJSUrl => _configuration?["TrackJSUrl"] ?? "https://cdn.trackjs.com/releases/current/tracker.js";
 
         public static string Render() => Render(TrackJSToken);
 

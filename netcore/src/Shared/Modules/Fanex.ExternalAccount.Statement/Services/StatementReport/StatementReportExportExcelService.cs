@@ -14,6 +14,13 @@
 
     public class StatementReportExportExcelService
     {
+        private readonly StatementSection _statementSection;
+
+        public StatementReportExportExcelService(StatementSection? statementSection = null)
+        {
+            _statementSection = statementSection ?? new StatementSection(null);
+        }
+
         public MemoryStream ExportMemberStatement(MemberStatementCriteria criteria, StatementReportModel data)
         {
             var result = new MemoryStream();
@@ -516,7 +523,7 @@
             ISheet worksheet,
             TransferDetailsCriteria criteria)
         {
-            var isShowCreator = StatementSection.Instance.ShowCreatorOnDetail;
+            var isShowCreator = _statementSection.ShowCreatorOnDetail;
             var currentRow = 0;
             var titleRow = worksheet.CreateRow(currentRow);
             var titleCell = titleRow.CreateCell(0);
@@ -612,8 +619,8 @@
             var currentColumn = 0;
             ICell column;
             IRow row;
-            var isShowExchangeRate = StatementSection.Instance.ShowExchangeRateOnDetail;
-            var isShowCreator = StatementSection.Instance.ShowCreatorOnDetail;
+            var isShowExchangeRate = _statementSection.ShowExchangeRateOnDetail;
+            var isShowCreator = _statementSection.ShowCreatorOnDetail;
             for (int i = 0; i < statementListLength; i++)
             {
                 row = worksheet.CreateRow(currentRow);   

@@ -1,7 +1,6 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.Repositories.Impl
 {
     using System.Collections;
-    using System.Configuration;
     using Common.Extensions;
     using Interface;
     using ViewModels;

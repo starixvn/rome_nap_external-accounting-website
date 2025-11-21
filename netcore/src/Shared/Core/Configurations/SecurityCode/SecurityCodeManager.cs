@@ -1,42 +1,46 @@
 ﻿namespace Fanex.ExternalAccount.Core.Configurations.SecurityCode
 {
     using System;
-    using System.Configuration;
     using System.Linq;
+    using Microsoft.Extensions.Configuration;
 
-    public static class SecurityCodeManager
+    public class SecurityCodeManager
     {
-        private static SecurityCodeSection securityCodeSection =
-            ConfigurationManager.GetSection("SecurityCodeSection") as SecurityCodeSection;
+        private readonly SecurityCodeSection _securityCodeSection;
 
-        public static string[] GetActions(bool isIgnored)
+        public SecurityCodeManager(IConfiguration configuration)
+        {
+            _securityCodeSection = new SecurityCodeSection(configuration);
+        }
+
+        public string[] GetActions(bool isIgnored)
         {
             return (
                 from ActionFilterElement element
-                in securityCodeSection.ActionFilterCollection
+                in _securityCodeSection.ActionFilterCollection
                 where element.IsIgnored == isIgnored
                 select element.Action).ToArray();
         }
 
-        public static string[] GetFilteredUsers()
+        public string[] GetFilteredUsers()
         {
             return (
                 from UserCodeElement element
-                in securityCodeSection.UserCodeCollection
+                in _securityCodeSection.UserCodeCollection
                 select element.UserName).ToArray();
         }
 
-        public static string GetSecurityCode(string userName)
+        public string GetSecurityCode(string userName)
         {
             return (
-                from UserCodeElement element in securityCodeSection.UserCodeCollection
+                from UserCodeElement element in _securityCodeSection.UserCodeCollection
                 where element.UserName.Equals(userName, StringComparison.CurrentCultureIgnoreCase)
                 select element)
                 .FirstOrDefault()?.SecurityCode.Trim();
         }
 
-        public static string GetAliveTime => securityCodeSection.ScAliveTime;
+        public string GetAliveTime => _securityCodeSection.ScAliveTime;
 
-        public static int GetMaxAllowAttempt => securityCodeSection.ScMaxAllowAttempt;
+        public int GetMaxAllowAttempt => _securityCodeSection.ScMaxAllowAttempt;
     }
 }

@@ -49,7 +49,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             _currentContext = new CurrentContext();
             _currentSession = new CurrentSession();
             _userService = new LoginService();
-            _nocaptcha = NoCaptchaSectionConfiguration.Instance;
+            _nocaptcha = new NoCaptchaSectionConfiguration(configuration);
             _jwtSettings = jwtSettings.Value;
             groupService = new GroupService();
             _hostEnvironment = hostEnvironment;

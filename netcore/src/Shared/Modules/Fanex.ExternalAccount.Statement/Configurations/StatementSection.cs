@@ -2,46 +2,21 @@
 {
     using Fanex.Common;
     using System;
-    using System.Configuration;
+    using Microsoft.Extensions.Configuration;
 
-    public class StatementSection : ConfigurationSection
+    public class StatementSection
     {
-        private static StatementSection _instance;
+        private readonly IConfiguration _configuration;
 
-        public static StatementSection Instance
+        public StatementSection(IConfiguration? configuration)
         {
-            get
-            {
-                _instance = _instance ?? ConfigurationManager.GetSection("StatementSection") as StatementSection;
-                return _instance;
-            }
+            _configuration = configuration ?? new ConfigurationBuilder().Build();
         }
 
-        [ConfigurationProperty("newlayoutdate", IsRequired = true)]
-        public DateTime NewLayoutDate
-        {
-            get
-            {
-                return Converter.ToDateTime(this["newlayoutdate"]);
-            }
-        }
+        public DateTime NewLayoutDate => Converter.ToDateTime(_configuration?["StatementSection:newlayoutdate"]);
 
-        [ConfigurationProperty("showCreatorOnDetail", IsRequired = false, DefaultValue = false)]
-        public bool ShowCreatorOnDetail
-        {
-            get
-            {
-                return Converter.ToBool(this["showCreatorOnDetail"]);
-            }
-        }
+        public bool ShowCreatorOnDetail => Converter.ToBool(_configuration?["StatementSection:showCreatorOnDetail"]);
 
-        [ConfigurationProperty("showExchangeRateOnDetail", IsRequired = false, DefaultValue = false)]
-        public bool ShowExchangeRateOnDetail
-        {
-            get
-            {
-                return Converter.ToBool(this["showExchangeRateOnDetail"]);
-            }
-        }
+        public bool ShowExchangeRateOnDetail => Converter.ToBool(_configuration?["StatementSection:showExchangeRateOnDetail"]);
     }
 }

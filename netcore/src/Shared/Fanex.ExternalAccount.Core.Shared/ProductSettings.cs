@@ -2,11 +2,17 @@ namespace Fanex.ExternalAccount.Core.Shared
 {
     using System;
     using System.Collections.Generic;
-    using System.Collections.Specialized;
-    using System.Configuration;
+    using Microsoft.Extensions.Configuration;
 
     public static class ProductSettings
     {
+        private static IConfiguration _configuration;
+
+        public static void Initialize(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+
         public static readonly IReadOnlyDictionary<int, Product> SiteProducts
             = new Dictionary<int, Product>
             {
@@ -15,9 +21,7 @@ namespace Fanex.ExternalAccount.Core.Shared
                 [ProductConstants.Cashout] = new Product(12, ProductConstants.Cashout, "Cashout", true)
             };
 
-        internal static NameValueCollection Configs { get; set; } = ConfigurationManager.AppSettings;
-
-        public static bool IsShowProduct(int productId) => ToBoolean(Configs[$"IsShowProduct-{productId}"]);
+        public static bool IsShowProduct(int productId) => ToBoolean(_configuration?[$"IsShowProduct-{productId}"]);
 
         private static bool ToBoolean(string value, bool defaultValue = false)
         {

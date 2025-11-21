@@ -29,6 +29,12 @@
         private readonly ILoginService loginService = new LoginService();
         private readonly IFunctionService functionService = new FunctionService();
         private readonly AuthorizationService _authorization = new AuthorizationServiceImpl();
+        private readonly InternalLoginManager _internalLoginManager;
+
+        public UserController(InternalLoginManager internalLoginManager)
+        {
+            _internalLoginManager = internalLoginManager;
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -283,7 +289,7 @@
                 param = AesExtension.Encrypt(param, "!@#$");
 
                 var CustomerSite = checkCustomerBelongToSpecialSiteResult.Site;
-                var internalAgentUrl = InternalLoginManager.GetInternalLoginUrl(CustomerSite);
+                var internalAgentUrl = _internalLoginManager.GetInternalLoginUrl(CustomerSite);
                 var internalPaths = internalAgentUrl.Split(new[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
                 var internalDomains = internalPaths[0].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 var internalLoginAction = internalPaths[1];

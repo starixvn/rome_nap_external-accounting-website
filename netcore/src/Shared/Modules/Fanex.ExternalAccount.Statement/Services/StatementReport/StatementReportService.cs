@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using Fanex.ExternalAccount.Statement.Configurations;
     using Fanex.ExternalAccount.Statement.Criteria;
     using Fanex.ExternalAccount.Statement.Criteria.StatementReport;
     using Fanex.ExternalAccount.Statement.Models;
@@ -14,15 +15,17 @@
     public class StatementReportService : IStatementReportService
     {
         private readonly IStatementReportRepository _statementReportRepository;
+        private readonly StatementSection _statementSection;
 
         public StatementReportService() :
-            this(null)
+            this(null, null)
         {
         }
 
-        public StatementReportService(IStatementReportRepository statementReportRepository)
+        public StatementReportService(IStatementReportRepository statementReportRepository, StatementSection? statementSection = null)
         {
             _statementReportRepository = statementReportRepository ?? new StatementReportRepository();
+            _statementSection = statementSection ?? new StatementSection(null);
         }
 
         public StatementReportModel SMAStatement(SMAStatementCriteria criteria)

@@ -10,10 +10,12 @@
     public class SecurityCodeController : Controller
     {
         private readonly CurrentSession currentSession;
+        private readonly SecurityCodeManager _securityCodeManager;
 
-        public SecurityCodeController()
+        public SecurityCodeController(SecurityCodeManager securityCodeManager)
         {
             currentSession = new CurrentSession();
+            _securityCodeManager = securityCodeManager;
         }
 
         [HttpGet]
@@ -30,7 +32,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult Verify(string txtSecurityCode, string txtSecretKey)
         {
-            string userSecurityCode = SecurityCodeManager.GetSecurityCode(currentSession.UserName);
+            string userSecurityCode = _securityCodeManager.GetSecurityCode(currentSession.UserName);
             string rawSecurityCode = Encryptor.Decrypt(txtSecurityCode, txtSecretKey);
             if (userSecurityCode.Equals(rawSecurityCode, StringComparison.CurrentCulture))
             {

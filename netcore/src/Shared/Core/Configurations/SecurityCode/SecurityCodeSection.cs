@@ -1,88 +1,56 @@
 ﻿namespace Fanex.ExternalAccount.Core.Configurations.SecurityCode
 {
-    using System.Configuration;
+    using Microsoft.Extensions.Configuration;
+    using System.Collections.Generic;
+    using System.Linq;
 
-    public sealed class SecurityCodeSection : ConfigurationSection
+    public class SecurityCodeSection
     {
-        [ConfigurationProperty("ActionFilterCollection", IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(ActionFilterCollection), AddItemName = "add")]
-        public ActionFilterCollection ActionFilterCollection => (ActionFilterCollection)base["ActionFilterCollection"];
+        private readonly IConfiguration _configuration;
 
-        [ConfigurationProperty("UserCodeCollection", IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(UserCodeCollection), AddItemName = "add")]
-        public UserCodeCollection UserCodeCollection => (UserCodeCollection)base["UserCodeCollection"];
-
-        [ConfigurationProperty("scAliveTime", IsRequired = true)]
-        public string ScAliveTime
+        public SecurityCodeSection(IConfiguration configuration)
         {
-            get => this["scAliveTime"].ToString();
-            set => this["scAliveTime"] = value;
+            _configuration = configuration;
         }
 
-        [ConfigurationProperty("scMaxAllowAttempt", IsRequired = true)]
-        public int ScMaxAllowAttempt
-        {
-            get => (int)this["scMaxAllowAttempt"];
-            set => this["scMaxAllowAttempt"] = value;
-        }
+        public IEnumerable<ActionFilterElement> ActionFilterCollection =>
+            _configuration.GetSection("SecurityCodeSection:ActionFilterCollection").GetChildren()
+                .Select(section => new ActionFilterElement(section));
+
+        public IEnumerable<UserCodeElement> UserCodeCollection =>
+            _configuration.GetSection("SecurityCodeSection:UserCodeCollection").GetChildren()
+                .Select(section => new UserCodeElement(section));
+
+        public string ScAliveTime => _configuration["SecurityCodeSection:scAliveTime"];
+
+        public int ScMaxAllowAttempt => int.Parse(_configuration["SecurityCodeSection:scMaxAllowAttempt"] ?? "0");
     }
 
-    public sealed class ActionFilterCollection : ConfigurationElementCollection
+
+    public class ActionFilterElement
     {
-        protected override ConfigurationElement CreateNewElement() => new ActionFilterElement();
+        private readonly IConfiguration _configuration;
 
-        protected override object GetElementKey(ConfigurationElement element) => ((ActionFilterElement)element).Action;
+        public ActionFilterElement(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
-        public new ActionFilterElement this[string name] => (ActionFilterElement)BaseGet(name);
+        public string Name => _configuration["name"];
+        public string Action => _configuration["action"];
+        public bool IsIgnored => bool.Parse(_configuration["isIgnored"] ?? "false");
     }
 
-    public sealed class UserCodeCollection : ConfigurationElementCollection
+    public class UserCodeElement
     {
-        protected override ConfigurationElement CreateNewElement() => new UserCodeElement();
+        private readonly IConfiguration _configuration;
 
-        protected override object GetElementKey(ConfigurationElement element) => ((UserCodeElement)element).UserName;
-
-        public new UserCodeElement this[string name] => (UserCodeElement)BaseGet(name);
-    }
-
-    public sealed class ActionFilterElement : ConfigurationElement
-    {
-        [ConfigurationProperty("name", IsRequired = true, IsKey = true)]
-        public string Name
+        public UserCodeElement(IConfiguration configuration)
         {
-            get => this["name"].ToString();
-            set => this["name"] = value;
+            _configuration = configuration;
         }
 
-        [ConfigurationProperty("action", IsRequired = true)]
-        public string Action
-        {
-            get => this["action"].ToString();
-            set => this["action"] = value;
-        }
-
-        [ConfigurationProperty("isIgnored", DefaultValue = false, IsRequired = false)]
-        public bool IsIgnored
-        {
-            get => (bool)this["isIgnored"];
-            set => this["isIgnored"] = value;
-        }
-    }
-
-    public sealed class UserCodeElement : ConfigurationElement
-    {
-        [ConfigurationProperty("user", IsRequired = true, IsKey = true)]
-        public string UserName
-        {
-            get => this["user"].ToString();
-            set => this["user"] = value;
-        }
-
-        [ConfigurationProperty("code", IsRequired = true)]
-        public string SecurityCode
-        {
-            get => this["code"].ToString();
-            set => this["code"] = value;
-        }
+        public string UserName => _configuration["user"];
+        public string SecurityCode => _configuration["code"];
     }
 }
