@@ -511,7 +511,7 @@
     },
 
     ConfigHideBetIP: function (custid, isSuper) {
-        var allow = $('#dbl-' + custid).css('cursor') == 'pointer';
+        var allow = $('#hideBetIP-' + custid).css('cursor') == 'pointer';
         if (allow && isSuper) {
             var msg = '';
             var title = '';
