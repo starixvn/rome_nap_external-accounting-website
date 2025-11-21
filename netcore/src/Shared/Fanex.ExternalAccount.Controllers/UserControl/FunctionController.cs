@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
+    using System.Net;
     using Microsoft.AspNetCore.Mvc;
     using Core.Base;
     using Core.Context;
@@ -88,9 +88,9 @@
             var groupIds = string.Empty;
             var index = 0;
 
-            model.FuncName = HttpUtility.HtmlDecode(model.FuncName);
-            model.FuncDesc = HttpUtility.HtmlDecode(model.FuncDesc);
-            model.FuncKey = HttpUtility.HtmlDecode(model.FuncKey);
+            model.FuncName = WebUtility.HtmlDecode(model.FuncName);
+            model.FuncDesc = WebUtility.HtmlDecode(model.FuncDesc);
+            model.FuncKey = WebUtility.HtmlDecode(model.FuncKey);
 
             if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
             {

@@ -6,6 +6,7 @@
     <AssemblyName>Fanex.ExternalAccount.Module.LeftPanel</AssemblyName>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,12 +26,10 @@
     <PackageReference Include="Microsoft.AspNet.Mvc" Version="5.2.6" />
     <PackageReference Include="Microsoft.AspNet.Razor" Version="3.2.6" />
     <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.6" />
-    <!--<PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Common" Version="5.0.414.0" />-->
-    <!--<PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Data" Version="5.0.414.0" />-->
-    <!--<PackageReference Include="Microsoft.Practices.EnterpriseLibrary.Logging" Version="5.0.414.0" />-->
-    <!--<PackageReference Include="Microsoft.Practices.ServiceLocation" Version="1.0.0.0" />-->
-    <!--<PackageReference Include="Microsoft.Practices.Unity" Version="2.0.414.0" />-->
-    <!--<PackageReference Include="Microsoft.Practices.Unity.Interception" Version="2.0.414.0" />-->
+    <!-- Microsoft.Practices packages removed - not compatible with .NET 9 -->
+    <!-- TODO: Replace EnterpriseLibrary.Data with ADO.NET/Dapper/EF Core -->
+    <!-- TODO: Replace EnterpriseLibrary.Logging with Microsoft.Extensions.Logging -->
+    <!-- TODO: Replace Unity with Microsoft.Extensions.DependencyInjection -->
     <PackageReference Include="Microsoft.Web.Infrastructure" Version="1.0.0.0" />
     <PackageReference Include="NetUtility" Version="4.5.6325.30210" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

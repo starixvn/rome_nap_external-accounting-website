@@ -3,8 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
+    using System.Net;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
@@ -12,7 +13,6 @@
     using DTO.UserControl;
     using Newtonsoft.Json;
     using Service.Impl.UserControl;
-    using Microsoft.AspNetCore.Mvc.Rendering;
 
     public class GroupController : BaseController
     {
@@ -30,7 +30,7 @@
             this.functionService = functionService ?? new FunctionService();
         }
 
-        public GroupController() : this(null, null, null)
+        public GroupController() : this(null!, null!, null!)
         {
         }   
 
@@ -80,9 +80,9 @@
         {
             var model = _groupService.GetGroupById(id);
 
-            model.GroupName = HttpUtility.HtmlDecode(model.GroupName);
-            model.Description = HttpUtility.HtmlDecode(model.Description);
-            model.ParentGroupName = HttpUtility.HtmlDecode(model.ParentGroupName);
+            model.GroupName = WebUtility.HtmlDecode(model.GroupName);
+            model.Description = WebUtility.HtmlDecode(model.Description);
+            model.ParentGroupName = WebUtility.HtmlDecode(model.ParentGroupName);
 
             return PartialViewBase(model);
         }

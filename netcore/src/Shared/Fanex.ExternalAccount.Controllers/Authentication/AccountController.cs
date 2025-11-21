@@ -83,12 +83,9 @@
         [HttpPost, ValidateAntiForgeryToken]
         public IActionResult Login(LoginModel model)
         {
-            if (model == null || string.IsNullOrEmpty(model.__RequestVerificationToken))
-                return BadRequest();
 
             //if (!AntiXSRFUtil.ValidateAntiXSRF(HttpContext.Request.Form, model.__RequestVerificationToken))
             //    return View(new LoginModel(ViewLang.ExpiredLoginSession));
-            
             var rawPassword = DecryptPassword(model.Password, model.Code);
             if (string.IsNullOrEmpty(rawPassword))
                 return View(new LoginModel(ViewLang.LoginNetworkError));

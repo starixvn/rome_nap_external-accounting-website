@@ -42,7 +42,7 @@
             Policy = AuthenticateAction.AuthenticationType.Host)]
         [ValidateAntiForgeryToken]
         public IActionResult ResetMemberCredit(int uplineId, bool closedOnly)
-            => JsonBase(customerCommandService.ResetMemberCredit(CurrentSession.UserId, uplineId, closedOnly));
+            => JsonBase(customerCommandService.ResetMemberCredit(CurrentSession.UserId, uplineId, closedOnly, CurrentContext.Ip4Address));
 
         [ExternalAccountAuthenticate(Function = eFunctions.UpdateBalance,
             Policy = AuthenticateAction.AuthenticationType.Host)]

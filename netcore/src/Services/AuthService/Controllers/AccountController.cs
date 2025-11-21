@@ -79,13 +79,9 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
 
         [HttpPost]
         [Route("Login")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            if (!AntiXSRFUtil.ValidateAntiXSRF(HttpContext.Request, model.__RequestVerificationToken))
-            {
-                return BadRequest(new LoginModel(ViewLang.ExpiredLoginSession));
-            }
-
             var rawPassword = DecryptPassword(model.Password, model.Code);
             if (string.IsNullOrEmpty(rawPassword))
             {

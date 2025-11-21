@@ -20,7 +20,7 @@
     {
         Result UpdateGivenCredit(int id, int userId, decimal newGivenCredit);
 
-        Result ResetMemberCredit(int userId, int uplineId, bool closedOnly);
+        Result ResetMemberCredit(int userId, int uplineId, bool closedOnly, string ip);
 
         Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip);
 
@@ -92,8 +92,8 @@
         }
 
 
-        public Result ResetMemberCredit(int userId, int uplineId, bool closedOnly) =>
-            customerDataAccess.ResetMemberCredit(userId, uplineId, closedOnly);
+        public Result ResetMemberCredit(int userId, int uplineId, bool closedOnly, string ip) =>
+            customerDataAccess.ResetMemberCredit(userId, uplineId, closedOnly, ip);
 
         public Result CustomerInsertClearBalance(int custId, string custIds, bool isCheckedAll, string ip)
         {

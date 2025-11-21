@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
+    using System.Net;
     using Microsoft.AspNetCore.Mvc;
     using Core.Base;
     using Core.Context;
@@ -58,9 +58,9 @@
 
             if (model != null)
             {
-                model.MenuName = HttpUtility.HtmlDecode(model.MenuName);
-                model.MenuDesc = HttpUtility.HtmlDecode(model.MenuDesc);
-                model.Url = HttpUtility.HtmlDecode(model.Url);
+                model.MenuName = WebUtility.HtmlDecode(model.MenuName);
+                model.MenuDesc = WebUtility.HtmlDecode(model.MenuDesc);
+                model.Url = WebUtility.HtmlDecode(model.Url);
 
                 ViewBag.FunctionList = GetFunctions();
                 ViewBag.MenuList = GetMenus();

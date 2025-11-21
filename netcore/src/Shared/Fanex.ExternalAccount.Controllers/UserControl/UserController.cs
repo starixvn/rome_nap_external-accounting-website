@@ -3,7 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.AspNetCore.Http;
     using Core.Authorization;
     using Core.Base;
     using Core.Context;
@@ -62,7 +65,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult UserListPost(string userName = null, int? groupId = null)
         {
-            var result = _userService.GetListUsers(userName, groupId);
+            var result = _userService.GetListUsers(userName ?? string.Empty, groupId);
 
             if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
             {
@@ -298,8 +301,9 @@
                 string internalLoginSessionKey = $"InternalLoginDomains_{CustomerSite}";
 
                 if (HttpContext.Session.GetString(internalLoginSessionKey) != null)
+                if (sessionData != null)
                 {
-                    configDomains = JsonConvert.DeserializeObject<List<InternLoginDomain>>(HttpContext.Session.GetString(internalLoginSessionKey));
+                    configDomains = System.Text.Json.JsonSerializer.Deserialize<List<InternLoginDomain>>(sessionData);
                     randomDomain = configDomains.FirstOrDefault(domain => !domain.IsInUsed)?.Domain;
                     if (randomDomain == null)
                     {
@@ -320,12 +324,13 @@
                     foundDomain.IsInUsed = true;
                 }
 
-                HttpContext.Session.SetString(internalLoginSessionKey, JsonConvert.SerializeObject(configDomains));
+                HttpContext.Session.SetString(internalLoginSessionKey, System.Text.Json.JsonSerializer.Serialize(configDomains));
 
                 randomDomain = FormatInternalLoginDomain(randomDomain);
                 var internalDomain = randomDomain.StartsWith("http") ? $"{randomDomain}{internalLoginAction}" : $"https://{randomDomain}{internalLoginAction}";
 
-                url = $"{internalDomain}?{(HttpContext.Session.GetString(Config.InternalAgentUMToken) == null ? string.Empty : $"UMToken={HttpContext.Session.GetString(Config.InternalAgentUMToken)}&")}parameter={param}";
+                var umToken = HttpContext.Session.GetString(Config.InternalAgentUMToken);
+                url = $"{internalDomain}?{(umToken == null ? string.Empty : $"UMToken={umToken}&")}parameter={param}";
             }
 
             return Redirect(url);
@@ -377,9 +382,10 @@
 
         private string FormatInternalLoginDomain(string configDomain)
         {
-            return Request.Headers["Host"].Contains("oneops.net") ?
+            var host = Request.Headers["Host"].ToString();
+            return host.Contains("oneops.net") ?
                 string.Format(configDomain, "gatonic.com") :
-                string.Format(configDomain, HttpContext.Request.Headers["Host"]
+                string.Format(configDomain, host
                                                     .ToString()
                                                     .Replace("www.", string.Empty).ToString()
                                                     .Replace("staging.", string.Empty).ToString()
