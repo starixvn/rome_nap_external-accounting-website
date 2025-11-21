@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.Utilities</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.Utilities</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
 

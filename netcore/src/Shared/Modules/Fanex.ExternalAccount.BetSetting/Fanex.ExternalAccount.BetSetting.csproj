@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.CustomerSetting.Module.BetSetting</RootNamespace>
     <AssemblyName>Fanex.CustomerSetting.Module.BetSetting</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

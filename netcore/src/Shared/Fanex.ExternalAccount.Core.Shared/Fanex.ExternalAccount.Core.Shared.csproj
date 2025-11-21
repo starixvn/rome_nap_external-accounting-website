@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.Core.Shared</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.Core.Shared</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
 

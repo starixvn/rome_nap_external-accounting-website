@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ProductStatus.Setting</RootNamespace>
     <AssemblyName>Fanex.ProductStatus.Setting</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.SuperWinLossDetailBySubGroup</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.SuperWinLossDetailBySubGroup</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.HeadlineBonus</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.HeadlineBonus</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

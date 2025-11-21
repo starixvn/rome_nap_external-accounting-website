@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.Excel</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.Excel</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

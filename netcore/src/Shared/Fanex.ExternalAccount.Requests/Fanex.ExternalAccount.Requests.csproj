@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.Requests</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.Requests</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.ProblemAccount</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.ProblemAccount</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

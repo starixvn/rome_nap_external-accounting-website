@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.Controllers</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.Controllers</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 

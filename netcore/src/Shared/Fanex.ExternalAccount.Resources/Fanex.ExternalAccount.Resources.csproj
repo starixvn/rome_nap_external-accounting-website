@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.Resources</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.Resources</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

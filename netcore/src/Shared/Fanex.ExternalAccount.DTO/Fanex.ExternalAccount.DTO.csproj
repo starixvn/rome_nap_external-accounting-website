@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.DTO</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.DTO</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>

@@ -5,7 +5,7 @@
     <RootNamespace>Fanex.ExternalAccount.RewardManagement</RootNamespace>
     <AssemblyName>Fanex.ExternalAccount.RewardManagement</AssemblyName>
     <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
