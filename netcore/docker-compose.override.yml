@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  fanex-external-account-reports:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+    volumes:
+      - ./src/Web/Fanex.ExternalAccount.Reports:/app
+      - /app/bin
+      - /app/obj
+    ports:
+      - "5000:80"
+    # Override for development - use external database if available
+    # Comment out the depends_on and use external connections if needed

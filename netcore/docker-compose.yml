@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  fanex-external-account-reports:
+    build:
+      context: ./src/Web/Fanex.ExternalAccount.Reports
+      dockerfile: Dockerfile
+    container_name: fanex-reports
+    ports:
+      - "8080:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      # Database connection strings - Update these with your actual values
+      - ConnectionStrings__DBONUSER.ON_USER.wsv_xnap=packet size=4096; Data Source=sqlserver; TrustServerCertificate=True; Initial Catalog=on_user; integrated security=false; user id=wsv_xnap; password=2PsZdGKkO6xgWu8DooqZMQAvOlExk7In69R9Xx3cEY0==
+      - ConnectionStrings__DBTXN.bodb02.wsv_xnap=packet size=4096; Data Source=sqlserver; TrustServerCertificate=True; Initial Catalog=bodb02; integrated security=false; user id=wsv_xnap; password=2PsZdGKkO6xgWu8DooqZMQAvOlExk7In69R9Xx3cEY0==
+      # Add other connection strings as needed...
+      - Environment=UAT
+      - EnvTheme=dev
+      - IsTest=1
+      - IsCache=1
+      - SystemId=4
+      - Fanex.Customer:ServiceUri=https://customer.nexdev.net/local4/api/
+      - Fanex.Customer:CdnUri=https://cdn-customer.nexdev.net/v4/
+      - Fanex.Customer:SystemId=4
+      - Redis:ConnectionString=redis:6379,password=yourpassword,DefaultDatabase=2
+    depends_on:
+      - sqlserver
+      - redis
+    networks:
+      - fanex-network
+    restart: unless-stopped
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: fanex-sqlserver
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=YourStrong!Passw0rd
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+      - ./docker/sqlserver/init:/docker-entrypoint-initdb.d
+    networks:
+      - fanex-network
+    restart: unless-stopped
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: fanex-redis
+    command: redis-server --requirepass yourpassword
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - fanex-network
+    restart: unless-stopped
+
+  # Optional: Nginx reverse proxy
+  nginx:
+    image: nginx:alpine
+    container_name: fanex-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - fanex-external-account-reports
+    networks:
+      - fanex-network
+    restart: unless-stopped
+
+volumes:
+  sqlserver_data:
+  redis_data:
+
+networks:
+  fanex-network:
+    driver: bridge

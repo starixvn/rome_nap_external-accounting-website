@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  fanex-external-account-reports:
+    build:
+      context: ./src/Web/Fanex.ExternalAccount.Reports
+      dockerfile: Dockerfile
+      target: build
+    container_name: fanex-reports-dev
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      # Development database connections
+      - ConnectionStrings__DBONUSER.ON_USER.wsv_xnap=packet size=4096; Data Source=host.docker.internal,1433; TrustServerCertificate=True; Initial Catalog=on_user; integrated security=false; user id=wsv_xnap; password=2PsZdGKkO6xgWu8DooqZMQAvOlExk7In69R9Xx3cEY0==
+      - ConnectionStrings__DBTXN.bodb02.wsv_xnap=packet size=4096; Data Source=host.docker.internal,1433; TrustServerCertificate=True; Initial Catalog=bodb02; integrated security=false; user id=wsv_xnap; password=2PsZdGKkO6xgWu8DooqZMQAvOlExk7In69R9Xx3cEY0==
+      - Environment=UAT
+      - EnvTheme=dev
+      - IsTest=1
+      - IsCache=0  # Disable cache for development
+      - SystemId=4
+    volumes:
+      # Mount source code for hot reload during development
+      - ./src/Web/Fanex.ExternalAccount.Reports:/src
+      - /src/bin
+      - /src/obj
+    networks:
+      - fanex-dev-network
+    restart: unless-stopped
+    # Override entrypoint for development
+    entrypoint: ["dotnet", "watch", "run", "--project", "/src/Fanex.ExternalAccount.Reports.csproj"]
+
+  # Use external SQL Server for development
+  # sqlserver:
+  #   image: mcr.microsoft.com/mssql/server:2022-latest
+  #   ...
+
+  # Use external Redis for development
+  # redis:
+  #   image: redis:7.2-alpine
+  #   ...
+
+networks:
+  fanex-dev-network:
+    driver: bridge
