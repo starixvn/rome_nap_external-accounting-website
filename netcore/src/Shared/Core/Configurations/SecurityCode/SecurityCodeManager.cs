@@ -4,7 +4,16 @@
     using System.Linq;
     using Microsoft.Extensions.Configuration;
 
-    public class SecurityCodeManager
+    public interface ISecurityCodeManager
+    {
+        string[] GetActions(bool isIgnored);
+        string[] GetFilteredUsers();
+        string GetSecurityCode(string userName);
+        string GetAliveTime { get; }
+        int GetMaxAllowAttempt { get; }
+    }
+
+    public class SecurityCodeManager : ISecurityCodeManager
     {
         private readonly SecurityCodeSection _securityCodeSection;
 

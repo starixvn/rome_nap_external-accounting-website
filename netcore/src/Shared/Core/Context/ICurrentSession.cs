@@ -57,5 +57,9 @@
         string UserAttempt { get; set; }
 
         void UpdateLastActiveTime(object lastActiveTime = null);
+
+        int OTPFailedCounter { get; set; }
+
+        string OTPSecretKey { get; set; }
     }
 }

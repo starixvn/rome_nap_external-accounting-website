@@ -4,7 +4,12 @@
     using Microsoft.Extensions.Configuration;
     using System.Linq;
 
-    public class InternalLoginManager
+    public interface IInternalLoginManager
+    {
+        string GetInternalLoginUrl(string site);
+    }
+
+    public class InternalLoginManager : IInternalLoginManager
     {
         private readonly InternalUrlSection _internalUrlSection;
 

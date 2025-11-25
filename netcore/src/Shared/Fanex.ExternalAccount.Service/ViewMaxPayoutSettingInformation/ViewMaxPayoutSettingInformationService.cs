@@ -5,7 +5,12 @@
     using Fanex.ExternalAccount.DataAccess.Criteria.ViewMaxPayoutSettingInformation;
     using Fanex.ExternalAccount.ViewModel.ViewMaxPayoutSettingInformation;
 
-    public class ViewMaxPayoutSettingInformationService
+    public interface IViewMaxPayoutSettingInformationService
+    {
+        IEnumerable<SabaSportViewModel> GetSabaSports(string site);
+    }
+
+    public class ViewMaxPayoutSettingInformationService : IViewMaxPayoutSettingInformationService
     {
         private readonly IDynamicRepository _dynamicRepository;
 

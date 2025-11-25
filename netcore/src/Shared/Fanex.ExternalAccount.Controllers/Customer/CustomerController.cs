@@ -13,7 +13,6 @@
     using Core.Base;
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
     using DataAccess.Criteria.Customer.CustomerStatus;
     using Fanex.Customer.Client;
@@ -23,7 +22,6 @@
     using Fanex.ExternalAccount.DTO.Products;
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Service.TelegramBot;
-    using IBCUtils;
     using Service;
     using Service.Impl.Customer;
     using Utilities;
@@ -33,6 +31,7 @@
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
 
     using CustomerClient = Fanex.Customer.Client;
+    using Fanex.ExternalAccount.Service.Interface.Customer;
 
     public partial class CustomerController : BaseController
     {
@@ -46,20 +45,28 @@
         private const byte SystemCode_ExternalNapSpecialSite = 8;
         private const byte SystemCode_ExternalNap = 4;
 
-        private readonly CustomerClient.Services.ICustomerService customerServiceClient = new CustomerClient.Services.CustomerService();
-
-        private readonly CustomerService _customerService = new CustomerService();
-        private readonly MasterService _masterService = new MasterService();
-        private readonly SuperService _superService = new SuperService();
-        private readonly IIPInformatonService ipInformationService = new IPInformationService();
-        private readonly ITelegramBotService _telegramChatbotService = new TelegramBotService();
-        private readonly ProductStatusService productStatusService = new ProductStatusServiceImpl();
-        private readonly AuthorizationService authorizationService = new AuthorizationServiceImpl();
-        private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
+        private readonly CustomerClient.Services.ICustomerService customerServiceClient;
+        private readonly ICustomerService _customerService;
+        private readonly IMasterService _masterService;
+        private readonly ISuperService _superService;
+        private readonly IIPInformatonService ipInformationService;
+        private readonly ITelegramBotService _telegramChatbotService;
+        private readonly ProductStatusService productStatusService;
+        private readonly AuthorizationService authorizationService;
+        private readonly ISiteDBConfigService siteDBConfigService;
 
         public CustomerController(
             IConfiguration configuration,
             IMemoryCache memoryCache,
+            CustomerClient.Services.ICustomerService customerServiceClient,
+            ICustomerService customerService,
+            IMasterService masterService,
+            ISuperService superService,
+            IIPInformatonService ipInformationService,
+            ITelegramBotService telegramChatbotService,
+            ProductStatusService productStatusService,
+            AuthorizationService authorizationServiceImpl,
+            ISiteDBConfigService siteDBConfigService,
             ICurrentSession currentSession,
             ICurrentContext currentContext,
             IExtRequest extRequest,
@@ -68,6 +75,15 @@
         {
             _configuration = configuration;
             _memoryCache = memoryCache;
+            this.customerServiceClient = customerServiceClient;
+            _customerService = customerService;
+            _masterService = masterService;
+            _superService = superService;
+            this.ipInformationService = ipInformationService;
+            _telegramChatbotService = telegramChatbotService;
+            this.productStatusService = productStatusService;
+            this.authorizationService = authorizationServiceImpl;
+            this.siteDBConfigService = siteDBConfigService;
         }
 
         private string GetCdnUri() => _configuration?["Fanex.Customer:CdnUri"] ?? string.Empty;
@@ -535,7 +551,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult ConfigDoubleComm(int custid, bool allow)
         {
-            var result = _superService.ConfigDoubleComm(
+            var result = _customerService.ConfigDoubleComm(
                 new UpdateDoubleCommCommand(
                     custid,
                     allow,

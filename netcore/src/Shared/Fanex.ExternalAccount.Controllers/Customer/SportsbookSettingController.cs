@@ -16,11 +16,12 @@
         private const int NG2Start = 213;
         private const int NG2End = 220;
    
-        private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
+        private readonly ISiteDBConfigService siteDBConfigService;
 
-        public SportsbookSettingController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+        public SportsbookSettingController(ISiteDBConfigService siteDBConfigService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
          : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
+            this.siteDBConfigService = siteDBConfigService;
         }
 
         public IActionResult ViewPtInfo(int custId)

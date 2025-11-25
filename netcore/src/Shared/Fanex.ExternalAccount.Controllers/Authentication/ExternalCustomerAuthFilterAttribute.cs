@@ -35,14 +35,14 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
             // Chú ý: Đã loại bỏ các keys không còn tồn tại trong eFunctions (xem lint)
         };
 
-        public ExternalCustomerAuthFilterAttribute() : this(null)
+        public ExternalCustomerAuthFilterAttribute() : this(null, null)
         {
         }
 
-        internal ExternalCustomerAuthFilterAttribute(CustomerClientConfiguration? clientConfig)
+        internal ExternalCustomerAuthFilterAttribute(CustomerClientConfiguration? clientConfig, AuthorizationService? authorizationService)
         {
-            this.clientConfig = clientConfig;
-            authorization = new AuthorizationServiceImpl();
+            this.clientConfig = clientConfig ?? ClientConfig;
+            authorization = authorizationService ?? new AuthorizationServiceImpl();
         }
 
         private CustomerClientConfiguration ClientConfig

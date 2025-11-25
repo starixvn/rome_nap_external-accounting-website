@@ -29,9 +29,9 @@
         private readonly ILoginService loginService;
         private readonly IFunctionService functionService;
         private readonly AuthorizationService authorization;
-        private readonly InternalLoginManager internalLoginManager;
+        private readonly IInternalLoginManager internalLoginManager;
 
-        public UserController(ICachingService cache, IUserService userService, IGroupService groupService, ILoginService loginService, IFunctionService functionService, AuthorizationService authorization, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+        public UserController(ICachingService cache, IUserService userService, IGroupService groupService, ILoginService loginService, IFunctionService functionService, AuthorizationService authorization, IInternalLoginManager internalLoginManager, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
             : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.cache = cache;
@@ -40,7 +40,7 @@
             this.loginService = loginService;
             this.functionService = functionService;
             this.authorization = authorization;
-            this.internalLoginManager = new InternalLoginManager(configuration);
+            this.internalLoginManager = internalLoginManager;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,

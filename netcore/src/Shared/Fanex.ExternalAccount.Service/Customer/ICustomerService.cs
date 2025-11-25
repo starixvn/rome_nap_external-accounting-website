@@ -57,5 +57,7 @@
         Result UpdateProtectedStatus(int custId, byte roleId, bool isProtected, int userId, string ip);
 
         Result CheckMultipleSupersBetSetting(string sourceUser, string destUsers, string groupName, int userId, bool isCopy = true);
+
+        SuspendedCustomerDetailViewModel GetSuspendDownlinesDetail(GetSuspendCustomerDetailInfoCriteria criteria);
     }
 }

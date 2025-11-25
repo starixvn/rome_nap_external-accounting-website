@@ -11,12 +11,12 @@
     public class SecurityCodeController : Controller
     {
         private readonly ICurrentSession currentSession;
-        private readonly SecurityCodeManager _securityCodeManager;
+        private readonly ISecurityCodeManager _securityCodeManager;
 
-        public SecurityCodeController(IConfiguration configuration, ICurrentSession currentSession)
+        public SecurityCodeController(ISecurityCodeManager securityCodeManager, ICurrentSession currentSession)
         {
             this.currentSession = currentSession;
-            _securityCodeManager = new SecurityCodeManager(configuration);
+            _securityCodeManager = securityCodeManager;
         }
 
         [HttpGet]

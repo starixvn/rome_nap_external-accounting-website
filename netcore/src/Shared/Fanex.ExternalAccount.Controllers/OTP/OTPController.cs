@@ -12,22 +12,21 @@
     using Logging.Extensions.Web;
     using Service.OTP;
     using ViewModels;
-    using CurrentSession = Core.Context.CurrentSession;
 
     public class OTPController : Controller
     {
         private readonly ICustomerOtpService customerOtpService;
-        private readonly CurrentSession currentSession;
+        private readonly ICurrentSession currentSession;
         private readonly IConfiguration _configuration;
 
         private const int LimitedFailure = 5;
         private const int CaptchaLength = 4;
 
-        public OTPController(IConfiguration configuration)
+        public OTPController(IConfiguration configuration, ICustomerOtpService customerOtpService, ICurrentSession currentSession)
         {
             _configuration = configuration;
-            currentSession = new CurrentSession();
-            customerOtpService = new CustomerOtpService();
+            this.currentSession = currentSession;
+            this.customerOtpService = customerOtpService;
         }
 
         public IActionResult Index(LoginModel model)

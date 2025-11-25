@@ -8,13 +8,11 @@
 
     public class ViewMaxPayoutSettingInformationController : Controller
     {
-        private readonly ViewMaxPayoutSettingInformationService service;
+        private readonly IViewMaxPayoutSettingInformationService service;
 
-        public ViewMaxPayoutSettingInformationController() : this(null) { }
-
-        public ViewMaxPayoutSettingInformationController(ViewMaxPayoutSettingInformationService service)
+        public ViewMaxPayoutSettingInformationController(IViewMaxPayoutSettingInformationService service)
         {
-            this.service = service ?? new ViewMaxPayoutSettingInformationService();
+            this.service = service;
         }
 
         public IActionResult Index()
