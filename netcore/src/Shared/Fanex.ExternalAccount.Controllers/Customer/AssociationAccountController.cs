@@ -1,10 +1,12 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using Core.Authorization;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
     using Fanex.ExternalAccount.DataAccess.Criteria.Customer;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Service.Impl.Customer;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
 
@@ -13,14 +15,16 @@
     {
         private readonly IAssociationAccountService associationService;
 
-        public AssociationAccountController() : this(null)
+        public AssociationAccountController(
+            IAssociationAccountService associationService,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-
-        }
-
-        public AssociationAccountController(IAssociationAccountService associationService)
-        {
-            this.associationService = associationService ?? new AssociationAccountService();
+            this.associationService = associationService;
         }
 
         public IActionResult Index()

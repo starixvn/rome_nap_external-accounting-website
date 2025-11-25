@@ -1,15 +1,15 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
+    using Core.Authorization;
     using Core.Base;
     using Core.Context;
     using Core.Shared;
-    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Controllers.Requests.MarkAccountType;
-    using Fanex.ExternalAccount.Core.Authorization;
     using Fanex.ExternalAccount.Service.Customer.MarkAccountType;
     using Fanex.ExternalAccount.Service.Customer.MarkAccountType.Params;
-    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using System.Linq;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
 
     [ExternalAccountAuthenticate(Function = eFunctions.MarkAccountType, Policy = AuthenticationType.Read)]
@@ -18,13 +18,16 @@
         private readonly IMarkAccountTypeService markAccountTypeService;
         private const int DefaultPageSize = 50;
 
-        public MarkAccountTypeController() : this(null!, null!)
+        public MarkAccountTypeController(
+            IMarkAccountTypeService markAccountTypeService,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-        }
-
-        public MarkAccountTypeController(IMarkAccountTypeService markAccountTypeService, AuthorizationService authorizationService)
-        {
-            this.markAccountTypeService = markAccountTypeService ?? new MarkAccountTypeService();
+            this.markAccountTypeService = markAccountTypeService;
         }
 
         public IActionResult Index()

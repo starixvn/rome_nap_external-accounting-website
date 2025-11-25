@@ -31,5 +31,13 @@
         bool IsBelongToSpecialGroups { get; }
 
         string LangKey { get; set; }
+
+        string ParentGroupName { get; set; }
+
+        string OTPModifiedDate { get; set; }
+
+        string OTPEncryptCode { get; set; }
+
+        bool EnabledOTP { get; set; }
     }
 }

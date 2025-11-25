@@ -2,7 +2,6 @@
 {
     using ExternalAccount.Core.Configurations.InternalLogin;
     using Microsoft.Extensions.Configuration;
-    using System.Globalization;
     using System.Linq;
 
     public class InternalLoginManager

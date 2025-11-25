@@ -3,27 +3,22 @@
     using System.Linq;
     using System.Net;
     using Microsoft.AspNetCore.Mvc;
-    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Authorization;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.DTO;
     using Fanex.ExternalAccount.DTO.Customer;
-    using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Interface.Customer;
     using Fanex.ExternalAccount.Utilities;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
+    using Microsoft.Extensions.Configuration;
 
     public class ProtectedStatusController : BaseController
     {
         private readonly ICustomerService customerService;
 
-        public ProtectedStatusController() : this(new CustomerService())
-        {
-        }
-
-        internal ProtectedStatusController(ICustomerService customerService)
+        internal ProtectedStatusController(ICustomerService customerService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.customerService = customerService;
         }

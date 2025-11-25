@@ -12,11 +12,19 @@
     using Newtonsoft.Json;
     using Service.Impl.UserControl;
     using Utilities;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class FunctionController : BaseController
     {
-        private readonly IFunctionService _funcService = new FunctionService();
-        private readonly IGroupService groupService = new GroupService();
+        private readonly IFunctionService funcService;
+        private readonly IGroupService groupService;
+
+        protected FunctionController(IFunctionService funcService, IGroupService groupService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        {
+            this.funcService = funcService;
+            this.groupService = groupService;
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageFunction,
             Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -32,7 +40,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult FunctionListPost()
         {
-            var funcs = _funcService.GetAllFunctions();
+            var funcs = funcService.GetAllFunctions();
             var parents = funcs.Where(o => o.ParentID == 0);
             var funcsOrder = new List<Function>();
 
@@ -80,9 +88,9 @@
         [ValidateAntiForgeryToken]
         public IActionResult EditFunction(int id)
         {
-            var funcs = _funcService.GetAllFunctions();
+            var funcs = funcService.GetAllFunctions();
             var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
-            var model = _funcService.GetFunctionPolicy(id);
+            var model = funcService.GetFunctionPolicy(id);
             var groups = groupService.GetAllGroup();
             var tmp = string.Empty;
             var groupIds = string.Empty;
@@ -138,7 +146,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult AddFunction()
         {
-            var funcs = _funcService.GetAllFunctions();
+            var funcs = funcService.GetAllFunctions();
             var parent = funcs.Where(o => o.ParentID == 0 && o.FuncKey != eFunctions.ExternalGroup);
             var model = new Function();
             var groups = groupService.GetAllGroup();
@@ -170,7 +178,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Function funtion, string oldGroups, string groups)
         {
-            var result = _funcService.UpdateFunction(funtion, CurrentSession.CustId,
+            var result = funcService.UpdateFunction(funtion, CurrentSession.CustId,
                 CurrentContext.Ip4Address, oldGroups, groups);
 
             return JsonBase(result);
@@ -181,7 +189,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult Add(Function function, string groups)
         {
-            var result = _funcService.CreateFunction(function, CurrentSession.CustId,
+            var result = funcService.CreateFunction(function, CurrentSession.CustId,
                 CurrentContext.Ip4Address, groups);
 
             return JsonBase(result);
@@ -192,7 +200,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult UpdateStatus(int funcId, bool isTest)
         {
-            var result = _funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
+            var result = funcService.UpdateStatus(funcId, isTest, CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }
@@ -202,7 +210,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult PolicyList(int funcId, bool addNew = false)
         {
-            var groups = _funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();
+            var groups = funcService.GetFunctionPolicy(funcId).AssignGroups.ToList();
 
             if (!CurrentSession.IsInternalAdmin && !CurrentSession.IsITAdmin)
             {

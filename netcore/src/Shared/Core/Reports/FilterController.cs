@@ -3,40 +3,30 @@
     using Microsoft.AspNetCore.Mvc;
     using Base;
     using Fanex.ExternalAccount.Core.Context;
-    using Fanex.ExternalAccount.Service.Impl.Report;
-    using Fanex.ExternalAccount.Service.Impl.Report.MultipleCurrency;
     using Fanex.ExternalAccount.Service.Interface.Report;
     using Fanex.ExternalAccount.Service.Interface.Report.MultipleCurrency;
     using Fanex.ExternalAccount.Service.Products;
     using Newtonsoft.Json;
     using Utilities;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
-    public class FilterController : BaseController
+    public class FilterController(
+        IReportService reportService,
+        IReportByCurrencyService reportByCurrencyService,
+        IProductService productService,
+        IProductDetailService productDetailService,
+        ICurrentSession currentSession,
+        ICurrentContext currentContext,
+        IExtRequest extRequest,
+        IConfiguration configuration,
+        AuthorizationService authorizationService) : BaseController(currentSession, currentContext, extRequest, configuration, authorizationService)
     {
-        private readonly IReportService reportService;
-        private readonly IReportByCurrencyService reportByCurrencyService;
-        private readonly IProductService productService;
-        private readonly IProductDetailService productDetailService;
-        private readonly CurrentSession currentSession;
-
-        public FilterController()
-            : this(null, null, null, null, null)
-        {
-        }
-
-        public FilterController(
-            IReportService reportService,
-            IReportByCurrencyService reportByCurrencyService,
-            IProductService productService,
-            IProductDetailService productDetailService,
-            CurrentSession currentSession)
-        {
-            this.reportService = reportService ?? new ReportService();
-            this.reportByCurrencyService = reportByCurrencyService ?? new ReportByCurrencyService();
-            this.productService = productService ?? new ProductService();
-            this.productDetailService = productDetailService ?? new ProductDetailService();
-            this.currentSession = currentSession ?? new CurrentSession();
-        }
+        private readonly IReportService reportService = reportService;
+        private readonly IReportByCurrencyService reportByCurrencyService = reportByCurrencyService;
+        private readonly IProductService productService = productService;
+        private readonly IProductDetailService productDetailService = productDetailService;
+        private readonly ICurrentSession currentSession = currentSession;
 
         public IActionResult ProductsList(bool isWinLossDetail)
         {

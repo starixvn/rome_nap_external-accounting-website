@@ -9,6 +9,8 @@
     using Microsoft.AspNetCore.Mvc;
     using Services;
     using ViewModels;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class SearchCustomerController : BaseController
     {
@@ -28,15 +30,13 @@
 
         private readonly CustomerQueryService customerQueryService;
 
-        public SearchCustomerController() : this(new CustomerQueryServiceImpl(), null, null, null)
-        {
-        }
-
-        internal SearchCustomerController(
+        public SearchCustomerController(
             CustomerQueryService customerQueryService,
             ICurrentSession currentSession,
             ICurrentContext currentContext,
-            IExtRequest extRequest) : base(currentSession, currentContext, extRequest)
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.customerQueryService = customerQueryService;
         }

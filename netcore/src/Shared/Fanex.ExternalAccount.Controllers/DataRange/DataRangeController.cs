@@ -1,25 +1,30 @@
 ﻿namespace Fanex.ExternalAccount.Controllers.DataRange
 {
+    using Core.Authorization;
     using Core.Base;
+    using Core.Context;
     using Core.Shared;
     using DataAccess.Criteria.DataRange;
     using DTO.DataRange;
-    using Service.DataRange;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Service.DataRange;
     using ViewModels;
 
     public class DataRangeController : BaseController
     {
         private readonly IDataRangeService service;
 
-        public DataRangeController()
+        public DataRangeController(
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService,
+            IDataRangeService service)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            service = new DataRangeService();
-        }
-
-        public DataRangeController(IDataRangeService service)
-        {
-            this.service = service ?? new DataRangeService();
+            this.service = service;
         }
 
         public IActionResult Index(string custIds)

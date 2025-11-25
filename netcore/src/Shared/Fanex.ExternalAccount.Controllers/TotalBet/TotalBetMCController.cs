@@ -13,31 +13,31 @@
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.TotalBet;
     using Requests;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     [ExternalAccountAuthenticate(Function = eFunctions.TotalBetSoccerBaseCurrency, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class TotalBetMCController : BaseController
     {
-        protected readonly CurrentSession currentSession;
         private readonly ITotalBetService totalBetService;
 
         public TotalBetMCController(
-            CurrentSession currentSession,
-            ITotalBetService totalBetService)
+            ITotalBetService totalBetService,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            this.currentSession = currentSession ?? new CurrentSession();
-            this.totalBetService = totalBetService ?? new TotalBetService();
-        }
-
-        public TotalBetMCController() : this(null!, null!)
-        {
+            this.totalBetService = totalBetService;
         }
 
         public IActionResult Index()
         {
             var testGroups = Config.TestGroups();
             var isTest =
-                testGroups.Contains(currentSession.CurrencyGroup, StringComparer.CurrentCultureIgnoreCase) ||
-                testGroups.Contains(currentSession.ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
+                testGroups.Contains(CurrentSession.CurrencyGroup, StringComparer.CurrentCultureIgnoreCase) ||
+                testGroups.Contains(CurrentSession.ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
 
             var leagues = totalBetService.GetLeagues(isTest);
 

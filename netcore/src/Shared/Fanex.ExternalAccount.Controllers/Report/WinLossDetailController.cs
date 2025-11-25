@@ -10,35 +10,36 @@
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Utilities;
     using Requests;
-    using Service.Impl.Report;
     using Service.Interface.Report;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WinlossDetail,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class WinLossDetailController : BaseReportController
     {
         private readonly WinLossDetailService winLossDetailService;
-        private readonly ProductDetailService productDetailService;
+        private readonly IProductDetailService productDetailService;
 
         public WinLossDetailController(
-            CurrentSession currentSession,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService,
             WinLossDetailService winLossDetailService,
-            ProductDetailService productDetailService,
+            IProductDetailService productDetailService,
             IReportService reportService)
-            : base(currentSession, reportService)
+            : base(reportService, currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            this.winLossDetailService = winLossDetailService ?? new WinLossDetailServiceImpl();
-            this.productDetailService = productDetailService ?? new ProductDetailService();
-        }
-
-        public WinLossDetailController() : this(null!, null!, null!, null!)
-        {
+            this.winLossDetailService = winLossDetailService;
+            this.productDetailService = productDetailService;
         }
 
         public IActionResult Index()
         {
             ViewBag.CanViewExtraPT = CanView(Config.GroupsCanViewExtraPT());
-            ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
+            ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(CurrentSession.ParentGroupName);
             return View();
         }
 
@@ -101,7 +102,7 @@
                     }
             }
 
-            var formatedProducts = reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
+            var formatedProducts = _reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)
@@ -116,8 +117,8 @@
         [ValidateAntiForgeryToken]
         public IActionResult GetExtraPT(ViewExtraPTRequest request)
         {
-            request.UserId = currentSession.CustId;
-            request.ParentGroupName = currentSession.ParentGroupName;
+            request.UserId = CurrentSession.CustId;
+            request.ParentGroupName = CurrentSession.ParentGroupName;
             var extraPTs = winLossDetailService.GetExtraPT(request);
 
             return Ok(extraPTs);
@@ -127,8 +128,8 @@
         {
             var toolTipsProducts = new
             {
-                liveCasino = reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
-                rngCasino = reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId)
+                liveCasino = _reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
+                rngCasino = _reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId)
             };
 
             return request.IsSearch()

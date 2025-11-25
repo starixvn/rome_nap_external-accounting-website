@@ -9,14 +9,17 @@
     using DTO.UserControl;
     using Newtonsoft.Json;
     using Service.UserControl;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class PermissionController : BaseController
     {
         private readonly IPolicyService policyService;
 
-        public PermissionController()
+        public PermissionController(IPolicyService policyService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+         : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            policyService = new PolicyService();
+            this.policyService = policyService;
         }
 
         [ExternalAccountAuthenticate(

@@ -7,6 +7,8 @@
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Mvc;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     [ExternalAccountAuthenticate(Function = eFunctions.Sportsbook, Policy = AuthenticationType.Read)]
     public class SportsbookSettingController : BaseController
@@ -15,6 +17,11 @@
         private const int NG2End = 220;
    
         private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
+
+        public SportsbookSettingController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+         : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        {
+        }
 
         public IActionResult ViewPtInfo(int custId)
         {

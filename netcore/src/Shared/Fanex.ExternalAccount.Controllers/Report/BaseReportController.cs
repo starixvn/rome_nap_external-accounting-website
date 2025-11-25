@@ -4,24 +4,28 @@
     using System.Linq;
     using Core.Base;
     using Fanex.ExternalAccount.Core.Context;
-    using Service.Impl.Report;
     using Service.Interface.Report;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class BaseReportController : BaseController
     {
-        protected readonly CurrentSession currentSession;
-        protected readonly IReportService reportService;
+        protected readonly IReportService _reportService;
 
         protected BaseReportController(
-            CurrentSession currentSession,
-            IReportService reportService)
+            IReportService reportService,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            this.currentSession = currentSession ?? new CurrentSession();
-            this.reportService = reportService ?? new ReportService();
+            _reportService = reportService;
         }
 
         protected bool CanView(string[] groups)
-            => groups.Contains(currentSession.ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
+            => groups.Contains(CurrentSession.ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
 
     }
 }

@@ -5,20 +5,26 @@
     using Core.Base;
     using Core.Context;
     using Core.Shared;
-    using CustomerSetting.Security.Authenticate;
     using DataAccess.Criteria.Customer;
     using DTO.Customer;
-    using Service.Impl.Customer;
     using AuthenticationType = CustomerSetting.Security.Authenticate.AuthenticateAction.AuthenticationType;
+    using Fanex.ExternalAccount.Service.Interface.Customer;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class MainSuperController : BaseController
-    {        
-        private readonly SuperService _superService = new SuperService();
+    {
+        private readonly ISuperService superService;
+
+        public MainSuperController(ISuperService superService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        {
+            this.superService = superService;
+        }
 
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]        
         public IActionResult EditInfo(int custId)
         {
-            var model = _superService.GetSuperInfo(custId);
+            var model = superService.GetSuperInfo(custId);
 
             model.FirstName = WebUtility.HtmlDecode(model.FirstName);
             model.LastName = WebUtility.HtmlDecode(model.LastName);
@@ -34,7 +40,7 @@
         [ExternalAccountAuthenticate(Function = eFunctions.EditCustomer, Policy = AuthenticationType.Read)]
         public IActionResult GetInfo(int superId)
         {
-            var model = _superService.GetSuperInfo(superId);
+            var model = superService.GetSuperInfo(superId);
 
             return JsonBase(model);
         }
@@ -55,7 +61,7 @@
                 customer.Email,
                 CurrentContext.Ip4Address,
                 CurrentSession.CustId);
-            var result = _superService.UpdateSuperInfo(criteria);
+            var result = superService.UpdateSuperInfo(criteria);
 
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, result.IsSuccess });
         }

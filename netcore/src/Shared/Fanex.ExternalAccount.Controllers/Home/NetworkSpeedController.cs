@@ -8,6 +8,8 @@
     using Common;
     using Core.Base;
     using Core.Helpers;
+    using Core.Context;
+    using Core.Authorization;
 
     public class NetworkSpeedController : BaseController
     {
@@ -15,7 +17,8 @@
         private readonly IEnumerable<string> CalculatingNWSpeedAdminNames;
         private readonly IConfiguration _configuration;
 
-        public NetworkSpeedController(IConfiguration configuration)
+        public NetworkSpeedController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             _configuration = configuration;
             

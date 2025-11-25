@@ -3,6 +3,8 @@
     using System;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Core.Authorization;
     using Core.Base;
     using Core.Context;
     using Fanex.Caching;
@@ -13,44 +15,52 @@
 
     public class HomeController : BaseController
     {
-        private readonly CurrentSession _currentSession;
+        private readonly ICurrentSession _currentSession;
         private readonly IGroupService _groupService;
         private readonly ICacheService _cacheService;
 
-        public HomeController()
+        public HomeController(
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService,
+            IGroupService groupService,
+            ICacheService cacheService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            _currentSession = new CurrentSession();
-            _groupService = new GroupService();
-            _cacheService = new CacheService();
+            _currentSession = currentSession;
+            _groupService = groupService;
+            _cacheService = cacheService;
         }
 
         [ExternalAccountAuthenticate]
         public IActionResult Index()
         {
-            if (_currentSession.IsInternalAdmin)
+            if (CurrentSession.IsInternalAdmin)
             {
                 var groupName = RouteData.Values["id"]?.ToString();
 
                 if (!string.IsNullOrWhiteSpace(groupName)
-                    && !groupName.Equals(_currentSession.CurrencyGroup)
+                    && !groupName.Equals(CurrentSession.CurrencyGroup)
                     && !IsIgnoreGroupName(groupName))
                 {
                     var group = _groupService.GetGroupByName(groupName);
 
                     if (group != null)
                     {
-                        _currentSession.CurrencyGroup = group.GroupName;
-                        _currentSession.ParentGroupName = group.ParentGroupId == 0 ? group.GroupName : group.ParentGroupName;
+                        CurrentSession.CurrencyGroup = group.GroupName;
+                        CurrentSession.ParentGroupName = group.ParentGroupId == 0 ? group.GroupName : group.ParentGroupName;
                     }
                 }
             }
 
             return View(new HomeViewModel
             {
-                Username = _currentSession.UserName,
-                Code = _currentSession.OTPEncryptCode,
-                EnabledOTP = _currentSession.EnabledOTP,
-                ModifiedDate = _currentSession.OTPModifiedDate
+                Username = CurrentSession.UserName,
+                Code = CurrentSession.OTPEncryptCode,
+                EnabledOTP = CurrentSession.EnabledOTP,
+                ModifiedDate = CurrentSession.OTPModifiedDate
             });
         }
 

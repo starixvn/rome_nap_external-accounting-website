@@ -12,32 +12,34 @@
     using Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT;
     using Requests;
     using Service.Interface.Report;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     [ExternalAccountAuthenticate(Function = eFunctions.SuperWinLossDetailByPT,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class SuperWinLossDetailByPTController : BaseReportController
     {
         private readonly SuperWinLossDetailByPTService services;
-        private readonly ProductDetailService productDetailService;
+        private readonly IProductDetailService productDetailService;
 
         public SuperWinLossDetailByPTController(
-            CurrentSession currentSession,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService,
             SuperWinLossDetailByPTService services,
-            ProductDetailService productDetailService,
+            IProductDetailService productDetailService,
             IReportService reportService)
-            : base(currentSession, reportService)
+            : base(reportService, currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            this.services = services ?? new SuperWinLossDetailByPTServiceImpl();
-            this.productDetailService = productDetailService ?? new ProductDetailService();
-        }
-
-        public SuperWinLossDetailByPTController() : this(null!, null!, null!, null!)
-        {
+            this.services = services;
+            this.productDetailService = productDetailService;
         }
 
         public IActionResult Index()
         {
-            ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
+            ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(CurrentSession.ParentGroupName);
 
             return View();
         }
@@ -53,8 +55,8 @@
                 request.Todate,
                 request.ProductIds,
                 request.ResourceIds,
-                reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
-                reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId),
+                _reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
+                _reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId),
                 request.PageSize,
                 request.PageIndex,
                 request.UserId);
@@ -72,8 +74,8 @@
                 request.Todate,
                 request.ProductIds,
                 request.ResourceIds,
-                reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
-                reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId),
+                _reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
+                _reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId),
                 0,
                 0,
                 request.UserId));
@@ -84,7 +86,7 @@
                 request.Fromdate,
                 request.Todate);
 
-            var formatedProducts = reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
+            var formatedProducts = _reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)

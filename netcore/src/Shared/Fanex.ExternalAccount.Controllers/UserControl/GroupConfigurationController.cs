@@ -10,6 +10,8 @@
     using Service.Products;
     using Service.UserControl;
     using ViewModels;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class GroupConfigurationController : BaseController
     {
@@ -20,15 +22,16 @@
         public GroupConfigurationController(
             IGroupService groupService,
             IProductService productService,
-            IGroupConfigurationService groupConfigurationService)
+            IGroupConfigurationService groupConfigurationService,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            this.groupService = groupService ?? new GroupService();
-            this.groupConfigurationService = groupConfigurationService ?? new GroupConfigurationService();
-            this.productService = productService ?? new ProductService();
-        }
-
-        public GroupConfigurationController() : this(null!, null!, null!)
-        {
+            this.groupService = groupService;
+            this.groupConfigurationService = groupConfigurationService;
+            this.productService = productService;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageProduct,

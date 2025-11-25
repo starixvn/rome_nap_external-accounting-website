@@ -9,10 +9,10 @@
     using Fanex.ExternalAccount.Core.Criteria;
     using Fanex.ExternalAccount.Core.Model;
     using Fanex.ExternalAccount.Core.Service;
-    using Newtonsoft.Json;
     using Utilities;
     using CurrentContext = Context.CurrentContext;
     using CurrentSession = Context.CurrentSession;
+    using Newtonsoft.Json;
 
     public class BaseController : Controller
     {
@@ -22,20 +22,17 @@
         private readonly ICurrentContext currentContext;
         private readonly ICurrentSession currentSession;
         private readonly IExtRequest extRequest;
-        private readonly IConfiguration? configuration;
+        private readonly IConfiguration configuration;
 
-        protected readonly AuthorizationService AuthorizationService = new AuthorizationServiceImpl();
+        protected readonly AuthorizationService AuthorizationService;
 
-        protected BaseController() : this(new CurrentSession(), new CurrentContext(), new ExtRequest())
-        {
-        }
-
-        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration? configuration = null)
+        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
         {
             this.currentContext = currentContext;
             this.currentSession = currentSession;
             this.extRequest = extRequest;
             this.configuration = configuration;
+            this.AuthorizationService = authorizationService;
         }
 
         protected string Environment => configuration?.GetValue<string>("Environment") ?? string.Empty;
@@ -50,15 +47,23 @@
 
         protected virtual IActionResult JsonBase(object data, JsonSerializerSettings settings = null)
         {
-            // In ASP.NET Core, we use Ok() method for JSON responses
-            return Ok(data);
+            return new JsonBase(data, settings ?? new JsonSerializerSettings());
         }
 
-        protected virtual IActionResult JsonBase2(object data) => Ok(data);
+        protected virtual IActionResult JsonBase2(object data) => new JsonBase(data);
 
-        protected virtual IActionResult PartialViewBase(object objModel = null, string viewName = null) =>
-            // ASP.NET Core API controllers don't support views
-            BadRequest("Partial views are not supported in API controllers");
+        protected virtual IActionResult PartialViewBase(object objModel = null, string viewName = null)
+        {
+            // For MVC controllers, return the partial view
+            // For API controllers that somehow inherit from this base, return JSON
+            if (this is Controller controller)
+            {
+                return viewName != null ? controller.PartialView(viewName, objModel) : controller.PartialView(objModel);
+            }
+
+            // Fallback for API contexts - return JSON data
+            return new JsonBase(objModel ?? new { });
+        }
 
         protected virtual void ExportToExcel(MemoryStream excelStream, string fileName)
         {

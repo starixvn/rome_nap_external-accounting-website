@@ -11,6 +11,8 @@
     using Newtonsoft.Json;
     using Service.Interface.Report;
     using Utilities;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class DailyWinlossController : BaseReportController
     {
@@ -27,13 +29,13 @@
         private DateTime _winlostDate = DateTime.Today;
 
         public DailyWinlossController(
-            CurrentSession currentSession,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService,
             IReportService reportService)
-            : base(currentSession, reportService)
-        {
-        }
-
-        public DailyWinlossController() : this(null!, null!)
+            : base(reportService, currentSession, currentContext, extRequest, configuration, authorizationService)
         {
         }
 
@@ -92,7 +94,7 @@
         {
             if (!string.IsNullOrWhiteSpace(_username))
             {
-                var custInfo = reportService.SearchCustomerInfo(_groupname, 0, _username, true);
+                var custInfo = _reportService.SearchCustomerInfo(_groupname, 0, _username, true);
                 if (custInfo == null)
                 {
                     return false;
@@ -124,7 +126,7 @@
 
             if (_roleId > Role.Master)
             {
-                _listDailyWinLoss = reportService.GetDailyWinLoss(_winlostDate, _srecommend, _groupname);
+                _listDailyWinLoss = _reportService.GetDailyWinLoss(_winlostDate, _srecommend, _groupname);
                 return JsonBase(
                     new
                     {
@@ -138,7 +140,7 @@
             }
             if (_roleId.IsMaster())
             {
-                _listDailyWinLoss = reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, _mrecommend, 0);
+                _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, _mrecommend, 0);
                 return JsonBase(
                     new
                     {
@@ -154,7 +156,7 @@
             }
             if (_roleId.IsAgent())
             {
-                _listDailyWinLoss = reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, _recommend, 0);
+                _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, _recommend, 0);
                 return JsonBase(
                     new
                     {
@@ -172,7 +174,7 @@
 
             if (_roleId.IsMember() && _recommend.IsDirectMemberOfSuper())
             {
-                _listDailyWinLoss = reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, 0, _memberId);
+                _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _srecommend, 0, _memberId);
                 return JsonBase(
                     new
                     {
@@ -189,7 +191,7 @@
             
             if (_roleId.IsMember() && _recommend.IsDirectMemberOfMaster())
             {
-                _listDailyWinLoss = reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, 0, _memberId);
+                _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _mrecommend, 0, _memberId);
                 return JsonBase(
                     new
                     {
@@ -204,7 +206,7 @@
                     },
                     new JsonSerializerSettings());
             }
-            _listDailyWinLoss = reportService.GetDailyWinLossAgent(_winlostDate, _recommend, _memberId);
+            _listDailyWinLoss = _reportService.GetDailyWinLossAgent(_winlostDate, _recommend, _memberId);
             return JsonBase(
                 new
                 {
@@ -224,7 +226,7 @@
         {
             if (_viewlevel.IsSuper())
             {
-                _listDailyWinLoss = reportService.GetDailyWinLossSuper(_winlostDate, _custId, 0,0);
+                _listDailyWinLoss = _reportService.GetDailyWinLossSuper(_winlostDate, _custId, 0,0);
                 return JsonBase(
                     new
                     {
@@ -236,7 +238,7 @@
             }
             if (_viewlevel.IsMaster())
             {
-                _listDailyWinLoss = reportService.GetDailyWinLossMaster(_winlostDate, _custId, 0, 0);
+                _listDailyWinLoss = _reportService.GetDailyWinLossMaster(_winlostDate, _custId, 0, 0);
                 return JsonBase(
                     new
                     {
@@ -248,7 +250,7 @@
                     new JsonSerializerSettings());
             }
 
-            _listDailyWinLoss = reportService.GetDailyWinLossAgent(_winlostDate, _custId, 0);
+            _listDailyWinLoss = _reportService.GetDailyWinLossAgent(_winlostDate, _custId, 0);
             return JsonBase(
                 new
                 {

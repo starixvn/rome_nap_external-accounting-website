@@ -4,8 +4,6 @@
     using System.Diagnostics;
     using System.Linq;
     using Microsoft.AspNetCore.Mvc;
-    using CaptchaMvc.Controllers;
-    using CaptchaMvc.HtmlHelpers;
     using Core.Context;
     using Core.Helpers;
     using DTO;

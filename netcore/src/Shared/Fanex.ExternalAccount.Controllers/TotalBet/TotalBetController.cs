@@ -13,31 +13,32 @@
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.TotalBet;
     using Requests;
+    using Core.Authorization;
+    using Microsoft.Extensions.Configuration;
 
     [ExternalAccountAuthenticate(Function = eFunctions.TotalBetSoccer, Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class TotalBetController : BaseController
     {
-        protected readonly CurrentSession currentSession;
         private readonly ITotalBetService totalBetService;
 
         public TotalBetController(
-            CurrentSession currentSession,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService,
             ITotalBetService totalBetService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            this.currentSession = currentSession ?? new CurrentSession();
-            this.totalBetService = totalBetService ?? new TotalBetService();
-        }
-
-        public TotalBetController() : this(null!, null!)
-        {
+            this.totalBetService = totalBetService;
         }
 
         public IActionResult Index()
         {
             var testGroups = Config.TestGroups();
             var isTest =
-                testGroups.Contains(currentSession.CurrencyGroup, StringComparer.CurrentCultureIgnoreCase) ||
-                testGroups.Contains(currentSession.ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
+                testGroups.Contains(CurrentSession.CurrencyGroup, StringComparer.CurrentCultureIgnoreCase) ||
+                testGroups.Contains(CurrentSession.ParentGroupName, StringComparer.CurrentCultureIgnoreCase);
 
             var leagues = totalBetService.GetLeagues(isTest);
 

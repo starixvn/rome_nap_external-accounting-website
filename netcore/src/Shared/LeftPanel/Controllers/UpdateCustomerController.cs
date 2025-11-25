@@ -5,27 +5,25 @@
     using Core.Context;
     using Core.Shared;
     using CustomerSetting.Security.Authenticate;
-    using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Interface.Customer;
     using Microsoft.AspNetCore.Mvc;
     using Services;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class UpdateCustomerController : BaseController
     {
         private readonly CustomerCommandService customerCommandService;
         private readonly ICustomerService customerService;
 
-        public UpdateCustomerController()
-            : this(new CustomerCommandServiceImpl(), new CustomerService(), null, null, null)
-        {
-        }
-
-        internal UpdateCustomerController(
+        public UpdateCustomerController(
             CustomerCommandService customerCommandService,
             ICustomerService customerService,
             ICurrentSession currentSession,
             ICurrentContext currentContext,
-            IExtRequest extRequest) : base(currentSession, currentContext, extRequest)
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.customerCommandService = customerCommandService;
             this.customerService = customerService;

@@ -8,19 +8,17 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class SuperInfoController : BaseController
     {
-        private readonly IEditSuperListService superListSevice;
+        private readonly IEditSuperListService _superListSevice;
 
-        public SuperInfoController(): this(null!)
+        public SuperInfoController(IEditSuperListService superListSevice, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+         : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-
-        }
-
-        public SuperInfoController(IEditSuperListService superListSevice)
-        {
-            this.superListSevice = superListSevice ?? new EditSuperListService();
+            _superListSevice = superListSevice;
         }
 
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditSuperInfo")]
@@ -36,7 +34,7 @@
         [AuthenticateAction(AuthenticateAction.AuthenticationType.Host, "EditSuperInfo")]
         public IActionResult CheckMultipleSupers([FromBody] string destUsers, [FromBody] string groupName)
         {
-            var result = superListSevice.CheckMultipleSupers(destUsers, groupName, CurrentSession.UserId);
+            var result = _superListSevice.CheckMultipleSupers(destUsers, groupName, CurrentSession.UserId);
             return JsonBase(new { result.ErrorCode, result.ErrorMessage, SuperIds = result.ResultData },
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
@@ -46,7 +44,7 @@
         public IActionResult UpdateMultipleSupers([FromBody] UpdateMultipleSuperRequest request)
         {
             request.Password = Encryptor.Decrypt(request.Password, Encryptor.RandomCaptcha);
-            var result = superListSevice.UpdateMultipleSuperRequest(request, CurrentSession.UserId, CurrentContext.Ip4Address);
+            var result = _superListSevice.UpdateMultipleSuperRequest(request, CurrentSession.UserId, CurrentContext.Ip4Address);
             return JsonBase(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, ContractResolver = new CamelCasePropertyNamesContractResolver() });
         }
     }

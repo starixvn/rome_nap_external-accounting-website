@@ -1,8 +1,5 @@
-﻿using System.Linq;
-
-namespace Fanex.ExternalAccount.Controllers.Customer
+﻿namespace Fanex.ExternalAccount.Controllers.Customer
 {
-    using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Controllers.Requests.CustomerList;
     using Fanex.ExternalAccount.Core.Authorization;
     using Fanex.ExternalAccount.Core.Base;
@@ -11,36 +8,35 @@ namespace Fanex.ExternalAccount.Controllers.Customer
     using Fanex.ExternalAccount.Excel.Customer.CustomerListPage;
     using Fanex.ExternalAccount.Service.Customer.CustomerList;
     using Fanex.ExternalAccount.Service.Customer.CustomerList.Params;
-    using Fanex.ExternalAccount.Service.Impl.Customer;
     using Fanex.ExternalAccount.Service.Interface.Customer;
-    using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Utilities;
     using Fanex.ExternalAccount.ViewModel.Customer.CustomerList;
     using System;
     using Microsoft.AspNetCore.Mvc;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
+    using Microsoft.Extensions.Configuration;
 
     public class CustomerListController : BaseController
     {
         private readonly ICustomerListService _customerListService;
         private readonly ICustomerService _customerService;
         private readonly AuthorizationService _authorizationService;
-        private const int DefaultPageSize = 50;
-
-        public CustomerListController()
-            : this(null!, null!, null!)
-        {
-        }
 
         public CustomerListController(
             ICustomerService customerService,
             ICustomerListService customerListService,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
             AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            _customerService = customerService ?? new CustomerService();
-            _customerListService = customerListService ?? new CustomerListService();
-            _authorizationService = authorizationService ?? new AuthorizationServiceImpl();
+            _customerListService = customerListService;
+            _customerService = customerService;
+            _authorizationService = authorizationService;
         }
+        private const int DefaultPageSize = 50;
 
         [ExternalAccountAuthenticate(Function = eFunctions.CustomerList, Policy = AuthenticationType.Read)]
         public IActionResult Index(int? custId, int? roleId)

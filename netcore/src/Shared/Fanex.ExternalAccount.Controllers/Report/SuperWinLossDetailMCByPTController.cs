@@ -12,32 +12,34 @@
     using Fanex.ExternalAccount.Service.Report.SuperWinLossDetailByPT;
     using Requests;
     using Service.Interface.Report;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     [ExternalAccountAuthenticate(Function = eFunctions.SuperWinLossDetailByPTBaseCurrency,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class SuperWinLossDetailMCByPTController : BaseReportController
     {
-        private readonly SuperWinLossDetailByPTService services;
-        private readonly ProductDetailService productDetailService;
+        private readonly SuperWinLossDetailByPTService _superWinLossDetailByPTService;
+        private readonly IProductDetailService _productDetailService;
 
         public SuperWinLossDetailMCByPTController(
-            CurrentSession currentSession,
-            SuperWinLossDetailByPTService services,
-            ProductDetailService productDetailService,
-            IReportService reportService)
-            : base(currentSession, reportService)
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService,
+            SuperWinLossDetailByPTService superWinLossDetailByPTService,
+            IProductDetailService productDetailService,
+            IReportService _reportService)
+            : base(_reportService, currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            this.services = services ?? new SuperWinLossDetailByPTServiceImpl();
-            this.productDetailService = productDetailService ?? new ProductDetailService();
-        }
-
-        public SuperWinLossDetailMCByPTController() : this(null!, null!, null!, null!)
-        {
+            _superWinLossDetailByPTService = superWinLossDetailByPTService;
+            _productDetailService = productDetailService;
         }
 
         public IActionResult Index()
         {
-            ViewBag.NoteSabaOthers = productDetailService.GetProductDetailBelongSabaOtherSports(currentSession.ParentGroupName);
+            ViewBag.NoteSabaOthers = _productDetailService.GetProductDetailBelongSabaOtherSports(CurrentSession.ParentGroupName);
 
             return View();
         }   
@@ -52,8 +54,8 @@
                 request.Todate,
                 request.ProductIds,
                 request.ResourceIds,
-                reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
-                reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId),
+                _reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
+                _reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId),
                 0,
                 0,
                 request.UserId)
@@ -63,21 +65,21 @@
                 Currencies = request.Currencies
             };
 
-            var viewModel = services.GetSuperWinLossMCDetailByPT(param);
+            var viewModel = _superWinLossDetailByPTService.GetSuperWinLossMCDetailByPT(param);
             return Ok(viewModel);
         }
 
         public IActionResult ExportWinLossDetailToExcel(ExportSuperWinLossDetailByPTRequest request)
         {
-            var winlossDetail = services.GetSuperWinLossMCDetailByPT(new SuperWinLossDetailByPTParam(
+            var winlossDetail = _superWinLossDetailByPTService.GetSuperWinLossMCDetailByPT(new SuperWinLossDetailByPTParam(
                 request.GroupId,
                 request.GroupName,
                 request.Fromdate,
                 request.Todate,
                 request.ProductIds,
                 request.ResourceIds,
-                reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
-                reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId),
+                _reportService.BuildTooltipsForLiveCasino(request.UserId, request.GroupName, request.GroupId),
+                _reportService.BuildTooltipsForRNGCasino(request.UserId, request.GroupName, request.GroupId),
                 0,
                 0,
                 request.UserId)
@@ -94,7 +96,7 @@
                 request.Fromdate,
                 request.Todate);
 
-            var formatedProducts = reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
+            var formatedProducts = _reportService.ConcatProductName(request.ProductIds, request.ResourceIds, request.GroupName);
             var memoryStream = builder.Build(formatedProducts);
 
             if (memoryStream != null)

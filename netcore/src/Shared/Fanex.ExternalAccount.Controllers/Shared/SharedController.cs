@@ -13,32 +13,26 @@
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Fanex.ExternalAccount.ViewModel.Shared;
     using Logging.Extensions.Web;
-    using ONEbook.UM;
     using ONEbook.UM.Services;
-    using Service.Impl.Login;
     using Service.Interface.Login;
     using Utilities;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class SharedController : BaseController
     {
         private static readonly string[] ignoreRecheckinCustomers = Config.IgnoreRecheckinCustomers.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-        private readonly ILoginService _loginService;
-        private readonly CurrentSession _currentSession;
-        private readonly IMaintenanceService _maintenanceService;
+        private readonly ILoginService loginService;
+        private readonly IMaintenanceService maintenanceService;
         private readonly IMenuService menuService;
         private readonly IGroupService groupService;
 
-        public SharedController()
+        public SharedController(ILoginService loginService, IMaintenanceService maintenanceService, IMenuService menuService, IGroupService groupService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            _currentSession = new CurrentSession();
-            _loginService = new LoginService();
-            _maintenanceService = new MaintenanceService(
-                UMClientManager.RestClient,
-                UMClientManager.CacheService,
-                UMClientManager.UMClientConfigs,
-                UMClientManager.HttpContext);
-            menuService = new MenuService();
-            groupService = new GroupService();
+            this.loginService = loginService;
+            this.maintenanceService = maintenanceService;
+            this.menuService = menuService;
+            this.groupService = groupService;
         }
 
         public IActionResult _Layout()
@@ -75,7 +69,7 @@
 
             var menuList = menuService.GetMenusByUserId(
                 CurrentSession.UserId,
-                _currentSession.ParentGroupName,
+                CurrentSession.ParentGroupName,
                 isShowAssignSubGroup,
                 isShowSuperWinLossDetailBySubGroup);
             var rootMenuList = menuList.Where(x => x.ParentId == 0);
@@ -117,17 +111,17 @@
         private RecheckinStatus GetRecheckinStatus()
         {
             if (!Config.IsEnabledRecheckin
-                || ignoreRecheckinCustomers.Any(s => string.Equals(s, _currentSession.UserName, StringComparison.OrdinalIgnoreCase)))
+                || ignoreRecheckinCustomers.Any(s => string.Equals(s, CurrentSession.UserName, StringComparison.OrdinalIgnoreCase)))
             {
                 return RecheckinStatus.Continue;
             }
 
-            int onuserId = _currentSession.OnUserId;
+            int onuserId = CurrentSession.OnUserId;
             if (onuserId > 0 && User.Identity?.IsAuthenticated == true)
             {
                 try
                 {
-                    var isKickOut = _loginService.IsKickedOut(onuserId);
+                        var isKickOut = loginService.IsKickedOut(onuserId);
                     if (isKickOut)
                     {
                         HttpContext.Session.Clear();
@@ -156,9 +150,9 @@
                 HttpContext.Session.SetString(Config.InternalAgentUMToken, Request.Query[Config.InternalAgentUMToken].ToString());
             }
 
-            if (_maintenanceService.IsUnderMaintenance())
+            if (maintenanceService.IsUnderMaintenance())
             {
-                var underMaintenanceTime = _maintenanceService.GetUnderMaintenanceTime();
+                var underMaintenanceTime = maintenanceService.GetUnderMaintenanceTime();
                 ViewBag.UmFromTime = underMaintenanceTime.From;
                 ViewBag.UmToTime = underMaintenanceTime.To;
                 return PartialView();
@@ -168,7 +162,7 @@
         }
 
         public int ReCheckInOffline()
-            => _maintenanceService.IsUnderMaintenance()
+            => maintenanceService.IsUnderMaintenance()
                 ? (int)RecheckinStatus.Maintenance
                 : (int)RecheckinStatus.Login;
 
@@ -180,7 +174,7 @@
 
                 if (group != null)
                 {
-                    _currentSession.ParentGroupName = group.ParentGroupId == 0 ? groupName : group.ParentGroupName;
+                    CurrentSession.ParentGroupName = group.ParentGroupId == 0 ? groupName : group.ParentGroupName;
                 }
             }
 

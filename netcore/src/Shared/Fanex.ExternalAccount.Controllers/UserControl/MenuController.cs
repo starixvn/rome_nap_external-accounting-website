@@ -11,16 +11,19 @@
     using DTO.UserControl;
     using Newtonsoft.Json;
     using Service.Impl.UserControl;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class MenuController : BaseController
     {
-        private readonly IMenuService _menuService;
-        private readonly ICachingService _cachingService;
+        private readonly IMenuService menuService;
+        private readonly ICachingService cachingService;
 
-        public MenuController()
+        public MenuController(ICachingService cachingService, IMenuService menuService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            _cachingService = new CachingService();
-            _menuService = _menuService ?? new MenuService();
+            this.menuService = menuService;
+            this.cachingService = cachingService;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageMenu,
@@ -54,7 +57,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult EditMenu(int id)
         {
-            var model = _menuService.GetAllMenus().FirstOrDefault(o => o.MenuId == id);
+            var model = menuService.GetAllMenus().FirstOrDefault(o => o.MenuId == id);
 
             if (model != null)
             {
@@ -78,7 +81,7 @@
             {
                 menu.IsActive = true;
             }
-            var result = _menuService.CreateMenu(menu, CurrentSession.CustId, CurrentContext.Ip4Address);
+            var result = menuService.CreateMenu(menu, CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }
@@ -88,7 +91,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Menu menu)
         {
-            var result = _menuService.UpdateMenu(menu, CurrentSession.CustId, CurrentContext.Ip4Address);
+            var result = menuService.UpdateMenu(menu, CurrentSession.CustId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }
@@ -98,7 +101,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult UpdateStatus(int menuId, bool isActive)
         {
-            var result = _menuService.UpdateMenuStatus(
+            var result = menuService.UpdateMenuStatus(
                 menuId,
                 isActive,
                 CurrentSession.CustId);
@@ -111,7 +114,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int menuId)
         {
-            var result = _menuService.DeleteMenu(
+            var result = menuService.DeleteMenu(
                 menuId,
                 CurrentSession.CustId);
 
@@ -122,7 +125,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Menu> GetAllMenus()
         {
-            var menuList = _menuService.GetAllMenus();
+            var menuList = menuService.GetAllMenus();
             var parents = menuList.Where(x => x.ParentId == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
@@ -142,7 +145,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Menu> GetMenus()
         {
-            var menuList = _cachingService.GetUserCache(CurrentSession.UserId, ExtRequest.GetGroupName()).MenuList;
+            var menuList = cachingService.GetUserCache(CurrentSession.UserId, ExtRequest.GetGroupName()).MenuList;
             var parents = menuList.Where(x => x.ParentId == 0);
             var list = new List<Menu>();
             foreach (var parent in parents)
@@ -157,7 +160,7 @@
             Policy = AuthenticateAction.AuthenticationType.Read)]
         private List<Function> GetFunctions()
         {
-            var menuList = _cachingService.GetUserCache(CurrentSession.UserId, ExtRequest.GetGroupName()).PolicyList;
+            var menuList = cachingService.GetUserCache(CurrentSession.UserId, ExtRequest.GetGroupName()).PolicyList;
             var parents = menuList.Where(x => x.ParentID == 0);
             var list = new List<Function>();
             foreach (var parent in parents)

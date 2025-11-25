@@ -7,6 +7,8 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Service.Report;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     [ExternalAccountAuthenticate(Function = eFunctions.OandaExchangeRate,
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
@@ -14,11 +16,9 @@
     {
         private readonly IExchangeService exchangeService;
 
-        public OandaExchangeController() : this(null!) { }
-
-        public OandaExchangeController(IExchangeService exchangeService)
+        public OandaExchangeController(IExchangeService exchangeService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            this.exchangeService = exchangeService ?? new ExchangeService();
+            this.exchangeService = exchangeService;
         }
 
         public IActionResult Index()

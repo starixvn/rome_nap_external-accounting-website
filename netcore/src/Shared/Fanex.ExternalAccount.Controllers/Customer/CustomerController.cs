@@ -57,7 +57,14 @@
         private readonly AuthorizationService authorizationService = new AuthorizationServiceImpl();
         private readonly ISiteDBConfigService siteDBConfigService = new SiteDBConfigService();
 
-        public CustomerController(IConfiguration configuration, IMemoryCache memoryCache)
+        public CustomerController(
+            IConfiguration configuration,
+            IMemoryCache memoryCache,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             _configuration = configuration;
             _memoryCache = memoryCache;

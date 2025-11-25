@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Net;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Http;
     using Core.Authorization;
     using Core.Base;
@@ -16,27 +15,32 @@
     using Fanex.Cryptography.Aes;
     using Fanex.ExternalAccount.Controllers.ViewModels;
     using Newtonsoft.Json;
-    using Service.Impl.Login;
     using Service.Impl.UserControl;
     using Service.Interface.Login;
     using Tarus.Infrastructure.Configurations.InternalLogin;
     using Utilities;
-    using System.Net;
-    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
 
     public class UserController : BaseController
     {
-        private readonly CachingService _cache = new CachingService();
-        private readonly IUserService _userService = new UserService();
-        private readonly IGroupService groupService = new GroupService();
-        private readonly ILoginService loginService = new LoginService();
-        private readonly IFunctionService functionService = new FunctionService();
-        private readonly AuthorizationService _authorization = new AuthorizationServiceImpl();
-        private readonly InternalLoginManager _internalLoginManager;
+        private readonly ICachingService cache;
+        private readonly IUserService userService;
+        private readonly IGroupService groupService;
+        private readonly ILoginService loginService;
+        private readonly IFunctionService functionService;
+        private readonly AuthorizationService authorization;
+        private readonly InternalLoginManager internalLoginManager;
 
-        public UserController(InternalLoginManager internalLoginManager)
+        public UserController(ICachingService cache, IUserService userService, IGroupService groupService, ILoginService loginService, IFunctionService functionService, AuthorizationService authorization, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            _internalLoginManager = internalLoginManager;
+            this.cache = cache;
+            this.userService = userService;
+            this.groupService = groupService;
+            this.loginService = loginService;
+            this.functionService = functionService;
+            this.authorization = authorization;
+            this.internalLoginManager = new InternalLoginManager(configuration);
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ManageUser,
@@ -65,7 +69,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult UserListPost(string userName = null, int? groupId = null)
         {
-            var result = _userService.GetListUsers(userName ?? string.Empty, groupId);
+            var result = userService.GetListUsers(userName ?? string.Empty, groupId);
 
             if (!CurrentSession.IsITAdmin && CurrentSession.IsInternalAdmin)
             {
@@ -88,7 +92,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult EditUser(int id)
         {
-            var model = _userService.GetUserById(id);
+            var model = userService.GetUserById(id);
 
             model.FirstName = WebUtility.HtmlDecode(model.FirstName);
             model.LastName = WebUtility.HtmlDecode(model.LastName);
@@ -115,7 +119,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int custId, string firstName, string lastName, int groupId)
         {
-            var result = _userService.EditUser(CurrentSession.UserId, custId, firstName, lastName,
+            var result = userService.EditUser(CurrentSession.UserId, custId, firstName, lastName,
                 CurrentContext.Ip4Address, groupId);
 
             return JsonBase(result);
@@ -142,7 +146,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult Add(string username, string pwd, string firstName, string lastName, int groupId)
         {
-            var result = _userService.CreateUser(CurrentSession.UserId, username, pwd, firstName, lastName, groupId,
+            var result = userService.CreateUser(CurrentSession.UserId, username, pwd, firstName, lastName, groupId,
                 CurrentContext.Ip4Address);
 
             return JsonBase(result);
@@ -154,7 +158,7 @@
         public IActionResult AddExist(string username, int groupId)
         {
             var result =
-                _userService.CreateExistUser(CurrentSession.UserId, username, groupId, CurrentContext.Ip4Address);
+                userService.CreateExistUser(CurrentSession.UserId, username, groupId, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }
@@ -164,7 +168,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult UpdateStatus(int userId, bool isActive)
         {
-            var result = _userService.UpdateStatus(CurrentSession.UserId, userId, isActive, CurrentContext.Ip4Address);
+            var result = userService.UpdateStatus(CurrentSession.UserId, userId, isActive, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }
@@ -174,7 +178,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult ResetPwd(int userId, string pwd)
         {
-            var result = _userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
+            var result = userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }
@@ -184,7 +188,7 @@
         [ValidateAntiForgeryToken]
         public IActionResult ResetPassword(int id)
         {
-            var model = _userService.GetUserById(id);
+            var model = userService.GetUserById(id);
 
             ViewBag.IsInternalAdmin = loginService.CheckExternalGroup(id, null, eFunctions.ExternalGroup);
 
@@ -200,7 +204,7 @@
             funcs = funcs.Where(f => f.IsTest).ToList();
             var groups = groupService.GetListGroup();
             var externalGroup = groupService.GetExternalGroup();
-            var functionList = _userService.GetUserFunction(userId);
+            var functionList = userService.GetUserFunction(userId);
             var allowFunctions = new List<Function>();
 
             if (!IncludeAllFunctions)
@@ -268,11 +272,11 @@
         [ValidateAntiForgeryToken]
         public IActionResult GrantPermissionPost(int userId, string oldPolicy, string policy)
         {
-            var result = _userService.UpdateUserPolicy(CurrentSession.CustId, userId, oldPolicy, policy,
+            var result = userService.UpdateUserPolicy(CurrentSession.CustId, userId, oldPolicy, policy,
                 CurrentContext.Ip4Address);
             if (result.IsSuccess)
             {
-                _cache.RemoveUserCache(CurrentSession.UserId);
+                cache.RemoveUserCache(CurrentSession.UserId);
             }
 
             return JsonBase(result);
@@ -284,7 +288,7 @@
         {
             var url = Url.Content("~") + "Shared/NoPermission";
             var checkCustomerBelongToSpecialSiteResult = CheckCustomerBelongToSpecialSite(username);
-            var isBelonging = _authorization.IsBelong(ExtRequest.GetGroupName(groupName), 0, username);
+            var isBelonging = authorization.IsBelong(ExtRequest.GetGroupName(groupName), 0, username);
 
             if (isBelonging)
             {
@@ -292,7 +296,7 @@
                 param = AesExtension.Encrypt(param, "!@#$");
 
                 var CustomerSite = checkCustomerBelongToSpecialSiteResult.Site;
-                var internalAgentUrl = _internalLoginManager.GetInternalLoginUrl(CustomerSite);
+                var internalAgentUrl = internalLoginManager.GetInternalLoginUrl(CustomerSite);
                 var internalPaths = internalAgentUrl.Split(new[] { '+' }, StringSplitOptions.RemoveEmptyEntries);
                 var internalDomains = internalPaths[0].Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
                 var internalLoginAction = internalPaths[1];
@@ -301,20 +305,23 @@
                 string internalLoginSessionKey = $"InternalLoginDomains_{CustomerSite}";
 
                 if (HttpContext.Session.GetString(internalLoginSessionKey) != null)
-                if (sessionData != null)
                 {
-                    configDomains = System.Text.Json.JsonSerializer.Deserialize<List<InternLoginDomain>>(sessionData);
-                    randomDomain = configDomains.FirstOrDefault(domain => !domain.IsInUsed)?.Domain;
-                    if (randomDomain == null)
+                    var sessionData = HttpContext.Session.GetString(internalLoginSessionKey);
+                    if (sessionData != null)
                     {
-                        randomDomain = internalDomains[new Random().Next(internalDomains.Length)];
+                        configDomains = System.Text.Json.JsonSerializer.Deserialize<List<InternLoginDomain>>(sessionData);
+                        randomDomain = configDomains.FirstOrDefault(domain => !domain.IsInUsed)?.Domain;
+                        if (randomDomain == null)
+                        {
+                            randomDomain = internalDomains[new Random().Next(internalDomains.Length)];
+                        }
                     }
-                }
-                else
-                {
-                    foreach (var domain in internalDomains)
+                    else
                     {
-                        configDomains.Add(new InternLoginDomain { Domain = domain });
+                        foreach (var domain in internalDomains)
+                        {
+                            configDomains.Add(new InternLoginDomain { Domain = domain });
+                        }
                     }
                 }
 
@@ -343,7 +350,7 @@
                 return ActionDenied();
             }
 
-            var result = _userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
+            var result = userService.ResetPassword(CurrentSession.UserId, userId, pwd, CurrentContext.Ip4Address);
 
             return JsonBase(result);
         }
@@ -355,7 +362,7 @@
                 return ActionDenied();
             }
 
-            var model = _userService.GetUserById(id);
+            var model = userService.GetUserById(id);
             ViewBag.IsInternalAdmin = loginService.CheckExternalGroup(id, null, eFunctions.ExternalGroup);
             return PartialViewBase(model);
         }
