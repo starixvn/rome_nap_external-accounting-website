@@ -51,8 +51,8 @@
         private readonly ISuperService _superService;
         private readonly IIPInformatonService ipInformationService;
         private readonly ITelegramBotService _telegramChatbotService;
-        private readonly ProductStatusService productStatusService;
-        private readonly AuthorizationService authorizationService;
+        private readonly IProductStatusService productStatusService;
+        private readonly IAuthorizationService authorizationService;
         private readonly ISiteDBConfigService siteDBConfigService;
 
         public CustomerController(
@@ -64,13 +64,13 @@
             ISuperService superService,
             IIPInformatonService ipInformationService,
             ITelegramBotService telegramChatbotService,
-            ProductStatusService productStatusService,
-            AuthorizationService authorizationServiceImpl,
+            IProductStatusService productStatusService,
+            IAuthorizationService authorizationServiceImpl,
             ISiteDBConfigService siteDBConfigService,
             ICurrentSession currentSession,
             ICurrentContext currentContext,
             IExtRequest extRequest,
-            AuthorizationService authorizationService)
+            IAuthorizationService authorizationService)
             : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             _configuration = configuration;

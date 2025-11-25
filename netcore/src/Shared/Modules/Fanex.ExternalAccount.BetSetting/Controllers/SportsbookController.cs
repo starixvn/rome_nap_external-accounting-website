@@ -14,7 +14,7 @@ namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
     {
         private readonly ICustomerService externalCustomerService;
 
-        protected SportsbookController(ICustomerService externalCustomerService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        protected SportsbookController(ICustomerService externalCustomerService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.externalCustomerService = externalCustomerService;
         }

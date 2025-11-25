@@ -20,7 +20,7 @@
         ICurrentContext currentContext,
         IExtRequest extRequest,
         IConfiguration configuration,
-        AuthorizationService authorizationService) : BaseController(currentSession, currentContext, extRequest, configuration, authorizationService)
+        IAuthorizationService authorizationService) : BaseController(currentSession, currentContext, extRequest, configuration, authorizationService)
     {
         private readonly IReportService reportService = reportService;
         private readonly IReportByCurrencyService reportByCurrencyService = reportByCurrencyService;

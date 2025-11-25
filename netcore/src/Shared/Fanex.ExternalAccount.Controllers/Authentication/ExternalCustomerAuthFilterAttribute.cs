@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
     // Đã fix lại class ExternalCustomerAuthFilterAttribute cho .NET Core
     public class ExternalCustomerAuthFilterAttribute : Attribute, IAsyncAuthorizationFilter, IAuthenticate
     {
-        private readonly AuthorizationService authorization;
+        private readonly IAuthorizationService authorization;
         private CustomerClientConfiguration? clientConfig;
 
         public bool IsHost { get; set; }
@@ -39,7 +39,7 @@ namespace Fanex.ExternalAccount.Controllers.Authentication
         {
         }
 
-        internal ExternalCustomerAuthFilterAttribute(CustomerClientConfiguration? clientConfig, AuthorizationService? authorizationService)
+        internal ExternalCustomerAuthFilterAttribute(CustomerClientConfiguration? clientConfig, IAuthorizationService? authorizationService)
         {
             this.clientConfig = clientConfig ?? ClientConfig;
             authorization = authorizationService ?? new AuthorizationServiceImpl();

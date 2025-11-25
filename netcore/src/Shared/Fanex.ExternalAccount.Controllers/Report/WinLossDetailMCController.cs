@@ -18,7 +18,7 @@
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class WinLossDetailMCController : BaseReportController
     {
-        private readonly WinLossDetailService winLossDetailService;
+        private readonly IWinLossDetailService winLossDetailService;
         private readonly IProductDetailService productDetailService;
 
         public WinLossDetailMCController(
@@ -26,8 +26,8 @@
             ICurrentContext currentContext,
             IExtRequest extRequest,
             IConfiguration configuration,
-            AuthorizationService authorizationService,
-            WinLossDetailService winLossDetailService,
+            IAuthorizationService authorizationService,
+            IWinLossDetailService winLossDetailService,
             IProductDetailService productDetailService,
             IReportService reportService)
             : base(reportService, currentSession, currentContext, extRequest, configuration, authorizationService)

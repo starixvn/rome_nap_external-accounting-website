@@ -11,7 +11,7 @@
     using Fanex.ExternalAccount.Utilities;
     using Interface.Report;
 
-    public class WinLossDetailServiceImpl : WinLossDetailService
+    public class WinLossDetailServiceImpl : IWinLossDetailService
     {
         private readonly IReportService reportService;
         private readonly IReportByCurrencyService reportByCurrencyService;

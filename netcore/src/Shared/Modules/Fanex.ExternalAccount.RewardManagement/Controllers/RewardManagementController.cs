@@ -18,7 +18,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Controllers
     {
         // RewardManagement
         private readonly IRewardManagementService service;
-        public RewardManagementController(IRewardManagementService service, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        public RewardManagementController(IRewardManagementService service, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.service = service;
         }

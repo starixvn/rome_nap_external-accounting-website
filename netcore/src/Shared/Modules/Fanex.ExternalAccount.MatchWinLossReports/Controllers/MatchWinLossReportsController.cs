@@ -26,7 +26,7 @@
 
         private const string DetailReportCacheKey = "cacheMatchWinLossDetail1";
 
-        public MatchWinLossReportsController(IMatchWinLossReportsService service, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+        public MatchWinLossReportsController(IMatchWinLossReportsService service, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService)
             : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.service = service ?? new MatchWinLossReportsService();

@@ -19,7 +19,7 @@
         Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class SuperWinLossDetailByPTController : BaseReportController
     {
-        private readonly SuperWinLossDetailByPTService services;
+        private readonly ISuperWinLossDetailByPTService services;
         private readonly IProductDetailService productDetailService;
 
         public SuperWinLossDetailByPTController(
@@ -27,8 +27,8 @@
             ICurrentContext currentContext,
             IExtRequest extRequest,
             IConfiguration configuration,
-            AuthorizationService authorizationService,
-            SuperWinLossDetailByPTService services,
+            IAuthorizationService authorizationService,
+            ISuperWinLossDetailByPTService services,
             IProductDetailService productDetailService,
             IReportService reportService)
             : base(reportService, currentSession, currentContext, extRequest, configuration, authorizationService)

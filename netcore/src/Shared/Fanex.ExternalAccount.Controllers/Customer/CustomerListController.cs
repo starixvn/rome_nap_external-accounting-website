@@ -20,7 +20,7 @@
     {
         private readonly ICustomerListService _customerListService;
         private readonly ICustomerService _customerService;
-        private readonly AuthorizationService _authorizationService;
+        private readonly IAuthorizationService _authorizationService;
 
         public CustomerListController(
             ICustomerService customerService,
@@ -29,7 +29,7 @@
             ICurrentContext currentContext,
             IExtRequest extRequest,
             IConfiguration configuration,
-            AuthorizationService authorizationService)
+            IAuthorizationService authorizationService)
             : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             _customerListService = customerListService;

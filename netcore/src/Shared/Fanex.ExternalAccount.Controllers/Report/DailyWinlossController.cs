@@ -33,7 +33,7 @@
             ICurrentContext currentContext,
             IExtRequest extRequest,
             IConfiguration configuration,
-            AuthorizationService authorizationService,
+            IAuthorizationService authorizationService,
             IReportService reportService)
             : base(reportService, currentSession, currentContext, extRequest, configuration, authorizationService)
         {

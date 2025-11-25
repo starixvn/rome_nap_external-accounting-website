@@ -15,7 +15,7 @@
     {
         private readonly IEditSuperListService _superListSevice;
 
-        public SuperInfoController(IEditSuperListService superListSevice, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+        public SuperInfoController(IEditSuperListService superListSevice, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService)
          : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             _superListSevice = superListSevice;

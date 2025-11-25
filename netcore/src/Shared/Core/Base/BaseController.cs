@@ -24,9 +24,9 @@
         private readonly IExtRequest extRequest;
         private readonly IConfiguration configuration;
 
-        protected readonly AuthorizationService AuthorizationService;
+        protected readonly IAuthorizationService AuthorizationService;
 
-        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+        protected BaseController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService)
         {
             this.currentContext = currentContext;
             this.currentSession = currentSession;

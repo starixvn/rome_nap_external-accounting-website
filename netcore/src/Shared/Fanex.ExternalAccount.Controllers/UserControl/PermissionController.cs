@@ -16,7 +16,7 @@
     {
         private readonly IPolicyService policyService;
 
-        public PermissionController(IPolicyService policyService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+        public PermissionController(IPolicyService policyService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService)
          : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.policyService = policyService;

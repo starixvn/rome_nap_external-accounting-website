@@ -12,7 +12,7 @@
     [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
     public class ExternalAccountAuthenticateAttribute : AuthorizeAttribute, IAuthorizationFilter, IAuthenticate
     {
-        private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
+        private readonly Authorization.IAuthorizationService authorization = new AuthorizationServiceImpl();
 
         public bool IsAjaxRequest { get; set; } = true;
 

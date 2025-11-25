@@ -17,7 +17,7 @@
             int userId, 
             int roleId,
             IEnumerable<ProductSettingElement> productSettingElements = null,
-            AuthorizationService authorizationService = null,
+            IAuthorizationService authorizationService = null,
             CurrentSession currentSession = null,
             Func<DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null) 
             : base(userId, roleId, productSettingElements, authorizationService, currentSession, hiddenAndSyncItemsCreator)

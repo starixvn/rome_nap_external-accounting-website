@@ -7,7 +7,7 @@
     using Fanex.ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Utilities;
 
-    public interface ProductStatusService
+    public interface IProductStatusService
     {
         ProductStatusDto GetProductStatus(int custId, int roleId, int productId, byte settingStatus);
 
@@ -16,7 +16,7 @@
         IEnumerable<Product> GetVisibleProductGroups(int custId, int roleId, byte settingStatus);
     }
 
-    public class ProductStatusServiceImpl : ProductStatusService
+    public class ProductStatusServiceImpl : IProductStatusService
     {
         private readonly ProductStatusDataAccess dataAccess;
 

@@ -7,14 +7,14 @@
 
     public class SuperSettingServiceImpl : CustomerSettingServiceImpl
     {
-        private readonly AuthorizationService authorizationService;
+        private readonly IAuthorizationService authorizationService;
 
         private readonly IReadOnlyDictionary<int, string> visibleBetSettingPermissions;
 
         public SuperSettingServiceImpl(
             int userId,
             int roleId,
-            AuthorizationService authorizationService = null,
+            IAuthorizationService authorizationService = null,
             IReadOnlyDictionary<int, string> visibleBetSettingPermissions = null)
             : base(userId, roleId)
         {

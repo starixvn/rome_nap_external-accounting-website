@@ -25,11 +25,11 @@
 
     public class CustomerInfoQueryServiceImpl : CustomerInfoQueryService
     {
-        protected readonly AuthorizationService authorizationService;
+        protected readonly IAuthorizationService authorizationService;
         protected IDictionary<int, CustomerSettingQueryService> settingServices;
 
         public CustomerInfoQueryServiceImpl(
-            AuthorizationService authorizationService = null,
+            IAuthorizationService authorizationService = null,
             IDictionary<int, CustomerSettingQueryService> settingServices = null)
         {
             this.authorizationService = authorizationService ?? new AuthorizationServiceImpl();

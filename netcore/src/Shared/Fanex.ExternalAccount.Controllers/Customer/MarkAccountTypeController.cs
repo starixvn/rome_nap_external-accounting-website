@@ -24,7 +24,7 @@
             ICurrentContext currentContext,
             IExtRequest extRequest,
             IConfiguration configuration,
-            AuthorizationService authorizationService)
+            IAuthorizationService authorizationService)
             : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.markAccountTypeService = markAccountTypeService;

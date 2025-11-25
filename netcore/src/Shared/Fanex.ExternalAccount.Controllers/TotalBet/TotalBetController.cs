@@ -26,7 +26,7 @@
             ICurrentContext currentContext,
             IExtRequest extRequest,
             IConfiguration configuration,
-            AuthorizationService authorizationService,
+            IAuthorizationService authorizationService,
             ITotalBetService totalBetService)
             : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {

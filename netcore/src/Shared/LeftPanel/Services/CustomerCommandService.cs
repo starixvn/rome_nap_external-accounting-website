@@ -42,7 +42,7 @@
     {
         private const int AlphaAdminSystem = 3;
         private const string Salt = "1qaw3+{:P)";
-        private readonly AuthorizationService authorizationService;
+        private readonly IAuthorizationService authorizationService;
         private readonly ITelegramBotService telegramBotService;
 
         private readonly CustomerDataAccess customerDataAccess;
@@ -52,7 +52,7 @@
 
         public CustomerCommandServiceImpl(
             CustomerDataAccess customerDataAccess = null,
-            AuthorizationService authorizationService = null,
+            IAuthorizationService authorizationService = null,
             IReportService reportService = null,
             Encryptor encryptor = null,
             ITelegramBotService telegramBotService = null,

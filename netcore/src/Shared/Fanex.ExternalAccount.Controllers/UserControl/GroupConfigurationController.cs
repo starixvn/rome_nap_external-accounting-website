@@ -27,7 +27,7 @@
             ICurrentContext currentContext,
             IExtRequest extRequest,
             IConfiguration configuration,
-            AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+            IAuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.groupService = groupService;
             this.groupConfigurationService = groupConfigurationService;

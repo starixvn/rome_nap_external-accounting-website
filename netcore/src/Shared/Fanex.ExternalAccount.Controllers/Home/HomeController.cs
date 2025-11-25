@@ -24,7 +24,7 @@
             ICurrentContext currentContext,
             IExtRequest extRequest,
             IConfiguration configuration,
-            AuthorizationService authorizationService,
+            Core.Authorization.IAuthorizationService authorizationService,
             IGroupService groupService,
             ICacheService cacheService)
             : base(currentSession, currentContext, extRequest, configuration, authorizationService)

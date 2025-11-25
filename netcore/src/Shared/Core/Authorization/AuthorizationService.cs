@@ -14,7 +14,7 @@
     using Fanex.ExternalAccount.Service.Impl.UserControl;
     using Shared;
 
-    public interface AuthorizationService
+    public interface IAuthorizationService
     {
         bool IsBelong();
 
@@ -41,7 +41,7 @@
         bool CanViewVNIP(string ip);
     }
 
-    public class AuthorizationServiceImpl : AuthorizationService
+    public class AuthorizationServiceImpl : IAuthorizationService
     {
         private static readonly string[] UrlToCheckUsernameParam = new[]
         {
@@ -89,7 +89,7 @@
         public AuthorizationServiceImpl(
             ICachingService cachingService,
             IIPInformatonService ipInformationService,
-            IBelongingService userService)
+            IBelongingService belongingService)
         {
             this.cachingService = cachingService ?? new CachingService();
             this.ipInformationService = ipInformationService ?? new IPInformationService();

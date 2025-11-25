@@ -16,7 +16,7 @@
         private readonly IHeadlineListService service;
         private readonly IHeadlineListExcel excel;
 
-        public HeadlineListController(IHeadlineListService service, IHeadlineListExcel excel, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        public HeadlineListController(IHeadlineListService service, IHeadlineListExcel excel, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.service = service;
             this.excel = excel;

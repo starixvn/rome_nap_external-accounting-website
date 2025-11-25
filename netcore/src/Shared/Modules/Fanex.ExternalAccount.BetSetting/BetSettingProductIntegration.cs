@@ -7,7 +7,7 @@
 
     public static class BetSettingProductIntegration
     {
-        private static ProductStatusService productStatusService = new ProductStatusServiceImpl();
+        private static readonly IProductStatusService productStatusService = new ProductStatusServiceImpl();
 
         public static IEnumerable<Product> GetVisibledProductGroupBetSettingTabs(int custId, int roleId, byte settingStatus)
         {

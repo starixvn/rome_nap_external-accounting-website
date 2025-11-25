@@ -17,7 +17,7 @@
         private readonly IEnumerable<string> CalculatingNWSpeedAdminNames;
         private readonly IConfiguration _configuration;
 
-        public NetworkSpeedController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+        public NetworkSpeedController(ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService)
             : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             _configuration = configuration;

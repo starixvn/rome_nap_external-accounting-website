@@ -18,7 +18,7 @@
     {
         private readonly ICustomerService customerService;
 
-        internal ProtectedStatusController(ICustomerService customerService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        internal ProtectedStatusController(ICustomerService customerService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.customerService = customerService;
         }

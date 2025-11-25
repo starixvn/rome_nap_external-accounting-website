@@ -20,7 +20,7 @@
         private readonly IProblemAccountService service;
         private readonly IProblemAccountExcel excel;
 
-        public ProblemAccountController(IProblemAccountService service, IProblemAccountExcel excel, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        public ProblemAccountController(IProblemAccountService service, IProblemAccountExcel excel, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.service = service;
             this.excel = excel;

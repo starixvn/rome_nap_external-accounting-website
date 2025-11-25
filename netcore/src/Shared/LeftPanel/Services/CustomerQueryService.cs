@@ -33,14 +33,14 @@
 
     public class CustomerQueryServiceImpl : CustomerQueryService
     {
-        private readonly AuthorizationService authorizationService;
+        private readonly IAuthorizationService authorizationService;
         private readonly CustomerDataAccess customerDataAccess;
         private readonly CustomerInfoQueryService customerInfoQueryService;
         private readonly ISiteDBConfigService siteDBService;
 
         public CustomerQueryServiceImpl(
             CustomerDataAccess customerDataAccess = null,
-            AuthorizationService authorizationService = null,
+            IAuthorizationService authorizationService = null,
             CustomerInfoQueryService customerInfoQueryService = null,
             ISiteDBConfigService siteDBService = null)
         {

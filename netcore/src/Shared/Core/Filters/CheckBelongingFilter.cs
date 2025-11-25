@@ -11,7 +11,7 @@
     [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
     public class CheckBelongingFilter : AuthorizeAttribute, IAuthorizationFilter
     {
-        private readonly AuthorizationService authorization = new AuthorizationServiceImpl();
+        private readonly Authorization.IAuthorizationService authorization = new AuthorizationServiceImpl();
 
         private readonly IMaintenanceService umService = new MaintenanceService(
                       UMClientManager.RestClient,

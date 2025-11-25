@@ -20,7 +20,7 @@
             ICurrentContext currentContext,
             IExtRequest extRequest,
             IConfiguration configuration,
-            AuthorizationService authorizationService,
+            IAuthorizationService authorizationService,
             IDataRangeService service)
             : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {

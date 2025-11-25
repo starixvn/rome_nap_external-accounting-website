@@ -20,7 +20,7 @@
         private readonly IFunctionService funcService;
         private readonly IGroupService groupService;
 
-        protected FunctionController(IFunctionService funcService, IGroupService groupService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        protected FunctionController(IFunctionService funcService, IGroupService groupService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.funcService = funcService;
             this.groupService = groupService;

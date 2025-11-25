@@ -21,7 +21,7 @@
         private readonly ISubGroupService subGroupService;
         private readonly IGroupService groupService;
 
-        public SubGroupController(ISubGroupService subGroupService, IGroupService groupService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        public SubGroupController(ISubGroupService subGroupService, IGroupService groupService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.subGroupService = subGroupService;
             this.groupService = groupService;

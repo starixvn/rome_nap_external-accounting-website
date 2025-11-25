@@ -20,14 +20,14 @@
     {
         private readonly IEnumerable<ProductSettingElement> productSettingElements;
         private readonly Func<DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator;
-        private readonly AuthorizationService authorizationService;
+        private readonly IAuthorizationService authorizationService;
         private readonly CurrentSession currentSession;
         private readonly int _roleId;
         protected readonly int _userId;
 
         public CustomerSettingServiceImpl(int userId, int roleId,
             IEnumerable<ProductSettingElement> productSettingElements = null,
-            AuthorizationService authorizationService = null,
+            IAuthorizationService authorizationService = null,
             CurrentSession currentSession = null,
             Func<DataTable, List<ObjectInfo>> hiddenAndSyncItemsCreator = null)
         {

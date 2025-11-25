@@ -27,7 +27,7 @@
         private readonly IMenuService menuService;
         private readonly IGroupService groupService;
 
-        public SharedController(ILoginService loginService, IMaintenanceService maintenanceService, IMenuService menuService, IGroupService groupService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        public SharedController(ILoginService loginService, IMaintenanceService maintenanceService, IMenuService menuService, IGroupService groupService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, Core.Authorization.IAuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.loginService = loginService;
             this.maintenanceService = maintenanceService;

@@ -12,13 +12,13 @@
     using Fanex.ExternalAccount.Service.Products;
     using Fanex.ExternalAccount.Utilities;
 
-    public interface SuperWinLossDetailByPTService
+    public interface ISuperWinLossDetailByPTService
     {
         SuperWinLossDetailByPTModel GetSuperWinLossDetailByPT(SuperWinLossDetailByPTParam param);
         SuperWinLossDetailMCByPTModel GetSuperWinLossMCDetailByPT(SuperWinLossDetailByPTParam param);
     }
 
-    public class SuperWinLossDetailByPTServiceImpl : SuperWinLossDetailByPTService
+    public class SuperWinLossDetailByPTServiceImpl : ISuperWinLossDetailByPTService
     {
         private readonly SuperWinLossDetailByPTDataAccess superWinLossDetailByPTDataAccess;
         private readonly SuperWinLossMCDetailByPTDao superWinLossMCDetailByPTDataAccess;

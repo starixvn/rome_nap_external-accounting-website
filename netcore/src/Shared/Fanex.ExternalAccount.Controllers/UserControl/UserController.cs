@@ -28,10 +28,10 @@
         private readonly IGroupService groupService;
         private readonly ILoginService loginService;
         private readonly IFunctionService functionService;
-        private readonly AuthorizationService authorization;
+        private readonly IAuthorizationService authorization;
         private readonly IInternalLoginManager internalLoginManager;
 
-        public UserController(ICachingService cache, IUserService userService, IGroupService groupService, ILoginService loginService, IFunctionService functionService, AuthorizationService authorization, IInternalLoginManager internalLoginManager, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+        public UserController(ICachingService cache, IUserService userService, IGroupService groupService, ILoginService loginService, IFunctionService functionService, IAuthorizationService authorization, IInternalLoginManager internalLoginManager, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, IAuthorizationService authorizationService)
             : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.cache = cache;
