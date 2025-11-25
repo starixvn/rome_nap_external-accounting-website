@@ -2,8 +2,6 @@ namespace Fanex.ExternalAccount.WhiteLabelWinLossReports.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using System.Web;
-    using System.Collections.Generic;
-    using Fanex.ExternalAccount.WhiteLabelWinLossReports.Models;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
@@ -12,15 +10,18 @@ namespace Fanex.ExternalAccount.WhiteLabelWinLossReports.Controllers
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.Services;
     using Fanex.ExternalAccount.WhiteLabelWinLossReports.ViewModels;
     using Newtonsoft.Json;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     [ExternalAccountAuthenticate(Function = eFunctions.WhiteLabelSettlementReport, Policy = AuthenticateAction.AuthenticationType.Read)]
     public class WhiteLabelReportController : BaseController
     {
         private readonly IWhiteLabelReportService service;
         
-        public WhiteLabelReportController() : base()
+        public WhiteLabelReportController(IWhiteLabelReportService service, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            service = new WhiteLabelReportService();
+            this.service = service;
         }
 
         public IActionResult Index()

@@ -10,18 +10,16 @@
     using Fanex.ExternalAccount.HeadlineBonus.Services;
     using Fanex.ExternalAccount.HeadlineBonus.ViewModels;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class BonusDetailController : BaseController
     {
         private readonly IBonusDetailService service;
 
-        public BonusDetailController() : this(null)
+        internal BonusDetailController(IBonusDetailService service, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-        }
-
-        internal BonusDetailController(IBonusDetailService service)
-        {
-            this.service = service ?? new BonusDetailService();
+            this.service = service;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.BonusDetail, Policy = AuthenticationType.Read)]

@@ -2,7 +2,6 @@ namespace Fanex.ExternalAccount.RewardManagement.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
     using System.Web;
-    using System.Collections.Generic;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Shared;
@@ -11,31 +10,29 @@ namespace Fanex.ExternalAccount.RewardManagement.Controllers
     using Fanex.ExternalAccount.RewardManagement.Requests;
     using Fanex.CustomerSetting.Security.Authenticate;
     using Newtonsoft.Json;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     [ExternalAccountAuthenticate(Function = eFunctions.RewardDetail, Policy = AuthenticateAction.AuthenticationType.Read)]
     public class RewardManagementController : BaseController
     {
         // RewardManagement
-        private readonly IRewardManagementService _service;
-        public RewardManagementController() : this(null)
+        private readonly IRewardManagementService service;
+        public RewardManagementController(IRewardManagementService service, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-        }
-
-        public RewardManagementController(IRewardManagementService service)
-        {
-            _service = service ?? new RewardManagementService();
+            this.service = service;
         }
         
         public IActionResult Index()
         {
-            var programs = _service.GetPrograms();
+            var programs = service.GetPrograms();
             var viewModel = new RewardManagementViewModel(programs);
             return PartialViewBase(viewModel);
         }
 
         public IActionResult GetPrograms()
         {
-            var programs = _service.GetPrograms();
+            var programs = service.GetPrograms();
             return Json(programs);
         }
 
@@ -43,7 +40,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Controllers
         {
             request.GroupName = CurrentSession.CurrencyGroup;
             request.Username = HttpUtility.HtmlEncode(request.Username);
-            var result = _service.GetReport(request);
+            var result = service.GetReport(request);
             return this.JsonExt(result, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
         
@@ -51,7 +48,7 @@ namespace Fanex.ExternalAccount.RewardManagement.Controllers
         {
             request.GroupName = CurrentSession.CurrencyGroup;
             request.Username = HttpUtility.HtmlEncode(request.Username);
-            var reportData = _service.GetReport(request);
+            var reportData = service.GetReport(request);
             var fileName = $"RewardDetail_{request.FromDate.ToString("MMddyyyy")}_{request.ToDate.ToString("MMddyyyy")}.xls";
 
             using (var excel = new RewardDetailExcel

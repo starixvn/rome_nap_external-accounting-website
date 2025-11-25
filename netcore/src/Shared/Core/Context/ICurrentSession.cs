@@ -39,5 +39,23 @@
         string OTPEncryptCode { get; set; }
 
         bool EnabledOTP { get; set; }
+
+        int LoginAttempt { get; set; }
+
+        bool InvalidOTP { get; set; }
+
+        bool IsAuthenticated { get; }
+
+        string HashPassword { get; set; }
+
+        string CurrentLine { get; set; }
+
+        double LastActiveTime { get; set; }
+
+        int SCFailedCounter { get; set; }
+        
+        string UserAttempt { get; set; }
+
+        void UpdateLastActiveTime(object lastActiveTime = null);
     }
 }

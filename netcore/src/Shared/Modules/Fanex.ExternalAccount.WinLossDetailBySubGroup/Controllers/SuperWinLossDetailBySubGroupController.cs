@@ -12,30 +12,29 @@
     using Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.Services;
     using Fanex.ExternalAccount.SuperWinLossDetailBySubGroup.ViewModels;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     [ExternalAccountAuthenticate(Function = eFunctions.SuperWinLossDetailBySubGroup, Policy = AuthenticationType.Read)]
     public class SuperWinLossDetailBySubGroupController : BaseController
     {
         private readonly IGroupService groupService;
         private readonly ISuperWinLossDetailBySubGroupService service;
-        private readonly CurrentSession currentSession;
-        private readonly ProductDetailService productDetailService;
-
-        public SuperWinLossDetailBySubGroupController()
-            : this(new GroupService(), new SuperWinLossDetailBySubGroupService(), new CurrentSession(), new ProductDetailService())
-        {
-        }
+        private readonly ICurrentSession currentSession;
+        private readonly IProductDetailService productDetailService;
 
         internal SuperWinLossDetailBySubGroupController(
             IGroupService groupService,
             ISuperWinLossDetailBySubGroupService service,
-            CurrentSession currentSession,
-            ProductDetailService productDetailService)
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
             this.groupService = groupService;
             this.service = service;
-            this.currentSession = currentSession;
-            this.productDetailService = productDetailService ?? new ProductDetailService();
         }
 
         public IActionResult Index()

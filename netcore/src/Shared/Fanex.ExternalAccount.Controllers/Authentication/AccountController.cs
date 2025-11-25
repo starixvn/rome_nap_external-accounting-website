@@ -10,14 +10,11 @@
     using DTO.UserControl;
     using Logging.Extensions.Web;
     using RSACryptoPad;
-    using Service.Impl.Login;
     using Service.Impl.UserControl;
     using Service.Interface.Login;
     using Utilities;
     using ViewModel.Account;
     using ViewModels;
-    using CurrentContext = Core.Context.CurrentContext;
-    using CurrentSession = Core.Context.CurrentSession;
     using Microsoft.AspNetCore.Authentication;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
@@ -38,7 +35,7 @@
         private const int CaptchaLength = 4;
         private const string LoginActionName = "Login";
         private readonly ICurrentContext _currentContext;
-        private readonly CurrentSession _currentSession;
+        private readonly ICurrentSession _currentSession;
         private readonly NoCaptchaSectionConfiguration _nocaptcha;
         private readonly ILoginService _userService;
         private readonly IGroupService _groupService;
@@ -46,15 +43,14 @@
         // Lưu tạm cho switchline
         private string _scLastActiveTime;
         private string _scFailedCounter;
-
-        // Nếu sử dụng DI thì nên inject các service này.
-        public AccountController(IConfiguration configuration)
+        
+        public AccountController(ICurrentContext currentContext, ICurrentSession currentSession, ILoginService userService, IGroupService groupService, IConfiguration configuration)
         {
-            _currentContext = new CurrentContext();
-            _currentSession = new CurrentSession();
-            _userService = new LoginService();
-            _nocaptcha = new NoCaptchaSectionConfiguration(configuration);
-            _groupService = new GroupService();
+            this._currentContext = currentContext;
+            this._currentSession = currentSession;
+            this._userService = userService;
+            this._groupService = groupService;
+            this._nocaptcha = new NoCaptchaSectionConfiguration(configuration);
         }
 
         [HttpGet]

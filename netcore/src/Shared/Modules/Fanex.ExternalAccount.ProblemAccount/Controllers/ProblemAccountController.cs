@@ -12,21 +12,18 @@
     using Fanex.ExternalAccount.ProblemAccount.ViewModels;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
     using System.IO;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
 
     public class ProblemAccountController : BaseController
     {
         private readonly IProblemAccountService service;
         private readonly IProblemAccountExcel excel;
 
-        public ProblemAccountController()
-            : this(null, null)
+        public ProblemAccountController(IProblemAccountService service, IProblemAccountExcel excel, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-        }
-
-        public ProblemAccountController(IProblemAccountService service, IProblemAccountExcel excel)
-        {
-            this.service = service ?? new ProblemAccountService();
-            this.excel = excel ?? new ProblemAccountExcel();
+            this.service = service;
+            this.excel = excel;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.ProblemAccountList, Policy = AuthenticationType.Read)]

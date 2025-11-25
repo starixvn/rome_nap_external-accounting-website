@@ -275,7 +275,7 @@
             set => SetSessionValue(EASSCFailedCounter, value);
         }
 
-        public string LangKey { get; set; } = "E";
+        public string LangKey { get; set; } = "E";       
 
         private static object? GetSessionValue(string key)
         {

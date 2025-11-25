@@ -8,18 +8,18 @@
     using Services;
     using ViewModels;
     using static Fanex.CustomerSetting.Security.Authenticate.AuthenticateAction;
-    
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
+
     public class HeadlineListController : BaseController
     {
         private readonly IHeadlineListService service;
         private readonly IHeadlineListExcel excel;
 
-        public HeadlineListController() : this(null, null) { }
-
-        public HeadlineListController(IHeadlineListService service, IHeadlineListExcel excel)
+        public HeadlineListController(IHeadlineListService service, IHeadlineListExcel excel, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            this.service = service ?? new HeadlineListService();
-            this.excel = excel ?? new HeadlineListExcel();
+            this.service = service;
+            this.excel = excel;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.HeadlineList, Policy = AuthenticationType.Read)]

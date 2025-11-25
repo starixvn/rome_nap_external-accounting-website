@@ -1,21 +1,23 @@
 namespace Fanex.CustomerSetting.Module.BetSetting.Controllers
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Linq;
     using Microsoft.AspNetCore.Mvc;
-    using ExternalAccount.Core.Shared;
     using Fanex.ExternalAccount.Core.Base;
-    using Fanex.Logging.Extensions.Web;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using Security.Authenticate;
-    using Security.Configurations;
+    using Fanex.ExternalAccount.Core.Context;
+    using Microsoft.Extensions.Configuration;
+    using Fanex.ExternalAccount.Core.Authorization;
+    using Fanex.ExternalAccount.Service.Interface.Customer;
 
     public class SportsbookController : BaseController
     {
-        private readonly Fanex.ExternalAccount.Service.Interface.Customer.ICustomerService externalCustomerService = new Fanex.ExternalAccount.Service.Impl.Customer.CustomerService();
+        private readonly ICustomerService externalCustomerService;
+
+        protected SportsbookController(ICustomerService externalCustomerService, ICurrentSession currentSession, ICurrentContext currentContext, IExtRequest extRequest, IConfiguration configuration, AuthorizationService authorizationService) : base(currentSession, currentContext, extRequest, configuration, authorizationService)
+        {
+            this.externalCustomerService = externalCustomerService;
+        }
 
         public IActionResult Index(int custId, int uplineId, int userId, string groupName)
             => PartialView("~/Areas/CustomerSetting/Views/BetSetting/Sportsbook/Index.cshtml", externalCustomerService.IsArchivedCustId(custId));
