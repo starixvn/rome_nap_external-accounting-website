@@ -2,56 +2,45 @@
 {
     using System;
     using System.Net;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
     using AppResources;
     using Configuration;
     using Models;
 
     [AttributeUsage(AttributeTargets.Method, Inherited = false, AllowMultiple = false)]
-    internal class ProductStatusAuthorizeAttribute : AuthorizeAttribute
+    internal class ProductStatusAuthorizeAttribute : AuthorizeAttribute, IAuthorizationFilter
     {
         public bool IsHost { get; set; }
 
-        public override void OnAuthorization(AuthorizationContext filterContext)
+        public void OnAuthorization(AuthorizationFilterContext context)
         {
-            base.OnAuthorization(filterContext);
-
-            if (filterContext.Result is HttpUnauthorizedResult)
-            {
-                UnAuthorizedAction(filterContext);
-                return;
-            }
-
             var authorizationService = ProductStatusConfigurationHandler.AuthorizeService;
 
             var isAuthorized = IsHost
-                ? authorizationService.CanUpdate(filterContext)
-                : authorizationService.CanView(filterContext);
+                ? authorizationService.CanUpdate(context)
+                : authorizationService.CanView(context);
 
             if (!isAuthorized)
             {
-                UnAuthorizedAction(filterContext);
+                UnAuthorizedAction(context);
             }
         }
 
-        private static void UnAuthorizedAction(AuthorizationContext filterContext)
+        private static void UnAuthorizedAction(AuthorizationFilterContext context)
         {
-            var response = filterContext.HttpContext.Response;
+            var request = context.HttpContext.Request;
+            var isAjaxRequest = request.Headers.ContainsKey("X-Requested-With") &&
+                               request.Headers["X-Requested-With"].ToString().Equals("XMLHttpRequest", StringComparison.OrdinalIgnoreCase);
 
-            if (filterContext.HttpContext.Request.IsAjaxRequest())
+            if (isAjaxRequest)
             {
-                response.Clear();
-                filterContext.Result = new JsonResult
-                {
-                    Data = new[] { new Result((int)HttpStatusCode.Forbidden, Resources.UnauthorizeMessage) },
-                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
-                }; 
-                filterContext.Result.ExecuteResult(filterContext.Controller.ControllerContext);
-                response.End();
+                context.Result = new JsonResult(new[] { new Result((int)HttpStatusCode.Forbidden, Resources.UnauthorizeMessage) });
             }
             else
             {
-                filterContext.Result = new RedirectResult(ProductStatusConfigurationHandler.UnAuthorizedUrl);
+                context.Result = new RedirectResult(ProductStatusConfigurationHandler.UnAuthorizedUrl);
             }
         }
     }

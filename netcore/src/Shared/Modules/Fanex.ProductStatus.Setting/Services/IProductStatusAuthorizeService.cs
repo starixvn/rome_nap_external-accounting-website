@@ -1,11 +1,11 @@
 ﻿namespace Fanex.ProductStatus.Setting.Services
 {
-    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Filters;
 
     public interface IProductStatusAuthorizeService
     {
-        bool CanView(AuthorizationContext filterContext);
+        bool CanView(AuthorizationFilterContext filterContext);
 
-        bool CanUpdate(AuthorizationContext filterContext);
+        bool CanUpdate(AuthorizationFilterContext filterContext);
     }
 }

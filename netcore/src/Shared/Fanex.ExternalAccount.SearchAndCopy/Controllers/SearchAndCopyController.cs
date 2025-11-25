@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Fanex.CustomerSetting.Security.Authenticate;
+    using Fanex.ExternalAccount.Core.Authorization;
     using Fanex.ExternalAccount.Core.Base;
     using Fanex.ExternalAccount.Core.Context;
     using Fanex.ExternalAccount.Core.Helpers;
@@ -23,17 +25,17 @@
     {
         private readonly IList<string> ErrorCodesNotSendEmail = new List<string> { "201", "202", "203", "204", "205" };
         private readonly ISearchAndCopyService searchAndCopyService;
-        private readonly CurrentSession _currentSession;
 
-        public SearchAndCopyController()
-            : this(null)
+        public SearchAndCopyController(
+            ISearchAndCopyService searchAndCopyService,
+            ICurrentSession currentSession,
+            ICurrentContext currentContext,
+            IExtRequest extRequest,
+            IConfiguration configuration,
+            AuthorizationService authorizationService)
+            : base(currentSession, currentContext, extRequest, configuration, authorizationService)
         {
-            _currentSession = new CurrentSession();
-        }
-
-        public SearchAndCopyController(ISearchAndCopyService searchAndCopyService)
-        {
-            this.searchAndCopyService = searchAndCopyService ?? new SearchAndCopyService();
+            this.searchAndCopyService = searchAndCopyService;
         }
 
         [ExternalAccountAuthenticate(Function = eFunctions.SearchAndCopySuper, Policy = AuthenticationType.Read)]
@@ -88,7 +90,7 @@
         public IActionResult GetSuperPrefixes(SuperPrefixRequest query)
             => Json(searchAndCopyService.GetSuperPrefixes(new SuperPrefixCriteria
             {
-                GroupName = _currentSession.ParentGroupName,
+                GroupName = CurrentSession.ParentGroupName,
                 Prefix = query.Prefix,
                 AllowNewSuper = query.AllowNewSuper
             }));
