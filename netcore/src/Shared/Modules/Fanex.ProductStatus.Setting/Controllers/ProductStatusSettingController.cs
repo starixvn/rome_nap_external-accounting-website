@@ -36,7 +36,7 @@
             return View(SingleViewPath, viewModel);
         }
 
-        [HttpPost, ProductStatusAuthorize(IsHost = true), ProductStatusValidateAntiForgeryToken]
+        [HttpPost, ProductStatusAuthorize(IsHost = true), ValidateAntiForgeryToken]
         public IActionResult Update(UpdateViewModel viewModel)
         {
             if (!viewModel.IsValid())
@@ -72,7 +72,7 @@
             return View(MultipleViewPath, viewModel);
         }
 
-        [HttpPost, ProductStatusAuthorize(IsHost = true), ProductStatusValidateAntiForgeryToken]
+        [HttpPost, ProductStatusAuthorize(IsHost = true), ValidateAntiForgeryToken]
         public IActionResult MultipleUpdate(MultipleUpdateViewModel viewModel)
         {
             if (!viewModel.IsValid())
@@ -112,7 +112,7 @@
             return View(SimpleViewPath, viewModel);
         }
 
-        [HttpPost, ProductStatusAuthorize(IsHost = true), ProductStatusValidateAntiForgeryToken]
+        [HttpPost, ProductStatusAuthorize(IsHost = true), ValidateAntiForgeryToken]
         public IActionResult SimpleUpdate(SimpleUpdateViewModel viewModel)
         {
             if (!viewModel.IsValid())
