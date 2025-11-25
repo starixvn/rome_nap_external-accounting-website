@@ -58,7 +58,7 @@
 
         public override void WriteBodyReport(ISheet resultSheet)
         {
-            var totalColumn = _builder.RoleId.IsSuper() ? 17 : 16;
+            var totalColumn = _builder.RoleId.IsSuper() ? 18 : 17;
 
             if (_builder.RoleId.IsSuper())
             {
@@ -115,6 +115,7 @@
                     item.LockedAccess.IsLocked ? "Yes" : "No",
                     GetCustomerStatus(item),
                     item.DoubleCommLosing ? "ON" : "OFF",
+                    item.IsHideIP ? "Yes" : "No",
                     item.NickName,
                     item.FirstName,
                     item.LastName,
@@ -162,6 +163,7 @@
                     item.LockedAccess.IsLocked ? "Yes" : "No",
                     custStatus,
                     item.DoubleCommLosing ? "ALLOWED" : "DISALLOWED",
+                    item.IsHideIP ? "Yes" : "No",
                     item.FirstName,
                     item.LastName,
                     item.GroupA,
