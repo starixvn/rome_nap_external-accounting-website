@@ -41,9 +41,9 @@
         {
             int groupId;
             string groupName;
-            var parentGroupName = currentSession.ParentGroupName;
+            var parentGroupName = CurrentSession.ParentGroupName;
 
-            if (currentSession.IsITAdmin || currentSession.IsInternalAdmin)
+            if (CurrentSession.IsITAdmin || CurrentSession.IsInternalAdmin)
             {
                 var group = groupService.GetGroupByName(parentGroupName);
                 groupId = group.GroupID;
@@ -51,7 +51,7 @@
             }
             else
             {
-                groupId = currentSession.GroupId;
+                groupId = CurrentSession.GroupId;
                 groupName = parentGroupName;
             }
 

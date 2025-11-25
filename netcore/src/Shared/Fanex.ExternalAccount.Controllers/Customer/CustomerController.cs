@@ -121,8 +121,7 @@
         [ExternalCustomerAuthFilter]
         public async Task<IActionResult> EditCustomer(EditCustomerRequest request)
         {
-            var currentSession = new CurrentSession();
-            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
+            var systemCode = GetSystemCode(CurrentSession.IsBelongToSpecialGroups, false);
             var userId = CurrentSession.UserId;
             request.NoPermissionEditCredit = !AuthorizationService.HasUpdateCreditPermission(userId);
             request.ServiceType = await customerServiceClient.GetCashServiceStatus(request.CustId);
@@ -138,8 +137,7 @@
         [ExternalCustomerAuthFilter(IsBettingLimit = true)]
         public IActionResult EditSuperBetSetting(EditCustomerRequest request)
         {
-            var currentSession = new CurrentSession();
-            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, true);
+            var systemCode = GetSystemCode(CurrentSession.IsBelongToSpecialGroups, true);
 
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), systemCode),
@@ -184,8 +182,7 @@
                 return JsonBase(new DTO.Result(1, "Access denied"));
             }
 
-            var currentSession = new CurrentSession();
-            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, true);
+            var systemCode = GetSystemCode(CurrentSession.IsBelongToSpecialGroups, true);
             var editCustomerViewModel = new EditCustomerViewModel(
                 new AppConfiguration(GetApplicationPath(), systemCode),
                 GetCdnUri(),
@@ -318,8 +315,7 @@
         [ExternalCustomerAuthFilter]
         public async Task<IActionResult> EditMultiple(EditMultipleCustomerRequest request)
         {
-            var currentSession = new CurrentSession();
-            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
+            var systemCode = GetSystemCode(CurrentSession.IsBelongToSpecialGroups, false);
             int firstCustId = 0;
             if (!string.IsNullOrWhiteSpace(request.CustIds))
             {
@@ -339,8 +335,7 @@
         [ExternalCustomerAuthFilter(Function = eFunctions.Sportsbook)]
         public IActionResult SportBookInformation(SportBookInformationRequest request)
         {
-            var currentSession = new CurrentSession();
-            var systemCode = GetSystemCode(currentSession.IsBelongToSpecialGroups, false);
+            var systemCode = GetSystemCode(CurrentSession.IsBelongToSpecialGroups, false);
             var appPath = GetApplicationPath();
             request.ApplicationPath = appPath;
             var viewModel = new SportBookInformationViewModel(

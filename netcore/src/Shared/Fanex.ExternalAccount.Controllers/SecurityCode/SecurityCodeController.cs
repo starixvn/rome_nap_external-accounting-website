@@ -5,17 +5,18 @@
     using Fanex.ExternalAccount.Core.Context;
     using System;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
 
     [ExternalAccountAuthenticate(Policy = AuthenticateAction.AuthenticationType.Read, IsAjaxRequest = false)]
     public class SecurityCodeController : Controller
     {
-        private readonly CurrentSession currentSession;
+        private readonly ICurrentSession currentSession;
         private readonly SecurityCodeManager _securityCodeManager;
 
-        public SecurityCodeController(SecurityCodeManager securityCodeManager)
+        public SecurityCodeController(IConfiguration configuration, ICurrentSession currentSession)
         {
-            currentSession = new CurrentSession();
-            _securityCodeManager = securityCodeManager;
+            this.currentSession = currentSession;
+            _securityCodeManager = new SecurityCodeManager(configuration);
         }
 
         [HttpGet]

@@ -26,12 +26,11 @@
         private readonly IReportByCurrencyService reportByCurrencyService = reportByCurrencyService;
         private readonly IProductService productService = productService;
         private readonly IProductDetailService productDetailService = productDetailService;
-        private readonly ICurrentSession currentSession = currentSession;
 
         public IActionResult ProductsList(bool isWinLossDetail)
         {
             var products = productService.GetProducts(ExtRequest.GetGroupName(), ExtRequest.GetGroupId(), isWinLossDetail);
-            var productDetails = productDetailService.GetProductDetails(products, currentSession.ParentGroupName);
+            var productDetails = productDetailService.GetProductDetails(products, CurrentSession.ParentGroupName);
 
             return JsonBase(new { products, productDetails }, new JsonSerializerSettings());
         }
