@@ -24,6 +24,8 @@ var builder = WebApplication.CreateBuilder(args);
             options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
         });
 
+    builder.Services.AddHealthChecks();
+
     // Initialize the Config class with the configuration
     Config.Initialize(builder.Configuration);
 
@@ -41,6 +43,7 @@ var builder = WebApplication.CreateBuilder(args);
     app.UseAuthorization();
 
     app.MapStaticAssets();
+    app.MapHealthChecks("/healthz");
 
     app.MapControllerRoute(
         name: "default",

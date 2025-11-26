@@ -2,7 +2,7 @@
 {
     using System;
 
-    [Serializable]
+    //[Serializable]
     public class StatementModel 
     {
         public StatementModel() { }

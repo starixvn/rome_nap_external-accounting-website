@@ -2,7 +2,7 @@
 using Fanex.ExternalAccount.DataAccess.Customer;
 using Fanex.ExternalAccount.DTO;
 using Fanex.ExternalAccount.Requests.Customer.SuperList;
-using Fanex.Security;
+//using Fanex.Security;
 using Sunplus.Agent.Utilities;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,7 +72,7 @@ namespace Fanex.ExternalAccount.Service.Customer
                 var command = new UpdateMultipleSuperPasswordCommand
                 {
                     CustIDList = custIds,
-                    UserPwd = Cryptography.CfsEnCode(request.Password),
+                    UserPwd = "",//todo: Cryptography.CfsEnCode(request.Password),
                     UserId = userId,
                     LoginIP = ip
                 };

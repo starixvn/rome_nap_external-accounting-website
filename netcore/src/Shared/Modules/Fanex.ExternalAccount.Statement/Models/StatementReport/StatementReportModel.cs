@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    [Serializable]
+    //[Serializable]
     public class StatementReportModel
     {
         public List<StatementModel> StatementList { get; set; }

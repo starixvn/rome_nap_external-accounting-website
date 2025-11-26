@@ -5,7 +5,7 @@
     /// <summary>
     /// Data Column Model.
     /// </summary>
-    [Serializable]
+    //[Serializable]
     public class DataColumnModel
     {
         public bool HasData { get; set; }

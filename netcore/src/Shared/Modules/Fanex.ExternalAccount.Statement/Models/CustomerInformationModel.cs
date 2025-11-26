@@ -2,7 +2,7 @@
 {
     using System;
 
-    [Serializable]
+    //[Serializable]
     public class CustomerInformationModel
     {
         public int RoleId { get; set; }
