@@ -1,7 +1,7 @@
 services:
   external-admin-main:
     build:
-      context: ./src/ExternalAdmin.Main
+      context: ./src/Web/ExternalAdmin.Main
       dockerfile: Dockerfile
     container_name: external-admin-main
     ports:
