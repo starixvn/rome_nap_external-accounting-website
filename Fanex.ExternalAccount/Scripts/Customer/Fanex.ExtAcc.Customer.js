@@ -517,10 +517,10 @@
             var title = '';
 
             if ($('#hideBetIP-' + custid).attr('class').includes('disallowHideBetIP')) {
-                msg = 'Once Hide Bet IP is enabled, IP details on the Alpha site will no longer be visible to this Super and Downlines';
+                msg = 'Once Hide Bet IP is enabled, IP details on the agency system will no longer be visible to this Super and Downlines';
                 title = 'Enable Hide Bet IP';
             } else if ($('#hideBetIP-' + custid).attr('class').includes('allowHideBetIP')) {
-                msg = 'Once Hide Bet IP is disabled, IP details on the Alpha site will become visible to this Super and Downlines';
+                msg = 'Once Hide Bet IP is disabled, IP details on the agency system will become visible to this Super and Downlines';
                 title = 'Disable Hide Bet IP';
             }
 
